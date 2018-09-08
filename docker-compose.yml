@@ -1,0 +1,11 @@
+qards:
+  build: .
+  command: develop
+  ports:
+  - "8000:8000"
+  - "9000:9000"
+  volumes:
+  - .:/site
+  - ~/.netlify/config:/home/root/.netlify/config
+  environment:
+    - ENABLE_GATSBY_REFRESH_ENDPOINT=true

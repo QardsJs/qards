@@ -1,0 +1,14 @@
+{
+	"defaultSeverity": "error",
+	"jsRules": {},
+	"rules": {
+		"interface-name": false,
+		"semicolon": [false, "never"],
+		"member-access": [false],
+		"ordered-imports": [false],
+		"no-console": [false],
+		"no-var-requires": false,
+		"quotemark": [false, "single", "jsx-single"]
+	},
+	"rulesDirectory": []
+}

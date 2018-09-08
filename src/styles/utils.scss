@@ -1,0 +1,74 @@
+.flex-aligner-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.center {
+		//	this will alignt center hor & ver
+		max-width: 50%;
+	}
+
+	.top {
+		align-self: flex-start;
+	}
+
+	.bottom {
+		align-self: flex-end;
+	}
+}
+
+.responsive-media {
+	padding-top: 56.25%; /* 450px/800px = 0.5625 */
+	background-size: cover;
+	-moz-background-size: cover; /* Firefox 3.6 */
+	background-position: center; /* Internet Explorer 7/8 */
+}
+
+*.unselectable {
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	/*
+	  Introduced in IE 10.
+	  See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+	*/
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+.grayscale {
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	filter: grayscale(100%);
+	transition: all 200ms ease-in-out;
+
+	&:hover {
+		-webkit-filter: grayscale(0);
+		-moz-filter: grayscale(0);
+		filter: grayscale(0);
+	}
+}
+
+@-webkit-keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
