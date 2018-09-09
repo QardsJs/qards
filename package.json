@@ -62,6 +62,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^3.3.3",
     "tinycolor2": "^1.4.1",
+    "typeface-roboto": "^0.0.54",
     "typography": "^0.16.17"
   },
   "keywords": [

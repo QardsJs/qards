@@ -11,7 +11,7 @@ const typography = new Typography({
         "Arial",
         "sans-serif",
     ],
-    bodyFontFamily: ["Roboto", "serif"],
+    bodyFontFamily: ["Roboto", "arial", "serif"],
 });
 
 export default typography;
