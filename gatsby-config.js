@@ -140,14 +140,6 @@ module.exports = {
 		// 		whitelist: []
 		// 	}
 		// },
-		// {
-		// 	resolve: 'gatsby-plugin-web-font-loader',
-		// 	options: {
-		// 		google: {
-		// 			families: [`Roboto:300,400,500`,]
-		// 		}
-		// 	}
-		// },
 		{
 			resolve: `gatsby-plugin-google-analytics`,
 			options: {
@@ -206,6 +198,57 @@ module.exports = {
 		{
 			resolve: 'gatsby-plugin-mailchimp',
 			options: mailchimpConfig,
+		},
+		{
+			resolve: `gatsby-plugin-feed`,
+			options: {
+				query: `
+					{
+						site {
+							siteMetadata {
+								title
+								description
+								siteUrl
+								site_url: siteUrl
+							}
+						}
+					}
+				`,
+				feeds: [
+					{
+						serialize: ({query: {site, allContentfulPost}}) => {
+							return allContentfulPost.edges.map(edge => {
+								return {
+									title: edge.node.title,
+									description: edge.node.excerpt,
+									url: site.siteMetadata.siteUrl + edge.node.slug,
+									guid: site.siteMetadata.siteUrl + edge.node.slug,
+									custom_elements: [{
+										//"content:encoded": edge.node.html
+									}],
+								};
+							});
+						},
+						query: `
+							{
+								allContentfulPost(
+									limit: 1000,
+									sort: {fields: [createdAt], order: DESC}
+								) {
+									edges {
+										node {
+											title
+											excerpt
+											slug
+										}
+									}
+								}
+							}
+          `,
+						output: "/rss.xml",
+					},
+				],
+			},
 		},
 		`gatsby-plugin-netlify`, // make sure to keep it last in the array
 	],
