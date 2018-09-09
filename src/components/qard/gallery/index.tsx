@@ -14,10 +14,6 @@ import {CardGallery as CardGalleryProps} from '../../../templates/types';
 const Wrapper = styled.div`
 	position: relative;
 	margin: 40px 0 40px 0;
-
-	img {
-		border-radius: 8px;
-	}
 `;
 
 const Title = styled.div`
@@ -37,9 +33,7 @@ const PrevNextButton = styled(Button)`
 	color: ${theme.colors.lightText}!important;
 
 	&:hover {
-		color: ${tinycolor(theme.colors.lightText)
-    .darken(20)
-    .toString()}!important;
+		color: ${tinycolor(theme.colors.lightText).darken(20).toString()}!important;
 	}
 
 	&:focus {
@@ -95,6 +89,8 @@ class QardGallery extends Component<Props, any> {
             nextArrow: <NextArrow/>,
             prevArrow: <PrevArrow/>,
         };
+
+        if(!element.entries) return "";
 
         if (element.entries.length == 1 && element.entries[0].image) {
             return <Wrapper>

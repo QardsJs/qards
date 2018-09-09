@@ -59,10 +59,16 @@ export function tokenizePost(post: PostProps): PostProps {
         post.title = tokens[i].perform(post.title);
         post.excerpt = tokens[i].perform(post.excerpt);
 
+        if (!post.cards.length) continue;
+
         for (let j = 0; j < post.cards.length; j++) {
             const card = post.cards[j];
 
+            if (!card.headers || !card.headers.length) continue;
+
             for (let k = 0; k < card.headers.length; k++) {
+                if(!post.cards[j].headers[k].title) continue;
+
                 post.cards[j].headers[k].title = tokens[i].perform(post.cards[j].headers[k].title);
 
                 if (post.cards[j].headers[k].subtitle) {

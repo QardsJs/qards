@@ -155,7 +155,8 @@ export default class IndexRoute extends Component<Props & HTMLDivProps, State> {
                 <PrimaryBg>
                     <Content>
                         <Box mb={40}>
-                            <Posts darkTheme={true} showExcerpt={true} posts={latest} title={`Latest articles`} paginate={{
+                            <Posts darkTheme={true} showExcerpt={true} posts={latest.slice(0, 3)}
+                                   title={`Latest articles`} paginate={{
                                 pageSize: 6
                             }}/>
                         </Box>

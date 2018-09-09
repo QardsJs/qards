@@ -5,21 +5,41 @@ import styled from 'styled-components';
 import {Scrollbars} from 'react-custom-scrollbars';
 import PrismCode from 'react-prism';
 
-import TitledWrapper from "../../common/titled-wrapper";
 import {CardCodeBlock} from '../../../templates/types';
 
 const Wrapper = styled.div`
 	font-size: 0.85rem;
 	margin-bottom: 40px;
+	border-top-color: #0C344B;
+    border-radius: 6px;
+    background: #0C344B;
+    color: #fff;
+    padding: 20px;
+    border-top: 40px solid transparent;
+    position: relative;
+    
+    &:before {
+        display: block;
+        position: absolute;
+        content: '';
+        top: -20px;
+        left: 20px;
+        width: .5em;
+        height: .5em;
+        border-radius: 50%;
+        background-color: #F5716B;
+        box-shadow: 0 0 0 2px #F5716B, 1.5em 0 0 2px #f4c20d, 3em 0 0 2px #3cba54;
+    }
 	
 	pre {
         padding: 0!important;
         margin: 0!important;
+	    background: #0C344B!important;
 	}
 	
 	code {
         margin: 0!important;
-	    background: transparent!important;
+	    background: #0C344B!important;
 	}
 `;
 
@@ -33,17 +53,7 @@ export default class QardCodeBlock extends React.Component<Props, any> {
 
         return (
             <Wrapper>
-                <TitledWrapper innerProps={{
-                    style: {
-                        padding: 12,
-                    }
-                }} titleProps={{
-                    style: {
-                        fontSize: '.9em',
-                        textTransform: "uppercase"
-                    }
-                }} title={language}>
-                    <pre className={`language-${language}`}>
+                <pre className={`language-${language}`}>
                         <Scrollbars
                             autoHeight
                             autoHeightMin={100}
@@ -59,7 +69,6 @@ export default class QardCodeBlock extends React.Component<Props, any> {
                             </PrismCode>
                         </Scrollbars>
                     </pre>
-                </TitledWrapper>
             </Wrapper>
         );
     }

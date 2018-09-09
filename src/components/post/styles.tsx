@@ -53,5 +53,6 @@ export const SidebarWrapper = styled(Box)`
 
 export const CardWrapper = styled.div`
     margin-top: 30px;
+    padding-top: 30px;
 	border-top: 1px solid ${theme.colors.borderColor};
 `;

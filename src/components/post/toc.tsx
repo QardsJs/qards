@@ -101,8 +101,13 @@ class Toc extends Component<Props, State> {
     renderCard(card: CardProps) {
         const {headers} = card;
 
+        if(!headers) return;
+
         const clonedHeaders = Object.create(headers);
+
         const main = clonedHeaders[0];
+
+        if(!main) return;
 
         //	remove main (first element) from the list
         clonedHeaders.shift();

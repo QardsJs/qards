@@ -10,7 +10,7 @@ const Wrapper = styled.header`
 	margin-bottom: 30px;
 
 	h3 {
-		margin-top: 40px;
+		margin-top: 20px;
 		margin-bottom: 5px;
 	}
 
