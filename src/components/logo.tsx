@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import LogoImage from "../static/images/logo.svg";
 
 const StyledLogo = styled(Link)`
-	font-size: 1.2em;
 	display: block;
 	margin: 0;
 	padding: 0;
@@ -20,7 +19,9 @@ const StyledLogo = styled(Link)`
 	}
 	
 	span {
-	    line-height: 1.2em;
+	    font-size: .8em;
+	    font-weight: 200;
+	    text-transform: uppercase;
 	}
 	
 	&:hover {

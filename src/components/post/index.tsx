@@ -221,44 +221,42 @@ export default class Post extends React.Component<Props, any> {
         const {post, location} = this.props;
 
         return (
-            <div>
-                <Wrapper>
-                    <Box width={[1, 1, 1, 3 / 5]}>
-                        <Article>
-                            <Title>{post.title}</Title>
-                            <Date>{post.updatedAt}</Date>
+            <Wrapper>
+                <Box width={[1, 1, 1, 3 / 5]} mt={[0, 0, 0, 60]}>
+                    <Article>
+                        <Title>{post.title}</Title>
+                        <Date>{post.updatedAt}</Date>
 
-                            {post.cover && <Hero>
-								<LazyLoad height={300}>
-									<TrackVisibility once>
-										<Img fluid={post.cover.fluid}/>
-									</TrackVisibility>
-								</LazyLoad>
-							</Hero>}
+                        {post.cover && <Hero>
+							<LazyLoad height={300}>
+								<TrackVisibility once>
+									<Img fluid={post.cover.fluid}/>
+								</TrackVisibility>
+							</LazyLoad>
+						</Hero>}
 
 
-                            <SubTitle>{post.excerpt}</SubTitle>
+                        <SubTitle>{post.excerpt}</SubTitle>
 
-                            {this.orderdCards.map((card, key) => {
-                                return (
-                                    <CardWrapper key={key}>
-                                        {this.renderCard(Post.cardElements(card))}
-                                    </CardWrapper>
-                                );
-                            })}
-                        </Article>
+                        {this.orderdCards.map((card, key) => {
+                            return (
+                                <CardWrapper key={key}>
+                                    {this.renderCard(Post.cardElements(card))}
+                                </CardWrapper>
+                            );
+                        })}
+                    </Article>
 
-                        <Author author={post.author} style={{
-                            marginTop: 40
-                        }}/>
-                    </Box>
-                    <SidebarWrapper width={[0, 0, 0, 2 / 5]}>
-                        <Hide medium small xsmall className={'sidebar'}>
-                            <Sidebar wrapperProps={{style: {marginLeft: 60}}} post={post} currentUrl={location.href}/>
-                        </Hide>
-                    </SidebarWrapper>
-                </Wrapper>
-            </div>
+                    <Author author={post.author} style={{
+                        marginTop: 40
+                    }}/>
+                </Box>
+                <SidebarWrapper width={[0, 0, 0, 2 / 5]} mt={[0, 0, 0, 60]}>
+                    <Hide medium small xsmall className={'sidebar'}>
+                        <Sidebar wrapperProps={{style: {marginLeft: 60}}} post={post} currentUrl={location.href}/>
+                    </Hide>
+                </SidebarWrapper>
+            </Wrapper>
         );
     }
 }

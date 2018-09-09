@@ -4,7 +4,7 @@ import theme from "../../theme";
 
 
 export const Wrapper = styled(Flex)`
-	margin: 60px 0;
+
 `;
 
 export const Title = styled.h1`
