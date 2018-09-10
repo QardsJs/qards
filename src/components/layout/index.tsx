@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled, {ThemeProvider} from 'styled-components'
 
+
 import Footer from '../footer';
 import Navbar from '../navbar';
 import Content from './content';

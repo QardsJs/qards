@@ -2,7 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import {graphql} from 'gatsby';
 import {Post as PostProps} from '../types';
+
 import PostPage from "../../components/pages/post";
+
 
 interface DataProps {
     post: PostProps;
