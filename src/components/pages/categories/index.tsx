@@ -26,6 +26,7 @@ class CategoryPage extends React.Component<Props, any> {
 
         return <Layout>
             <Helmet title={`${category.title} category`}>
+                <html lang="en" />
                 <meta name="description" content={category.description}/>
             </Helmet>
 

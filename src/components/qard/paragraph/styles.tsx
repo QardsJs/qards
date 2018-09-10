@@ -17,8 +17,8 @@ export const Wrapper = styled.div`
         font-size: 1rem;
         padding: 0 4px;
         border-radius: 4px;
-        color: ${theme.colors.intents.warning.color};
-        background: ${theme.colors.intents.warning.background};
+        color: ${tinycolor2(theme.colors.intents.danger.color).darken(20).toString()};
+        background: ${tinycolor2(theme.colors.intents.danger.background).lighten(10).toString()};
     }
 	
 	p {

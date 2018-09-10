@@ -24,7 +24,7 @@ export default {
     // text color
     text: 'black',
     // text color used for secondary content
-    lightText: '#94A4B0',
+    lightText: tinycolor('#94A4B0').darken(20).toString(),
 
     borderColor: Colors.LIGHT_GRAY3,
 

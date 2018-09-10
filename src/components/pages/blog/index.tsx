@@ -47,6 +47,7 @@ export class IndexPage extends React.Component<Props, any> {
 
         return <Layout>
             <Helmet title={metadata.title}>
+                <html lang="en" />
                 <meta name="description" content={metadata.description}/>
             </Helmet>
 

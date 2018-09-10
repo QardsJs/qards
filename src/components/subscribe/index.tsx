@@ -21,7 +21,6 @@ const Wrapper = styled.div`
 	.subtitle {
 		display: block;
 		font-size: 1rem;
-		margin-bottom: 40px;
 	}
 
 	input {
@@ -32,7 +31,7 @@ const Wrapper = styled.div`
 
 	.bp3-input-group {
 		.bp3-icon {
-			top: 6px;
+			top: 46px;
 			left: 8px !important;
 			font-size: 24px !important;
 			
@@ -93,43 +92,41 @@ export default class Subscribe extends Component<Props, State> {
         return (
             <Wrapper style={this.props.style}>
                 <b className="title">{this.props.title || "Don't miss our next post"}</b>
-                <span className="subtitle">
+                <label className="subtitle">
 					{this.props.subtitle || 'Cool stuff like this article. No spam.'}
-				</span>
 
-                <InputGroup
-                    disabled={this.state.submitting}
-                    large={true}
-                    round={false}
-                    leftIcon="envelope"
-                    placeholder="gollum@ring.com"
-                    value={this.state.email}
-                    onChange={this._handleChange.bind(this)}
-                    rightElement={
-                        <Button
-                            disabled={this.state.submitting}
-                            minimal={true}
-                            active={true}
-                            large={true}
-                            intent={Intent.PRIMARY}
-                            onClick={this._handleSubmit.bind(this)}
-                            style={{
-                                color:
-                                theme.colors
-                                    .bgPrimaryText,
-                                background:
-                                theme.colors.primary,
-                            }}
-                        >
-                            JOIN
-                        </Button>
-                    }
-                    style={{
-                        background: theme.colors.faded,
-                        border: 'none',
-                        boxShadow: 'none',
-                    }}
-                />
+                    <InputGroup
+                        disabled={this.state.submitting}
+                        large={true}
+                        round={false}
+                        leftIcon="envelope"
+                        placeholder="gollum@ring.com"
+                        value={this.state.email}
+                        onChange={this._handleChange.bind(this)}
+                        rightElement={
+                            <Button
+                                disabled={this.state.submitting}
+                                minimal={true}
+                                active={true}
+                                large={true}
+                                intent={Intent.PRIMARY}
+                                onClick={this._handleSubmit.bind(this)}
+                                style={{
+                                    color: theme.colors.bgPrimaryText,
+                                    background: theme.colors.primary,
+                                }}
+                            >
+                                JOIN
+                            </Button>
+                        }
+                        style={{
+                            background: theme.colors.faded,
+                            border: 'none',
+                            boxShadow: 'none',
+                            marginTop: 40
+                        }}
+                    />
+				</label>
             </Wrapper>
         );
     }

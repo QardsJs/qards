@@ -28,6 +28,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 
         return <Layout>
             <Helmet title={tokenizedPost.title}>
+                <html lang="en" />
                 <meta name="description" content={tokenizedPost.excerpt}/>
             </Helmet>
 

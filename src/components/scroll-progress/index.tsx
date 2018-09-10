@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
 import SP from 'scrollprogress';
-import {debounce} from "lodash";
+import {throttle} from "lodash";
 import styled from "styled-components";
 import {Intent, ProgressBar} from "@blueprintjs/core";
 
@@ -38,18 +38,27 @@ export default class ScrollProgress extends React.Component<Props, State> {
         progress: 0, visible: false, scrollPerformed: false
     };
 
-    debounceVisibility = debounce(() => {
-        this.setState({visible: false});
-    }, 1000).bind(this);
+    throttleVisibility = throttle((y: number) => this.setState({
+            progress: y,
+            visible: true,
+            scrollPerformed: true
+        }, () => setTimeout(() => {
+            this.setState({visible: false});
+        }, 2000)
+    ), 400, {
+        leading: false,
+        trailing: true
+    });
 
     initObserver = () => {
-        this.progressObserver = new SP((x: number, y: number) => {
-            requestAnimationFrame(() => this.setState({
-                progress: y,
-                visible: true,
-                scrollPerformed: true
-            }, this.debounceVisibility));
-        });
+        if (this.progressObserver) {
+            this.progressObserver.destroy();
+            this.progressObserver = undefined;
+        }
+
+        this.progressObserver = new SP(
+            (x: number, y: number) => this.throttleVisibility.bind(this, y)()
+        );
     };
 
     componentDidMount() {

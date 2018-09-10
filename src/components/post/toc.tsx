@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {debounce} from 'lodash';
+import {throttle} from 'lodash';
 import styled from 'styled-components';
 
 import theme from '../../theme';
@@ -64,8 +64,6 @@ interface State {
 }
 
 class Toc extends Component<Props, State> {
-    debouncedUpdateScrollPositionFunc: any;
-
     state: State = {
         activeItemId: null,
     };
@@ -85,12 +83,9 @@ class Toc extends Component<Props, State> {
         }
     }
 
-    componentDidMount() {
-        const self = this;
-        this.debouncedUpdateScrollPositionFunc = debounce(() => {
-            requestAnimationFrame(this.updateScrollPosition.bind(self));
-        }, 50).bind(this);
+    debouncedUpdateScrollPositionFunc = () => requestAnimationFrame(this.updateScrollPosition.bind(this));
 
+    componentDidMount() {
         window.addEventListener('scroll', this.debouncedUpdateScrollPositionFunc);
     }
 
@@ -101,13 +96,13 @@ class Toc extends Component<Props, State> {
     renderCard(card: CardProps) {
         const {headers} = card;
 
-        if(!headers) return;
+        if (!headers) return;
 
         const clonedHeaders = Object.create(headers);
 
         const main = clonedHeaders[0];
 
-        if(!main) return;
+        if (!main) return;
 
         //	remove main (first element) from the list
         clonedHeaders.shift();

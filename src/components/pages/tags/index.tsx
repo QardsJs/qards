@@ -25,6 +25,7 @@ class TagsPage extends React.Component<Props, any> {
 
         return <Layout>
             <Helmet title={`${tag.title} tag`}>
+                <html lang="en" />
                 <meta name="description" content={tag.description}/>
             </Helmet>
 

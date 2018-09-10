@@ -111,13 +111,13 @@ export const Content = styled.div`
 		font-size: 1rem;
 		line-height: 1.3;
 		font-weight: 300;
-		color: ${tinycolor(theme.colors.lightText).darken(20).toString()};
+		color: ${theme.colors.lightText};
 	}
 
 	span.date {
 		font-size: 0.8rem;
 		font-weight: 400;
-		color: rgb(143, 166, 178);
+		color: ${theme.colors.lightText};
 		text-transform: uppercase;
 	}
 `;

@@ -77,6 +77,7 @@ export default class IndexRoute extends Component<Props & HTMLDivProps, State> {
 
         return <Layout>
             <Helmet title={`Qards - A blogging platform for professionals`}>
+                <html lang="en" />
                 <meta name="description" content={""}/>
             </Helmet>
 
