@@ -44,11 +44,11 @@ export default class ScrollProgress extends React.Component<Props, State> {
 
     initObserver = () => {
         this.progressObserver = new SP((x: number, y: number) => {
-            this.setState({
+            requestAnimationFrame(() => this.setState({
                 progress: y,
                 visible: true,
                 scrollPerformed: true
-            }, this.debounceVisibility);
+            }, this.debounceVisibility));
         });
     };
 
@@ -73,15 +73,13 @@ export default class ScrollProgress extends React.Component<Props, State> {
     }
 
     render() {
-        return (
-            <ScrollProgressBar
-                stripes={false}
-                animate={false}
-                intent={Intent.SUCCESS}
-                className={this.state.visible ? "inherit" : "fadeOut"}
-                scrollPerformed={this.state.scrollPerformed}
-                value={this.state.progress}
-            />
-        );
+        return <ScrollProgressBar
+            stripes={false}
+            animate={false}
+            intent={Intent.SUCCESS}
+            className={this.state.visible ? "inherit" : "fadeOutStayOut"}
+            scrollPerformed={this.state.scrollPerformed}
+            value={this.state.progress}
+        />;
     }
 }
