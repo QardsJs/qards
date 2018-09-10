@@ -15,8 +15,9 @@ export const Title = styled.h1`
 
 export const SubTitle = styled.h2`
 	margin-top: 40px;
-	font-weight: 400;
+	font-weight: 300;
 	font-size: 1.4rem;
+	line-height: 1.7rem;
 	color: ${theme.colors.lightText};
 `;
 

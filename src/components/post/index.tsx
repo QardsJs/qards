@@ -32,7 +32,9 @@ import Hide from '../common/hide';
 import {Types} from '../qard/meta';
 import Sidebar from './sidebar';
 import Author from '../author';
+import ScrollProgress from "../scroll-progress";
 import {Article, CardWrapper, Date, Hero, SidebarWrapper, SubTitle, Title, Wrapper} from "./styles";
+
 
 export interface Props {
     post: PostProps;
@@ -221,7 +223,7 @@ export default class Post extends React.Component<Props, any> {
         const {post, location} = this.props;
 
         return (
-            <Wrapper>
+            <Wrapper data-rpi-area>
                 <Box width={[1, 1, 1, 3 / 5]} mt={[0, 0, 0, 60]}>
                     <Article>
                         <Title>{post.title}</Title>
@@ -256,6 +258,8 @@ export default class Post extends React.Component<Props, any> {
                         <Sidebar wrapperProps={{style: {marginLeft: 60}}} post={post} currentUrl={location.href}/>
                     </Hide>
                 </SidebarWrapper>
+
+                <ScrollProgress identifier={post.id}/>
             </Wrapper>
         );
     }

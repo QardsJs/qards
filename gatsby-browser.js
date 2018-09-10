@@ -9,6 +9,6 @@ exports.onInitialClientRender = () => {
 	);
 	// don't remove unless this is fixed: https://github.com/gatsbyjs/gatsby/issues/7261#issuecomment-413361951
 
-	require("./src/styles/index.scss");
 	require("typeface-roboto");
+	require("./src/styles/index.scss");
 };

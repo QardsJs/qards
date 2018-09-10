@@ -1,8 +1,6 @@
 import React from 'react';
 import Helmet from "react-helmet";
 import {Box} from "grid-styled";
-// @ts-ignore
-import ReadingPositionIndicator from 'reading-position-indicator/dist/rpi.bundle';
 
 import {Wrapper} from "../styles";
 import {Post as PostProps} from '../../../templates/types';
@@ -14,9 +12,6 @@ import Posts from '../../posts';
 import DiagonalBand from '../../common/diagonal-band';
 import {tokenizePost} from "../../../utils/helpers";
 
-import theme from "../../../theme";
-
-import "reading-position-indicator/dist/rpi.bundle.css";
 
 interface PostPageProps {
     post: PostProps;
@@ -25,26 +20,6 @@ interface PostPageProps {
 }
 
 class PostPage extends React.Component<PostPageProps, any> {
-    rpi: any;
-
-    componentDidMount() {
-        setTimeout(() => {
-            this.rpi = new ReadingPositionIndicator({
-                progressBar: {
-                    show: true,
-                    color: theme.colors.intents.success.color,
-                },
-            }).init();
-        }, 200);
-    }
-
-    componentDidUpdate(){
-        this.rpi.update();
-    }
-
-    componentWillUnmount() {
-        this.rpi.destroy();
-    }
 
     render() {
         const {post, related, location} = this.props;
@@ -73,16 +48,6 @@ class PostPage extends React.Component<PostPageProps, any> {
                     </Box>
                 </Content>
             </Wrapper>
-
-
-            <div className="rpi-progress-bar"
-                 role="progressbar"
-                 aria-valuemin={0}
-                 aria-valuemax={100}
-                 aria-valuenow={0}>
-                <div className="rpi-progress-bar__position" aria-hidden="true"/>
-                <div className="rpi-progress-bar__percentage"/>
-            </div>
         </Layout>
     }
 }

@@ -20,6 +20,7 @@ const Wrapper = styled.header`
 		color: ${theme.colors.lightText};
 		font-weight: 300;
 		font-size: 1.3rem;
+		line-height: 1.6rem;
 	}
 `;
 

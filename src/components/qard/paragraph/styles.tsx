@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
 	
 	ul {
 	    li {
-	        padding: 6px 0;
+	        padding: 0;
 	        font-size: .9em;
 	        color: ${tinycolor2(theme.colors.lightText).darken(20).toString()};
 	    }
