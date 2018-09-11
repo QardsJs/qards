@@ -59,7 +59,8 @@ export default class Footer extends React.Component<Props, any> {
                                                 {page.title}
 											</Link>}
 
-                                            {page.url.startsWith('http') && <a target={'_blank'} href={page.url}>
+                                            {page.url.startsWith('http') &&
+											<a target={'_blank'} href={page.url} rel={"noopener"}>
                                                 {page.title}
 											</a>}
                                         </PageWrapper>

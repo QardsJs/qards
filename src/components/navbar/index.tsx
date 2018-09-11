@@ -162,6 +162,7 @@ export default class Navigation extends React.Component<Props, State> {
 											className={"bp3-button bp3-minimal"}
 											target={'_blank'}
 											href={page.url}
+                                            rel={"noopener"}
 										>
                                             {page.title}
 										</a>}

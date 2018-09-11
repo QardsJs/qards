@@ -149,7 +149,7 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 											</Link>}
 
                                             {page.url.startsWith('http') &&
-											<a target={'_blank'} href={page.url}>
+											<a target={'_blank'} rel={"noopener"} href={page.url}>
                                                 {page.title}
 											</a>}
                                         </li>
