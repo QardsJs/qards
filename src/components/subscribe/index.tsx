@@ -43,7 +43,7 @@ const Wrapper = styled.div`
 		
 		.bp3-input-action {
 			font-family: inherit !important;
-			top: 10px !important;
+			top: 50px !important;
 			right: 10px !important;
 		}
 	}
@@ -93,7 +93,7 @@ export default class Subscribe extends Component<Props, State> {
             <Wrapper style={this.props.style}>
                 <b className="title">{this.props.title || "Don't miss our next post"}</b>
                 <label className="subtitle">
-					{this.props.subtitle || 'Cool stuff like this article. No spam.'}
+                    {this.props.subtitle || 'Cool stuff like this article. No spam.'}
 
                     <InputGroup
                         disabled={this.state.submitting}
@@ -126,7 +126,7 @@ export default class Subscribe extends Component<Props, State> {
                             marginTop: 40
                         }}
                     />
-				</label>
+                </label>
             </Wrapper>
         );
     }

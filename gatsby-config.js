@@ -131,7 +131,7 @@ module.exports = {
 		`gatsby-plugin-styled-components`,
 		//	This is unusable because it removes everything from blueprintjs and many other components
 		//	I'll leave it here because it's something I want to come back too since there's a lot of
-		//	unused css code being exported
+		//	unused css code being sent into production
 		//
 		// {
 		// 	resolve: `gatsby-plugin-purgecss`,
@@ -184,6 +184,16 @@ module.exports = {
 					windows: false
 				}
 			}
+		},
+		{
+			resolve: `fix-external-links`,
+			options: {
+				attributes: {
+					nofollow: {
+						skipMatch: [/** regex that will be matched against external link */]
+					}
+				}
+			},
 		},
 		{
 			resolve: `gatsby-plugin-typography`,

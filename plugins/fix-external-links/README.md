@@ -1,0 +1,2 @@
+It will intercept all external links of generated pages/posts etc and add rel="noopener nofollow noreferrer" to them.
+It can be configured to skip any of these attributes by placing a skip match regex.
