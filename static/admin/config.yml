@@ -1,18 +1,64 @@
 backend:
-  name: github
+  name: git-gateway
   repo: QardsJs/qards
-  branch: master
+  branch: netlify-cms
 
 publish_mode: editorial_workflow
 media_folder: static/assets
 
 collections:
-  - name: blog
-    label: Blog
-    folder: static/content/collections/blog
+  - name: "settings"
+    label: "Settings"
+    delete: false # Prevent users from deleting documents in this collection
+    editor:
+      preview: false
+    files:
+      - name: "general"
+        label: "Site Settings"
+        file: "_data/settings.json"
+        description: "General Site Settings"
+        fields:
+          - {label: "Global title", name: "site_title", widget: "string"}
+          - label: "Post Settings"
+            name: posts
+            widget: "object"
+            fields:
+              - {label: "Number of posts on frontpage", name: front_limit, widget: number}
+              - {label: "Default Author", name: author, widget: string}
+              - {label: "Default Thumbnail", name: thumb, widget: image, class: "thumb"}
+
+      - name: "authors"
+        label: "Authors"
+        file: "_data/authors.yml"
+        description: "Author descriptions"
+        fields:
+          - name: authors
+            label: Authors
+            label_singular: "Author"
+            widget: list
+            fields:
+              - {label: "Name", name: "name", widget: "string", hint: "First and Last"}
+              - {label: "Description", name: "description", widget: "markdown"}
+      
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: static/content/collections/posts
     create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { name: path, label: Path }
-      - { name: date, label: Date, widget: date }
-      - { name: title, label: Title }
-      - { name: body, label: Body, widget: markdown }
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Author", name: "author", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Categories", name: "categories", widget: "string"}
+      - label: "Header Image"
+        name: "header"
+        widget: "object"
+        fields:
+          - {label: "Teaser Image", name: "teaser", widget: "image"}
+          - {label: "Detailed Image", name: "image", widget: "image", required: false}
+          - {label: "Alternative Text", name: "alt", widget: "text", required: false}
+      - {label: "Excerpt", name: "excerpt", widget: "text"}
+      - {label: "Description", name: "description", widget: "text"} 
+      - {label: "Featured Image", name: "og_image", widget: "image"}
+      - {label: "Body", name: "body", widget: "markdown"}
