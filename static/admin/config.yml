@@ -1,14 +1,15 @@
 backend:
   name: github
-  repo: ciokan/qards-netlifycms
+  repo: QardsJs/qards
   branch: master
 
+publish_mode: editorial_workflow
 media_folder: static/assets
 
 collections:
   - name: blog
     label: Blog
-    folder: blog
+    folder: static/content/collections/blog
     create: true
     fields:
       - { name: path, label: Path }
