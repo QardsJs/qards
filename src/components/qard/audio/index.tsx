@@ -1,253 +1,271 @@
 import * as React from 'react';
-import ReactPlayer from "react-player";
-import {Icon} from "@blueprintjs/core";
-import moment from "moment";
+import ReactPlayer from 'react-player';
+import { Icon } from '@blueprintjs/core';
+import moment from 'moment';
 
-import TitledWrapper from "../../common/titled-wrapper";
-import {CardAudio, CardAudioItem} from '../../../templates/types';
-import {InterfaceBtn, Item, Main, Playlist, Wrapper} from "./styles";
+import TitledWrapper from '../../common/titled-wrapper';
+import { Image } from '../../../templates/types';
+import { InterfaceBtn, Item, Main, Playlist, Wrapper } from './styles';
 
+export interface CardAudioItemType {
+	id: string;
+	url: string;
+	title: string;
+	subtitle?: string;
+	poster?: Image;
+}
+
+export interface CardAudioType {
+	id: string;
+	contentful_id: string;
+	playlist: CardAudioItemType[];
+}
 
 export interface State {
-    isPlaying: boolean;
-    duration?: number;
-    progress?: Progress;
-    currentTrack: CardAudioItem;
+	isPlaying: boolean;
+	duration?: number;
+	progress?: Progress;
+	currentTrack: CardAudioItemType;
 }
 
 export interface Props {
-    element: CardAudio;
-    //  on infinite if he's at the last track, clicking next will jump to the first track
-    //  without infinit, when at the last track, the `next` button is disabled
-    //  same story goes for prev controls
-    infinite?: boolean;
+	element: CardAudioType;
+	//  on infinite if we're at the last track, clicking next will jump to the first track
+	//  without infinite, when at the last track, the `next` button is disabled
+	//  same story goes for prev controls
+	infinite?: boolean;
 }
 
 interface Progress {
-    played: number;
-    playedSeconds: number;
-    loaded: number;
-    loadedSeconds: number;
+	played: number;
+	playedSeconds: number;
+	loaded: number;
+	loadedSeconds: number;
 }
 
 export default class QardAudio extends React.Component<Props, State> {
+	constructor(props: Props) {
+		super(props);
 
-    constructor(props: Props) {
-        super(props);
+		const { playlist } = this.props.element;
 
-        const {playlist} = this.props.element;
+		this.state = {
+			isPlaying: false,
+			currentTrack: playlist[0]
+		};
+	}
 
-        this.state = {
-            isPlaying: false,
-            currentTrack: playlist[0]
-        }
-    }
+	hasPrev = () => {
+		const { playlist } = this.props.element;
 
-    hasPrev = () => {
-        const {playlist} = this.props.element;
+		for (let i = 0; i < playlist.length; i++) {
+			if (playlist[i].id === this.state.currentTrack.id) {
+				return i > 0;
+			}
+		}
 
-        for (let i = 0; i < playlist.length; i++) {
-            if (playlist[i].id === this.state.currentTrack.id) {
-                return i > 0;
-            }
-        }
+		return false;
+	};
 
-        return false;
-    };
+	hasNext = () => {
+		const { playlist } = this.props.element;
 
-    hasNext = () => {
-        const {playlist} = this.props.element;
+		for (let i = 0; i < playlist.length; i++) {
+			if (playlist[i].id === this.state.currentTrack.id) {
+				return i < playlist.length - 1;
+			}
+		}
 
-        for (let i = 0; i < playlist.length; i++) {
-            if (playlist[i].id === this.state.currentTrack.id) {
-                return i < playlist.length - 1;
-            }
-        }
+		return false;
+	};
 
-        return false;
-    };
+	play = (audio: CardAudioItemType) => {
+		this.setState({ currentTrack: audio, isPlaying: true });
+	};
 
-    play = (audio: CardAudioItem) => {
-        this.setState({currentTrack: audio, isPlaying: true});
-    };
+	resetTimer = () => {
+		this.setState({
+			duration: 0,
+			progress: {
+				played: 0,
+				playedSeconds: 0,
+				loaded: 0,
+				loadedSeconds: 0
+			}
+		});
+	};
 
-    resetTimer = () => {
-        this.setState({
-            duration: 0, progress: {
-                played: 0,
-                playedSeconds: 0,
-                loaded: 0,
-                loadedSeconds: 0
-            }
-        });
-    };
+	playPrev = () => {
+		if (!this.hasPrev() && !this.props.infinite) return;
 
-    playPrev = () => {
-        if (!this.hasPrev() && !this.props.infinite) return;
+		this.resetTimer();
 
-        this.resetTimer();
+		const { playlist } = this.props.element;
 
-        const {playlist} = this.props.element;
+		for (let i = 0; i < playlist.length; i++) {
+			if (playlist[i].id === this.state.currentTrack.id) {
+				let prevTrack;
+				//  if we're the first item we need to go to last
+				const isFirst = playlist[i].id == playlist[0].id;
 
-        for (let i = 0; i < playlist.length; i++) {
-            if (playlist[i].id === this.state.currentTrack.id) {
-                let prevTrack;
-                //  if we're the first item we need to go to last
-                const isFirst = playlist[i].id == playlist[0].id;
+				if (isFirst) {
+					prevTrack = playlist[playlist.length - 1];
+				} else {
+					prevTrack = playlist[i - 1];
+				}
 
-                if (isFirst) {
-                    prevTrack = playlist[playlist.length - 1];
-                } else {
-                    prevTrack = playlist[i - 1];
-                }
+				if (this.state.isPlaying) {
+					this.setState({ isPlaying: false });
+					this.setState({ currentTrack: prevTrack, isPlaying: true });
+				} else {
+					this.setState({ currentTrack: prevTrack });
+				}
+			}
+		}
+	};
 
-                if (this.state.isPlaying) {
-                    this.setState({isPlaying: false});
-                    this.setState({currentTrack: prevTrack, isPlaying: true});
-                } else {
-                    this.setState({currentTrack: prevTrack});
-                }
-            }
-        }
-    };
+	playNext = () => {
+		if (!this.hasNext() && !this.props.infinite) return;
 
-    playNext = () => {
-        if (!this.hasNext() && !this.props.infinite) return;
+		this.resetTimer();
 
-        this.resetTimer();
+		const { playlist } = this.props.element;
 
-        const {playlist} = this.props.element;
+		for (let i = 0; i < playlist.length; i++) {
+			if (playlist[i].id === this.state.currentTrack.id) {
+				let nextTrack;
+				//  if we're the last item we need to start from first one
+				const isLast = playlist.length == i + 1;
 
-        for (let i = 0; i < playlist.length; i++) {
-            if (playlist[i].id === this.state.currentTrack.id) {
-                let nextTrack;
-                //  if we're the last item we need to start from first one
-                const isLast = playlist.length == i + 1;
+				if (isLast) {
+					nextTrack = playlist[0];
+				} else {
+					nextTrack = playlist[i + 1];
+				}
 
-                if (isLast) {
-                    nextTrack = playlist[0];
-                } else {
-                    nextTrack = playlist[i + 1];
-                }
+				if (this.state.isPlaying) {
+					this.setState({ isPlaying: false });
+					this.setState({ currentTrack: nextTrack, isPlaying: true });
+				} else {
+					this.setState({ currentTrack: nextTrack });
+				}
+			}
+		}
+	};
 
+	togglePlay = () => {
+		this.setState({ isPlaying: !this.state.isPlaying });
+	};
 
-                if (this.state.isPlaying) {
-                    this.setState({isPlaying: false});
-                    this.setState({currentTrack: nextTrack, isPlaying: true});
-                } else {
-                    this.setState({currentTrack: nextTrack});
-                }
-            }
-        }
-    };
+	setDuration = (seconds: number) => {
+		this.setState({ duration: parseInt(Number(seconds).toFixed(0)) });
+	};
 
-    togglePlay = () => {
-        this.setState({isPlaying: !this.state.isPlaying});
-    };
+	setProgress = (progress: Progress) => {
+		this.setState({
+			progress: {
+				loaded: parseInt(Number(progress.loaded).toFixed(0)),
+				played: parseInt(Number(progress.played).toFixed(0)),
+				loadedSeconds: parseInt(Number(progress.loadedSeconds).toFixed(0)),
+				playedSeconds: parseInt(Number(progress.playedSeconds).toFixed(0))
+			}
+		});
+	};
 
-    setDuration = (seconds: number) => {
-        this.setState({duration: parseInt(Number(seconds).toFixed(0))});
-    };
+	get playedTimer() {
+		//  We can't get a remaining timer because we don't know the total number of seconds
+		//  this track has so we're forced to only showing the positive progress
+		const { duration, progress } = this.state;
 
-    setProgress = (progress: Progress) => {
-        this.setState({
-            progress: {
-                loaded: parseInt(Number(progress.loaded).toFixed(0)),
-                played: parseInt(Number(progress.played).toFixed(0)),
-                loadedSeconds: parseInt(Number(progress.loadedSeconds).toFixed(0)),
-                playedSeconds: parseInt(Number(progress.playedSeconds).toFixed(0))
-            }
-        });
-    };
+		if (!duration || !progress) return <i>loading</i>;
 
-    get playedTimer() {
-        //  We can't get a remaining timer because we don't know the total number of seconds
-        //  this track has so we're forced to only showing the positive progress
-        const {duration, progress} = this.state;
+		const remainingSeconds = duration - progress.playedSeconds;
 
-        if (!duration || !progress) return <i>loading</i>;
+		let format: string = 'mm:ss';
+		if (remainingSeconds > 3600) {
+			format = 'hh:mm:ss';
+		}
 
-        const remainingSeconds = duration - progress.playedSeconds;
+		const dur = moment.duration(remainingSeconds, 'seconds');
+		return moment.utc(dur.asMilliseconds()).format(format);
+	}
 
-        let format: string = 'mm:ss';
-        if (remainingSeconds > 3600) {
-            format = 'hh:mm:ss';
-        }
+	componentDidMount() {
+		const { playlist } = this.props.element;
+		this.setState({ currentTrack: playlist[0] });
+	}
 
-        const dur = moment.duration(remainingSeconds, "seconds");
-        return moment.utc(dur.asMilliseconds()).format(format);
-    }
+	public render() {
+		if (!this.state) return null;
 
-    componentDidMount() {
-        const {playlist} = this.props.element;
-        this.setState({currentTrack: playlist[0]});
-    }
+		const { playlist } = this.props.element;
+		const { isPlaying, currentTrack } = this.state;
+		const { title, subtitle, url, poster } = currentTrack;
 
-    public render() {
-        if (!this.state) return null;
+		return (
+			<TitledWrapper>
+				<Wrapper>
+					<ReactPlayer
+						url={url}
+						playing={this.state.isPlaying}
+						controls={false}
+						onEnded={this.playNext}
+						onDuration={this.setDuration}
+						onProgress={this.setProgress}
+						style={{
+							display: 'none'
+						}}
+					/>
 
-        const {playlist} = this.props.element;
-        const {isPlaying, currentTrack} = this.state;
-        const {title, subtitle, url, poster} = currentTrack;
+					<Main>
+						<div className="details">
+							<div className="content">
+								<b className="title">{title}</b>
+								<span className="subtitle">{subtitle}</span>
+							</div>
 
-        return <TitledWrapper>
-            <Wrapper>
-                <ReactPlayer
-                    url={url}
-                    playing={this.state.isPlaying}
-                    controls={false}
-                    onEnded={this.playNext}
-                    onDuration={this.setDuration}
-                    onProgress={this.setProgress}
-                    style={{
-                        display: "none"
-                    }}
-                />
+							<div className="controls">
+								<InterfaceBtn
+									minimal
+									disabled={!this.hasPrev() && !this.props.infinite}
+									onClick={this.playPrev}
+									icon={<Icon icon="step-backward" iconSize={34} />}
+								/>
+								<InterfaceBtn
+									minimal
+									onClick={this.togglePlay}
+									isPlaying={isPlaying}
+									icon={<Icon icon={isPlaying ? 'pause' : 'play'} iconSize={62} />}
+								/>
+								<InterfaceBtn
+									minimal
+									disabled={!this.hasNext() && !this.props.infinite}
+									onClick={this.playNext}
+									icon={<Icon icon="step-forward" iconSize={34} />}
+								/>
 
-                <Main>
-                    <div className="details">
-                        <div className="content">
-                            <b className="title">{title}</b>
-                            <span className="subtitle">{subtitle}</span>
-                        </div>
+								{isPlaying && <div className="duration">{this.playedTimer}</div>}
+							</div>
+						</div>
 
-                        <div className="controls">
-                            <InterfaceBtn
-                                minimal
-                                disabled={!this.hasPrev() && !this.props.infinite}
-                                onClick={this.playPrev}
-                                icon={<Icon icon="step-backward" iconSize={34}/>}
-                            />
-                            <InterfaceBtn
-                                minimal
-                                onClick={this.togglePlay}
-                                isPlaying={isPlaying}
-                                icon={<Icon icon={isPlaying ? "pause" : "play"} iconSize={62}/>}
-                            />
-                            <InterfaceBtn
-                                minimal
-                                disabled={!this.hasNext() && !this.props.infinite}
-                                onClick={this.playNext}
-                                icon={<Icon icon="step-forward" iconSize={34}/>}
-                            />
+						{poster && <img src={poster.resize.src} />}
+					</Main>
 
-                            {isPlaying && <div className="duration">{this.playedTimer}</div>}
-                        </div>
-                    </div>
-
-                    {poster && <img src={poster.resize.src}/>}
-                </Main>
-
-                <Playlist>
-                    {playlist.map((audio: CardAudioItem, key) => {
-                        return <Item
-                            key={key}
-                            onClick={() => this.play(audio)}
-                            className={currentTrack.id == audio.id ? `active` : ""}
-                        >{audio.title}</Item>;
-                    })}
-                </Playlist>
-            </Wrapper>
-        </TitledWrapper>;
-    }
+					<Playlist>
+						{playlist.map((audio: CardAudioItemType, key) => {
+							return (
+								<Item
+									key={key}
+									onClick={() => this.play(audio)}
+									className={currentTrack.id == audio.id ? `active` : ''}
+								>
+									{audio.title}
+								</Item>
+							);
+						})}
+					</Playlist>
+				</Wrapper>
+			</TitledWrapper>
+		);
+	}
 }

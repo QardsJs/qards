@@ -1,11 +1,27 @@
-qards:
-  build: .
-  command: develop
-  ports:
-  - "8000:8000"
-  - "9000:9000"
-  volumes:
-  - .:/site
-  - ~/.netlify/config:/home/root/.netlify/config
-  environment:
-    - ENABLE_GATSBY_REFRESH_ENDPOINT=true
+version: '3.3'
+
+services:
+  qards:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: develop
+    ports:
+      - "8000:8000"
+      - "9000:9000"
+    volumes:
+      - .:/site
+    environment:
+      - ENABLE_GATSBY_REFRESH_ENDPOINT=true
+
+  cypress:
+    build:
+      context: .
+      dockerfile: Dockerfile-cypress
+    command: waitforit -address=http://localhost:8000 -timeout=40 -retry=500 -debug -- ./node_modules/.bin/cypress run
+    volumes:
+      - ./cypress:/usr/src/app/cypress
+      - ./cypress.json:/usr/src/app/cypress.json
+    depends_on:
+      - qards
+    network_mode: 'host'

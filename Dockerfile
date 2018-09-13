@@ -34,7 +34,8 @@ RUN \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN npm install --global gatsby-cli --no-optional gatsby@2.0.0-rc.14 netlify-cli
+RUN npm install --global gatsby-cli --no-optional gatsby@2.0.0-rc.14
+RUN rm -rf node_modules && yarn install
 
 RUN mkdir -p /site
 WORKDIR /site

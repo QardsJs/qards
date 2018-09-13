@@ -71,7 +71,7 @@ export default class Search extends Component<Props & HTMLDivProps, State> {
                 }, 800).bind(this);
 
                 return (
-                    <Wrapper {...props}>
+                    <Wrapper className="qards-search" {...props}>
                         <input
                             className="bp3-input bp3-large bp3-fill"
                             type="text" placeholder="Search"

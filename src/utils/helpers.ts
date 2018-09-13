@@ -67,7 +67,7 @@ export function tokenizePost(post: PostProps): PostProps {
             if (!card.headers || !card.headers.length) continue;
 
             for (let k = 0; k < card.headers.length; k++) {
-                if(!post.cards[j].headers[k].title) continue;
+                if (!post.cards[j].headers[k].title) continue;
 
                 post.cards[j].headers[k].title = tokens[i].perform(post.cards[j].headers[k].title);
 
@@ -79,6 +79,28 @@ export function tokenizePost(post: PostProps): PostProps {
     }
 
     return post;
+}
+
+export function slugify(text: string) {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
+}
+
+export function deGatsbyFyContentfulId(id: string): string {
+    //  if the contentful_id field starts with a number, Gatsby adds a `c` (letter) in front
+    //  due to some bs I don't have the time to check so, if a c is followed by a number we
+    //  have to remove that `c` in order to be able to query the real data
+    const firstChar = id.charAt(0);
+    const secondChar = id.charAt(1);
+
+    if (firstChar == "c" && '0123456789'.indexOf(secondChar) !== -1) {
+        return id.substring(1);
+    }
+    return id;
 }
 
 export interface PopularCategoriesCategory {

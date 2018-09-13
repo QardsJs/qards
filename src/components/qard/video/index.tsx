@@ -7,7 +7,6 @@ import LazyLoad from 'react-lazyload';
 
 import theme from '../../../theme';
 import MarkdownRenderer from "../../markdown";
-import {CardVideo as CardVideoProps} from "../../../templates/types"
 
 const Wrapper = styled.div`
     margin-bottom: 30px;
@@ -45,8 +44,17 @@ const Wrapper = styled.div`
     }
 `;
 
+export interface CardVideoType {
+    contentful_id: string;
+    url: string;
+    title: string;
+    description?: {
+        description: string;
+    };
+}
+
 interface Props {
-    element: CardVideoProps;
+    element: CardVideoType;
 }
 
 interface State {

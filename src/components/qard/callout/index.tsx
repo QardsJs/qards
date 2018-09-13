@@ -1,16 +1,27 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import {Callout, Intent} from "@blueprintjs/core";
+import {IconName} from "@blueprintjs/icons";
 import {HTMLDivProps} from "@blueprintjs/core/src/common/props";
+
 import MarkdownRenderer from "../../markdown";
-import {CardCallout as CardCalloutProps} from "../../../templates/types"
 
 const Wrapper = styled.div`
     margin-bottom: 20px;
 `;
 
+export interface CardCalloutType {
+    contentful_id: string;
+    title?: string;
+    icon?: IconName;
+    message: {
+        message: string;
+    };
+    intent?: Intent;
+}
+
 interface Props {
-    element: CardCalloutProps;
+    element: CardCalloutType;
 }
 
 interface State {

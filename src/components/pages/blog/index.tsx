@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 import styled from 'styled-components';
-import {Box} from "grid-styled";
+import { Box } from 'grid-styled';
 
 import FeaturedPost from '../../featured-post';
 import Posts from '../../posts';
@@ -10,7 +10,7 @@ import Subscribe from '../../subscribe';
 import Layout from '../../layout';
 import Content from '../../layout/content';
 import DiagonalBand from '../../common/diagonal-band';
-import {Post as PostProps} from '../../../templates/types';
+import { Post as PostProps } from '../../../templates/types';
 
 //  exported because they are used in other templates
 export const Hero = styled.div`
@@ -26,50 +26,55 @@ export const Hero = styled.div`
 	}
 `;
 
-export const Wrapper = styled.div`
-    padding-bottom: 120px;
-`;
+export const Wrapper = styled.div`padding-bottom: 120px;`;
 
 export interface Props {
-    latest: PostProps[];
-    featured: PostProps;
-    metadata: {
-        name: string;
-        title: string;
-        siteUrl: string;
-        description: string;
-    }
+	latest: PostProps[];
+	featured: PostProps;
+	metadata: {
+		name: string;
+		title: string;
+		siteUrl: string;
+		description: string;
+	};
 }
 
 export class IndexPage extends React.Component<Props, any> {
-    public render() {
-        const {latest, featured, metadata} = this.props;
+	public render() {
+		const { latest, featured, metadata } = this.props;
 
-        return <Layout>
-            <Helmet title={metadata.title}>
-                <html lang="en" />
-                <meta name="description" content={metadata.description}/>
-            </Helmet>
+		return (
+			<Layout>
+				<Helmet title={metadata.title}>
+					<html lang="en" />
+					<meta name="description" content={metadata.description} />
+				</Helmet>
 
-            <DiagonalBand skew={35}/>
+				<DiagonalBand skew={35} />
 
-            <Wrapper>
-                <Content>
-                    {featured && <FeaturedPost post={featured}/>}
+				<Wrapper>
+					<Content>
+						{featured && <FeaturedPost post={featured} />}
 
-                    <div style={featured ? {marginTop: 120} : {}}>
-                        <Subscribe/>
-                    </div>
+						<div style={featured ? { marginTop: 120 } : {}}>
+							<Subscribe />
+						</div>
 
-                    <Box mt={[80, 80, 80, 180]} mb={[40, 40, 40, 120]}>
-                        <Posts showExcerpt={false} posts={latest} title={`Latest articles`} paginate={{
-                            pageSize: 6
-                        }}/>
-                    </Box>
-                </Content>
-            </Wrapper>
-        </Layout>
-    }
+						<Box mt={[ 80, 80, 80, 180 ]} mb={[ 40, 40, 40, 120 ]}>
+							<Posts
+								showExcerpt={false}
+								posts={latest}
+								title={`Latest articles`}
+								paginate={{
+									pageSize: 6
+								}}
+							/>
+						</Box>
+					</Content>
+				</Wrapper>
+			</Layout>
+		);
+	}
 }
 
 export default IndexPage;

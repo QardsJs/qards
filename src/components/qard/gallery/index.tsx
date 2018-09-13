@@ -9,7 +9,7 @@ import {Button} from '@blueprintjs/core';
 
 import theme from '../../../theme';
 import TitledWrapper from "../../common/titled-wrapper";
-import {CardGallery as CardGalleryProps} from '../../../templates/types';
+import {Image} from "../../../templates/types";
 
 const Wrapper = styled.div`
 	position: relative;
@@ -69,8 +69,21 @@ class PrevArrow extends React.Component<IconProps, any> {
     }
 }
 
+
+export interface CardGalleryEntryType {
+    id: string;
+    image: Image;
+    title: string;
+}
+
+export interface CardGalleryType {
+    title: string;
+    contentful_id: string;
+    entries: CardGalleryEntryType[];
+}
+
 interface Props {
-    element: CardGalleryProps;
+    element: CardGalleryType;
 }
 
 class QardGallery extends Component<Props, any> {
@@ -90,7 +103,7 @@ class QardGallery extends Component<Props, any> {
             prevArrow: <PrevArrow/>,
         };
 
-        if(!element.entries) return "";
+        if (!element.entries) return "";
 
         if (element.entries.length == 1 && element.entries[0].image) {
             return <Wrapper>

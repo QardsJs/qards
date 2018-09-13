@@ -2,22 +2,28 @@ import * as React from 'react';
 
 import {Wrapper} from "./styles";
 import MarkdownRenderer from "../../markdown";
-import {CardParagraph} from '../../../templates/types';
+
+export interface CardParagraphType {
+    //  needed so we can run the queried variant" ./queried.ts
+    contentful_id?: string;
+    text: {
+        text: string
+    };
+}
 
 export interface Props {
-    element: CardParagraph;
+    element: CardParagraphType;
+    isMarkdown?: boolean;
 }
 
 export default class QardParagraph extends React.Component<Props, any> {
     public render() {
-        const {element} = this.props;
+        const {element, isMarkdown} = this.props;
 
         if (!element.text) return "";
 
-        const {text} = element;
-
         return <Wrapper>
-            <MarkdownRenderer md={text.text}/>
+            {isMarkdown ? <MarkdownRenderer md={element.text.text}/> : <p>{element.text.text}</p>}
         </Wrapper>;
     }
 }

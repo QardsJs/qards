@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import {Scrollbars} from 'react-custom-scrollbars';
 import PrismCode from 'react-prism';
 
-import {CardCodeBlock} from '../../../templates/types';
-
 const Wrapper = styled.div`
 	font-size: 0.85rem;
 	margin-bottom: 40px;
@@ -43,8 +41,17 @@ const Wrapper = styled.div`
 	}
 `;
 
+export interface CardCodeType {
+    title: string;
+    language: string;
+    contentful_id: string;
+    code: {
+        code: string;
+    };
+}
+
 export interface Props {
-    element: CardCodeBlock;
+    element: CardCodeType;
 }
 
 export default class QardCodeBlock extends React.Component<Props, any> {

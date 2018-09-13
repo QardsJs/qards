@@ -3,7 +3,7 @@ import Helmet from "react-helmet";
 import {Box} from "grid-styled";
 
 import {Wrapper} from "../styles";
-import {Post as PostProps} from '../../../templates/types';
+import {PostType} from '../../post';
 import Layout from '../../layout';
 import Content from '../../layout/content';
 import Post from '../../post';
@@ -14,8 +14,8 @@ import {tokenizePost} from "../../../utils/helpers";
 
 
 interface PostPageProps {
-    post: PostProps;
-    related: PostProps[];
+    post: PostType;
+    related: PostType[];
     location: any;
 }
 
@@ -28,7 +28,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 
         return <Layout>
             <Helmet title={tokenizedPost.title}>
-                <html lang="en" />
+                <html lang="en"/>
                 <meta name="description" content={tokenizedPost.excerpt}/>
             </Helmet>
 

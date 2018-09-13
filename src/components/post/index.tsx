@@ -4,220 +4,39 @@ import Img from "gatsby-image";
 import {Box} from 'grid-styled';
 import TrackVisibility from "react-on-screen";
 import LazyLoad from "react-lazyload";
-
-import {
-    Card as CardProps,
-    CardAudio as CardAudioProps,
-    CardCallout as CardCalloutProps,
-    CardCodeBlock as CardCodeBlockProps,
-    CardGallery as CardGalleryProps,
-    CardHeader as CardHeaderProps,
-    CardHero as CardHeroProps,
-    CardParagraph as CardParagraphProps,
-    CardRevealSet as CardRevealSetProps,
-    CardVideo as CardVideoProps,
-    Post as PostProps,
-} from '../../templates/types';
-
-import QardHeader from '../qard/header';
-import QardGallery from '../qard/gallery';
-import QardParagraph from '../qard/paragraph';
-import QardAudio from '../qard/audio';
-import QardVideo from '../qard/video';
-import QardCodeBlock from '../qard/code';
-import QardReveal from '../qard/reveal';
-import QardCallout from '../qard/callout';
+import Card, {CardType} from "./card";
 
 import Hide from '../common/hide';
-import {Types} from '../qard/meta';
 import Sidebar from './sidebar';
 import Author from '../author';
 import ScrollProgress from "../scroll-progress";
 import {Article, CardWrapper, Date, Hero, SidebarWrapper, SubTitle, Title, Wrapper} from "./styles";
+import {CategoryType} from "../../templates/category";
+import {Image, Tag} from "../../templates/types";
+import {AuthorType} from "../author";
 
+export interface PostType {
+    id: string;
+    title: string;
+    slug: string;
+    excerpt: string;
+    tags: Tag[];
+    createdAt: string;
+    updatedAt: string;
+    cover: Image;
+    categories: CategoryType[];
+    cards: CardType[];
+    author: AuthorType;
+}
 
 export interface Props {
-    post: PostProps;
+    post: PostType;
     location: {
         href: string;
     };
 }
 
-export interface CardElementType {
-    type: string;
-    order: number;
-    elementCallout?: CardCalloutProps;
-    elementHero?: CardHeroProps;
-    elementHeader?: CardHeaderProps;
-    elementAudio?: CardAudioProps;
-    elementVideo?: CardVideoProps;
-    elementGallery?: CardGalleryProps;
-    elementCodeBlock?: CardCodeBlockProps;
-    elementReveal?: CardRevealSetProps;
-    elementParagraph?: CardParagraphProps;
-}
-
 export default class Post extends React.Component<Props, any> {
-    static cardElements(card: CardProps): CardElementType[] {
-        // Will loop through all the contents of this
-        // card and arrange them based on order. Will
-        // also assign the types for later consuming
-        const content = [];
-        const {headers, paragraphs, hero, galleries, codeBlocks, audios, videos, reveals, callouts} = card;
-
-        if (hero) {
-            content.push({
-                type: Types.HERO,
-                order: 0,
-                elementHero: hero,
-            });
-        }
-
-        if (headers) {
-            for (let i = 0; i < headers.length; i++) {
-                content.push({
-                    type: Types.HEADER,
-                    order: headers[i].order,
-                    elementHeader: headers[i],
-                });
-            }
-        }
-
-        if (paragraphs) {
-            for (let i = 0; i < paragraphs.length; i++) {
-                content.push({
-                    type: Types.PARAGRAPH,
-                    order: paragraphs[i].order,
-                    elementParagraph: paragraphs[i],
-                });
-            }
-        }
-
-        if (galleries) {
-            for (let i = 0; i < galleries.length; i++) {
-                content.push({
-                    type: Types.GALLERY,
-                    order: galleries[i].order,
-                    elementGallery: galleries[i],
-                });
-            }
-        }
-
-        if (reveals) {
-            for (let i = 0; i < reveals.length; i++) {
-                content.push({
-                    type: Types.REVEAL,
-                    order: reveals[i].order,
-                    elementReveal: reveals[i],
-                });
-            }
-        }
-
-        if (callouts) {
-            for (let i = 0; i < callouts.length; i++) {
-                content.push({
-                    type: Types.CALLOUT,
-                    order: callouts[i].order,
-                    elementCallout: callouts[i],
-                });
-            }
-        }
-
-        if (codeBlocks) {
-            for (let i = 0; i < codeBlocks.length; i++) {
-                content.push({
-                    type: Types.CODE,
-                    order: codeBlocks[i].order,
-                    elementCodeBlock: codeBlocks[i],
-                });
-            }
-        }
-
-        if (audios) {
-            for (let i = 0; i < audios.length; i++) {
-                content.push({
-                    type: Types.AUDIO,
-                    order: audios[i].order,
-                    elementAudio: audios[i],
-                });
-            }
-        }
-
-        if (videos) {
-            for (let i = 0; i < videos.length; i++) {
-                content.push({
-                    type: Types.VIDEO,
-                    order: videos[i].order,
-                    elementVideo: videos[i],
-                });
-            }
-        }
-
-        return content.sort((a, b) => {
-            return a.order - b.order;
-        });
-    }
-
-    get orderdCards(): CardProps[] {
-        const {post} = this.props;
-        return post.cards.sort((a, b) => {
-            return a.order - b.order;
-        });
-    }
-
-    renderCard(elements: CardElementType[]) {
-        return (
-            <React.Fragment>
-                {elements.map((element, key) => {
-                    let ret;
-
-                    switch (element.type) {
-                        case Types.HEADER:
-                            if (!element.elementHeader) break;
-                            ret = <QardHeader element={element.elementHeader}/>;
-                            break;
-
-                        case Types.PARAGRAPH:
-                            if (!element.elementParagraph) break;
-                            ret = <QardParagraph element={element.elementParagraph}/>;
-                            break;
-
-                        case Types.GALLERY:
-                            if (!element.elementGallery) break;
-                            ret = <QardGallery element={element.elementGallery}/>;
-                            break;
-
-                        case Types.CODE:
-                            if (!element.elementCodeBlock) break;
-                            ret = <QardCodeBlock element={element.elementCodeBlock}/>;
-                            break;
-
-                        case Types.AUDIO:
-                            if (!element.elementAudio) break;
-                            ret = <QardAudio infinite={true} element={element.elementAudio}/>;
-                            break;
-
-                        case Types.CALLOUT:
-                            if (!element.elementCallout) break;
-                            ret = <QardCallout element={element.elementCallout}/>;
-                            break;
-
-                        case Types.VIDEO:
-                            if (!element.elementVideo) break;
-                            ret = <QardVideo element={element.elementVideo}/>;
-                            break;
-
-                        case Types.REVEAL:
-                            if (!element.elementReveal) break;
-                            ret = <QardReveal element={element.elementReveal}/>;
-                            break;
-                    }
-
-                    return ret ? <React.Fragment key={key}>{ret}</React.Fragment> : null;
-                })}
-            </React.Fragment>
-        );
-    }
 
     public render() {
         const {post, location} = this.props;
@@ -240,10 +59,11 @@ export default class Post extends React.Component<Props, any> {
 
                         <SubTitle>{post.excerpt}</SubTitle>
 
-                        {this.orderdCards.map((card, key) => {
+                        {post.cards.map((card, key) => {
+                            if (!card.content) return "";
                             return (
                                 <CardWrapper key={key}>
-                                    {this.renderCard(Post.cardElements(card))}
+                                    <Card card={card}/>
                                 </CardWrapper>
                             );
                         })}
@@ -258,6 +78,7 @@ export default class Post extends React.Component<Props, any> {
                         <Sidebar wrapperProps={{style: {marginLeft: 60}}} post={post} currentUrl={location.href}/>
                     </Hide>
                 </SidebarWrapper>
+
 
                 <ScrollProgress identifier={post.id}/>
             </Wrapper>

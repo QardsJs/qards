@@ -3,8 +3,7 @@ import {Box, Flex} from "grid-styled";
 import styled from "styled-components";
 import Img from "gatsby-image";
 import {HTMLDivProps} from "@blueprintjs/core/src/common/props";
-
-import {Author as AuthorProps} from "../../templates/types";
+import {Image} from "../../templates/types";
 
 const Wrapper = styled.div`
     .name, .company {
@@ -33,8 +32,19 @@ const Avatar = styled.div`
     }
 `;
 
+
+export interface AuthorType {
+    name: string;
+    title: string;
+    company: string;
+    shortBio: {
+        shortBio: string;
+    };
+    avatar: Image;
+}
+
 interface Props {
-    author: AuthorProps
+    author: AuthorType
 }
 
 interface State {

@@ -1,7 +1,7 @@
 {
   "include": [
     "./src/**/*",
-    "node_modules/@types/node/index.d.ts"
+    "node_modules/@types/node/index.d.ts", "cypress/integration/qards/pages/homepage.spec.js"
   ],
   "compilerOptions": {
     "target": "esnext",

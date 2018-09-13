@@ -1,17 +1,17 @@
 import React from 'react';
 import _ from 'lodash';
 import {graphql} from 'gatsby';
-import {Post as PostProps} from '../types';
+import {PostType} from '../../components/post';
 
 import PostPage from "../../components/pages/post";
 
 
 interface DataProps {
-    post: PostProps;
+    post: PostType;
 
     related: {
         edges: {
-            node: PostProps
+            node: PostType
         }[]
     };
 }
@@ -19,8 +19,8 @@ interface DataProps {
 interface Props {
     pageContext: {
         slug: string;
-        next: null | PostProps;
-        previous: null | PostProps;
+        next: null | PostType;
+        previous: null | PostType;
     };
 
     location: any;
@@ -29,16 +29,12 @@ interface Props {
 }
 
 const PostTemplate = ({data, location}: Props) => {
-    const related: PostProps[] = [];
+    const related: PostType[] = [];
 
     for (let i = 0; i < data.related.edges.length; i++) {
-        const post: PostProps = data.related.edges[i].node;
-        const hasSimilarTags = _.intersection(
-            post.tags.map(a => a.id),
-            data.post.tags.map(a => a.id)).length;
-        const hasSimilarCategories = _.intersection(
-            post.categories.map(a => a.id),
-            data.post.categories.map(a => a.id)).length;
+        const post: PostType = data.related.edges[i].node;
+        const hasSimilarTags = _.intersection(post.tags.map(a => a.id), data.post.tags.map(a => a.id)).length;
+        const hasSimilarCategories = _.intersection(post.categories.map(a => a.id), data.post.categories.map(a => a.id)).length;
 
         if (post.id == data.post.id) continue;
         if (!hasSimilarTags && !hasSimilarCategories) continue;

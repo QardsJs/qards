@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {throttle} from 'lodash';
 import styled from 'styled-components';
 
 import theme from '../../theme';
-import {Card as CardProps, CardHeader} from '../../templates/types';
+import {CardContentEntityType, CardType, EntityTypes} from './card';
+import {CardHeaderType} from '../qard/header';
+import {graphql, StaticQuery} from "gatsby";
+import {CardHeaderDataProps} from "../qard/header/queried";
 
 const Wrapper = styled.ul`
 	list-style-type: none;
@@ -56,7 +58,7 @@ const Wrapper = styled.ul`
 `;
 
 interface Props {
-    cards: CardProps[];
+    cards: CardType[];
 }
 
 interface State {
@@ -93,36 +95,23 @@ class Toc extends Component<Props, State> {
         window.removeEventListener(`scroll`, this.debouncedUpdateScrollPositionFunc);
     }
 
-    renderCard(card: CardProps) {
-        const {headers} = card;
-
-        if (!headers) return;
-
-        const clonedHeaders = Object.create(headers);
-
-        const main = clonedHeaders[0];
-
-        if (!main) return;
-
-        //	remove main (first element) from the list
-        clonedHeaders.shift();
-
+    renderCard(card: CardType, headers: CardHeaderType[]) {
         return (
             <Wrapper>
                 <li
                     className={`parent toc-item ${
-                        this.state.activeItemId == `h-item-${main.id}`
+                        this.state.activeItemId == `h-item-${card.id}`
                             ? 'active'
                             : null
                         }`}
                 >
-                    <a href={`#h-item-${main.id}`}>{main.title}</a>
+                    <a href={`#h-item-${card.id}`}>{card.title}</a>
                 </li>
 
-                {clonedHeaders.length > 0 && (
+                {headers.length > 0 && (
                     <li>
                         <ul>
-                            {clonedHeaders.map((header: CardHeader, key: number) => {
+                            {headers.map((header, key: number) => {
                                 return (
                                     <li
                                         key={key}
@@ -147,12 +136,62 @@ class Toc extends Component<Props, State> {
         );
     }
 
-    render() {
+    cardHeaders(card: CardType, data: CardHeaderDataProps): CardHeaderType[] {
+        const headers: CardHeaderType[] = [];
+
+        for (let i = 0; i < card.content.content.length; i++) {
+            const entity: CardContentEntityType = card.content.content[i];
+
+            if (!entity.data.target) continue;
+
+            const cardType = entity.data.target.sys.contentType.sys.id;
+
+            if (cardType == EntityTypes.HEADER) {
+                const needleId = entity.data.target.sys.id;
+
+                for (let j = 0; j < data.headers.edges.length; j++) {
+                    const node = data.headers.edges[j].node;
+
+                    if (node.contentful_id == needleId) {
+                        headers.push(node)
+                    }
+                }
+
+            }
+        }
+
+        return headers;
+    }
+
+    renderToc(data: CardHeaderDataProps) {
         const {cards} = this.props;
 
         return cards.map((card, key) => (
-            <React.Fragment key={key}>{this.renderCard(card)}</React.Fragment>
+            <React.Fragment key={key}>{this.renderCard(card, this.cardHeaders(card, data))}</React.Fragment>
         ));
+    }
+
+    render() {
+        return <StaticQuery
+            query={graphql`
+                query {
+                    headers: allContentfulCardHeader {
+                        edges{
+                            node{
+                                id
+                                contentful_id
+                                title
+                                subtitle
+                            }
+                        }
+                    }
+                }
+            `}
+
+            render={(data: CardHeaderDataProps) => {
+                return this.renderToc(data);
+            }}
+        />;
     }
 }
 

@@ -78,7 +78,7 @@ const Index = (props: IndexPageProps) => {
 
             return <Route
                 component={BlogIndex}
-                path="/"
+                path="/blog"
                 latest={latest}
                 metadata={data.site.siteMetadata}
                 featured={data.featuredPost.edges[0].node}
