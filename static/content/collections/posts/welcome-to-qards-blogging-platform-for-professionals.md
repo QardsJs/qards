@@ -19,11 +19,11 @@ excerpt: >-
   utilizing sets of "smart cards", closing the gap between publishers and
   developers
 ---
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IldoeSBhbm90aGVyIGJsb2dnaW5nIHNvZnR3YXJlPyIsInN1YnRpdGxlIjoiUWFyZHMgaXMgYSBiaXQgZGlmZmVyZW50IHRoYW4gb3RoZXIgYmxvZ2dpbmcgcGxhdGZvcm1zIn0="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IldoeSBhbm90aGVyIGJsb2dnaW5nIHNvZnR3YXJlPyIsInN1YnRpdGxlIjoiUWFyZHMgaXMgYSBiaXQgZGlmZmVyZW50IHRoYW4gb3RoZXIgYmxvZ2dpbmcgcGxhdGZvcm1zIiwidHlwZSI6InByaW1hcnkifQ=="}
 
 Blogs, in general, are quite static. Content gets published and that's it. Very little interaction is expected from the visitor besides a small subscribe to some mailing list or a comment to express opinions. There is no login box, signup, user session or anything like that. Blogs are supposed to attract readers that can be piped to another service...or not.
 
-{"widget":"qards-section-heading","config":"eyJzdWJ0aXRsZSI6IiIsInRpdGxlIjoiUWFyZHMgaXMgZGlmZmVyZW50In0="}
+{"widget":"qards-section-heading","config":"eyJzdWJ0aXRsZSI6IiIsInRpdGxlIjoiUWFyZHMgaXMgZGlmZmVyZW50IiwidHlwZSI6InNlY29uZGFyeSJ9"}
 
 With Qards, the gap between publishers and developers is reduced to a minimum. Every bit of content (even a paragraph like this one) can be customized by the publishing team.
 
@@ -31,25 +31,25 @@ Do you want to show a warning message in the middle of your text? An image galle
 
 For a full list of widgets that we currently support please navigate to our next post: List of supported cards.
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIGZhc3QifQ=="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIGZhc3QiLCJ0eXBlIjoic2Vjb25kYXJ5In0="}
 
 A platform that is supposed to rank well in search engines has to be fast and well optimised. Qards makes use of the latest technologies and recommendations from specialists in order to be fast, crawler friendly and user friendly.
 
 There is no database involved which reduces the time it takes to render a page, any page. Everything compiles down to static files (HTML, CSS and Javascript) and served from a CDN.
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIGVhc3ksIG9uIHRoZSBwb2NrZXQifQ=="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIGVhc3ksIG9uIHRoZSBwb2NrZXQiLCJ0eXBlIjoic2Vjb25kYXJ5In0="}
 
 You don't need a web server to create a new blog, you don't need a database or servers. Actually...you don't need to spend a single dime in order to have a super-fast, well oprimised and (https) secure blog that can handle any traffic without a sweat.
 
 Thanks to external tools like Contentful and Netlify, everything can be up and running in minutes, with ssl, CDN and all the things that used to take hours and hours not long ago.
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGRvZXMgYSBsb3Qgb3V0IG9mIHRoZSBib3giLCJzdWJ0aXRsZSI6IldpdGggdGhlIHJpc2sgb2YgYmVpbmcgYSBiaXQgb3BpbmlvbmF0ZWQsIFFhcmRzIHRha2VzIGEgbG90IG9mIChvYnZpb3VzKSBkZWNpc2lvbnMifQ=="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGRvZXMgYSBsb3Qgb3V0IG9mIHRoZSBib3giLCJzdWJ0aXRsZSI6IldpdGggdGhlIHJpc2sgb2YgYmVpbmcgYSBiaXQgb3BpbmlvbmF0ZWQsIFFhcmRzIHRha2VzIGEgbG90IG9mIChvYnZpb3VzKSBkZWNpc2lvbnMiLCJ0eXBlIjoic2Vjb25kYXJ5In0="}
 
 Some things are obvious and should not require your input. There's absolutely no excuse for not having a blog with mobile-first design that looks good and stays readable on all devices. There is also no excuse for a platform to not utilize proper caching techniques or remain readable even when offline.
 
 These are just a few of the features that come with Qards by default, inside its core. Many other (questionable) optimizations and enhancements can be added by the use of plugins.
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IldoYXQncyB0aGUgdGVjaG5vbG9neSBiZWhpbmQgUWFyZHM/Iiwic3VidGl0bGUiOiJMb3RzIG9mIEphdmFzY3JpcHQgKFR5cGVzY3JpcHQpIHdpdGggR2F0c2J5IGFuZCBSZWFjdCJ9"}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IldoYXQncyB0aGUgdGVjaG5vbG9neSBiZWhpbmQgUWFyZHM/Iiwic3VidGl0bGUiOiJMb3RzIG9mIEphdmFzY3JpcHQgKFR5cGVzY3JpcHQpIHdpdGggR2F0c2J5IGFuZCBSZWFjdCIsInR5cGUiOiJwcmltYXJ5In0="}
 
 Qards breaks free of databases and servers. It is a static site based on Gatsby which means it's super fast and editable down to the smallest details. You can have a powerful blog that handles any amounts of traffic without a sweat…without spending a dime and without having to worry about setting up a database, a web server or getting hacked.
 
@@ -57,7 +57,7 @@ Gatsby is a fast static site generator written in Javascript and using React to 
 
 Content is created using Contentful and hosting can be done just about anywhere you can upload html files. I recommend netlify for the simplicity of things and zero costs.
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IldoYXQgaXMgdGhlIGN1cnJlbnQgc3RhdHVzIG9mIFFhcmRzPyIsInN1YnRpdGxlIjoiU29tZXdoYXQgZnVuY3Rpb25hbCBidXQgc3RpbGwgbm90IHJlYWR5IGZvciBhbiBhbHBoYSJ9"}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IldoYXQgaXMgdGhlIGN1cnJlbnQgc3RhdHVzIG9mIFFhcmRzPyIsInN1YnRpdGxlIjoiU29tZXdoYXQgZnVuY3Rpb25hbCBidXQgc3RpbGwgbm90IHJlYWR5IGZvciBhbiBhbHBoYSIsInR5cGUiOiJwcmltYXJ5In0="}
 
 To put it short: not even an alpha release. This blog is powered by Qards but I'm still in a very early stage; something more like a proof of concept than a release.
 
@@ -65,7 +65,7 @@ I have a lot of todo's to take care of before releasing something to the public.
 
 **If you want to get notified about any updates or code releases make sure you subscribe to the newsletter (there's a subscribe form on this page, maybe two).**
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IldoYXQgaXMgb24gdGhlIHRvZG8gbGlzdD8ifQ=="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IldoYXQgaXMgb24gdGhlIHRvZG8gbGlzdD8iLCJ0eXBlIjoic2Vjb25kYXJ5In0="}
 
 The list is pretty long but here are the most important aspects that I want to tackle and get right from the start:
 
@@ -79,7 +79,7 @@ The list is pretty long but here are the most important aspects that I want to t
 * Allow developers to create their own cards and add them through the plugin system
 * A plugin system (doh)
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IkNhcmRzIHRoYXQgSSBwbGFuIG9uIGFkZGluZyBhcyBwYXJ0IG9mIHRoZSBjb3JlIiwic3VidGl0bGUiOiJXaGlsZSB0aGUgcGxhdGZvcm0gc3VwcG9ydHMgYWRkaW5nIHlvdXIgb3duIGNhcmRzLCB0aGVzZSBhcmUgdGhlIG9uZXMgdGhhdCBJIHBsYW4gb24gbWFraW5nIHBhcnQgb2YgdGhlIGNvcmUifQ=="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IkNhcmRzIHRoYXQgSSBwbGFuIG9uIGFkZGluZyBhcyBwYXJ0IG9mIHRoZSBjb3JlIiwic3VidGl0bGUiOiJXaGlsZSB0aGUgcGxhdGZvcm0gc3VwcG9ydHMgYWRkaW5nIHlvdXIgb3duIGNhcmRzLCB0aGVzZSBhcmUgdGhlIG9uZXMgdGhhdCBJIHBsYW4gb24gbWFraW5nIHBhcnQgb2YgdGhlIGNvcmUiLCJ0eXBlIjoic2Vjb25kYXJ5In0="}
 
 The cards represent the whole idea behind this platform so they're important to me. In theory, a publisher should have enough cards to express and shape his content as desired. It's like Bootstrap...but for content creators.
 
