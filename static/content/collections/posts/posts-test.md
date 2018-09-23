@@ -45,9 +45,9 @@ Thanks to external tools like Contentful and Netlify, everything can be up and r
 
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGRvZXMgYSBsb3Qgb3V0IG9mIHRoZSBib3giLCJzdWJ0aXRsZSI6IldpdGggdGhlIHJpc2sgb2YgYmVpbmcgYSBiaXQgb3BpbmlvbmF0ZWQsIFFhcmRzIHRha2VzIGEgbG90IG9mIChvYnZpb3VzKSBkZWNpc2lvbnMifQ=="}
 
-Some things are obvious and should not require your input. There's absolutely no excuse for not having a blog with mobile-first design that looks good and stays readable on all devices. There is also no excuse for a platform to not utilise proper caching techniques or remain readable even when offline.
+Some things are obvious and should not require your input. There's absolutely no excuse for not having a blog with mobile-first design that looks good and stays readable on all devices. There is also no excuse for a platform to not utilize proper caching techniques or remain readable even when offline.
 
-These are just a few of the features that come with Qards by default, inside its core. Many other (questionable) optimisations and enhancements can be added by the use of plugins.
+These are just a few of the features that come with Qards by default, inside its core. Many other (questionable) optimizations and enhancements can be added by the use of plugins.
 
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IldoYXQncyB0aGUgdGVjaG5vbG9neSBiZWhpbmQgUWFyZHM/Iiwic3VidGl0bGUiOiJMb3RzIG9mIEphdmFzY3JpcHQgKFR5cGVzY3JpcHQpIHdpdGggR2F0c2J5IGFuZCBSZWFjdCJ9"}
 
@@ -82,8 +82,6 @@ The list is pretty long but here are the most important aspects that I want to t
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IkNhcmRzIHRoYXQgSSBwbGFuIG9uIGFkZGluZyBhcyBwYXJ0IG9mIHRoZSBjb3JlIiwic3VidGl0bGUiOiJXaGlsZSB0aGUgcGxhdGZvcm0gc3VwcG9ydHMgYWRkaW5nIHlvdXIgb3duIGNhcmRzLCB0aGVzZSBhcmUgdGhlIG9uZXMgdGhhdCBJIHBsYW4gb24gbWFraW5nIHBhcnQgb2YgdGhlIGNvcmUifQ=="}
 
 The cards represent the whole idea behind this platform so they're important to me. In theory, a publisher should have enough cards to express and shape his content as desired. It's like Bootstrap...but for content creators.
-
-
 
 * photo image/gallery with slider and preview (modal)
 * audio player with support for multiple files
