@@ -13,4 +13,4 @@ hero:
   image: /images/uploads/batman-slap-header-620x400.jpg
 excerpt: asdasd asd
 ---
-asd asd
+{"widget":"qards-gallery","config":"eyJpdGVtcyI6W3sidGl0bGUiOiJhc2RhcyBkYXNkIiwic3JjIjoiL2ltYWdlcy91cGxvYWRzL2JhdG1hbi1zbGFwLWhlYWRlci02MjB4NDAwLmpwZyJ9LHsidGl0bGUiOiJzYWRmcyBkZiBzZGYiLCJzcmMiOiIvaW1hZ2VzL3VwbG9hZHMvbWF4cmVzZGVmYXVsdC5qcGcifV19"}
