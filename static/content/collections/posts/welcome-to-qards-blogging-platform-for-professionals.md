@@ -27,7 +27,7 @@ Blogs, in general, are quite static. Content gets published and that's it. Very 
 
 With Qards, the gap between publishers and developers is reduced to a minimum. Every bit of content (even a paragraph like this one) can be customized by the publishing team.
 
-Do you want to show a warning message in the middle of your text? An image gallery or a video? Your favourite soundcloud songs nicely wrapped and presented? A pie chart? Bar chart? A data table that is filterable, sortable or...searchable? Everything without having to embed third party code that never seems to accomodate with your design? Look no further because Qards does all of that, and so much more.
+Do you want to show a warning message in the middle of your text? An image gallery or a video? Your favourite soundcloud songs nicely wrapped and presented? A pie chart? Bar chart? A data table that is filterable, sortable or...searchable? Everything without having to embed third party code that never seems to accommodate with your design? Look no further because Qards does all of that, and so much more.
 
 For a full list of widgets that we currently support please navigate to our next post: List of supported cards.
 
