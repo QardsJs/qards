@@ -14,7 +14,7 @@ meta:
   keywords: 'qards, blogging platform, developers, blog, free, fast blog, pwa'
 hero:
   alt: ' Qards - a blogging platform for professionals'
-  image: /images/uploads/andrew-ridley-76547-unsplash.jpg
+  src: /images/uploads/andrew-ridley-76547-unsplash.jpg
 excerpt: >-
   Qards is a blogging platform for professionals that differentiates itself by
   utilizing sets of "smart cards", closing the gap between publishers and
