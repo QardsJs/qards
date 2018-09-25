@@ -1,5 +1,5 @@
 ---
-title: List of supported cards
+title: Supported cards
 created_at: 2018-09-23T22:55:09.020Z
 tags:
   - Qards
