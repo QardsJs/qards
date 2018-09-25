@@ -4,7 +4,7 @@ created_at: 2018-09-22T04:59:50.021Z
 tags:
   - Qards
   - Release
-authors: romeo
+authors: Romeo Mihalcea
 categories: Release
 meta:
   description: >-
