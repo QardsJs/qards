@@ -1,39 +1,18 @@
 import * as React from 'react';
 import ReactPlayer from 'react-player';
-import { Icon } from '@blueprintjs/core';
+import {Icon} from '@blueprintjs/core';
 import moment from 'moment';
 
 import TitledWrapper from '../../common/titled-wrapper';
-import { Image } from '../../../templates/types';
-import { InterfaceBtn, Item, Main, Playlist, Wrapper } from './styles';
+import QardImage, {CardImageType} from '../image';
+import QardBase, {QardProps} from '../base';
+import {InterfaceBtn, Item, Main, Playlist, Wrapper} from './styles';
 
 export interface CardAudioItemType {
-	id: string;
 	url: string;
 	title: string;
 	subtitle?: string;
-	poster?: Image;
-}
-
-export interface CardAudioType {
-	id: string;
-	contentful_id: string;
-	playlist: CardAudioItemType[];
-}
-
-export interface State {
-	isPlaying: boolean;
-	duration?: number;
-	progress?: Progress;
-	currentTrack: CardAudioItemType;
-}
-
-export interface Props {
-	element: CardAudioType;
-	//  on infinite if we're at the last track, clicking next will jump to the first track
-	//  without infinite, when at the last track, the `next` button is disabled
-	//  same story goes for prev controls
-	infinite?: boolean;
+	poster?: CardImageType;
 }
 
 interface Progress {
@@ -43,23 +22,41 @@ interface Progress {
 	loadedSeconds: number;
 }
 
-export default class QardAudio extends React.Component<Props, State> {
-	constructor(props: Props) {
+export interface State {
+	isPlaying: boolean;
+	duration?: number;
+	progress?: Progress;
+	currentTrack: CardAudioItemType;
+}
+
+export interface CardAudioType extends QardProps {
+	items: CardAudioItemType[];
+	//  on infinite if we're at the last track, clicking next will jump to the first track
+	//  without infinite, when at the last track, the `next` button is disabled
+	//  same story goes for prev controls
+	infinite?: boolean;
+}
+
+
+export default class QardAudio extends QardBase<CardAudioType, State> {
+	player: any;
+
+	constructor(props: CardAudioType) {
 		super(props);
 
-		const { playlist } = this.props.element;
+		const {items} = this.props;
 
 		this.state = {
-			isPlaying: false,
-			currentTrack: playlist[0]
+			isPlaying   : false,
+			currentTrack: items[0]
 		};
 	}
 
 	hasPrev = () => {
-		const { playlist } = this.props.element;
+		const {items} = this.props;
 
-		for (let i = 0; i < playlist.length; i++) {
-			if (playlist[i].id === this.state.currentTrack.id) {
+		for (let i = 0; i < items.length; i++) {
+			if (items[i].url === this.state.currentTrack.url) {
 				return i > 0;
 			}
 		}
@@ -68,11 +65,11 @@ export default class QardAudio extends React.Component<Props, State> {
 	};
 
 	hasNext = () => {
-		const { playlist } = this.props.element;
+		const {items} = this.props;
 
-		for (let i = 0; i < playlist.length; i++) {
-			if (playlist[i].id === this.state.currentTrack.id) {
-				return i < playlist.length - 1;
+		for (let i = 0; i < items.length; i++) {
+			if (items[i].url === this.state.currentTrack.url) {
+				return i < items.length - 1;
 			}
 		}
 
@@ -80,92 +77,100 @@ export default class QardAudio extends React.Component<Props, State> {
 	};
 
 	play = (audio: CardAudioItemType) => {
-		this.setState({ currentTrack: audio, isPlaying: true });
+		this.notAvailableInPreview(() => {
+			this.setState({currentTrack: audio, isPlaying: true});
+		});
 	};
 
 	resetTimer = () => {
 		this.setState({
 			duration: 0,
 			progress: {
-				played: 0,
+				played       : 0,
 				playedSeconds: 0,
-				loaded: 0,
+				loaded       : 0,
 				loadedSeconds: 0
 			}
 		});
 	};
 
 	playPrev = () => {
-		if (!this.hasPrev() && !this.props.infinite) return;
+		this.notAvailableInPreview(() => {
+			if (!this.hasPrev() && !this.props.infinite) return;
 
-		this.resetTimer();
+			this.resetTimer();
 
-		const { playlist } = this.props.element;
+			const {items} = this.props;
 
-		for (let i = 0; i < playlist.length; i++) {
-			if (playlist[i].id === this.state.currentTrack.id) {
-				let prevTrack;
-				//  if we're the first item we need to go to last
-				const isFirst = playlist[i].id == playlist[0].id;
+			for (let i = 0; i < items.length; i++) {
+				if (items[i].url === this.state.currentTrack.url) {
+					let prevTrack;
+					//  if we're the first item we need to go to last
+					const isFirst = items[i].url == items[0].url;
 
-				if (isFirst) {
-					prevTrack = playlist[playlist.length - 1];
-				} else {
-					prevTrack = playlist[i - 1];
-				}
+					if (isFirst) {
+						prevTrack = items[items.length - 1];
+					} else {
+						prevTrack = items[i - 1];
+					}
 
-				if (this.state.isPlaying) {
-					this.setState({ isPlaying: false });
-					this.setState({ currentTrack: prevTrack, isPlaying: true });
-				} else {
-					this.setState({ currentTrack: prevTrack });
+					if (this.state.isPlaying) {
+						this.setState({isPlaying: false});
+						this.setState({currentTrack: prevTrack, isPlaying: true});
+					} else {
+						this.setState({currentTrack: prevTrack});
+					}
 				}
 			}
-		}
+		});
 	};
 
 	playNext = () => {
-		if (!this.hasNext() && !this.props.infinite) return;
+		this.notAvailableInPreview(() => {
+			if (!this.hasNext() && !this.props.infinite) return;
 
-		this.resetTimer();
+			this.resetTimer();
 
-		const { playlist } = this.props.element;
+			const {items} = this.props;
 
-		for (let i = 0; i < playlist.length; i++) {
-			if (playlist[i].id === this.state.currentTrack.id) {
-				let nextTrack;
-				//  if we're the last item we need to start from first one
-				const isLast = playlist.length == i + 1;
+			for (let i = 0; i < items.length; i++) {
+				if (items[i].url === this.state.currentTrack.url) {
+					let nextTrack;
+					//  if we're the last item we need to start from first one
+					const isLast = items.length == i + 1;
 
-				if (isLast) {
-					nextTrack = playlist[0];
-				} else {
-					nextTrack = playlist[i + 1];
-				}
+					if (isLast) {
+						nextTrack = items[0];
+					} else {
+						nextTrack = items[i + 1];
+					}
 
-				if (this.state.isPlaying) {
-					this.setState({ isPlaying: false });
-					this.setState({ currentTrack: nextTrack, isPlaying: true });
-				} else {
-					this.setState({ currentTrack: nextTrack });
+					if (this.state.isPlaying) {
+						this.setState({isPlaying: false});
+						this.setState({currentTrack: nextTrack, isPlaying: true});
+					} else {
+						this.setState({currentTrack: nextTrack});
+					}
 				}
 			}
-		}
+		});
 	};
 
 	togglePlay = () => {
-		this.setState({ isPlaying: !this.state.isPlaying });
+		this.notAvailableInPreview(() => {
+			this.setState({isPlaying: !this.state.isPlaying});
+		});
 	};
 
 	setDuration = (seconds: number) => {
-		this.setState({ duration: parseInt(Number(seconds).toFixed(0)) });
+		this.setState({duration: parseInt(Number(seconds).toFixed(0))});
 	};
 
 	setProgress = (progress: Progress) => {
 		this.setState({
 			progress: {
-				loaded: parseInt(Number(progress.loaded).toFixed(0)),
-				played: parseInt(Number(progress.played).toFixed(0)),
+				loaded       : parseInt(Number(progress.loaded).toFixed(0)),
+				played       : parseInt(Number(progress.played).toFixed(0)),
 				loadedSeconds: parseInt(Number(progress.loadedSeconds).toFixed(0)),
 				playedSeconds: parseInt(Number(progress.playedSeconds).toFixed(0))
 			}
@@ -175,7 +180,7 @@ export default class QardAudio extends React.Component<Props, State> {
 	get playedTimer() {
 		//  We can't get a remaining timer because we don't know the total number of seconds
 		//  this track has so we're forced to only showing the positive progress
-		const { duration, progress } = this.state;
+		const {duration, progress} = this.state;
 
 		if (!duration || !progress) return <i>loading</i>;
 
@@ -191,27 +196,74 @@ export default class QardAudio extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
-		const { playlist } = this.props.element;
-		this.setState({ currentTrack: playlist[0] });
+		const items = this.prepareItems();
+		this.setState({currentTrack: items[0]});
 	}
 
-	public render() {
-		if (!this.state) return null;
+	ref = (player: any) => {
+		this.player = player
+	};
 
-		const { playlist } = this.props.element;
-		const { isPlaying, currentTrack } = this.state;
-		const { title, subtitle, url, poster } = currentTrack;
+	prepareItems(): CardAudioItemType[] {
+		const {items, preview} = this.props;
+
+		const audioItems: CardAudioItemType[] = [];
+
+		//	Normalize items to a format that would be acceptable
+		//	to our component. We have to make sure that at least
+		//	one item is sent with the required fields in place
+		//	(title, url)
+		for (let i = 0; i < items.length; i++) {
+			const audio = items[i];
+
+			//	absolutely required
+			if (!audio.title || !audio.url) continue;
+
+			//  there's no sharp transformations in preview mode so we have
+			//  to inject the src of the poster
+			if (preview) audioItems.push(Object.assign(items[i], audio.poster ? {
+				poster: {
+					alt: items[i].title,
+					src: items[i].poster
+				}
+			} : {}));
+
+			if (!preview) audioItems.push(items[i]);
+		}
+
+		return audioItems;
+	}
+
+	render() {
+		if (!this.state) {
+			console.warn("state was not set");
+			return <React.Fragment/>;
+		}
+		if (!this.props.items || !this.props.items.length) {
+			console.warn("no items received");
+			return <React.Fragment/>;
+		}
+
+		const {isPlaying, currentTrack} = this.state;
+
+		const {title, subtitle, url, poster} = currentTrack;
+		const audioItems = this.prepareItems();
+
+		if (!audioItems.length) return <React.Fragment/>;
 
 		return (
 			<TitledWrapper>
 				<Wrapper>
 					<ReactPlayer
+						ref={this.ref}
 						url={url}
 						playing={this.state.isPlaying}
 						controls={false}
 						onEnded={this.playNext}
 						onDuration={this.setDuration}
+						onError={e => console.log('player error:', e)}
 						onProgress={this.setProgress}
+						className='qard-audio-player'
 						style={{
 							display: 'none'
 						}}
@@ -229,35 +281,35 @@ export default class QardAudio extends React.Component<Props, State> {
 									minimal
 									disabled={!this.hasPrev() && !this.props.infinite}
 									onClick={this.playPrev}
-									icon={<Icon icon="step-backward" iconSize={34} />}
+									icon={<Icon icon="step-backward" iconSize={34}/>}
 								/>
 								<InterfaceBtn
 									minimal
 									onClick={this.togglePlay}
 									isPlaying={isPlaying}
-									icon={<Icon icon={isPlaying ? 'pause' : 'play'} iconSize={62} />}
+									icon={<Icon icon={isPlaying ? 'pause' : 'play'} iconSize={62}/>}
 								/>
 								<InterfaceBtn
 									minimal
 									disabled={!this.hasNext() && !this.props.infinite}
 									onClick={this.playNext}
-									icon={<Icon icon="step-forward" iconSize={34} />}
+									icon={<Icon icon="step-forward" iconSize={34}/>}
 								/>
 
 								{isPlaying && <div className="duration">{this.playedTimer}</div>}
 							</div>
 						</div>
 
-						{poster && <img src={poster.resize.src} />}
+						{poster && <QardImage {...poster}/>}
 					</Main>
 
 					<Playlist>
-						{playlist.map((audio: CardAudioItemType, key) => {
+						{audioItems.map((audio: CardAudioItemType, key) => {
 							return (
 								<Item
 									key={key}
 									onClick={() => this.play(audio)}
-									className={currentTrack.id == audio.id ? `active` : ''}
+									className={currentTrack.url == audio.url ? `active` : ''}
 								>
 									{audio.title}
 								</Item>

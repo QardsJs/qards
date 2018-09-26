@@ -1,45 +1,37 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import {Callout, Intent} from "@blueprintjs/core";
-import {IconName} from "@blueprintjs/icons";
 import {HTMLDivProps} from "@blueprintjs/core/src/common/props";
 
+import {QardProps} from "../base";
 import MarkdownRenderer from "../../markdown";
 
 const Wrapper = styled.div`
     margin-bottom: 20px;
 `;
 
-export interface CardCalloutType {
-    contentful_id: string;
+export interface CardCalloutType extends QardProps {
     title?: string;
-    icon?: IconName;
-    message: {
-        message: string;
-    };
+    message: string;
     intent?: Intent;
-}
-
-interface Props {
-    element: CardCalloutType;
 }
 
 interface State {
 
 }
 
-export default class QardVideo extends Component<Props & HTMLDivProps, State> {
+export default class QardVideo extends Component<CardCalloutType & HTMLDivProps, State> {
     render() {
-        const {element, ...props} = this.props;
+        const {title, message, intent, ...props} = this.props;
 
         return (
             <Wrapper {...props}>
                 <Callout
-                    icon={element.icon || undefined}
-                    intent={element.intent || Intent.NONE}
-                    title={element.title ? element.title : undefined}
+                    // @TODO: extract icon from intent. icon={element.icon || undefined}
+                    intent={intent || Intent.NONE}
+                    title={title ? title : undefined}
                 >
-                    <MarkdownRenderer md={element.message.message}/>
+                    <MarkdownRenderer md={message}/>
                 </Callout>
             </Wrapper>
         );

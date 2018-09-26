@@ -1,16 +1,12 @@
-import React, {Component} from "react";
+import React from "react";
 import styled from "styled-components";
 import ReactPlayer from "react-player";
 import {HTMLDivProps} from "@blueprintjs/core/src/common/props";
-import TrackVisibility from 'react-on-screen';
-import LazyLoad from 'react-lazyload';
+import QardBase, {QardProps} from "../base";
 
 import theme from '../../../theme';
-import MarkdownRenderer from "../../markdown";
 
 const Wrapper = styled.div`
-    margin-bottom: 30px;
-    
     .player {
         position: relative;
         margin-bottom: 10px;
@@ -22,15 +18,6 @@ const Wrapper = styled.div`
             width: 100%;
             left: 0;
         }
-    }
- 
-    .title {
-        font-size: .8em;
-    }
-    
-    .description {
-        font-size: .8em;
-        color: ${theme.colors.lightText};
     }
     
     .video-player {
@@ -44,42 +31,20 @@ const Wrapper = styled.div`
     }
 `;
 
-export interface CardVideoType {
-    contentful_id: string;
+export interface CardVideoType extends QardProps {
     url: string;
-    title: string;
-    description?: {
-        description: string;
-    };
 }
 
-interface Props {
-    element: CardVideoType;
-}
-
-interface State {
-
-}
-
-export default class QardVideo extends Component<Props & HTMLDivProps, State> {
+export default class QardVideo extends QardBase<CardVideoType & HTMLDivProps, any> {
     render() {
-        const {element, ...props} = this.props;
+        const {url, ...props} = this.props;
 
         return (
-            <LazyLoad height={300}>
-                <TrackVisibility once>
-                    <Wrapper {...props}>
-                        <div className="player">
-                            <ReactPlayer width={"100%"} className={"video-player"} url={element.url}/>
-                        </div>
-
-                        <b className="title">{element.title}</b>
-                        {element.description && <div className="description">
-							<MarkdownRenderer md={element.description.description}/>
-						</div>}
-                    </Wrapper>
-                </TrackVisibility>
-            </LazyLoad>
+            <Wrapper {...props}>
+                <div className="player">
+                    <ReactPlayer width={"100%"} className={"video-player"} url={url}/>
+                </div>
+            </Wrapper>
         );
     }
 }

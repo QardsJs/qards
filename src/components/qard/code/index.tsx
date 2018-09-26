@@ -2,8 +2,14 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
+// @ts-ignore
+import Highlight from 'react-highlight';
+
 import {Scrollbars} from 'react-custom-scrollbars';
-import PrismCode from 'react-prism';
+
+import QardBase, {QardProps} from "../base";
+
+import "./theme.scss";
 
 const Wrapper = styled.div`
 	font-size: 0.85rem;
@@ -12,7 +18,7 @@ const Wrapper = styled.div`
     border-radius: 6px;
     background: #0C344B;
     color: #fff;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     border-top: 40px solid transparent;
     position: relative;
     
@@ -28,6 +34,11 @@ const Wrapper = styled.div`
         background-color: #F5716B;
         box-shadow: 0 0 0 2px #F5716B, 1.5em 0 0 2px #f4c20d, 3em 0 0 2px #3cba54;
     }
+    
+    pre, code {
+        font-size: .9rem!important;
+        line-height: 1.6rem!important;
+    }
 	
 	pre {
         padding: 0!important;
@@ -41,41 +52,29 @@ const Wrapper = styled.div`
 	}
 `;
 
-export interface CardCodeType {
-    title: string;
+export interface CardCodeType extends QardProps {
     language: string;
-    contentful_id: string;
-    code: {
-        code: string;
-    };
+    code: string;
 }
 
-export interface Props {
-    element: CardCodeType;
-}
-
-export default class QardCodeBlock extends React.Component<Props, any> {
+export default class QardCodeBlock extends QardBase<CardCodeType, any> {
     public render() {
-        const {language, code} = this.props.element;
+        const {language, code} = this.props;
 
         return (
             <Wrapper>
-                <pre className={`language-${language}`}>
-                        <Scrollbars
-                            autoHeight
-                            autoHeightMin={100}
-                            autoHeightMax={800}
-                            autoHide
-                            universal={true}
-                            renderThumbVertical={({...props}) => (
-                                <div {...props} style={{backgroundColor: '#A8FF60'}}/>
-                            )}
-                        >
-                            <PrismCode className={`language-${language}`}>
-                                {code.code}
-                            </PrismCode>
-                        </Scrollbars>
-                    </pre>
+                <Scrollbars
+                    autoHeight
+                    autoHeightMin={100}
+                    autoHeightMax={800}
+                    autoHide
+                    universal={true}
+                    renderThumbVertical={({...props}) => (
+                        <div {...props} style={{backgroundColor: '#A8FF60'}}/>
+                    )}
+                >
+                    <Highlight className={language}>{code}</Highlight>
+                </Scrollbars>
             </Wrapper>
         );
     }

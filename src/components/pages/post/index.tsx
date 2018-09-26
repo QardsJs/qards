@@ -14,43 +14,43 @@ import {tokenizePost} from "../../../utils/helpers";
 
 
 interface PostPageProps {
-    post: PostType;
-    related: PostType[];
-    location: any;
+	post: PostType;
+	related: PostType[];
+	location: any;
 }
 
 class PostPage extends React.Component<PostPageProps, any> {
 
-    render() {
-        const {post, related, location} = this.props;
+	render() {
+		const {post, related, location} = this.props;
 
-        const tokenizedPost = tokenizePost(post);
+		const tokenizedPost = tokenizePost(post);
 
-        return <Layout>
-            <Helmet title={tokenizedPost.title}>
-                <html lang="en"/>
-                <meta name="description" content={tokenizedPost.excerpt}/>
-            </Helmet>
+		return <Layout>
+			<Helmet title={tokenizedPost.frontmatter.title}>
+				<html lang="en"/>
+				<meta name="description" content={tokenizedPost.frontmatter.excerpt}/>
+			</Helmet>
 
-            <Wrapper>
-                <DiagonalBand translate={50}/>
+			<Wrapper>
+				<DiagonalBand translate={50}/>
 
-                <Content>
-                    <Post post={tokenizedPost} location={location}/>
+				<Content>
+					<Post post={tokenizedPost} location={location}/>
 
-                    <Box mt={[80, 80, 80, 180]} mb={[20, 20, 20, 60]}>
-                        <Posts showExcerpt={true} posts={related} title={`More like this`} paginate={{
-                            pageSize: 6
-                        }}/>
-                    </Box>
+					<Box mt={[80, 80, 80, 180]} mb={[20, 20, 20, 60]}>
+						<Posts showExcerpt={true} posts={related} title={`More like this`} paginate={{
+							pageSize: 6
+						}}/>
+					</Box>
 
-                    <Box mt={[60, 60, 60, 120]} mb={[60, 60, 60, 120]}>
-                        <Subscribe/>
-                    </Box>
-                </Content>
-            </Wrapper>
-        </Layout>
-    }
+					<Box mt={[60, 60, 60, 120]} mb={[60, 60, 60, 120]}>
+						<Subscribe/>
+					</Box>
+				</Content>
+			</Wrapper>
+		</Layout>
+	}
 }
 
 export default PostPage;

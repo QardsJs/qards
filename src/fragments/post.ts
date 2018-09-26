@@ -1,34 +1,58 @@
 import {graphql} from 'gatsby';
 
 export const _ = graphql`
-	fragment postFragment on ContentfulPost {
+	fragment postFragment on MarkdownRemark {
 		id
-		slug
-		title
-		excerpt
+		md: rawMarkdownBody
 		
-		createdAt(formatString: "MMMM DD, YYYY")
-		updatedAt(formatString: "MMMM DD, YYYY")
-		
-		cover {
-            fluid(maxWidth: 1200) {
-                ...GatsbyContentfulFluid_tracedSVG
-            }
-        }
-		
-		tags {
-		    ...tagFragment
+		frontmatter{
+			title
+			excerpt
+			created_at(formatString: "MMMM DD, YYYY")
+			tags
+			meta{
+				keywords
+				description
+			}
+			hero{
+				alt
+			}
 		}
 		
-		categories {
-			...categoryFragment
+		audioPosterImages: childrenQardsAudioImages {
+			image: childImageSharp {
+				fixed(width: 120) {
+					width
+					height
+					tracedSVG
+					aspectRatio
+					src
+					srcSet
+				}
+			}
 		}
 		
-		cards {
-			...cardFragment
+		galleryImages: childrenQardsGalleryImages {
+			image: childImageSharp {
+				fluid(maxWidth: 2900) {
+					tracedSVG
+					aspectRatio
+					src
+					srcSet
+					sizes
+				}
+			}
 		}
-		author {
-			...authorFragment
+		
+		fields {
+			slug
+			
+			authors {
+				frontmatter{
+					title
+					excerpt
+				}
+			}
 		}
 	}
 `;

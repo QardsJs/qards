@@ -13,15 +13,15 @@ services:
       - .:/site
     environment:
       - ENABLE_GATSBY_REFRESH_ENDPOINT=true
-
-  cypress:
-    build:
-      context: .
-      dockerfile: Dockerfile-cypress
-    command: waitforit -address=http://localhost:8000 -timeout=40 -retry=500 -debug -- ./node_modules/.bin/cypress run
-    volumes:
-      - ./cypress:/usr/src/app/cypress
-      - ./cypress.json:/usr/src/app/cypress.json
-    depends_on:
-      - qards
-    network_mode: 'host'
+#
+#  cypress:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile-cypress
+#    command: waitforit -address=http://localhost:8000 -timeout=40 -retry=500 -debug -- ./node_modules/.bin/cypress run
+#    volumes:
+#      - ./cypress:/usr/src/app/cypress
+#      - ./cypress.json:/usr/src/app/cypress.json
+#    depends_on:
+#      - qards
+#    network_mode: 'host'

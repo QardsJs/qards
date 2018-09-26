@@ -1,16 +1,20 @@
+require('typescript-require');
+
 const _ = require('lodash');
+const crypto = require('crypto');
 const Promise = require('bluebird');
 const path = require('path');
-const { createFilePath } = require(`gatsby-source-filesystem`);
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
+const base64 = require('base-64');
+const {createFilePath} = require('gatsby-source-filesystem');
+
 
 const getTags = (edges) => {
 	const tags = [];
 
 	_.each(edges, (edge) => {
-		if (_.get(edge, 'node.tags')) {
-			for (let i = 0; i < edge.node.tags.length; i++) {
-				tags.push(edge.node.tags[i]);
+		if (_.get(edge, 'node.frontmatter.tags')) {
+			for (let i = 0; i < edge.node.frontmatter.tags.length; i++) {
+				tags.push(edge.node.frontmatter.tags[i]);
 			}
 		}
 	});
@@ -22,9 +26,9 @@ const getCategories = (edges) => {
 	const categories = [];
 
 	_.each(edges, (edge) => {
-		if (_.get(edge, 'node.categories')) {
-			for (let i = 0; i < edge.node.categories.length; i++) {
-				categories.push(edge.node.categories[i]);
+		if (_.get(edge, 'node.frontmatter.categories')) {
+			for (let i = 0; i < edge.node.frontmatter.categories.length; i++) {
+				categories.push(edge.node.frontmatter.categories[i]);
 			}
 		}
 	});
@@ -32,37 +36,37 @@ const getCategories = (edges) => {
 	return categories;
 };
 
-exports.createPages = ({ graphql, actions }) => {
-	const { createPage } = actions;
+const slugify = (text) => {
+	return text.toString().toLowerCase()
+		.replace(/\s+/g, '-')           // Replace spaces with -
+		.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+		.replace(/\-\-+/g, '-')         // Replace multiple - with single -
+		.replace(/^-+/, '')             // Trim - from start of text
+		.replace(/-+$/, '');            // Trim - from end of text
+};
+
+exports.createPages = ({graphql, actions}) => {
+	const {createPage} = actions;
 
 	return new Promise((resolve, reject) => {
 		const postTemplate = path.resolve('./src/templates/post/index.tsx');
 		const tagTemplate = path.resolve('./src/templates/tag/index.tsx');
-		const categoryTemplate = path.resolve('./src/templates/category/index.tsx');
+		// const categoryTemplate = path.resolve('./src/templates/category/index.tsx');
 
 		resolve(
 			graphql(`
 				{
-					allContentfulPost(sort: {fields: [createdAt], order: DESC}) {
+					posts: allMarkdownRemark(filter: {fileAbsolutePath: {regex: "//collections/posts//"}}) {
 						edges {
 							node {
 								id
-								slug
-								
-								tags {
-									id
+								fields{
 									slug
-									title
 								}
-
-								categories {
-									id
-									slug
+								frontmatter {
 									title
+									tags
 								}
-
-								createdAt
-								updatedAt
 							}
 						}
 					}
@@ -73,24 +77,24 @@ exports.createPages = ({ graphql, actions }) => {
 					reject(result.errors);
 				}
 
-				const edges = result.data.allContentfulPost.edges;
+				const edges = result.data.posts.edges;
 
 				const tags = getTags(edges);
-				const categories = getCategories(edges);
+				//const categories = getCategories(edges);
 
 				// Create posts and pages.
 				_.each(edges, (edge, index) => {
-					const slug = edge.node.slug;
+					const slug = edge.node.fields.slug;
 
 					const previous = index === edges.length - 1 ? null : edges[index + 1].node;
 					const next = index === 0 ? null : edges[index - 1].node;
 
-					//	create posts pages
+					// create posts
 					createPage({
-						path: `/posts/${slug}/`,
+						path     : slug,
 						component: postTemplate,
-						context: {
-							slug: slug,
+						context  : {
+							slug,
 							previous,
 							next
 						}
@@ -100,28 +104,204 @@ exports.createPages = ({ graphql, actions }) => {
 				// Make tag pages
 				_.uniq(tags).forEach((tag) => {
 					createPage({
-						path: `/tags/${tag.slug}/`,
+						path     : `/tags/${slugify(tag)}/`,
 						component: tagTemplate,
-						context: {
-							slug: tag.slug
+						context  : {
+							slug: slugify(tag)
 						}
 					});
 				});
 
-				// Make category pages
-				_.uniqBy(categories, 'id').forEach((category) => {
-					createPage({
-						path: `/categories/${category.slug}/`,
-						component: categoryTemplate,
-						context: {
-							slug: category.slug
-						}
-					});
-				});
+				// // Make category pages
+				// _.uniqBy(categories, 'id').forEach((category) => {
+				// 	createPage({
+				// 		path: `/categories/${category.slug}/`,
+				// 		component: categoryTemplate,
+				// 		context: {
+				// 			slug: category.slug
+				// 		}
+				// 	});
+				// });
 			})
 		);
 	});
 };
 
+//	Will return only nodes that are from a given collection
+const getCollectionNodes = (collection, getNodes) => {
+	return getNodes().filter(node =>
+		node.internal.type === "MarkdownRemark" &&
+		node.fileAbsolutePath.match(`collections/${collection}`)
+	) || [];
+};
+
+//	Given a post node, returns the node of the author
+const getPostAuthorNode = (postNode, getNodes) => {
+	return getCollectionNodes('authors', getNodes).find(node => {
+		return node.frontmatter.title === postNode.frontmatter.authors
+	});
+};
+
+//	Creates a mapping between posts and authors, sets the slug
+//	and other required attributes
+exports.sourceNodes = ({actions, getNodes, getNode}) => {
+	const {createNodeField} = actions;
+	const postsOfAuthors = {};
+
+	// iterate thorugh all markdown nodes to link posts to author and build author index
+	getCollectionNodes('posts', getNodes).forEach(node => {
+		const authorNode = getPostAuthorNode(node, getNodes);
+
+		if (authorNode) {
+			createNodeField({
+				node,
+				name : "authors",
+				value: authorNode,
+			});
+
+			if (!(authorNode.id in postsOfAuthors)) {
+				postsOfAuthors[authorNode.id] = [];
+			}
+			// add book to this author
+			postsOfAuthors[authorNode.id].push(node.id);
+
+			//	create a slug for this author
+			createNodeField({
+				node : authorNode,
+				name : "slug",
+				value: `authors${createFilePath({node: authorNode, getNode})}`
+			})
+		}
+
+		createPostImageNodes(node, actions, getNodes).then(null);
+
+		//	create the post slug
+		createNodeField({node, name: "slug", value: `posts${createFilePath({node, getNode})}`})
+	});
+
+	//	Create a node with the reverse of what we just did so we can
+	//	search for posts under each author
+	Object.entries(postsOfAuthors).forEach(([authorNodeId, postIds]) => {
+		createNodeField({
+			node : getNode(authorNodeId),
+			name : "posts",
+			value: postIds,
+		});
+	});
+};
+
+/**
+ * I'll start explaining this code by relating the problem we're facing.
+ *
+ * The custom editor components that we created in Netlify-CMS are encoding
+ * their content using base64 and the result injected in the markdown in each
+ * post that we're fetching above (`createPages`). Since those blocks
+ * are encoded, they will skip our image processing middlewares defined
+ * inside `gatsby-config.js` and who knows where else. This results in
+ * images that are not processed (resized, srcSet generated, tracedSVG)
+ * and not optimized for display.
+ *
+ * THE SOLUTION: Parse the content line by line (like we're doing in the
+ * post preview for Netlify-CMS admin) and identify our blocks. Decode
+ * the blocks and create a node for each of them images and hope that
+ * this will be enough for Gatsby to kick in those optimization incantations.
+ */
+const createPostImageNodes = async (node, actions, getNodes) => {
+	if (!node.rawMarkdownBody) return;
+
+	// TODO: This regex is in three places right now!
+	// TODO: We need a better regex here (the base64 part:  ([0-9a-zA-Z+/=]+?) )
+	const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+/=]+?)"}/;
+
+	function decodeWidgetDataObject(data) {
+		return JSON.parse(base64.decode(data));
+	}
+
+	const camelize = (string) => {
+		return string
+			.replace(/\W/g, ' ')
+			.replace(/\s(.)/g, $1 => $1.toUpperCase())
+			.replace(/\s/g, '')
+			.replace(/^(.)/, $1 => $1.toUpperCase())
+	};
+
+	const {createNode, createParentChildLink} = actions;
+
+	node.rawMarkdownBody.split("\n").map((line) => {
+		//	for the sake of simplicity we will only search for fields
+		//	that are named `src` (to identify an image) so keep that
+		//	in mind when creating components with images that don't
+		//	have src as their name because they will be ignored by this
+		//	parser
+		if (RegExp(cPattern).test(line)) {// this is one of the custom components
+			const params = line.match(cPattern);
+			const widget = params[1];
+			const config = decodeWidgetDataObject(params[2]);
+			const matches = [];
+
+			//	The `config` is an object that may or may not go nested
+			//	so we're going to have to parse it recursively to find
+			//	our needles
+			scanObjForImages(matches, config, node).then((subMatches) => {
+				matches.concat(subMatches);
+
+				for (let i = 0; i < matches.length; i++) {
+					const src = matches[i];
+
+					const imageNode = {
+						id          : `${widget}_${i}`,
+						parent      : node.id,
+						extension   : path.extname(src).toLowerCase().split('.')[1],
+						absolutePath: path.join(__dirname, 'static', src),
+						name        : path.basename(src).split('.')[0],
+						internal    : {
+							//	The type of the node must match the type of the widget
+							//	because we want to be able to select and modify them
+							//	differently based on the widget. For example we will
+							//	crop further down audio posters as compared to gallery
+							//	items
+							type         : `${camelize(widget)}Images`,
+							content      : src,
+							contentDigest: crypto.createHash(`md5`).update(src).digest(`hex`)
+						}
+					};
+
+					createNode(imageNode);
+					createParentChildLink({parent: node, child: imageNode})
+				}
+			});
+		}
+	});
+};
+
+const scanObjForImages = async (matches, obj) => {
+	// Find all values on the object which end in an extension we recognise, then create a
+	// file node for them so that all the standard image processing stuff will kick up
+	const extensions = new Set([`.jpeg`, `.jpg`, `.png`, `.webp`, `.tif`, `.tiff`]);
+
+	for (const key of Object.keys(obj)) {
+		const value = obj[key];
+
+		if (typeof value !== 'string') {
+			//	go deeper and keep adding the keys to the name
+			//	so we can have an understanding of how to query these images
+			await scanObjForImages(matches, value).then((subMatches) => {
+				matches.concat(subMatches);
+			});
+		} else {
+			if (key === 'src') {
+				const extension = path.extname(value).toLowerCase();
+
+				if (extensions.has(extension)) {
+					//	got an image
+					matches.push(value);
+				}
+			}
+		}
+	}
+
+	return matches;
+};
+
 //	Netlify cms fix for netlify deploys?
-module.exports.resolvableExtensions = () => [ '.json' ];
+module.exports.resolvableExtensions = () => ['.json'];

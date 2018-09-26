@@ -1,13 +1,11 @@
 import * as React from 'react';
-import styled, {ThemeProvider} from 'styled-components'
+import styled, {ThemeProvider} from 'styled-components';
 
 
 import Footer from '../footer';
 import Navbar from '../navbar';
 import Content from './content';
 import theme from "../../theme";
-
-require('prismjs');
 
 const LayoutWrapper = styled.div`
 	margin: 0;

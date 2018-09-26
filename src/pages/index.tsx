@@ -3,63 +3,48 @@ import {graphql, StaticQuery} from "gatsby";
 
 import IndexRoute from "../components/pages/index";
 import Route from "../components/common/route";
-import {Post as PostProps} from "../templates/types";
+import {PostType} from "../components/post";
 
 interface DataProps {
-    site: {
-        siteMetadata: {
-            name: string;
-            title: string;
-            siteUrl: string;
-            description: string;
-        }
-    }
-
-    latest: {
-        edges: {
-            node: PostProps;
-        }[];
-    };
+	latest: {
+		edges: {
+			node: PostType;
+		}[];
+	};
 }
 
 interface IndexPageProps {
 }
 
 const Index = (props: IndexPageProps) => {
-    return <StaticQuery
-        query={graphql`
-            query IndexPageQuery {
-                site {
-                    siteMetadata {
-                        name
-                        title
-                        description
-                        siteUrl
-                    }
-                }
-
-                latest: allContentfulPost(
-                    sort: {fields: [createdAt], order: DESC}
-                ) {
-                    edges {
-                        node {
-                            ...postFragment
-                        }
-                    }
-                }
-            }
+	return <StaticQuery
+		query={graphql`
+			query IndexPageQuery {
+				latest: allMarkdownRemark(
+					sort: {fields: [frontmatter___created_at], order: DESC},
+					filter: {
+						fileAbsolutePath: {regex: "//collections/posts//"}
+					}
+				) {
+					edges {
+						node {
+							...postFragment
+						}
+					}
+				}
+			}
         `}
 
-        render={(data: DataProps) => {
-            const latest: PostProps[] = [];
+		render={(data: DataProps) => {
+			const latest: PostType[] = [];
 
-            for (let i = 0; i < data.latest.edges.length; i++) {
-                latest.push(data.latest.edges[i].node);
-            }
+			for (let i = 0; i < data.latest.edges.length; i++) {
+				latest.push(data.latest.edges[i].node);
+			}
 
-            return <Route component={IndexRoute} latest={latest} path="/"/>
-        }}
-    />
+			return <Route component={IndexRoute} latest={latest} path="/"/>
+		}}
+	/>
 };
 
 export default Index;

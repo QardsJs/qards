@@ -3,7 +3,7 @@ declare module 'typography';
 declare module 'remark';
 declare module 'remark-react';
 declare module 'react-prism';
-declare module 'react-slick';
+declare module 'react-images';
 declare module 'react-custom-scrollbars';
 declare module 'react-accessible-accordion';
 declare module 'gatsby-plugin-mailchimp';
@@ -14,6 +14,10 @@ declare module "*.svg" {
     export default content;
 }
 declare module "*.png" {
+    const content: any;
+    export default content;
+}
+declare module "*.scss" {
     const content: any;
     export default content;
 }

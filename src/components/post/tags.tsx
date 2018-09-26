@@ -6,8 +6,8 @@ import tinycolor2 from "tinycolor2";
 import {Link} from "gatsby";
 
 import theme from "../../theme";
-
-import {Post as PostProps} from '../../templates/types';
+import {PostType} from "./index";
+import {slugify} from "../../utils/helpers";
 
 const Wrapper = styled(Flex)`
     padding: 20px 0;
@@ -34,7 +34,7 @@ const Wrapper = styled(Flex)`
 `;
 
 interface Props {
-    post: PostProps
+	post: PostType
 }
 
 interface State {
@@ -42,19 +42,19 @@ interface State {
 }
 
 export default class PostTags extends Component<Props, State> {
-    render() {
-        const {post, ...props} = this.props;
-        const {tags} = post;
+	render() {
+		const {post, ...props} = this.props;
+		const {tags} = post.frontmatter;
 
-        return (
-            <Wrapper flexWrap={"wrap"} alignItems={"space-between"} {...props}>
-                {tags.map((tag) => {
+		return (
+			<Wrapper flexWrap={"wrap"} alignItems={"space-between"} {...props}>
+				{tags.map((tag) => {
 
-                    return <Link to={`/tags/${tag.slug}/`} key={tag.id}>
-                        {tag.title}
-                    </Link>
-                })}
-            </Wrapper>
-        );
-    }
+					return <Link to={`/tags/${slugify(tag)}/`} key={tag}>
+						{tag}
+					</Link>
+				})}
+			</Wrapper>
+		);
+	}
 }

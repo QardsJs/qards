@@ -1,137 +1,229 @@
-import React, {Component} from 'react';
+import React from 'react';
+import Gallery from './Grid';
+import Lightbox from 'react-images';
 import Img from "gatsby-image";
-import Slider from 'react-slick';
 import styled from 'styled-components';
-import tinycolor from 'tinycolor2';
+// @ts-ignore
+import browserImageSize from "browser-image-size";
 
-import TrackVisibility from 'react-on-screen';
-import {Button} from '@blueprintjs/core';
+import {CardImageType} from "../image";
+import QardBase, {QardProps} from "../base";
+import {div} from "grid-styled";
 
-import theme from '../../../theme';
-import TitledWrapper from "../../common/titled-wrapper";
-import {Image} from "../../../templates/types";
-
+//  -2px is the margin set by the gallery for each image
+//	so we're substracting that from left/right edges
 const Wrapper = styled.div`
 	position: relative;
-	margin: 40px 0 40px 0;
+	margin: 40px -2px 40px -2px;
 `;
 
-const Title = styled.div`
-	text-align: center;
-	font-size: 14px;
-	line-height: 16px;
-	padding: 40px 80px 20px 80px;
-	color: ${theme.colors.lightText};
-`;
+export interface CardGalleryType extends QardProps {
+	items: CardImageType[];
+}
 
-const PrevNextButton = styled(Button)`
-	position: absolute;
-	bottom: 14px;
-	z-index: 2;
-	font-weight: 400;
-	text-transform: uppercase;
-	color: ${theme.colors.lightText}!important;
+interface StateImages {
+	width: number;
+	height: number;
+	image: CardImageType;
+}
 
-	&:hover {
-		color: ${tinycolor(theme.colors.lightText).darken(20).toString()}!important;
+interface State {
+	lightboxIsOpen: boolean;
+	currentImage: number;
+	images: StateImages[];
+}
+
+const ImageComponent = ({photo, onClick, post, margin, ...rest}: any) => {
+	if (photo.src && !photo.srcSet) {
+		return <img src={photo.src} {...rest}/>
+	} else {
+		//	find our image
+		for (let i = 0; i < post.galleryImages.length; i++) {
+			const image = post.galleryImages[i];
+
+			if (image.image.fluid && image.image.fluid.src == photo.src) {
+				return <div onClick={(e: any) => onClick(e, rest)}>
+					<Img
+						fluid={image.image.fluid}
+						style={{
+							margin,
+							width : photo.width,
+							height: photo.height,
+							cursor: "pointer"
+						}}
+						{...rest}
+					/>
+				</div>
+			}
+		}
 	}
 
-	&:focus {
-		outline: none;
+	return <div/>
+};
+
+export class QardGallery extends QardBase<CardGalleryType, State> {
+	state = {
+		lightboxIsOpen: false,
+		currentImage  : 0,
+		images        : [] as StateImages[]
+	};
+
+	constructor(props: CardGalleryType) {
+		super(props);
+
+		this.closeLightbox = this.closeLightbox.bind(this);
+		this.openLightbox = this.openLightbox.bind(this);
+		this.gotoNext = this.gotoNext.bind(this);
+		this.gotoPrevious = this.gotoPrevious.bind(this);
+		this.handleClickImage = this.handleClickImage.bind(this);
 	}
-`;
 
-const NextButton = styled(PrevNextButton)`
-	right: 0;
-`;
+	__prepare() {
+		if (this.props.preview) {
+			for (let i = 0; i < this.props.items.length; i++) {
+				this.getImageDimensions(this.props.items[i]);
+			}
+		}
+	}
 
-const PrevButton = styled(PrevNextButton)`
-	left: 0;
-`;
+	componentDidMount() {
+		this.__prepare();
+	}
 
-interface IconProps {
-    onClick?: () => void;
-}
+	componentDidUpdate(prevProps: CardGalleryType, prevState: State) {
+		//  only prepare if the props have changed and stay silent for state changes
+		if (prevProps.items.length != this.props.items.length) this.__prepare();
+	}
 
-class NextArrow extends React.Component<IconProps, any> {
-    render() {
-        const {onClick} = this.props;
-        return (
-            <NextButton minimal active text="Next" rightIcon="arrow-right" onClick={onClick}/>
-        );
-    }
-}
+	render() {
+		const {preview, post, items} = this.props;
+		const {images, currentImage, lightboxIsOpen} = this.state;
 
-class PrevArrow extends React.Component<IconProps, any> {
-    render() {
-        const {onClick} = this.props;
-        return <PrevButton minimal active text="Prev" icon="arrow-left" onClick={onClick}/>;
-    }
-}
+		let prepared: any = [];
 
+		if (!images.length && !preview) {
+			for (let i = 0; i < post.galleryImages.length; i++) {
+				const image = post.galleryImages[i];
 
-export interface CardGalleryEntryType {
-    id: string;
-    image: Image;
-    title: string;
-}
+				if (!image.image.fluid) continue;
 
-export interface CardGalleryType {
-    title: string;
-    contentful_id: string;
-    entries: CardGalleryEntryType[];
-}
+				prepared.push({
+					src    : image.image.fluid.src,
+					width  : 100,
+					height : 100 / image.image.fluid.aspectRatio,
+					srcSet : image.image.fluid.srcSet,
+					caption: items[i].alt
+				});
+			}
+		}
 
-interface Props {
-    element: CardGalleryType;
-}
+		if (preview) {
+			for (let i = 0; i < images.length; i++) {
 
-class QardGallery extends Component<Props, any> {
-    render() {
-        const {element} = this.props;
+				const p: any = {
+					...images[i].image
+				};
 
-        const settings = {
-            dots: true,
-            fade: true,
-            lazyLoad: true,
-            infinite: true,
-            adaptiveHeight: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            nextArrow: <NextArrow/>,
-            prevArrow: <PrevArrow/>,
-        };
+				//  we need these for the Gallery widget
+				p.width = images[i].width;
+				p.height = images[i].height;
+				prepared.push(p);
+			}
+		}
 
-        if (!element.entries) return "";
+		if (!prepared.length) return <React.Fragment/>;
 
-        if (element.entries.length == 1 && element.entries[0].image) {
-            return <Wrapper>
-                <TitledWrapper title={element.entries[0].title}>
-                    <Img fluid={element.entries[0].image.fluid}/>
-                </TitledWrapper>
-            </Wrapper>;
-        }
+		return <Wrapper>
+			{!this.props.preview && <Gallery
+				   columns={this.columnsNr}
+				   onClick={this.openLightbox}
+				   photos={prepared}
+				   post={post}
+				   ImageComponent={ImageComponent}
+			   />}
 
-        return (
-            <TrackVisibility>
-                <Wrapper>
-                    <Slider {...settings}>
-                        {element.entries.map(image => {
-                            if (!image.image) return;
+			{this.props.preview && <Gallery
+				   columns={this.columnsNr}
+				   photos={prepared}
+			   />}
 
-                            return (
-                                <div key={image.id}>
-                                    <Img fluid={image.image.fluid}/>
-                                    <Title>{image.title}</Title>
-                                </div>
-                            );
-                        })}
-                    </Slider>
-                </Wrapper>
-            </TrackVisibility>
-        );
-    }
+			{!this.props.preview && <Lightbox
+				   currentImage={currentImage}
+				   images={prepared}
+				   isOpen={lightboxIsOpen}
+				   onClickImage={this.handleClickImage}
+				   onClickNext={this.gotoNext}
+				   onClickPrev={this.gotoPrevious}
+				   onClickThumbnail={this.gotoImage}
+				   onClose={this.closeLightbox}
+				   showThumbnails={false}
+				   backdropClosesModal={true}
+			   />}
+		</Wrapper>;
+	}
+
+	get columnsNr() {
+		const {images} = this.state;
+		return images.length == 1 ? 1 : undefined;
+	}
+
+	getImageDimensions(image: CardImageType) {
+		browserImageSize(image.src).then((result: any) => {
+			const stateImages = this.state.images;
+
+			if (!stateImages.find(x => x.image.src == image.src)) {
+				stateImages.push({
+					image,
+					width : result ? result.width : 1,
+					height: result ? result.height : 1,
+				});
+			}
+
+			this.setState({
+				images: stateImages
+			});
+		});
+	}
+
+	openLightbox(event: Event, obj: any) {
+		event.preventDefault();
+
+		this.setState({
+			currentImage  : obj.index,
+			lightboxIsOpen: true,
+		});
+	}
+
+	closeLightbox() {
+		this.setState({
+			currentImage  : 0,
+			lightboxIsOpen: false,
+		});
+	}
+
+	gotoPrevious() {
+		this.setState({
+			currentImage: this.state.currentImage - 1,
+		});
+	}
+
+	gotoNext() {
+		this.setState({
+			currentImage: this.state.currentImage + 1,
+		});
+	}
+
+	gotoImage(index: number) {
+		this.setState({
+			currentImage: index,
+		});
+	}
+
+	handleClickImage() {
+		if (this.state.currentImage === this.props.items.length - 1) return;
+
+		this.gotoNext();
+	}
 }
 
 export default QardGallery;

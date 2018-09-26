@@ -64,7 +64,7 @@ export const PrimaryBg = styled.div`
 `;
 
 interface Props {
-    latest: PostProps[];
+	latest: PostProps[];
 }
 
 interface State {
@@ -72,98 +72,98 @@ interface State {
 }
 
 export default class IndexRoute extends Component<Props & HTMLDivProps, State> {
-    render() {
-        const {latest} = this.props;
+	render() {
+		const {latest} = this.props;
 
-        return <Layout>
-            <Helmet title={`Qards - A blogging platform for professionals`}>
-                <html lang="en" />
-                <meta name="description" content={""}/>
-            </Helmet>
+		return <Layout>
+			<Helmet title={`Qards - A blogging platform for professionals`}>
+				<html lang="en"/>
+				<meta name="description" content={""}/>
+			</Helmet>
 
-            <DiagonalBand skew={24}/>
+			<DiagonalBand skew={24}/>
 
-            <Wrapper>
-                <Hero>
-                    <Content>
-                        <Box mt={[80, 80, 80, 180]} mb={[40, 40, 40, 120]}>
-                            <Heading
-                                title={"A blogging platform for professionals"}
-                                subtitle={"Qards is a blogging platform focused " +
-                                "on performance and on closing the gap\n" +
-                                "between content publishers and developers"}
-                            />
-                        </Box>
-                    </Content>
-                </Hero>
+			<Wrapper>
+				<Hero>
+					<Content>
+						<Box mt={[80, 80, 80, 180]} mb={[40, 40, 40, 120]}>
+							<Heading
+								title={"A blogging platform for professionals"}
+								subtitle={"Qards is a blogging platform focused " +
+								"on performance and on closing the gap\n" +
+								"between content publishers and developers"}
+							/>
+						</Box>
+					</Content>
+				</Hero>
 
-                <Content>
-                    <Features/>
-                </Content>
+				<Content>
+					<Features/>
+				</Content>
 
-                <Hero>
-                    <Box mt={[120, 120, 120, 180]} mb={[20, 20, 20, 100]}>
-                        <Content>
-                            <Heading
-                                title={"Developers and Publishers express without barriers"}
-                                subtitle={"With Qards, developers are free to shape content however they like; " +
-                                "a content that is pure and speaks metadata about itself. No junk or polluted " +
-                                "WYSIWYG editors."}
-                            />
+				<Hero>
+					<Box mt={[120, 120, 120, 180]} mb={[20, 20, 20, 100]}>
+						<Content>
+							<Heading
+								title={"Developers and Publishers express without barriers"}
+								subtitle={"With Qards, developers are free to shape content however they like; " +
+								"a content that is pure and speaks metadata about itself. No junk or polluted " +
+								"WYSIWYG editors."}
+							/>
 
-                            <PublishersDevelopers/>
-                        </Content>
-                    </Box>
-                </Hero>
+							<PublishersDevelopers/>
+						</Content>
+					</Box>
+				</Hero>
 
-                <GreenBg>
-                    <div style={{
-                        textAlign: "center",
-                        marginTop: -235
-                    }}>
-                        <LazyLoad height={296}>
-                            <img width={250} src={Rocket} alt=""/>
-                        </LazyLoad>
-                    </div>
+				<GreenBg>
+					<div style={{
+						textAlign: "center",
+						marginTop: -235
+					}}>
+						<LazyLoad height={296}>
+							<img width={250} src={Rocket} alt=""/>
+						</LazyLoad>
+					</div>
 
-                    <Hero>
-                        <Content>
-                            <Heading
-                                title={"Supercharge your content"}
-                                subtitle={"It's time to change the way we are sending content " +
-                                "to our users and make use of the latest technologies that make " +
-                                "your website faster, cheaper, easier to operate, more secure and engaging"}
-                            />
-                        </Content>
-                    </Hero>
+					<Hero>
+						<Content>
+							<Heading
+								title={"Supercharge your content"}
+								subtitle={"It's time to change the way we are sending content " +
+								"to our users and make use of the latest technologies that make " +
+								"your website faster, cheaper, easier to operate, more secure and engaging"}
+							/>
+						</Content>
+					</Hero>
 
-                    <Content>
-                        <SideBySide/>
-                    </Content>
-                </GreenBg>
+					<Content>
+						<SideBySide/>
+					</Content>
+				</GreenBg>
 
-                <Hero>
-                    <Box mt={[80, 80, 80, 120]} mb={[80, 80, 80, 120]}>
-                        <Content>
-                            <Subscribe
-                                title={"We're in closed beta"}
-                                subtitle={"Please subscribe if you want to get notified of our release and future updates"}
-                            />
-                        </Content>
-                    </Box>
-                </Hero>
+				<Hero>
+					<Box mt={[80, 80, 80, 120]} mb={[80, 80, 80, 120]}>
+						<Content>
+							<Subscribe
+								title={"We're in closed beta"}
+								subtitle={"Please subscribe if you want to get notified of our release and future updates"}
+							/>
+						</Content>
+					</Box>
+				</Hero>
 
-                <PrimaryBg>
-                    <Content>
-                        <Box mb={40}>
-                            <Posts darkTheme={true} showExcerpt={true} posts={latest.slice(0, 3)}
-                                   title={`Latest articles`} paginate={{
-                                pageSize: 6
-                            }}/>
-                        </Box>
-                    </Content>
-                </PrimaryBg>
-            </Wrapper>
-        </Layout>
-    }
+				<PrimaryBg>
+					<Content>
+						<Box mb={40}>
+							<Posts darkTheme={true} showExcerpt={true} posts={latest.slice(0, 3)}
+								  title={`Latest articles`} paginate={{
+								pageSize: 6
+							}}/>
+						</Box>
+					</Content>
+				</PrimaryBg>
+			</Wrapper>
+		</Layout>
+	}
 }

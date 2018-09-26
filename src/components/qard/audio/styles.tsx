@@ -10,8 +10,8 @@ export const Wrapper = styled.div`
 `;
 
 export const Playlist = styled.ul`
-    margin: 0;
-    padding: 0;
+    margin: 0!important;
+    padding: 0!important;
     list-style-type: none;
 `;
 

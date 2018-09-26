@@ -4,7 +4,7 @@ import theme from "../../theme";
 
 
 export const Wrapper = styled(Flex)`
-
+    
 `;
 
 export const Title = styled.h1`
@@ -13,11 +13,10 @@ export const Title = styled.h1`
 	line-height: 2.4rem;
 `;
 
-export const SubTitle = styled.h2`
-	margin-top: 40px;
+export const Excerpt = styled.p`
 	font-weight: 300;
 	font-size: 1.4rem;
-	line-height: 1.7rem;
+	line-height: 2.2rem;
 	color: ${theme.colors.lightText};
 `;
 
@@ -42,6 +41,14 @@ export const Article = styled.article`
 	font-size: 1.4rem;
 	line-height: 2.2rem;
 	font-weight: 300;
+	
+	b, strong {
+        font-weight: 400;
+    }
+	
+	ul {
+        margin-left: 1.5rem;
+    }
 `;
 
 export const SidebarWrapper = styled(Box)`

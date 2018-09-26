@@ -3,7 +3,8 @@ import {graphql, StaticQuery} from "gatsby";
 
 import Route from "../components/common/route";
 import BlogIndex from "../components/pages/blog";
-import {Post as PostProps} from "../templates/types";
+
+import {div} from "grid-styled";
 
 interface DataProps {
     site: {
@@ -33,58 +34,60 @@ interface IndexPageProps {
 }
 
 const Index = (props: IndexPageProps) => {
-    return <StaticQuery
-        query={graphql`
-            query BlogPageQuery {
-                site {
-                    siteMetadata {
-                        name
-                        title
-                        description
-                        siteUrl
-                    }
-                }
+    // return <StaticQuery
+    //     query={graphql`
+    //         query BlogPageQuery {
+    //             site {
+    //                 siteMetadata {
+    //                     name
+    //                     title
+    //                     description
+    //                     siteUrl
+    //                 }
+    //             }
+    //
+    //             featuredPost: allContentfulPost(
+    //                 filter: {featured: {eq: true}}
+    //                 sort: {fields: [createdAt], order: DESC}
+    //                 limit: 1
+    //             ) {
+    //                 edges {
+    //                     node {
+    //                         ...postFragment
+    //                     }
+    //                 }
+    //             }
+    //
+    //             latest: allContentfulPost(
+    //                 sort: {fields: [createdAt], order: DESC}
+    //             ) {
+    //                 edges {
+    //                     node {
+    //                         ...postFragment
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     `}
+    //
+    //     render={(data: DataProps) => {
+    //         const latest: PostProps[] = [];
+    //
+    //         for (let i = 0; i < data.latest.edges.length; i++) {
+    //             latest.push(data.latest.edges[i].node);
+    //         }
+    //
+    //         return <Route
+    //             component={BlogIndex}
+    //             path="/blog"
+    //             latest={latest}
+    //             metadata={data.site.siteMetadata}
+    //             featured={data.featuredPost.edges[0].node}
+    //         />
+    //     }}
+    // />
 
-                featuredPost: allContentfulPost(
-                    filter: {featured: {eq: true}}
-                    sort: {fields: [createdAt], order: DESC}
-                    limit: 1
-                ) {
-                    edges {
-                        node {
-                            ...postFragment
-                        }
-                    }
-                }
-
-                latest: allContentfulPost(
-                    sort: {fields: [createdAt], order: DESC}
-                ) {
-                    edges {
-                        node {
-                            ...postFragment
-                        }
-                    }
-                }
-            }
-        `}
-
-        render={(data: DataProps) => {
-            const latest: PostProps[] = [];
-
-            for (let i = 0; i < data.latest.edges.length; i++) {
-                latest.push(data.latest.edges[i].node);
-            }
-
-            return <Route
-                component={BlogIndex}
-                path="/blog"
-                latest={latest}
-                metadata={data.site.siteMetadata}
-                featured={data.featuredPost.edges[0].node}
-            />
-        }}
-    />
+	return <div>blog</div>
 };
 
 export default Index;

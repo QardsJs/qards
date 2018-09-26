@@ -3,63 +3,63 @@ import {Box, Flex} from 'grid-styled';
 import Img from "gatsby-image";
 import {Intent} from "@blueprintjs/core";
 
-import {getPostUrlPath, tokenizePost} from "../../utils/helpers";
-import {Post as PostProps} from '../../templates/types';
+import {tokenizePost} from "../../utils/helpers";
+import {PostType} from "../post";
 import {Image, Date, FeaturedTag, Text, Wrapper} from "./styles";
 
 interface Props {
-    post: PostProps;
+	post: PostType;
 }
 
 export default class FeaturedPost extends Component<Props, any> {
-    get coverBoxWidth(): number[] {
-        const {post} = this.props;
+	get heroImageBoxWidth(): number[] {
+		const {post} = this.props;
 
-        if (post.cover) {
-            return [0, 0, 1 / 3];
-        }
+		if (post.heroImage) {
+			return [0, 0, 1 / 3];
+		}
 
-        return [0];
-    }
+		return [0];
+	}
 
-    get detailsBoxWidth(): number[] {
-        const {post} = this.props;
+	get detailsBoxWidth(): number[] {
+		const {post} = this.props;
 
-        if (post.cover) {
-            return [1, 1, 2 / 3];
-        }
+		if (post.heroImage) {
+			return [1, 1, 2 / 3];
+		}
 
-        return [1];
-    }
+		return [1];
+	}
 
-    render() {
-        const {post} = this.props;
+	render() {
+		const {post} = this.props;
 
-        if (!post) return "";
+		if (!post) return "";
 
-        const tokenizedPost = tokenizePost(post);
+		const tokenizedPost = tokenizePost(post);
 
-        return (
-            <Wrapper to={getPostUrlPath(tokenizedPost)}>
-                <Flex flexWrap="wrap">
-                    {tokenizedPost.cover && <Box pr={30} width={this.coverBoxWidth}>
-						<Image>
-							<Img fluid={tokenizedPost.cover.fluid}/>
-						</Image>
-					</Box>}
-                    <Box width={this.detailsBoxWidth} pr={10}>
-                        <Text>
-                            <Date>{tokenizedPost.updatedAt}</Date>
-                            <FeaturedTag intent={Intent.SUCCESS}>Featured</FeaturedTag>
+		return (
+			<Wrapper to={tokenizedPost.fields.slug}>
+				<Flex flexWrap="wrap">
+					{tokenizedPost.heroImage && <Box pr={30} width={this.heroImageBoxWidth}>
+							 <Image>
+								 <Img fluid={tokenizedPost.heroImage.image.fluid}/>
+							 </Image>
+						 </Box>}
+					<Box width={this.detailsBoxWidth} pr={10}>
+						<Text>
+							<Date>{tokenizedPost.frontmatter.created_at}</Date>
+							<FeaturedTag intent={Intent.SUCCESS}>Featured</FeaturedTag>
 
-                            <div className="clearfix"/>
+							<div className="clearfix"/>
 
-                            <h3>{tokenizedPost.title}</h3>
-                            <p>{tokenizedPost.excerpt}</p>
-                        </Text>
-                    </Box>
-                </Flex>
-            </Wrapper>
-        );
-    }
+							<h3>{tokenizedPost.frontmatter.title}</h3>
+							<p>{tokenizedPost.frontmatter.excerpt}</p>
+						</Text>
+					</Box>
+				</Flex>
+			</Wrapper>
+		);
+	}
 }
