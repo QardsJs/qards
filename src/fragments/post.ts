@@ -5,17 +5,48 @@ export const _ = graphql`
 		id
 		md: rawMarkdownBody
 		
+		authors {
+			frontmatter {
+				title
+				avatar {
+					image: childImageSharp {
+						fixed(width: 80) {
+							width
+							height
+							tracedSVG
+							aspectRatio
+							src
+							srcSet
+						}
+					}
+				}
+			}
+		}
+		
 		frontmatter{
 			title
 			excerpt
 			created_at(formatString: "MMMM DD, YYYY")
 			tags
+			
 			meta{
 				keywords
 				description
 			}
+			
 			hero{
 				alt
+				image {
+					image: childImageSharp {
+						fluid(maxWidth: 2900) {
+							tracedSVG
+							aspectRatio
+							src
+							srcSet
+							sizes
+						}
+					}
+				}
 			}
 		}
 		
@@ -46,13 +77,6 @@ export const _ = graphql`
 		
 		fields {
 			slug
-			
-			authors {
-				frontmatter{
-					title
-					excerpt
-				}
-			}
 		}
 	}
 `;

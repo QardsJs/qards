@@ -13,7 +13,7 @@ meta:
 isPage: true
 hero:
   alt: Qards - List of supported cards
-  src: /images/uploads/eugenio-mazzone-190204-unsplash.jpg
+  image: /images/uploads/eugenio-mazzone-190204-unsplash.jpg
 excerpt: >-
   This is a list with all the supported types of cards. This list will be
   updated with each additions so make sure you check it out regularly.

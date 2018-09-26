@@ -15,6 +15,16 @@ export interface PostMetaDescriptionType {
 	description: string;
 }
 
+export interface PostAuthorType {
+	frontmatter: {
+		avatar: {
+			image: CardImageType;
+		};
+		title: string;
+		excerpt: string;
+	}
+}
+
 export interface PostType {
 	id: string;
 	md: string;
@@ -27,24 +37,18 @@ export interface PostType {
 
 		hero: {
 			alt: string;
+			image: {
+				image: CardImageType;
+			};
 		}
 
 		meta: PostMetaDescriptionType;
 	}
 
+	authors: PostAuthorType[];
+
 	fields: {
 		slug: string;
-
-		authors: {
-			frontmatter: {
-				title: string;
-				excerpt: string;
-			}
-		}
-	}
-
-	authorAvatarImage: {
-		image: CardImageType;
 	}
 
 	audioPosterImages: {
@@ -54,10 +58,6 @@ export interface PostType {
 	galleryImages: {
 		image: CardImageType;
 	}[]
-
-	heroImage: {
-		image: CardImageType;
-	}
 }
 
 export interface Props {

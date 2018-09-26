@@ -69,15 +69,17 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	static renderAuthor(post: PostType) {
-		if (post.fields.authors) {
+		if (post.authors && post.authors.length) {
 			return <Author className={"post-card-author"}>
-				{post.authorAvatarImage && <Gravatar>
-						<Img fixed={post.authorAvatarImage.image.fixed}/>
-					</Gravatar>}
+				{post.authors[0].frontmatter.avatar && <TrackVisibility once>
+						<Gravatar>
+							<Img fixed={post.authors[0].frontmatter.avatar.image.fixed}/>
+						</Gravatar>
+					</TrackVisibility>}
 
 				<AuthorContent>
 					<div className="name">
-						{post.fields.authors.frontmatter.title}
+						{post.authors[0].frontmatter.title}
 					</div>
 
 					<div className="info">
@@ -89,17 +91,17 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	static renderHero(post: PostType) {
-		if (post.heroImage) {
+		if (post.frontmatter.hero) {
 			return <Cover className={"post-card-cover"}>
-				<LazyLoad height={210}>
-					<TrackVisibility once>
+				<TrackVisibility once>
+					<LazyLoad height={210}>
 						<Img
 							alt={post.frontmatter.hero.alt}
-							fluid={post.heroImage.image.fluid}
+							fluid={post.frontmatter.hero.image.image.fluid}
 							style={{maxHeight: 210}}
 						/>
-					</TrackVisibility>
-				</LazyLoad>
+					</LazyLoad>
+				</TrackVisibility>
 			</Cover>
 		}
 	}

@@ -164,6 +164,11 @@ export const Gravatar = styled.div`
 	height: 40px;
 	width: 40px;
 	float: left;
+	
+	div.gatsby-image-wrapper {
+		width: 40px!important;
+		height: 40px!important;
+	}
 
 	img {
 		border-radius: 40px;

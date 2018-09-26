@@ -127,12 +127,12 @@ exports.createPages = ({graphql, actions}) => {
 	});
 };
 
+const isNodeOfCollection = (node, collection) => node.internal.type === "MarkdownRemark" &&
+	node.fileAbsolutePath.match(`collections/${collection}`);
+
 //	Will return only nodes that are from a given collection
 const getCollectionNodes = (collection, getNodes) => {
-	return getNodes().filter(node =>
-		node.internal.type === "MarkdownRemark" &&
-		node.fileAbsolutePath.match(`collections/${collection}`)
-	) || [];
+	return getNodes().filter(node => isNodeOfCollection(node, collection)) || [];
 };
 
 //	Given a post node, returns the node of the author
@@ -142,51 +142,46 @@ const getPostAuthorNode = (postNode, getNodes) => {
 	});
 };
 
+//	Given a post node, returns the node of the category
+const getPostCategoryNode = (postNode, getNodes) => {
+	return getCollectionNodes('categories', getNodes).find(node => {
+		return node.frontmatter.title === postNode.frontmatter.categories
+	});
+};
+
+
+const mapCategoriesToPostNode = (node, getNodes) => {
+	const category = getPostCategoryNode(node, getNodes);
+
+	//	Netlify CMS does not (yet) support one to many relationships
+	//	but we're adding an array to avoid introducing breaking changes
+	//	once they do and we have to adapt
+	if (category) node.categories___NODES = [category.id];
+};
+
+const mapAuthorsToPostNode = (node, getNodes) => {
+	const author = getPostAuthorNode(node, getNodes);
+
+	//	Same as above...an array is created
+	if (author) node.authors___NODES = [author.id];
+};
+
 //	Creates a mapping between posts and authors, sets the slug
 //	and other required attributes
 exports.sourceNodes = ({actions, getNodes, getNode}) => {
 	const {createNodeField} = actions;
-	const postsOfAuthors = {};
 
-	// iterate thorugh all markdown nodes to link posts to author and build author index
-	getCollectionNodes('posts', getNodes).forEach(node => {
-		const authorNode = getPostAuthorNode(node, getNodes);
-
-		if (authorNode) {
-			createNodeField({
-				node,
-				name : "authors",
-				value: authorNode,
-			});
-
-			if (!(authorNode.id in postsOfAuthors)) {
-				postsOfAuthors[authorNode.id] = [];
-			}
-			// add book to this author
-			postsOfAuthors[authorNode.id].push(node.id);
-
-			//	create a slug for this author
-			createNodeField({
-				node : authorNode,
-				name : "slug",
-				value: `authors${createFilePath({node: authorNode, getNode})}`
-			})
-		}
-
-		createPostImageNodes(node, actions, getNodes).then(null);
-
-		//	create the post slug
-		createNodeField({node, name: "slug", value: `posts${createFilePath({node, getNode})}`})
+	getCollectionNodes('categories', getNodes).forEach(node => {
+		createNodeField({node, name: "slug", value: `categories${createFilePath({node, getNode})}`});
 	});
 
-	//	Create a node with the reverse of what we just did so we can
-	//	search for posts under each author
-	Object.entries(postsOfAuthors).forEach(([authorNodeId, postIds]) => {
-		createNodeField({
-			node : getNode(authorNodeId),
-			name : "posts",
-			value: postIds,
-		});
+	getCollectionNodes('posts', getNodes).forEach(node => {
+		mapAuthorsToPostNode(node, getNodes);
+		mapCategoriesToPostNode(node, getNodes);
+		createPostImageNodes(node, actions);
+
+		//	create the post slug
+		createNodeField({node, name: "slug", value: `posts${createFilePath({node, getNode})}`});
 	});
 };
 
@@ -206,7 +201,7 @@ exports.sourceNodes = ({actions, getNodes, getNode}) => {
  * the blocks and create a node for each of them images and hope that
  * this will be enough for Gatsby to kick in those optimization incantations.
  */
-const createPostImageNodes = async (node, actions, getNodes) => {
+const createPostImageNodes = (node, actions) => {
 	if (!node.rawMarkdownBody) return;
 
 	// TODO: This regex is in three places right now!

@@ -108,7 +108,7 @@ export default class Post extends React.Component<Props, any> {
 		const title = post ? post.frontmatter.title : (previewData ? previewData.title : "");
 		const created_at = post ? post.frontmatter.created_at : (previewData ? previewData.created_at : "");
 		const excerpt = post ? post.frontmatter.excerpt : (previewData ? previewData.excerpt : "");
-		const heroImage = post ? post.heroImage.image : (previewData ? previewData.heroImage : "");
+		const heroImage = post ? post.frontmatter.hero.image.image : (previewData ? previewData.heroImage : "");
 		const md = post ? post.md : (previewData ? previewData.md : "");
 
 		return (
