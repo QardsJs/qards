@@ -18,8 +18,6 @@ excerpt: In this post we compare Qards with other blogging platforms
 ---
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIHZzIFdvcmRwcmVzcyIsInN1YnRpdGxlIjoiRmFzdGVyLCBsaWdodGVyLCBjaGVhcGVyIGFuZCBtb3JlIHNlY3VyZSIsInR5cGUiOiJwcmltYXJ5In0="}
 
-
-
 Everyone likes to bash on Wordpress nowadays and I'm no exception. Don't get me wrong because I'm not a hater. I know Wordpress since it was released and I'm aware that it powers millions of websites. That's a fantastic achievement by the most popular piece of software of our days. Milions of dollars have been made and continue to be made by offering professional services related to Wordpress.
 
 But...(Nothing Someone Says Before The Word But Really Counts - Game of Thrones fan)
@@ -36,7 +34,7 @@ But...(Nothing Someone Says Before The Word But Really Counts - Game of Thrones 
 
 Qards compiles down to HTML, CSS, Javascript which can be placed on any web server or CDN out there. Nothing needs to be interpreted by a programming language before being sent to the visitor. These are all static files that are sent immediately after being accessed.
 
-{"widget":"image","config":"eyJzcmMiOiIvaW1hZ2VzL3VwbG9hZHMvYW5kcmV3LXJpZGxleS03NjU0Ny11bnNwbGFzaC5qcGciLCJhbHQiOiJRYXJkcyB2cyBXb3JkcHJlc3Mgc3BlZWQiLCJsYXlvdXQiOiJmdWxsLXdpZHRoIn0="}
+{"widget":"image","config":"eyJzcmMiOiIvaW1hZ2VzL3VwbG9hZHMvc2NyZWVuc2hvdF9mcm9tXzIwMTgtMDktMDdfMDMtMzItMjAtMS0ucG5nIiwiYWx0IjoiUWFyZHMgdnMgV29yZHByZXNzIHNwZWVkIiwibGF5b3V0IjoiZnVsbC13aWR0aCJ9"}
 
 Ask any expert you like and they will all reply with the same line: every second counts; for SEO, for user experience, user retention etc.
 
@@ -56,7 +54,7 @@ Charts, galleries, maps, audios, videos, data tables, table of contents and so m
 
 Here's one such audio widget where, as a publisher, I only entered a soundcloud link and a title. Qards did the rest putting together a player with controls.
 
-{"widget":"qards-audio","config":"eyJpdGVtcyI6W3sidXJsIjoiaHR0cHM6Ly9zb3VuZGNsb3VkLmNvbS9wb2xvLXBhbi9sYS1mb3JldC1kZS1zaGFyZWdvb2Qtc2hhcmluZ3MtY2FyaW5nLXBvbG9wYW4tcmVtaXgiLCJ0aXRsZSI6IkxhIGZvcmV0IGRlIFNoYXJlZ29vZCAocG9sbyZwYW4ncyBzaGFyaW5nIGlzIGNhcmluZyByZW1peCkiLCJzdWJ0aXRsZSI6IkF3ZXNvbWUgdHJhY2sgdG8gYnJlYWsgc2V0cyB3aGVuIERqJ2luZyJ9XX0="}
+{"widget":"qards-audio","config":"eyJpdGVtcyI6W3sidXJsIjoiaHR0cHM6Ly9zb3VuZGNsb3VkLmNvbS9wb2xvLXBhbi9sYS1mb3JldC1kZS1zaGFyZWdvb2Qtc2hhcmluZ3MtY2FyaW5nLXBvbG9wYW4tcmVtaXgiLCJ0aXRsZSI6IkxhIGZvcmV0IGRlIFNoYXJlZ29vZCAocG9sbyZwYW4ncyBzaGFyaW5nIGlzIGNhcmluZyByZW1peCkiLCJzdWJ0aXRsZSI6IkF3ZXNvbWUgdHJhY2sgdG8gYnJlYWsgc2V0cyB3aGVuIERqJ2luZyIsInNyYyI6Ii9pbWFnZXMvdXBsb2Fkcy9hcnR3b3Jrcy0wMDAxMDEyMDg1NjktNnF0MWI1LXQ1MDB4NTAwLmpwZyJ9XX0="}
 
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIHNhZmVyIiwic3VidGl0bGUiOiJMZXNzIHRoaW5ncyB0byB3b3JyeSBhYm91dCIsInR5cGUiOiJwcmltYXJ5In0="}
 
