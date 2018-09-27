@@ -12,6 +12,7 @@ meta:
     utilizing sets of "smart cards", closing the gap between publishers and
     developers
   keywords: 'qards, blogging platform, developers, blog, free, fast blog, pwa'
+isFeatured: true
 hero:
   alt: ' Qards - a blogging platform for professionals'
   image: /images/uploads/mike-dorner-173502-unsplash.jpg
