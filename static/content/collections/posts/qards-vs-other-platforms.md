@@ -30,7 +30,7 @@ But...(Nothing Someone Says Before The Word But Really Counts - Game of Thrones 
 6. **It generates a lot of junk content** - whenever you type in that WYSIWYG editor, HTML gets generated and saved to the database. Pressing ENTER multiple times create empty paragraphs for example `<p></p>`. You don't write spans, divs, ps and all those elements, they are generated and persisted to the database. That makes it very hard to migrate or alter your content. It's not hard for Wordpresss but, if you want to pull your content and start using markdown for example, it 's difficult.
 7. **Reddit kiss of death**? Miss popularity overnight? Your server goes down. If you're not constantly monitoring resources, that downtime might last for hours.
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIGZhc3RlciIsInN1YnRpdGxlIjoiV2F5IGZhc3RlciBhY3R1YWxseSIsInR5cGUiOiJzZWNvbmRhcnkifQ=="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIGZhc3RlciIsInN1YnRpdGxlIjoiV2F5IGZhc3RlciBhY3R1YWxseSIsInR5cGUiOiJwcmltYXJ5In0="}
 
 Qards compiles down to HTML, CSS, Javascript which can be placed on any web server or CDN out there. Nothing needs to be interpreted by a programming language before being sent to the visitor. These are all static files that are sent immediately after being accessed.
 
@@ -38,7 +38,7 @@ Qards compiles down to HTML, CSS, Javascript which can be placed on any web serv
 
 Ask any expert you like and they will all reply with the same line: every second counts; for SEO, for user experience, user retention etc.
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIGNoZWFwZXIiLCJzdWJ0aXRsZSI6IkNoZWFwZXIgaXMgdGhlIHdyb25nIHdvcmQ7IFFhcmRzIGlzIGZyZWUgLSBmcmVlIHRvIHVzZSBhbmQgZnJlZSB0byBob3N0IiwidHlwZSI6InNlY29uZGFyeSJ9"}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIGNoZWFwZXIiLCJzdWJ0aXRsZSI6IkNoZWFwZXIgaXMgdGhlIHdyb25nIHdvcmQ7IFFhcmRzIGlzIGZyZWUgLSBmcmVlIHRvIHVzZSBhbmQgZnJlZSB0byBob3N0IiwidHlwZSI6InByaW1hcnkifQ=="}
 
 Since all your content is just HTML, CSS and Javascript you're free to server Qards from anywhere you like. Take [Netlify](https://www.netlify.com/) for example. With a simple \`netlify deploy\` comand, your content goes up, goes live and gets served from a Content Delivery Network at zero costs. It doesn't matter if your blog gets hit by a million visitors in one day, you're still operating at zero costs. Not to mention that they also provide you with a free SSL.
 
@@ -54,15 +54,15 @@ Charts, galleries, maps, audios, videos, data tables, table of contents and so m
 
 Here's one such audio widget where, as a publisher, I only entered a soundcloud link and a title. Qards did the rest putting together a player with controls.
 
-{"widget":"qards-audio","config":"eyJpdGVtcyI6W3sidXJsIjoiaHR0cHM6Ly9zb3VuZGNsb3VkLmNvbS9wb2xvLXBhbi9sYS1mb3JldC1kZS1zaGFyZWdvb2Qtc2hhcmluZ3MtY2FyaW5nLXBvbG9wYW4tcmVtaXgiLCJ0aXRsZSI6IkxhIGZvcmV0IGRlIFNoYXJlZ29vZCAocG9sbyZwYW4ncyBzaGFyaW5nIGlzIGNhcmluZyByZW1peCkiLCJzdWJ0aXRsZSI6IkF3ZXNvbWUgdHJhY2sgdG8gYnJlYWsgc2V0cyB3aGVuIERqJ2luZyIsInNyYyI6Ii9pbWFnZXMvdXBsb2Fkcy9hcnR3b3Jrcy0wMDAxMDEyMDg1NjktNnF0MWI1LXQ1MDB4NTAwLmpwZyJ9XX0="}
+{"widget":"qards-audio","config":"eyJpdGVtcyI6W3sidXJsIjoiaHR0cHM6Ly9zb3VuZGNsb3VkLmNvbS9wb2xvLXBhbi9sYS1mb3JldC1kZS1zaGFyZWdvb2Qtc2hhcmluZ3MtY2FyaW5nLXBvbG9wYW4tcmVtaXgiLCJ0aXRsZSI6IkxhIGZvcmV0IGRlIFNoYXJlZ29vZCAocG9sbyZwYW4ncyBzaGFyaW5nIGlzIGNhcmluZyByZW1peCkiLCJzdWJ0aXRsZSI6IkF3ZXNvbWUgdHJhY2sgdG8gYnJlYWsgc2V0cyB3aGVuIERqJ2luZyIsInNyYyI6Ii9pbWFnZXMvdXBsb2Fkcy9hcnR3b3Jrcy0wMDAxMDEyMDg1NjktNnF0MWI1LXQ1MDB4NTAwLmpwZyJ9LHsidXJsIjoiaHR0cHM6Ly9zb3VuZGNsb3VkLmNvbS9kZWFuZGVsYXJpY2hhcmRpZXJlLzA1LWRlYW4tZGUtbGEtcmljaGFyZGllcmUtdGVja25vZm9iaWEtcG9sby1wYW4tdGVja25vbG92aWEtcmVtaXg/aW49cG9sby1wYW4vc2V0cy9yZW1peGVzIiwidGl0bGUiOiJUZWNrbm9mb2JpYSAoUG9sbyAmIFBhbiBUZWNrbm9sb3ZpYSBSZW1peCkiLCJzdWJ0aXRsZSI6IlllcywgSSdtIGEgYmlnIGZhbiBvZiB0aGVzZSBndXlzIiwic3JjIjoiL2ltYWdlcy91cGxvYWRzL2FydHdvcmtzLTAwMDE0Njk5MzE2NS1wY3J3bWYtdDUwMHg1MDAuanBnIn0seyJ0aXRsZSI6ImFkcyIsInN1YnRpdGxlIjoiYWRzIiwidXJsIjoiaHR0cHM6Ly9zb3VuZGNsb3VkLmNvbS9wb2xvLXBhbi9saW1vdXNpbmUtYm9vbmdodXNhLXBvbG8tcGFuP2luPXBvbG8tcGFuL3NldHMvcmVtaXhlcyJ9XX0="}
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIHNhZmVyIiwic3VidGl0bGUiOiJMZXNzIHRoaW5ncyB0byB3b3JyeSBhYm91dCIsInR5cGUiOiJzZWNvbmRhcnkifQ=="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGlzIHNhZmVyIiwic3VidGl0bGUiOiJMZXNzIHRoaW5ncyB0byB3b3JyeSBhYm91dCIsInR5cGUiOiJwcmltYXJ5In0="}
 
 There's no web server or database behind it; just plain HTML, CSS and Javascript files. You don't have to worry about SQL injections, open ports or software exploits.
 
 Forget about downtimes, waking up in the night to solve incidents or costly hosting bills and start focusing on what matters.
 
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGZvbGxvd3MgdGhlIEphbVN0YWNrIHByaW5jaXBsZSIsInN1YnRpdGxlIjoiTW9kZXJuIHdlYiBkZXZlbG9wbWVudCBhcmNoaXRlY3R1cmUgYmFzZWQgb24gY2xpZW50LXNpZGUgSmF2YVNjcmlwdCwgcmV1c2FibGUgQVBJcywgYW5kIHByZWJ1aWx0IE1hcmt1cCIsInR5cGUiOiJzZWNvbmRhcnkifQ=="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlFhcmRzIGZvbGxvd3MgdGhlIEphbVN0YWNrIHByaW5jaXBsZSIsInN1YnRpdGxlIjoiTW9kZXJuIHdlYiBkZXZlbG9wbWVudCBhcmNoaXRlY3R1cmUgYmFzZWQgb24gY2xpZW50LXNpZGUgSmF2YVNjcmlwdCwgcmV1c2FibGUgQVBJcywgYW5kIHByZWJ1aWx0IE1hcmt1cCIsInR5cGUiOiJwcmltYXJ5In0="}
 
 Qards is based on [GatsbyJs](https://www.gatsbyjs.com/) which follows the JamStack principle. Everything is compiled and generated before being sent into production. All communications and server-side processes are being done using APIs accessed over HTTP.
 
