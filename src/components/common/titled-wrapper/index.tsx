@@ -6,9 +6,13 @@ import theme from "../../../theme";
 import {Card, Elevation} from "@blueprintjs/core";
 
 const Wrapper = styled.div`
-    padding: 12px;
+	padding: 12px;
 	border-radius: 8px;
 	background-color: ${theme.colors.faded};
+	
+	h4 {
+	
+	}
 `;
 
 const Title = styled.div`
@@ -19,25 +23,22 @@ const Title = styled.div`
     margin: 0!important;
     padding: 0 0 8px 0!important;
     color: ${theme.colors.lightText};
-    
-    * {
-        margin: 0!important;
-        padding: 0!important;
-    }
 `;
 
-const InnerCard = styled(Card)`
-    padding: 0!important;
-    margin: 0!important;
-    border-radius: 6px;
+const InnerCard = styled.div`
+	background-color: white;
+	border: 1px solid ${theme.colors.borderColor};
+	padding: 0!important;
+	margin: 0!important;
+	border-radius: 6px;
 `;
 
 interface Props {
-    title?: any;
-    titleProps?: HTMLDivProps;
-    innerProps?: HTMLDivProps;
-    innerElevation?: Elevation;
-    children: any
+	title?: any;
+	titleProps?: HTMLDivProps;
+	innerProps?: HTMLDivProps;
+	innerElevation?: Elevation;
+	children: any
 }
 
 interface State {
@@ -45,16 +46,16 @@ interface State {
 }
 
 export default class TitledWrapper extends Component<Props & HTMLDivProps, State> {
-    render() {
-        const {title, children, innerProps, innerElevation, titleProps, ...props} = this.props;
+	render() {
+		const {title, children, innerProps, innerElevation, titleProps, ...props} = this.props;
 
-        return (
-            <Wrapper {...props}>
-                {title && <Title {...titleProps}>{title}</Title>}
-                <InnerCard elevation={innerElevation ? innerElevation : Elevation.ZERO}>
-                    <div {...innerProps}>{children}</div>
-                </InnerCard>
-            </Wrapper>
-        );
-    }
+		return (
+			<Wrapper {...props}>
+				{title && <Title {...titleProps}>{title}</Title>}
+				<InnerCard>
+					<div {...innerProps}>{children}</div>
+				</InnerCard>
+			</Wrapper>
+		);
+	}
 }

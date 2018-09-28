@@ -10,14 +10,18 @@ declare module 'gatsby-plugin-mailchimp';
 declare module 'react-motion-drawer';
 
 declare module "*.svg" {
-    const content: any;
-    export default content;
+	const content: any;
+	export default content;
 }
 declare module "*.png" {
-    const content: any;
-    export default content;
+	const content: any;
+	export default content;
 }
 declare module "*.scss" {
-    const content: any;
-    export default content;
+	const content: any;
+	export default content;
+}
+declare module "*.json" {
+	const content: any;
+	export default content;
 }

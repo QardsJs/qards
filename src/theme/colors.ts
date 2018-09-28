@@ -22,7 +22,7 @@ export default {
     // used for backgrounds and STUFF
     faded: tinycolor(primary).lighten(80).toString(),
     // text color
-    text: 'black',
+    text: '#333',
     // text color used for secondary content
     lightText: tinycolor('#94A4B0').darken(20).toString(),
 

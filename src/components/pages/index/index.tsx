@@ -20,7 +20,7 @@ import colors from "../../../theme/colors"
 
 import Rocket from "../../../static/images/homepage/rocket.svg";
 import Posts from "../../posts";
-import {Post as PostProps} from "../../../templates/types";
+import {PostType} from "../../../fragments/post";
 
 const Wrapper = styled.div``;
 
@@ -64,7 +64,7 @@ export const PrimaryBg = styled.div`
 `;
 
 interface Props {
-	latest: PostProps[];
+	latest: PostType[];
 }
 
 interface State {

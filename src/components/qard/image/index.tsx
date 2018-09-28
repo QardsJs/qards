@@ -1,43 +1,55 @@
 import React from 'react';
 import styled from 'styled-components';
 import Img from "gatsby-image";
+import Lightbox from 'react-images';
+import {pick} from "lodash";
 
 import Markdown from "../../markdown";
 import theme from "../../../theme";
 import {QardProps} from "../base";
+import {HTMLDivProps} from "@blueprintjs/core";
 
 const StyledImage = styled.figure`
-    img {
-        margin: 0;
-    }
-    
-    &.layout {
-        img {
-            cursor: pointer;
-        }
-        
-        &.left-aligned {
-            float: left;
-            margin: 0 20px 0 0;
-            max-width: 60%;
-        }
-        
-        &.break-out {
-            margin: 0 -40px;
-        }
-        
-        &.full-width, &.screen-width {
-            width: 100%;
-        }
-        
-        figcaption {
-            font-size: .9rem;
-            color: ${theme.colors.lightText};
-            padding: 8px 0;
-            line-height: 1rem;
-            text-align: center;
-        }
-    }
+	img {
+		margin: 0;
+	}
+	
+	&.layout {
+		 overflow: hidden;
+		 
+		img {
+			cursor: pointer;
+		}
+		
+		&.left-aligned {
+			float: left;
+			display: inline-block;
+			margin: 0 20px 0 0;
+			max-width: 60%;
+		}
+		
+		&.break-out {
+			margin: 0 -40px;
+		}
+		
+		&.full-width, &.screen-width {
+			width: 100%;
+		}
+		
+		figcaption {
+			font-size: .9rem;
+			color: ${theme.colors.lightText};
+			padding: 8px 0;
+			line-height: 1rem;
+			text-align: center;
+		}
+		
+		@media screen and (max-width: ${theme.main.breakpoints.medium}em) {
+			&.full-width, &.screen-width, &.break-out {
+				width: 100%;
+			}
+		}
+	}
 `;
 
 export interface CardImageType extends QardProps {
@@ -60,11 +72,6 @@ export interface CardImageType extends QardProps {
 	};
 }
 
-export interface ContentImageType extends CardImageType {
-	layout?: string;
-	caption?: string;
-}
-
 /**
  * This renders an image. If a `src` param is specified it will render
  * a normal img tag without doing anything special because sometimes
@@ -79,17 +86,53 @@ const QardImage = ({alt, src, ...rest}: CardImageType) => {
 	return src ? <img src={src} alt={alt} {...rest}/> : <Img {...rest}/>;
 };
 
+export interface ContentImageType extends CardImageType {
+	layout?: string;
+	caption?: string;
+}
+
+interface State {
+	lightboxOpen: boolean;
+	currentImage: number;
+}
+
 /**
  * This one extends the basic image component and should be used within
  * the actual content where it supports more options (layout, lightbox)
  */
-export const QardContentImage = ({alt, src, caption, layout, ...rest}: ContentImageType) => {
-	return <StyledImage className={`layout ${layout}`}>
-		{src ? <img src={src} alt={alt} {...rest}/> : <Img {...rest}/>}
-		{caption && <div className="alt">
-			  <Markdown component={"figcaption"} md={caption}/>
-		  </div>}
-	</StyledImage>;
-};
+export class QardImageContent extends React.Component<ContentImageType & HTMLDivProps, State> {
+	state = {
+		lightboxOpen: false,
+		currentImage: 0
+	};
+
+	render() {
+		const {caption, layout, fluid, fixed, src, alt, ...rest} = this.props;
+
+		const image: any = (fluid || fixed) ? (fluid ? fluid : fixed) : {src, alt};
+		if (image) image.caption = caption;
+
+		return <StyledImage
+			{...rest}
+			onClick={() => this.setState({lightboxOpen: true})}
+			className={`layout ${layout}`}>
+
+			<QardImage {...pick(image, ['alt', 'src', 'srcSet'])}/>
+
+			<Lightbox
+				images={[
+					{...pick(image, ['caption', 'src', 'srcSet'])}
+				]}
+				isOpen={this.state.lightboxOpen}
+				backdropClosesModal={true}
+				onClose={() => this.setState({lightboxOpen: false})}
+			/>
+
+			{caption && <div className="alt">
+				   <Markdown component={"figcaption"} md={caption}/>
+			   </div>}
+		</StyledImage>;
+	}
+}
 
 export default QardImage;

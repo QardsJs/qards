@@ -13,7 +13,7 @@ import colors from "../../../theme/colors"
 const Wrapper = styled.div`
     background: white;
     box-shadow: rgba(8, 35, 51, 0.05) 0px 4px 8px;
-    color: ${colors.primary};
+    color: ${colors.text};
     border-radius: 8px;
     padding: 32px 32px 10px 32px;
     position: relative;

@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import {omit} from "lodash";
 import styled from 'styled-components';
 
 // @ts-ignore
@@ -38,6 +39,8 @@ const Wrapper = styled.div`
     pre, code {
         font-size: .9rem!important;
         line-height: 1.6rem!important;
+        overflow-x: visible;
+        overflow-y: visible;
     }
 	
 	pre {
@@ -53,29 +56,32 @@ const Wrapper = styled.div`
 `;
 
 export interface CardCodeType extends QardProps {
-    language: string;
-    code: string;
+	language: string;
+	code: string;
 }
 
 export default class QardCodeBlock extends QardBase<CardCodeType, any> {
-    public render() {
-        const {language, code} = this.props;
+	public render() {
+		const {language, code} = this.props;
 
-        return (
-            <Wrapper>
-                <Scrollbars
-                    autoHeight
-                    autoHeightMin={100}
-                    autoHeightMax={800}
-                    autoHide
-                    universal={true}
-                    renderThumbVertical={({...props}) => (
-                        <div {...props} style={{backgroundColor: '#A8FF60'}}/>
-                    )}
-                >
-                    <Highlight className={language}>{code}</Highlight>
-                </Scrollbars>
-            </Wrapper>
-        );
-    }
+		return (
+			<Wrapper>
+				<Scrollbars
+					autoHeight
+					autoHeightMin={100}
+					autoHeightMax={800}
+					autoHide
+					universal={true}
+					renderThumbVertical={({...props}) => (
+						<div {...props} style={{backgroundColor: '#A8FF60'}}/>
+					)}
+					renderThumbHorizontal={({...props}) => (
+						<div {...props} style={{backgroundColor: '#A8FF60'}}/>
+					)}
+				>
+					<Highlight className={language}>{code}</Highlight>
+				</Scrollbars>
+			</Wrapper>
+		);
+	}
 }

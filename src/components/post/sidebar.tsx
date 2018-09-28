@@ -9,17 +9,16 @@ import Subscribe from '../subscribe';
 import SocialShare from '../social-share';
 import TitledWrapper from '../common/titled-wrapper';
 
-
-import {Post as PostProps} from '../../templates/types';
 import {HTMLDivProps} from "@blueprintjs/core";
+import {PostType} from "../../fragments/post";
 
 const Wrapper = styled.div`
     color: black;
 `;
 
 const TocTitle = styled.h4`
-    padding-top: 10px;
-    margin: 0 0 10px 0;
+    padding: 0;
+    margin: 0;
     text-align: center;
     font-weight: 400;
     font-size: 1rem;
@@ -53,41 +52,41 @@ const TagsWrapper = styled.div`
 `;
 
 interface Props {
-    post: PostProps;
-    currentUrl: string;
-    wrapperProps?: HTMLDivProps;
+	post: PostType;
+	currentUrl: string;
+	wrapperProps?: HTMLDivProps;
 }
 
 export default class PostSidebar extends Component<Props, any> {
 
 
-    render() {
-        const {post, currentUrl} = this.props;
+	render() {
+		const {post, currentUrl} = this.props;
 
-        return (
-            <Wrapper {...this.props.wrapperProps}>
-                <TitledWrapper title={<TocTitle>Table of contents</TocTitle>} innerProps={{
-                    style: {
-                        padding: 12
-                    }
-                }}>
-                    <Toc cards={post.cards}/>
-                </TitledWrapper>
+		return (
+			<Wrapper {...this.props.wrapperProps}>
+				<TitledWrapper title={<TocTitle>Table of contents</TocTitle>} innerProps={{
+					style: {
+						padding: 0
+					}
+				}}>
+					<Toc post={post}/>
+				</TitledWrapper>
 
-                <SocialShareWrapper>
-                    <SocialShare url={currentUrl} message={post.title}/>
-                </SocialShareWrapper>
+				<SocialShareWrapper>
+					<SocialShare url={currentUrl} message={post.frontmatter.title}/>
+				</SocialShareWrapper>
 
 
-                <SubscribeWrapper>
-                    <Subscribe/>
-                </SubscribeWrapper>
+				<SubscribeWrapper>
+					<Subscribe/>
+				</SubscribeWrapper>
 
-                <TagsWrapper>
-                    <b className="title">Tags</b>
-                    <Tags post={post}/>
-                </TagsWrapper>
-            </Wrapper>
-        );
-    }
+				<TagsWrapper>
+					<b className="title">Tags</b>
+					<Tags post={post}/>
+				</TagsWrapper>
+			</Wrapper>
+		);
+	}
 }

@@ -1,8 +1,34 @@
 import _ from "lodash";
 import rTime from "reading-time";
-import {PostType} from "../components/post";
+import {PostType} from "../fragments/post";
 import moment from "moment";
+import {CategoryType} from "../templates/category";
+import {CardHeaderType} from "../components/qard/header";
+import {decodeWidgetDataObject} from "../cms/utils";
 
+export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+/=]+?)"}/;
+
+export function lineRepresentsEncodedComponent(line: string) {
+	if (!line || line.replace(/\s+/g, '') === "") return false;
+	return RegExp(cPattern).test(line);
+}
+
+export function getPostPrimaryHeadings(post: PostType): CardHeaderType[] {
+	const headings: CardHeaderType[] = [];
+
+	post.md.split("\n").map((line, k) => {
+		if (lineRepresentsEncodedComponent(line)) {
+			const params = line.match(cPattern);
+			if (!params || params.length < 3) return;
+
+			if (params[1] == 'qards-section-heading') {
+				headings.push(decodeWidgetDataObject(params[2]));
+			}
+		}
+	});
+
+	return headings;
+}
 
 /**
  * There are some tokens that we can use (currently only in the title and excerpt sections) as
@@ -13,70 +39,41 @@ import moment from "moment";
  * not perfect but good to have
  */
 export function tokenizePost(post: PostType): PostType {
-	// const tokens = [
-	// 	{
-	// 		//  Will replace the token `{cardsNum}` with the number of cards found in this post
-	// 		perform: (input: string): string => {
-	// 			return input.replace("{cardsNum}", `${post.cards.length}`);
-	// 		}
-	// 	}, {
-	// 		//  Will replace the token with a `createdAt` derrived date (the date format is specified)
-	// 		//  using a formatter that is applied with moment
-	// 		perform: (input: string): string => {
-	// 			const r = /{createdAt:([a-zA-Z0-9-_:]+)}/i;
-	// 			const match = r.exec(input);
-	//
-	// 			if (!match) return input;
-	// 			const format = match[1];
-	// 			return input.replace(r, moment(post.createdAt).format(format));
-	// 		}
-	// 	}, {
-	// 		//  Will replace the token with a `updatedAt` derrived date (the date format is specified)
-	// 		//  using a formatter that is applied with moment
-	// 		perform: (input: string): string => {
-	// 			const r = /{updatedAt:([a-zA-Z0-9-_:]+)}/i;
-	// 			const match = r.exec(input);
-	//
-	// 			if (!match) return input;
-	// 			const format = match[1];
-	// 			return input.replace(r, moment(post.updatedAt).format(format));
-	// 		}
-	// 	}, {
-	// 		//  Will replace the token with derrived date (from current date) (the date format is specified)
-	// 		//  using a formatter that is applied with moment
-	// 		perform: (input: string): string => {
-	// 			const r = /{currentDate:([a-zA-Z0-9-_:]+)}/i;
-	// 			const match = r.exec(input);
-	//
-	// 			if (!match) return input;
-	// 			const format = match[1];
-	// 			return input.replace(r, moment().format(format));
-	// 		}
-	// 	}
-	// ];
-	//
-	// for (let i = 0; i < tokens.length; i++) {
-	// 	post.title = tokens[i].perform(post.title);
-	// 	post.excerpt = tokens[i].perform(post.excerpt);
-	//
-	// 	if (!post.cards.length) continue;
-	//
-	// 	for (let j = 0; j < post.cards.length; j++) {
-	// 		const card = post.cards[j];
-	//
-	// 		if (!card.headers || !card.headers.length) continue;
-	//
-	// 		for (let k = 0; k < card.headers.length; k++) {
-	// 			if (!post.cards[j].headers[k].title) continue;
-	//
-	// 			post.cards[j].headers[k].title = tokens[i].perform(post.cards[j].headers[k].title);
-	//
-	// 			if (post.cards[j].headers[k].subtitle) {
-	// 				post.cards[j].headers[k].subtitle = tokens[i].perform(`${post.cards[j].headers[k].subtitle}`);
-	// 			}
-	// 		}
-	// 	}
-	// }
+	const tokens = [
+		{
+			//  Will replace the token `{cardsNum}` with the number of cards found in this post
+			perform: (input: string): string => {
+				return input.replace("{cardsNum}", `${getPostPrimaryHeadings(post).length}`);
+			}
+		}, {
+			//  Will replace the token with a `createdAt` derrived date (the date format is specified)
+			//  using a formatter that is applied with moment
+			perform: (input: string): string => {
+				const r = /{createdAt:([a-zA-Z0-9-_:]+)}/i;
+				const match = r.exec(input);
+
+				if (!match) return input;
+				const format = match[1];
+				return input.replace(r, moment(post.frontmatter.created_at).format(format));
+			}
+		}, {
+			//  Will replace the token with derrived date (from current date) (the date format is specified)
+			//  using a formatter that is applied with moment
+			perform: (input: string): string => {
+				const r = /{currentDate:([a-zA-Z0-9-_:]+)}/i;
+				const match = r.exec(input);
+
+				if (!match) return input;
+				const format = match[1];
+				return input.replace(r, moment().format(format));
+			}
+		}
+	];
+
+	for (let i = 0; i < tokens.length; i++) {
+		post.frontmatter.title = tokens[i].perform(post.frontmatter.title);
+		post.frontmatter.excerpt = tokens[i].perform(post.frontmatter.excerpt);
+	}
 
 	return post;
 }
@@ -104,7 +101,7 @@ export function deGatsbyFyContentfulId(id: string): string {
 }
 
 export interface PopularCategoriesCategory {
-	category: CategoryProps;
+	category: CategoryType;
 	occurence: number;
 }
 
@@ -113,7 +110,7 @@ export interface PopularCategoriesCategory {
  * categories and formats the data in a group-by style saving
  * some counters along he way
  */
-export function getPopularCategories(categories: CategoryProps[]): PopularCategoriesCategory[] {
+export function getPopularCategories(categories: CategoryType[]): PopularCategoriesCategory[] {
 	const res: PopularCategoriesCategory[] = [];
 
 	_.each(categories, (category) => {
@@ -144,7 +141,7 @@ export function getPopularCategories(categories: CategoryProps[]): PopularCatego
  * Will return an array of node values from edges and stuff
  * returned by a grapql query of multiple children
  */
-export function extractNodesFromEdges(edges: any, path: string): any {
+export function extractNodesFromEdges(edges: any, path: string = ""): any {
 	const res: any = [];
 
 	_.each(edges, e => {
@@ -163,10 +160,10 @@ export function extractNodesFromEdges(edges: any, path: string): any {
 }
 
 interface rTimeResponse {
-	text: string;
-	time: number;
-	words: number;
-	minutes: number;
+	text?: string;
+	time?: number;
+	words?: number;
+	minutes?: number;
 }
 
 export function readingTime(post: PostType): rTimeResponse {

@@ -1,24 +1,23 @@
 import React from "react"
 
 import {graphql} from "gatsby"
-import {Post as PostProps, Tag as TagProps} from "../types";
+
 import TagsPage from "../../components/pages/tags";
 import Route from "../../components/common/route";
 import {extractNodesFromEdges} from "../../utils/helpers";
+import {PostType} from "../../fragments/post";
 
 interface DataProps {
 	posts: {
 		totalCount: number;
 		edges: {
-			node: PostProps;
+			node: PostType;
 		}[];
 	};
 
-	tag: TagProps;
-
 	featured: {
 		edges: {
-			node: PostProps
+			node: PostType
 		}[];
 	};
 }
@@ -27,27 +26,71 @@ interface Props {
 	data: DataProps;
 	pageContext: {
 		tag: string;
+		slug: string;
 	};
 }
 
 const TagTemplate = (props: Props) => {
 	const {data} = props;
-	const {featured, tag} = data;
-	const {edges, totalCount} = data.posts;
-
-	const posts: PostProps[] = [];
-	for (let i = 0; i < edges.length; i++) {
-		posts.push(edges[i].node);
-	}
+	const {tag, slug} = props.pageContext;
+	const {featured, posts} = data;
 
 	return <Route
-		path={`/tags/${tag.slug}/`}
+		path={`/tags/${slug}/`}
 		component={TagsPage}
-		totalCount={totalCount}
+		totalCount={posts.totalCount}
 		tag={tag}
-		posts={posts}
+		posts={posts.edges.length ? extractNodesFromEdges(posts.edges) : []}
 		featured={featured ? extractNodesFromEdges(featured.edges, "") : []}
 	/>;
 };
 
 export default TagTemplate;
+
+export const pageQuery = graphql`
+	query($tag: String) {
+		posts: allMarkdownRemark(
+			sort: {fields: [frontmatter___created_at], order: DESC},
+			filter: {
+				fileAbsolutePath: {
+					regex: "//collections/posts//"
+				},
+				frontmatter: {
+					tags: {
+						in: [$tag]
+					}
+				}
+			}
+		) {
+			totalCount
+			edges {
+				node {
+					...postFragment
+				}
+			}
+		}
+		
+		featured: allMarkdownRemark(
+			sort: {fields: [frontmatter___created_at], order: DESC},
+			filter: {
+				fileAbsolutePath: {
+					regex: "//collections/posts//"
+				},
+				frontmatter: {
+					tags: {
+						in: [$tag]
+					}, 
+					isFeatured: {
+						eq: true
+					}
+				}
+			}
+		) {
+			edges {
+				node {
+					...postFragment
+				}
+			}
+		}
+	}
+`;

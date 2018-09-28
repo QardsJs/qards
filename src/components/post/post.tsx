@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Article, Date, Excerpt, Hero, Title} from "./styles";
 import MarkdownRender from "../markdown";
-
+import {cPattern, lineRepresentsEncodedComponent} from "../../utils/helpers";
 import {decodeWidgetDataObject} from "../../cms/utils";
 
 import QardReveal from "../qard/reveal";
@@ -13,9 +13,9 @@ import QardDivider from "../qard/divider";
 import QardHeader from "../qard/header";
 import QardGallery from "../qard/gallery";
 import QardCode from "../qard/code";
-import QardImage from "../qard/image";
+import {QardImageContent} from "../qard/image";
 
-import {PostType} from "./index";
+import {PostType} from "../../fragments/post";
 
 export interface Props {
 	post?: PostType;
@@ -28,23 +28,12 @@ export interface Props {
 		created_at: string;
 		heroImage: {
 			alt: string;
-			src: string;
+			image: string;
 		}
 	}
 }
 
-export const cPatternWithId = (id: string): string => {
-	return `{"widget":"${id}","config":"([0-9a-zA-Z+/=]+?)"}`;
-};
-export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+/=]+?)"}/;
-
 export default class Post extends React.Component<Props, any> {
-	static isEncodedComponent(line: string) {
-		if (!line || line.replace(/\s+/g, '') === "") return false;
-
-		return RegExp(cPattern).test(line);
-	}
-
 	renderComponent(line: string) {
 		const {preview, post} = this.props;
 
@@ -55,7 +44,7 @@ export default class Post extends React.Component<Props, any> {
 		const config = decodeWidgetDataObject(params[2]);
 
 		const cards: { [s: string]: any; } = {
-			'image'                : QardImage,
+			'image'                : QardImageContent,
 			'qards-code'           : QardCode,
 			'qards-reveal'         : QardReveal,
 			'qards-callout'        : QardCallout,
@@ -80,7 +69,7 @@ export default class Post extends React.Component<Props, any> {
 
 		return <React.Fragment>
 			{body.split("\n").map((line, k) => {
-				if (Post.isEncodedComponent(line)) {
+				if (lineRepresentsEncodedComponent(line)) {
 					//	render everything that is collected inside
 					//	our accumulator and then render the component
 					//	also resets the accumulator
@@ -88,7 +77,9 @@ export default class Post extends React.Component<Props, any> {
 					accumulator = [];
 
 					return <React.Fragment key={k}>
-						<MarkdownRender md={acc}/>
+						<div className="paragraphs">
+							<MarkdownRender md={acc}/>
+						</div>
 						{this.renderComponent(line)}
 					</React.Fragment>
 				} else {
@@ -97,7 +88,9 @@ export default class Post extends React.Component<Props, any> {
 				}
 			})}
 
-			{(accumulator.length > 0) && <MarkdownRender md={accumulator.join("\n")}/>}
+			{(accumulator.length > 0) && <div className="paragraphs">
+				   <MarkdownRender md={accumulator.join("\n")}/>
+			   </div>}
 		</React.Fragment>
 	}
 
@@ -108,14 +101,17 @@ export default class Post extends React.Component<Props, any> {
 		const title = post ? post.frontmatter.title : (previewData ? previewData.title : "");
 		const created_at = post ? post.frontmatter.created_at : (previewData ? previewData.created_at : "");
 		const excerpt = post ? post.frontmatter.excerpt : (previewData ? previewData.excerpt : "");
-		const heroImage = post ? post.frontmatter.hero.image.image : (previewData ? previewData.heroImage : "");
+		const heroImage = post ? post.frontmatter.hero.image.image : (previewData && previewData.heroImage.image ? {
+			src: previewData.heroImage.image,
+			alt: previewData.heroImage.alt
+		} : "");
 		const md = post ? post.md : (previewData ? previewData.md : "");
 
 		return (
 			<Article>
 				{title && <Title>{title}</Title>}
 				{created_at && <Date>{created_at.toString()}</Date>}
-				{heroImage && <Hero><QardImage {...heroImage}/></Hero>}
+				{heroImage && <Hero><QardImageContent {...heroImage}/></Hero>}
 				{excerpt && <Excerpt>{excerpt}</Excerpt>}
 				{this.renderBody(md)}
 			</Article>

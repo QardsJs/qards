@@ -3,7 +3,7 @@ import {graphql, StaticQuery} from "gatsby";
 
 import IndexRoute from "../components/pages/index";
 import Route from "../components/common/route";
-import {PostType} from "../components/post";
+import {PostType} from "../fragments/post";
 
 interface DataProps {
 	latest: {
@@ -23,7 +23,8 @@ const Index = (props: IndexPageProps) => {
 				latest: allMarkdownRemark(
 					sort: {fields: [frontmatter___created_at], order: DESC},
 					filter: {
-						fileAbsolutePath: {regex: "//collections/posts//"}
+						fileAbsolutePath: {regex: "//collections/posts//"},
+						frontmatter: {isPage: {ne: true}}
 					}
 				) {
 					edges {

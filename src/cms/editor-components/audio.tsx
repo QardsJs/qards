@@ -19,7 +19,7 @@ export default base(
             label: 'Url',
             widget: 'string',
         }, {
-            name: 'src',
+            name: 'poster',
             label: 'Poster',
             widget: 'image',
             required: false

@@ -4,7 +4,7 @@ import Img from "gatsby-image";
 import {Intent} from "@blueprintjs/core";
 
 import {tokenizePost} from "../../utils/helpers";
-import {PostType} from "../post";
+import {PostType} from "../../fragments/post";
 import {Image, Date, FeaturedTag, Text, Wrapper} from "./styles";
 
 interface Props {
@@ -12,10 +12,10 @@ interface Props {
 }
 
 export default class FeaturedPost extends Component<Props, any> {
-	get heroImageBoxWidth(): number[] {
+	get heroImgBoxWidth(): number[] {
 		const {post} = this.props;
 
-		if (post.heroImage) {
+		if (post.frontmatter.hero.image) {
 			return [0, 0, 1 / 3];
 		}
 
@@ -25,7 +25,7 @@ export default class FeaturedPost extends Component<Props, any> {
 	get detailsBoxWidth(): number[] {
 		const {post} = this.props;
 
-		if (post.heroImage) {
+		if (post.frontmatter.hero.image) {
 			return [1, 1, 2 / 3];
 		}
 
@@ -42,9 +42,9 @@ export default class FeaturedPost extends Component<Props, any> {
 		return (
 			<Wrapper to={tokenizedPost.fields.slug}>
 				<Flex flexWrap="wrap">
-					{tokenizedPost.heroImage && <Box pr={30} width={this.heroImageBoxWidth}>
+					{tokenizedPost.frontmatter.hero.image && <Box pr={30} width={this.heroImgBoxWidth}>
 							 <Image>
-								 <Img fluid={tokenizedPost.heroImage.image.fluid}/>
+								 <Img fluid={tokenizedPost.frontmatter.hero.image.image.fluid}/>
 							 </Image>
 						 </Box>}
 					<Box width={this.detailsBoxWidth} pr={10}>

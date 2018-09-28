@@ -38,13 +38,13 @@ const ImageComponent = ({photo, onClick, post, margin, ...rest}: any) => {
 		return <img src={photo.src} {...rest}/>
 	} else {
 		//	find our image
-		for (let i = 0; i < post.galleryImages.length; i++) {
-			const image = post.galleryImages[i];
+		for (let i = 0; i < post.fields.galleries.length; i++) {
+			const item = post.fields.galleries[i];
 
-			if (image.image.fluid && image.image.fluid.src == photo.src) {
+			if (item.image.image.fluid && item.image.image.fluid.src == photo.src) {
 				return <div onClick={(e: any) => onClick(e, rest)}>
 					<Img
-						fluid={image.image.fluid}
+						fluid={item.image.image.fluid}
 						style={{
 							margin,
 							width : photo.width,
@@ -99,19 +99,21 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 		const {preview, post, items} = this.props;
 		const {images, currentImage, lightboxIsOpen} = this.state;
 
+		if (!post) return null;
+
 		let prepared: any = [];
 
 		if (!images.length && !preview) {
-			for (let i = 0; i < post.galleryImages.length; i++) {
-				const image = post.galleryImages[i];
+			for (let i = 0; i < post.fields.galleries.length; i++) {
+				const item = post.fields.galleries[i];
 
-				if (!image.image.fluid) continue;
+				if (!item.image.image.fluid) continue;
 
 				prepared.push({
-					src    : image.image.fluid.src,
+					src    : item.image.image.fluid.src,
 					width  : 100,
-					height : 100 / image.image.fluid.aspectRatio,
-					srcSet : image.image.fluid.srcSet,
+					height : 100 / item.image.image.fluid.aspectRatio,
+					srcSet : item.image.image.fluid.srcSet,
 					caption: items[i].alt
 				});
 			}

@@ -3,7 +3,7 @@ import Img from "gatsby-image";
 import TrackVisibility from "react-on-screen";
 import LazyLoad from "react-lazyload";
 
-import {PostType} from "../post";
+import {PostType} from "../../fragments/post";
 import {readingTime, tokenizePost} from "../../utils/helpers";
 import {Article, Author, AuthorContent, Content, Cover, Gravatar, List, ListItem, StyledCard, Wrapper} from "./styles";
 import {StyledButton} from "../pages/styles";

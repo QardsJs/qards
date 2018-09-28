@@ -30,7 +30,6 @@ const StyledLogo = styled(Link)`
 `;
 
 export interface Props {
-    siteUrl: string;
     siteName: string;
 }
 

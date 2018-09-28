@@ -21,29 +21,30 @@ try {
 }
 
 const query = `{
-	allContentfulPost {
+	allMarkdownRemark(
+		filter: {fileAbsolutePath: {regex: "//collections/posts//"}}
+	) {
 		edges {
 			node {
 				objectID: id
 				
-				slug
-				title
-				excerpt
-				
-				updatedAt
-				createdAt
-				
-				tags {
-					title
+				fields {
+					slug
 				}
+				
+				frontmatter {
+					title
+					excerpt
+					tags
+					created_at
+				}
+				
+				
 				
 				categories {
-					title
-				}
-
-				cards {
-					title
-					subtitle
+					frontmatter {
+						title
+					}
 				}
 			}
 		}
@@ -60,31 +61,19 @@ function concatSearchIndex(node) {
 		}
 
 	if (node.categories)
-		for (let i = 0; i < node.categories.length; i++) {
-			categories.push(node.categories[i]);
+		for (let i = 0; i < node.categories.edges.length; i++) {
+			categories.push(node.categories.edges[i].node.frontmatter.title);
 		}
 
 	return {
 		objectID : node.objectID,
-		title    : node.title,
-		slug     : node.slug,
-		createdAt: node.createdAt,
-		updatedAt: node.updatedAt,
-		excerpt  : node.excerpt,
-		tags,
-		categories
+		title    : node.frontmatter.title,
+		slug     : node.fields.slug,
+		createdAt: node.frontmatter.created_at,
+		excerpt  : node.frontmatter.excerpt,
+		tags, categories
 	};
 }
-
-const queries = [
-	{
-		query,
-		transformer: ({data}) => data.allContentfulPost.edges.map(({node}) => concatSearchIndex(node)) // optional
-	}
-];
-
-algoliaConfig['queries'] = queries;
-algoliaConfig['chunkSize'] = 10000;
 
 module.exports = {
 	siteMetadata: {
@@ -99,7 +88,15 @@ module.exports = {
 		`gatsby-transformer-sharp`,
 		{
 			resolve: `gatsby-plugin-algolia`,
-			options: algoliaConfig,
+			options: Object.assign(algoliaConfig, {
+				queries      : [{
+					query,
+					transformer: ({data}) => {
+						return data.allMarkdownRemark
+							.edges.map(({node}) => concatSearchIndex(node))
+					}
+				}], chunkSize: 10000
+			}),
 		},
 		{
 			resolve: `gatsby-source-filesystem`,

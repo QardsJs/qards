@@ -43,12 +43,19 @@ export const Article = styled.article`
 	font-weight: 300;
 	
 	b, strong {
-        font-weight: 400;
-    }
+		font-weight: 400;
+	}
 	
 	ul {
-        margin-left: 1.5rem;
-    }
+		margin-left: 1.5rem;
+	}
+	
+	@media screen and (min-width: ${theme.main.breakpoints.xsmall}em) {
+		div.paragraphs{
+			text-align: justify;
+			text-justify: inter-word;
+		}
+	}
 `;
 
 export const SidebarWrapper = styled(Box)`
@@ -57,10 +64,4 @@ export const SidebarWrapper = styled(Box)`
 		position: sticky;
 		top: 60px;
 	}
-`;
-
-export const CardWrapper = styled.div`
-    margin-top: 30px;
-    padding-top: 30px;
-	border-top: 1px solid ${theme.colors.borderColor};
 `;

@@ -3,7 +3,7 @@ import Helmet from "react-helmet";
 import {Box} from "grid-styled";
 
 import {Wrapper} from "../styles";
-import {PostType} from '../../post';
+import {PostType} from "../../../fragments/post";
 import Layout from '../../layout';
 import Content from '../../layout/content';
 import Post from '../../post';
@@ -37,13 +37,18 @@ class PostPage extends React.Component<PostPageProps, any> {
 
 				<Content>
 					<Post post={tokenizedPost} location={location}/>
+				</Content>
 
-					<Box mt={[80, 80, 80, 180]} mb={[20, 20, 20, 60]}>
-						<Posts showExcerpt={true} posts={related} title={`More like this`} paginate={{
-							pageSize: 6
-						}}/>
-					</Box>
+				<Box mt={[80, 80, 80, 180]} mb={[20, 20, 20, 60]}>
+					<Content darkTheme={true}>
+						<Posts darkTheme={true} showExcerpt={true} posts={related} title={`More like this`}
+							  paginate={{
+								  pageSize: 6
+							  }}/>
+					</Content>
+				</Box>
 
+				<Content>
 					<Box mt={[60, 60, 60, 120]} mb={[60, 60, 60, 120]}>
 						<Subscribe/>
 					</Box>

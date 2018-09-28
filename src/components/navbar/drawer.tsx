@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
-import { Link } from 'gatsby';
+import {Link} from 'gatsby';
 import Drawer from 'react-motion-drawer';
 import styled from 'styled-components';
-import { HTMLDivProps } from '@blueprintjs/core/src/common/props';
-import { Tag, Spinner } from '@blueprintjs/core';
+import {HTMLDivProps} from '@blueprintjs/core/src/common/props';
+import {Tag, Spinner} from '@blueprintjs/core';
 
-import { DrawerLinkList, DrawerSearch, DrawerSection, DrawerWrapper } from './styles';
-import { Categories } from './index';
-import { Category as CategoryProps, Page as PageProps, Post as PostProps } from '../../templates/types';
+import {DrawerLinkList, DrawerSearch, DrawerSection, DrawerWrapper} from './styles';
+import {Categories} from './index';
 import Search from '../search';
-import { Response } from 'algoliasearch';
+import {Response} from 'algoliasearch';
 import Hide from '../common/hide';
-import { getPostUrlPath } from '../../utils/helpers';
 
 import theme from '../../theme';
+import {PostType} from "../../fragments/post";
+import {CategoryType} from "../../templates/category";
 
 const Wrapper = styled.div``;
 const SearchResultTag = styled(Tag)`
@@ -42,8 +42,8 @@ const SearchResult = styled(Link)`
 `;
 
 interface Props {
-	pages: PageProps[];
-	popularCategories: CategoryProps[];
+	pages: PostType[];
+	popularCategories: CategoryType[];
 	children: any;
 	width: string | number;
 }
@@ -52,11 +52,11 @@ interface State {
 	drawerOpen?: boolean;
 	searchPerformed: boolean;
 	searchingWrite?: boolean;
-	searchResults?: PostProps[];
+	searchResults?: PostType[];
 }
 
 export default class NavbarDrawer extends Component<Props & HTMLDivProps, State> {
-	state = { drawerOpen: false, searchPerformed: false, searchingWrite: false, searchResults: [] };
+	state = {drawerOpen: false, searchPerformed: false, searchingWrite: false, searchResults: []};
 
 	toggleBodyCls(isItOpen: boolean) {
 		if (isItOpen) {
@@ -67,11 +67,11 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 	}
 
 	toggleDrawer = () => {
-		this.setState({ drawerOpen: !this.state.drawerOpen });
+		this.setState({drawerOpen: !this.state.drawerOpen});
 	};
 
 	onDrawerChange = (isItOpen: boolean) => {
-        this.setState({ drawerOpen: isItOpen});
+		this.setState({drawerOpen: isItOpen});
 		this.toggleBodyCls(isItOpen);
 	};
 
@@ -91,8 +91,8 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 	}
 
 	render() {
-		const { pages, popularCategories, width, children, ...props } = this.props;
-		const { searchResults, searchingWrite, searchPerformed } = this.state;
+		const {pages, popularCategories, width, children, ...props} = this.props;
+		const {searchResults, searchingWrite, searchPerformed} = this.state;
 
 		const childrenWithProps = React.cloneElement(children, {
 			onClick: this.toggleDrawer.bind(this)
@@ -105,7 +105,7 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 				<Drawer
 					open={this.state.drawerOpen}
 					width={width}
-					drawerStyle={{ position: 'relative', background: 'white' }}
+					drawerStyle={{position: 'relative', background: 'white'}}
 					className="qards-navbar-drawer"
 					onChange={this.onDrawerChange}
 				>
@@ -114,8 +114,8 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 							<Search
 								onResults={(results: Response['hits']) => {
 									this.setState({
-										searchResults: results,
-										searchingWrite: false,
+										searchResults  : results,
+										searchingWrite : false,
 										searchPerformed: true
 									});
 								}}
@@ -132,24 +132,26 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 								<DrawerSection>
 									<Title>Search results</Title>
 
-									{searchingWrite && <Spinner size={50} />}
+									{searchingWrite && <Spinner size={50}/>}
 
 									{searchResults.length > 0 && (
 										<DrawerLinkList>
-											{searchResults.map((result: PostProps) => {
+											{searchResults.map((result: PostType) => {
 												return (
-													<li key={result.slug}>
+													<li key={result.fields.slug}>
 														<SearchResult
 															onClick={this.toggleDrawer}
-															to={getPostUrlPath(result)}
+															to={result.fields.slug}
 														>
-															<b>{result.title}</b>
-															<span>{result.excerpt}</span>
+															<b>{result.frontmatter.title}</b>
+															<span>{result.frontmatter.excerpt}</span>
 															<div className="tags">
-																{result.tags.map((tag, k) => {
+																{result.frontmatter.tags.map((tag, k) => {
 																	return (
-																		<SearchResultTag intent={'primary'} key={k}>
-																			{tag.title}
+																		<SearchResultTag
+																			intent={'primary'}
+																			key={k}>
+																			{tag}
 																		</SearchResultTag>
 																	);
 																})}
@@ -175,17 +177,17 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 							</div>
 						)}
 
-                        <Hide medium large larger xlarge>
+						<Hide medium large larger xlarge>
 
-                            {popularCategories.length > 0 && (
-                                <div>
-                                    <DrawerSection>
-                                        <Title>Categories</Title>
-                                        <Categories isInDrawer={true} popularCategories={popularCategories} />
-                                    </DrawerSection>
-                                </div>
-                            )}
-                            
+							{popularCategories.length > 0 && (
+								<div>
+									<DrawerSection>
+										<Title>Categories</Title>
+										<Categories isInDrawer={true} popularCategories={popularCategories}/>
+									</DrawerSection>
+								</div>
+							)}
+
 							{pages.length > 0 && (
 								<DrawerSection>
 									<Title>Pages</Title>
@@ -193,15 +195,10 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 										{pages.map((page) => {
 											return (
 												<li key={page.id}>
-													{!page.url.startsWith('http') && (
-														<Link to={page.url}>{page.title}</Link>
-													)}
-
-													{page.url.startsWith('http') && (
-														<a target={'_blank'} rel={'noopener'} href={page.url}>
-															{page.title}
-														</a>
-													)}
+													<a target={'_blank'} rel={'noopener'}
+													   href={page.fields.slug}>
+														{page.frontmatter.title}
+													</a>
 												</li>
 											);
 										})}

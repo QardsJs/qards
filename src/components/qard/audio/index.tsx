@@ -24,6 +24,7 @@ interface Progress {
 
 export interface State {
 	isPlaying: boolean;
+	readyToPlay: boolean;
 	duration?: number;
 	progress?: Progress;
 	currentTrack: CardAudioItemType;
@@ -47,6 +48,7 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 		const {items} = this.props;
 
 		this.state = {
+			readyToPlay : false,
 			isPlaying   : false,
 			currentTrack: items[0]
 		};
@@ -76,8 +78,16 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 		return false;
 	};
 
+	onReadyToPlay = () => {
+		this.setState({readyToPlay: true});
+	};
+
 	play = (audio: CardAudioItemType) => {
 		this.notAvailableInPreview(() => {
+			if (audio == this.state.currentTrack) return;
+
+			this.resetTimer();
+
 			this.setState({currentTrack: audio, isPlaying: true});
 		});
 	};
@@ -92,6 +102,10 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 				loadedSeconds: 0
 			}
 		});
+	};
+
+	ref = (player: ReactPlayer) => {
+		this.player = player;
 	};
 
 	playPrev = () => {
@@ -163,11 +177,14 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 	};
 
 	setDuration = (seconds: number) => {
-		this.setState({duration: parseInt(Number(seconds).toFixed(0))});
+		//this.setState({duration: parseInt(Number(seconds).toFixed(0))});
 	};
 
 	setProgress = (progress: Progress) => {
 		this.setState({
+			//	the `onDuration` callback is faulty in react player
+			//	https://github.com/CookPete/react-player/issues/488
+			duration: parseInt(Number(this.player.getDuration()).toFixed(0)),
 			progress: {
 				loaded       : parseInt(Number(progress.loaded).toFixed(0)),
 				played       : parseInt(Number(progress.played).toFixed(0)),
@@ -178,8 +195,6 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 	};
 
 	get playedTimer() {
-		//  We can't get a remaining timer because we don't know the total number of seconds
-		//  this track has so we're forced to only showing the positive progress
 		const {duration, progress} = this.state;
 
 		if (!duration || !progress) return <i>loading</i>;
@@ -199,10 +214,6 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 		const items = this.prepareItems();
 		this.setState({currentTrack: items[0]});
 	}
-
-	ref = (player: any) => {
-		this.player = player
-	};
 
 	prepareItems(): CardAudioItemType[] {
 		const {items, preview} = this.props;
@@ -239,17 +250,18 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 			console.warn("state was not set");
 			return <React.Fragment/>;
 		}
+
 		if (!this.props.items || !this.props.items.length) {
 			console.warn("no items received");
 			return <React.Fragment/>;
 		}
 
-		const {isPlaying, currentTrack} = this.state;
-
-		const {title, subtitle, url, poster} = currentTrack;
 		const audioItems = this.prepareItems();
 
 		if (!audioItems.length) return <React.Fragment/>;
+
+		const {isPlaying, currentTrack} = this.state;
+		const {title, subtitle, url, poster} = currentTrack;
 
 		return (
 			<TitledWrapper>
@@ -260,8 +272,9 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 						playing={this.state.isPlaying}
 						controls={false}
 						onEnded={this.playNext}
+						onReady={this.onReadyToPlay}
 						onDuration={this.setDuration}
-						onError={e => console.log('player error:', e)}
+						onError={e => console.error('player error:', e)}
 						onProgress={this.setProgress}
 						className='qard-audio-player'
 						style={{

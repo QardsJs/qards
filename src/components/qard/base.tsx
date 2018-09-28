@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {PostType} from "../post";
+import {PostType} from "../../fragments/post";
 
 export interface QardProps {
 	//  some items do not work well on preview mode

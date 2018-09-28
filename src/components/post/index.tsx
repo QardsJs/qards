@@ -8,57 +8,7 @@ import Author from '../author';
 import ScrollProgress from "../scroll-progress";
 import {SidebarWrapper, Wrapper} from "./styles";
 import PostComponent from "./post";
-import {CardImageType} from "../qard/image";
-
-export interface PostMetaDescriptionType {
-	keywords: string;
-	description: string;
-}
-
-export interface PostAuthorType {
-	frontmatter: {
-		avatar: {
-			image: CardImageType;
-		};
-		title: string;
-		excerpt: string;
-	}
-}
-
-export interface PostType {
-	id: string;
-	md: string;
-
-	frontmatter: {
-		title: string;
-		excerpt: string;
-		created_at: string;
-		tags: string[];
-
-		hero: {
-			alt: string;
-			image: {
-				image: CardImageType;
-			};
-		}
-
-		meta: PostMetaDescriptionType;
-	}
-
-	authors: PostAuthorType[];
-
-	fields: {
-		slug: string;
-	}
-
-	audioPosterImages: {
-		image: CardImageType;
-	}
-
-	galleryImages: {
-		image: CardImageType;
-	}[]
-}
+import {PostType} from "../../fragments/post";
 
 export interface Props {
 	post: PostType;
@@ -68,7 +18,6 @@ export interface Props {
 }
 
 export default class Post extends React.Component<Props, any> {
-
 	public render() {
 		const {post, location} = this.props;
 
@@ -77,9 +26,9 @@ export default class Post extends React.Component<Props, any> {
 				<Box width={[1, 1, 1, 3 / 5]} mt={[0, 0, 0, 60]}>
 					<PostComponent preview={false} post={post}/>
 
-					{/*<Author author={post.author} style={{*/}
-					{/*marginTop: 40*/}
-					{/*}}/>*/}
+					<Box mt={[40, 40, 40, 100]}>
+						<Author author={post.authors[0]}/>
+					</Box>
 				</Box>
 				<SidebarWrapper width={[0, 0, 0, 2 / 5]} mt={[0, 0, 0, 60]}>
 					<Hide medium small xsmall className={'sidebar'}>

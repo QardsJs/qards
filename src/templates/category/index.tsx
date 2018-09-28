@@ -2,18 +2,23 @@ import React from "react";
 import {graphql} from "gatsby";
 
 import Route from "../../components/common/route";
-import {PostType} from '../../components/post';
+import {PostType} from "../../fragments/post";
 
 import CategoriesPage from "../../components/pages/categories";
 import {extractNodesFromEdges} from "../../utils/helpers";
-import {Image} from "../types";
+
 
 export interface CategoryType {
 	id: string;
-	slug: string;
-	title: string;
-	cover: Image;
-	description: string;
+
+	fields: {
+		slug: string;
+	}
+
+	frontmatter: {
+		title: string;
+		excerpt: string;
+	}
 }
 
 interface Props {
@@ -32,18 +37,15 @@ interface Props {
 		};
 		category: CategoryType
 	};
-
-	pageContext: {
-		category: string;
-	};
 }
 
 
 class CategoryTemplate extends React.Component<Props, any> {
 	public render() {
 		const {data} = this.props;
+
 		const {featured, category} = data;
-		const {edges, totalCount} = data.posts;
+		const {edges} = data.posts;
 
 		const posts: PostType[] = [];
 		for (let i = 0; i < edges.length; i++) {
@@ -51,9 +53,9 @@ class CategoryTemplate extends React.Component<Props, any> {
 		}
 
 		return <Route
-			path={`/categories/${category.slug}/`}
+			path={category.fields.slug}
 			component={CategoriesPage}
-			totalCount={totalCount}
+			totalCount={data.posts.totalCount}
 			posts={posts}
 			category={category}
 			featured={featured ? extractNodesFromEdges(featured.edges, "") : []}
@@ -62,3 +64,41 @@ class CategoryTemplate extends React.Component<Props, any> {
 }
 
 export default CategoryTemplate;
+
+export const pageQuery = graphql`
+	query($slug: String) {
+		posts: allMarkdownRemark(
+			sort: {fields: [frontmatter___created_at], order: DESC},
+			filter: {
+				fileAbsolutePath: {regex: "//collections/posts//"},
+				categories: {fields: {slug: {eq: $slug}}}
+			}
+		) {
+			totalCount
+			edges {
+				node {
+					...postFragment
+				}
+			}
+		}
+		
+		featured: allMarkdownRemark(
+			sort: {fields: [frontmatter___created_at], order: DESC},
+			filter: {
+				fileAbsolutePath: {regex: "//collections/posts//"},
+				categories: {fields: {slug: {eq: $slug}}},
+				frontmatter: {isFeatured: {eq: true}}
+			}
+		) {
+			edges {
+				node {
+					...postFragment
+				}
+			}
+		}
+		
+		category: markdownRemark(fields: { slug: { eq: $slug } }){
+			...categoryFragment
+		}
+	}
+`;

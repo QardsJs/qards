@@ -6,13 +6,13 @@ import styled from "styled-components";
 import {Intent, ProgressBar} from "@blueprintjs/core";
 
 interface State {
-    progress: number;
-    visible: boolean;
-    scrollPerformed: boolean;
+	progress: number;
+	visible: boolean;
+	scrollPerformed: boolean;
 }
 
 interface Props {
-    identifier: string;
+	identifier: string;
 }
 
 const ScrollProgressBar = styled(ProgressBar)`
@@ -32,63 +32,63 @@ const ScrollProgressBar = styled(ProgressBar)`
 `;
 
 export default class ScrollProgress extends React.Component<Props, State> {
-    progressObserver: any;
+	progressObserver: any;
 
-    state = {
-        progress: 0, visible: false, scrollPerformed: false
-    };
+	state = {
+		progress: 0, visible: false, scrollPerformed: false
+	};
 
-    throttleVisibility = throttle((y: number) => this.setState({
-            progress: y,
-            visible: true,
-            scrollPerformed: true
-        }, () => setTimeout(() => {
-            this.setState({visible: false});
-        }, 2000)
-    ), 400, {
-        leading: false,
-        trailing: true
-    });
+	throttleVisibility = throttle((y: number) => this.setState({
+			progress       : y,
+			visible        : true,
+			scrollPerformed: true
+		}, () => setTimeout(() => {
+			this.setState({visible: false});
+		}, 2000)
+	), 400, {
+		leading : false,
+		trailing: true
+	});
 
-    initObserver = () => {
-        if (this.progressObserver) {
-            this.progressObserver.destroy();
-            this.progressObserver = undefined;
-        }
+	initObserver = () => {
+		if (this.progressObserver) {
+			this.progressObserver.destroy();
+			this.progressObserver = undefined;
+		}
 
-        this.progressObserver = new SP(
-            (x: number, y: number) => this.throttleVisibility.bind(this, y)()
-        );
-    };
+		this.progressObserver = new SP(
+			(x: number, y: number) => this.throttleVisibility.bind(this, y)()
+		);
+	};
 
-    componentDidMount() {
-        this.initObserver();
-    }
+	componentDidMount() {
+		this.initObserver();
+	}
 
-    componentDidUpdate(prevProps: Props) {
-        if (prevProps.identifier != this.props.identifier) {
-            //  this is supposed to be a singleton and we just received a new identifier
-            //  If we bootstrap our code inside `componentDidMount` we can experience
-            //  unwanted behavior since only the first post seems to be calling `componentDidMount`
-            //  while the rest are loaded via prefetch which does not call `componentDidMount` again
-            //  and we're left with a progressbar that does not reflect the length of our current post
-            //  so we're watching for a change in identifier and reset the state when that happens
-            this.initObserver();
-        }
-    }
+	componentDidUpdate(prevProps: Props) {
+		if (prevProps.identifier != this.props.identifier) {
+			//  this is supposed to be a singleton and we just received a new identifier
+			//  If we bootstrap our code inside `componentDidMount` we can experience
+			//  unwanted behavior since only the first post seems to be calling `componentDidMount`
+			//  while the rest are loaded via prefetch which does not call `componentDidMount` again
+			//  and we're left with a progressbar that does not reflect the length of our current post
+			//  so we're watching for a change in identifier and reset the state when that happens
+			this.initObserver();
+		}
+	}
 
-    componentWillUnmount() {
-        this.progressObserver.destroy();
-    }
+	componentWillUnmount() {
+		this.progressObserver.destroy();
+	}
 
-    render() {
-        return <ScrollProgressBar
-            stripes={false}
-            animate={false}
-            intent={Intent.SUCCESS}
-            className={this.state.visible ? "inherit" : "fadeOutStayOut"}
-            scrollPerformed={this.state.scrollPerformed}
-            value={this.state.progress}
-        />;
-    }
+	render() {
+		return <ScrollProgressBar
+			stripes={false}
+			animate={false}
+			intent={Intent.SUCCESS}
+			className={this.state.visible ? "inherit" : "fadeOutStayOut"}
+			scrollPerformed={this.state.scrollPerformed}
+			value={this.state.progress}
+		/>;
+	}
 }

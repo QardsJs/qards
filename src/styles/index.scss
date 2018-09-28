@@ -30,3 +30,9 @@ body {
 	box-shadow: none !important;
 	background-image: none !important;
 }
+
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}

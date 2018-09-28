@@ -1,9 +1,9 @@
 import React from 'react';
-import _ from 'lodash';
 import {graphql} from 'gatsby';
-import {PostType} from '../../components/post';
+import {PostType} from "../../fragments/post";
 
 import PostPage from "../../components/pages/post";
+import {extractNodesFromEdges} from "../../utils/helpers";
 
 
 interface DataProps {
@@ -21,6 +21,7 @@ interface Props {
 		slug: string;
 		next: null | PostType;
 		previous: null | PostType;
+		tags: string[];
 	};
 
 	location: any;
@@ -29,29 +30,36 @@ interface Props {
 }
 
 const PostTemplate = ({data, location}: Props) => {
-	const related: PostType[] = [];
-
-	// for (let i = 0; i < data.related.edges.length; i++) {
-	//     const post: PostType = data.related.edges[i].node;
-	//     const hasSimilarTags = _.intersection(post.tags.map(a => a.id), data.post.tags.map(a => a.id)).length;
-	//     const hasSimilarCategories = _.intersection(post.categories.map(a => a.id), data.post.categories.map(a => a.id)).length;
-	//
-	//     if (post.id == data.post.id) continue;
-	//     if (!hasSimilarTags && !hasSimilarCategories) continue;
-	//
-	//     related.push(post);
-	// }
-
-	return <PostPage location={location} post={data.post} related={related}/>
+	return <PostPage
+		location={location}
+		post={data.post}
+		related={data.related ? extractNodesFromEdges(data.related.edges) : []}
+	/>
 };
 
 
 export default PostTemplate;
 
 export const pageQuery = graphql`
-	query($slug: String) {
+	query($slug: String, $tags: [String]) {
 		post: markdownRemark(fields: { slug: { eq: $slug } }) {
 			...postFragment
+		}
+		
+		related: allMarkdownRemark(
+			sort: {fields: [frontmatter___created_at], order: DESC},
+			filter: {
+				fileAbsolutePath: {regex: "//collections/posts//"},
+				frontmatter: {tags: {in: $tags}},
+				fields: {slug: {ne: $slug}}
+			}
+		) {
+			totalCount
+			edges {
+				node {
+					...postFragment
+				}
+			}
 		}
 	}
 `;

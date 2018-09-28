@@ -32,6 +32,8 @@ export const Item = styled.li`
     
     &:hover {
         background-color: ${tinycolor(theme.colors.faded).lighten(2).toString()};
+        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 6px;
         
         &.active {
             color: ${tinycolor(theme.colors.accent).lighten(15).toString()};

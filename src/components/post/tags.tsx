@@ -6,7 +6,7 @@ import tinycolor2 from "tinycolor2";
 import {Link} from "gatsby";
 
 import theme from "../../theme";
-import {PostType} from "./index";
+import {PostType} from "../../fragments/post";
 import {slugify} from "../../utils/helpers";
 
 const Wrapper = styled(Flex)`
