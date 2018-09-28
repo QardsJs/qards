@@ -6,6 +6,10 @@
     "base_url": "https://qards.io"
   },
   "posts": {
-    "front_limit": 12
+    "front_limit": 12,
+    "post_progress_show": true,
+    "post_toc_show": true,
+    "post_social_show": true,
+    "post_subscribe_show": true
   }
 }
