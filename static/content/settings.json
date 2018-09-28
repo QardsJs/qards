@@ -3,7 +3,8 @@
     "name": "qards",
     "title": "Qards - the blogging platform for professionals",
     "excerpt": "Qards is a blogging platform for professionals",
-    "base_url": "https://qards.io"
+    "base_url": "https://qards.io",
+    "social_share_img": "/images/uploads/neonbrand-428982-unsplash.jpg"
   },
   "posts": {
     "front_limit": 12,
