@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import styled from 'styled-components';
 
+import config from "../../../static/content/settings.json";
 import theme from '../../theme';
 import Toc from './toc';
 import Tags from './tags';
@@ -25,9 +26,11 @@ const TocTitle = styled.h4`
     color: ${theme.colors.lightText};
 `;
 
-const SubscribeWrapper = styled.div`
-	margin-top: 80px;
+const SidebarItem = styled.div`
+	margin-bottom: 80px;
+`;
 
+const SubscribeWrapper = styled.div`
 	.title {
 		font-size: 1.2rem !important;
 	}
@@ -40,12 +43,10 @@ const SubscribeWrapper = styled.div`
 `;
 
 const SocialShareWrapper = styled.div`
-	margin-top: 40px;
+
 `;
 
 const TagsWrapper = styled.div`
-	margin-top: 80px;
-	
 	.title {
 		font-size: 1.2rem !important;
 	}
@@ -65,22 +66,27 @@ export default class PostSidebar extends Component<Props, any> {
 
 		return (
 			<Wrapper {...this.props.wrapperProps}>
-				<TitledWrapper title={<TocTitle>Table of contents</TocTitle>} innerProps={{
-					style: {
-						padding: 0
-					}
-				}}>
-					<Toc post={post}/>
-				</TitledWrapper>
+				{config.posts.post_toc_show &&
+					<SidebarItem>
+						<TitledWrapper title={<TocTitle>Table of contents</TocTitle>}>
+							<Toc post={post}/>
+						</TitledWrapper>
+					</SidebarItem>}
 
-				<SocialShareWrapper>
-					<SocialShare url={currentUrl} message={post.frontmatter.title}/>
-				</SocialShareWrapper>
+				{config.posts.post_social_show &&
+					<SidebarItem>
+						<SocialShareWrapper>
+							<SocialShare url={currentUrl} message={post.frontmatter.title}/>
+						</SocialShareWrapper>
+					</SidebarItem>}
 
 
-				<SubscribeWrapper>
-					<Subscribe/>
-				</SubscribeWrapper>
+				{config.posts.post_subscribe_show &&
+					<SidebarItem>
+						<SubscribeWrapper>
+							<Subscribe/>
+						</SubscribeWrapper>
+					</SidebarItem>}
 
 				<TagsWrapper>
 					<b className="title">Tags</b>

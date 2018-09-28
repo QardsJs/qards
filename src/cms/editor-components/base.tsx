@@ -1,7 +1,7 @@
 import React from 'react';
 import Immutable from "immutable";
 
-import {cPatternWithId} from "../../components/post/post";
+import {cPatternWithId} from "../../utils/helpers";
 import {encodeWidgetDataObject, decodeWidgetDataObject} from "../utils";
 
 export interface FieldType {

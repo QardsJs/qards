@@ -6,6 +6,9 @@ import {CategoryType} from "../templates/category";
 import {CardHeaderType} from "../components/qard/header";
 import {decodeWidgetDataObject} from "../cms/utils";
 
+export const cPatternWithId = (id: string): string => {
+	return `{"widget":"${id}","config":"([0-9a-zA-Z+/=]+?)"}`;
+};
 export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+/=]+?)"}/;
 
 export function lineRepresentsEncodedComponent(line: string) {

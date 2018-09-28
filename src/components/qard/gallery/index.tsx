@@ -35,7 +35,16 @@ interface State {
 
 const ImageComponent = ({photo, onClick, post, margin, ...rest}: any) => {
 	if (photo.src && !photo.srcSet) {
-		return <img src={photo.src} {...rest}/>
+		return <img
+			src={photo.src}
+			style={{
+				margin,
+				width : photo.width,
+				height: photo.height,
+				cursor: "pointer"
+			}}
+			onClick={(e: any) => onClick(e, rest)}
+			{...rest}/>
 	} else {
 		//	find our image
 		for (let i = 0; i < post.fields.galleries.length; i++) {
@@ -97,13 +106,14 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 
 	render() {
 		const {preview, post, items} = this.props;
+
 		const {images, currentImage, lightboxIsOpen} = this.state;
 
-		if (!post) return null;
+		if (!post && !preview) return null;
 
 		let prepared: any = [];
 
-		if (!images.length && !preview) {
+		if (!images.length && !preview && post) {
 			for (let i = 0; i < post.fields.galleries.length; i++) {
 				const item = post.fields.galleries[i];
 
@@ -122,11 +132,10 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 		if (preview) {
 			for (let i = 0; i < images.length; i++) {
 
-				const p: any = {
-					...images[i].image
-				};
+				const p: any = {...images[i].image};
 
 				//  we need these for the Gallery widget
+				p.caption = images[i].image.alt;
 				p.width = images[i].width;
 				p.height = images[i].height;
 				prepared.push(p);
@@ -135,32 +144,28 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 
 		if (!prepared.length) return <React.Fragment/>;
 
+		console.log(prepared);
+
 		return <Wrapper>
-			{!this.props.preview && <Gallery
-				   columns={this.columnsNr}
-				   onClick={this.openLightbox}
-				   photos={prepared}
-				   post={post}
-				   ImageComponent={ImageComponent}
-			   />}
-
-			{this.props.preview && <Gallery
-				   columns={this.columnsNr}
-				   photos={prepared}
-			   />}
-
-			{!this.props.preview && <Lightbox
-				   currentImage={currentImage}
-				   images={prepared}
-				   isOpen={lightboxIsOpen}
-				   onClickImage={this.handleClickImage}
-				   onClickNext={this.gotoNext}
-				   onClickPrev={this.gotoPrevious}
-				   onClickThumbnail={this.gotoImage}
-				   onClose={this.closeLightbox}
-				   showThumbnails={false}
-				   backdropClosesModal={true}
-			   />}
+			<Gallery
+				columns={this.columnsNr}
+				onClick={this.openLightbox}
+				photos={prepared}
+				post={post}
+				ImageComponent={ImageComponent}
+			/>
+			<Lightbox
+				currentImage={currentImage}
+				images={prepared}
+				isOpen={lightboxIsOpen}
+				onClickImage={this.handleClickImage}
+				onClickNext={this.gotoNext}
+				onClickPrev={this.gotoPrevious}
+				onClickThumbnail={this.gotoImage}
+				onClose={this.closeLightbox}
+				showThumbnails={false}
+				backdropClosesModal={true}
+			/>
 		</Wrapper>;
 	}
 
