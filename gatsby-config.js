@@ -1,17 +1,17 @@
 const configPlugins = require("./static/config/plugins");
 
-let algoliaConfig;
-
-try {
-	algoliaConfig = require('./config/algolia.json');
-} catch (_) {
-	algoliaConfig = {
-		appId    : process.env.ALGOLIA_APP_ID,
-		apiKey   : process.env.ALGOLIA_API_KEY,
-		indexName: process.env.ALGOLIA_INDEX_NAME,
-		searchKey: process.env.ALGOLIA_SEARCH_KEY
-	};
-}
+// let algoliaConfig;
+//
+// try {
+// 	algoliaConfig = require('./config/algolia.json');
+// } catch (_) {
+// 	algoliaConfig = {
+// 		appId    : process.env.ALGOLIA_APP_ID,
+// 		apiKey   : process.env.ALGOLIA_API_KEY,
+// 		indexName: process.env.ALGOLIA_INDEX_NAME,
+// 		searchKey: process.env.ALGOLIA_SEARCH_KEY
+// 	};
+// }
 
 const query = `{
 	allMarkdownRemark(
@@ -72,18 +72,6 @@ function concatSearchIndex(node) {
 const plugins = [
 	`gatsby-plugin-sharp`,
 	`gatsby-transformer-sharp`,
-	{
-		resolve: `gatsby-plugin-algolia`,
-		options: Object.assign(algoliaConfig, {
-			queries      : [{
-				query,
-				transformer: ({data}) => {
-					return data.allMarkdownRemark
-						.edges.map(({node}) => concatSearchIndex(node))
-				}
-			}], chunkSize: 10000
-		}),
-	},
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
@@ -297,16 +285,28 @@ if (configPlugins.email_subscribers_enable && configPlugins.email_subscribers_ma
 	})
 }
 
+if (configPlugins.search_enable) {
+	plugins.push({
+		resolve: `gatsby-plugin-algolia`,
+		options: Object.assign({
+			appId    : configPlugins.search_algolia_app_id,
+			indexName: configPlugins.search_algolia_index_name,
+			searchKey: configPlugins.search_algolia_search_key,
+		}, {
+			queries      : [{
+				query,
+				transformer: ({data}) => {
+					return data.allMarkdownRemark
+						.edges.map(({node}) => concatSearchIndex(node))
+				}
+			}], chunkSize: 10000
+		}),
+	})
+}
+
 //	last
 plugins.push(`gatsby-plugin-netlify`);
 
 module.exports = {
-	siteMetadata: {
-		algolia: {
-			indexName: algoliaConfig.indexName,
-			appId    : algoliaConfig.appId,
-			searchKey: algoliaConfig.searchKey,
-		},
-	},
 	plugins,
 };
