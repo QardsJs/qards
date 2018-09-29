@@ -34,7 +34,7 @@ But...(Nothing Someone Says Before The Word But Really Counts - Game of Thrones 
 
 Qards compiles down to HTML, CSS, Javascript which can be placed on any web server or CDN out there. Nothing needs to be interpreted by a programming language before being sent to the visitor. These are all static files that are sent immediately after being accessed.
 
-{"widget":"image","config":"eyJzcmMiOiIvaW1hZ2VzL3VwbG9hZHMvc2NyZWVuc2hvdF9mcm9tXzIwMTgtMDktMDdfMDMtMzItMjAtMS0ucG5nIiwiYWx0IjoiUWFyZHMgdnMgV29yZHByZXNzIHNwZWVkIiwibGF5b3V0IjoiZnVsbC13aWR0aCIsImNhcHRpb24iOiJRYXJkcyBkb2VzIG5vdCBoYXZlIHRvIGRlYWwgd2l0aCBkeW5hbWljIGNvbnRlbnQgb3IgZGF0YWJhc2VzIGFuZCBzaG93cyB0byBiZSBjb25zaXN0ZW50bHkgZmFzdGVyIHRoYW4gV29yZHByZXNzIn0="}
+{"widget":"image","config":"eyJzcmMiOiIvaW1hZ2VzL3VwbG9hZHMvc2NyZWVuc2hvdF9mcm9tXzIwMTgtMDktMDdfMDMtMzItMjAtMS0ucG5nIiwiYWx0IjoiUWFyZHMgdnMgV29yZHByZXNzIHNwZWVkIiwibGF5b3V0IjoiZnVsbC13aWR0aCIsImNhcHRpb24iOiJRYXJkcyBkb2VzIG5vdCBoYXZlIHRvIGRlYWwgd2l0aCBkeW5hbWljIGNvbnRlbnQgb3IgZGF0YWJhc2VzIGFuZCBzaG93cyB0byBiZSBjb25zaWRlcmFibHkgZmFzdGVyIHRoYW4gV29yZHByZXNzIn0="}
 
 Ask any expert you like and they will all reply with the same line: every second counts; for SEO, for user experience, user retention etc.
 
