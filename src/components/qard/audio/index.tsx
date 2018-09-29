@@ -47,8 +47,6 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 
 		const {items} = this.props;
 
-		console.log(items);
-
 		this.state = {
 			readyToPlay : false,
 			isPlaying   : false,
