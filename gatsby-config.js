@@ -1,17 +1,17 @@
-const config = require("./static/content/settings");
+const configPlugins = require("./static/config/plugins");
 
-let algoliaConfig;
-
-try {
-	algoliaConfig = require('./config/algolia.json');
-} catch (_) {
-	algoliaConfig = {
-		appId    : process.env.ALGOLIA_APP_ID,
-		apiKey   : process.env.ALGOLIA_API_KEY,
-		indexName: process.env.ALGOLIA_INDEX_NAME,
-		searchKey: process.env.ALGOLIA_SEARCH_KEY
-	};
-}
+// let algoliaConfig;
+//
+// try {
+// 	algoliaConfig = require('./config/algolia.json');
+// } catch (_) {
+// 	algoliaConfig = {
+// 		appId    : process.env.ALGOLIA_APP_ID,
+// 		apiKey   : process.env.ALGOLIA_API_KEY,
+// 		indexName: process.env.ALGOLIA_INDEX_NAME,
+// 		searchKey: process.env.ALGOLIA_SEARCH_KEY
+// 	};
+// }
 
 const query = `{
 	allMarkdownRemark(
@@ -72,18 +72,6 @@ function concatSearchIndex(node) {
 const plugins = [
 	`gatsby-plugin-sharp`,
 	`gatsby-transformer-sharp`,
-	{
-		resolve: `gatsby-plugin-algolia`,
-		options: Object.assign(algoliaConfig, {
-			queries      : [{
-				query,
-				transformer: ({data}) => {
-					return data.allMarkdownRemark
-						.edges.map(({node}) => concatSearchIndex(node))
-				}
-			}], chunkSize: 10000
-		}),
-	},
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
@@ -275,36 +263,50 @@ const plugins = [
 			modulePath: `${__dirname}/src/cms/cms.ts`,
 		},
 	},
-	`gatsby-plugin-netlify`, // make sure to keep it last in the array
 ];
 
-if (config.tracking_google_analytics_tracking_id && config.tracking_enable_google_analytics) {
+if (configPlugins.tracking_google_analytics_tracking_id && configPlugins.tracking_enable_google_analytics) {
 	plugins.push({
 		resolve: `gatsby-plugin-google-analytics`,
 		options: {
-			trackingId: config.tracking_google_analytics_id,
+			trackingId: configPlugins.tracking_google_analytics_id,
 			head      : false,
 			respectDNT: true,
 		},
 	},)
 }
 
-if (config.email_subscribers_enable && config.email_subscribers_mailchimp) {
+if (configPlugins.email_subscribers_enable && configPlugins.email_subscribers_mailchimp) {
 	plugins.push({
 		resolve: 'gatsby-plugin-mailchimp',
 		options: {
-			endpoint: config.email_subscribers_mailchimp_endpoint
+			endpoint: configPlugins.email_subscribers_mailchimp_endpoint
 		},
 	})
 }
 
+if (configPlugins.search_enable) {
+	plugins.push({
+		resolve: `gatsby-plugin-algolia`,
+		options: Object.assign({
+			appId    : configPlugins.search_algolia_app_id,
+			indexName: configPlugins.search_algolia_index_name,
+			searchKey: configPlugins.search_algolia_search_key,
+		}, {
+			queries      : [{
+				query,
+				transformer: ({data}) => {
+					return data.allMarkdownRemark
+						.edges.map(({node}) => concatSearchIndex(node))
+				}
+			}], chunkSize: 10000
+		}),
+	})
+}
+
+//	last
+plugins.push(`gatsby-plugin-netlify`);
+
 module.exports = {
-	siteMetadata: {
-		algolia: {
-			indexName: algoliaConfig.indexName,
-			appId    : algoliaConfig.appId,
-			searchKey: algoliaConfig.searchKey,
-		},
-	},
 	plugins,
 };

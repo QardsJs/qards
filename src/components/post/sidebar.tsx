@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import styled from 'styled-components';
 
-import config from "../../../static/content/settings.json";
+import config from "../../../static/config/settings.json";
 import theme from '../../theme';
 import Toc from './toc';
 import Tags from './tags';

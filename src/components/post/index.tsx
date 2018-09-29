@@ -9,7 +9,7 @@ import ScrollProgress from "../scroll-progress";
 import {SidebarWrapper, Wrapper} from "./styles";
 import PostComponent from "./post";
 import {PostType} from "../../fragments/post";
-import config from "../../../static/content/settings.json";
+import config from "../../../static/config/settings.json";
 
 export interface Props {
 	post: PostType;

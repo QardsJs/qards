@@ -40,49 +40,51 @@ export default class Search extends Component<Props & HTMLDivProps, State> {
     render() {
         const {...props} = this.props;
 
-        return <StaticQuery
-            query={graphql`
-                query {
-                    site {
-                        siteMetadata {
-                            algolia {
-                                appId
-                                indexName
-                                searchKey
-                            }
-                        }
-                    }
-                }
-            `}
+        return "Not implemented!"
 
-            render={(data: DataProps) => {
-                const algoliaCfg = data.site.siteMetadata.algolia;
-                const client = algoliasearch(algoliaCfg.appId, algoliaCfg.searchKey);
-                const index = client.initIndex(algoliaCfg.indexName);
-
-                const search = debounce((query: string) => {
-                    if (this.props.onWrite) {
-                        this.props.onWrite();
-                    }
-
-                    index.search({query}, (err, content) => {
-                        if (this.props.onResults) this.props.onResults(content.hits);
-                    });
-                }, 800).bind(this);
-
-                return (
-                    <Wrapper className="qards-search" {...props}>
-                        <input
-                            className="bp3-input bp3-large bp3-fill"
-                            type="text" placeholder="Search"
-                            onChange={(e) => search(e.target.value)}
-                        />
-
-                        <img src={Algolia} alt={"Search by algolia"}/>
-
-                    </Wrapper>
-                );
-            }}
-        />
+        // return <StaticQuery
+        //     query={graphql`
+        //         query {
+        //             site {
+        //                 siteMetadata {
+        //                     algolia {
+        //                         appId
+        //                         indexName
+        //                         searchKey
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     `}
+	   //
+        //     render={(data: DataProps) => {
+        //         const algoliaCfg = data.site.siteMetadata.algolia;
+        //         const client = algoliasearch(algoliaCfg.appId, algoliaCfg.searchKey);
+        //         const index = client.initIndex(algoliaCfg.indexName);
+	   //
+        //         const search = debounce((query: string) => {
+        //             if (this.props.onWrite) {
+        //                 this.props.onWrite();
+        //             }
+	   //
+        //             index.search({query}, (err, content) => {
+        //                 if (this.props.onResults) this.props.onResults(content.hits);
+        //             });
+        //         }, 800).bind(this);
+	   //
+        //         return (
+        //             <Wrapper className="qards-search" {...props}>
+        //                 <input
+        //                     className="bp3-input bp3-large bp3-fill"
+        //                     type="text" placeholder="Search"
+        //                     onChange={(e) => search(e.target.value)}
+        //                 />
+	   //
+        //                 <img src={Algolia} alt={"Search by algolia"}/>
+	   //
+        //             </Wrapper>
+        //         );
+        //     }}
+        // />
     }
 }
