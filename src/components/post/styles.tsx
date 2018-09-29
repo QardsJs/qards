@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import {Box, Flex} from "grid-styled";
 import theme from "../../theme";
-import {getThemeConfig} from '../../utils/helpers';
 
 
 export const Wrapper = styled(Flex)`
