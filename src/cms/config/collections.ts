@@ -78,7 +78,7 @@ export const settingsCollection = {
 						name  : 'text',
 						widget: 'color',
 						format: 'hex',
-						color : '#ffa100',
+						default : '#ffa100',
 					}, {
 						label  : 'Background',
 						name   : 'background',

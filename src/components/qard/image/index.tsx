@@ -7,6 +7,7 @@ import Markdown from "../../markdown";
 import theme from "../../../theme";
 import {QardProps} from "../base";
 import {HTMLDivProps} from "@blueprintjs/core";
+import {getThemeConfig} from '../../../utils/helpers';
 
 const StyledImage = styled.figure`
 	img {
@@ -37,7 +38,7 @@ const StyledImage = styled.figure`
 		
 		figcaption {
 			font-size: .9rem;
-			color: ${theme.colors.lightText};
+			color: ${theme.color(['lightText'])};
 			padding: 8px 0;
 			line-height: 1rem;
 			text-align: center;

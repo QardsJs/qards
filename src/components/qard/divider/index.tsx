@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import theme from '../../../theme';
 import QardBase, {QardProps} from "../base";
+import {getThemeConfig} from '../../../utils/helpers';
 
 const Divider = styled.hr`
     margin: 50px 0 40px 0;
@@ -16,7 +17,7 @@ const Divider = styled.hr`
 	    &::before {
             content: '...';
             display: inline-block;
-            color: ${theme.colors.lightText};
+            color: ${theme.color(['lightText'])};
             font-weight: 400;
             font-style: italic;
             font-size: 30px;
@@ -27,7 +28,7 @@ const Divider = styled.hr`
 	}
 	
 	&.line {
-	    background: ${theme.colors.borderColor};
+	    background: ${theme.color(['borders'])};
 	}
 `;
 

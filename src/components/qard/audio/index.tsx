@@ -47,6 +47,8 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 
 		const {items} = this.props;
 
+		console.log(items);
+
 		this.state = {
 			readyToPlay : false,
 			isPlaying   : false,
@@ -262,6 +264,8 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 
 		const {isPlaying, currentTrack} = this.state;
 		const {title, subtitle, url, poster} = currentTrack;
+
+		console.log(poster);
 
 		return (
 			<TitledWrapper>

@@ -7,7 +7,6 @@ import {HTMLDivProps} from "@blueprintjs/core/src/common/props";
 import {Box, Flex} from "grid-styled";
 
 import theme from "../../../theme/";
-import colors from "../../../theme/colors";
 
 const Wrapper = styled.div`
     box-shadow: rgba(8, 35, 51, 0.05) 0px 4px 8px;
@@ -38,13 +37,13 @@ const FeatureWrapper = styled.div`
             border-radius: 50%;
             
             &.success {
-                color: ${colors.intents.success.color};
-                background-color: ${colors.intents.success.background};
+                color: ${theme.color(['intents', 'success', 'text'])};
+                background-color: ${theme.color(['intents', 'success', 'background'])};
             }
             
             &.danger {
-                color: ${colors.intents.danger.color};
-                background-color: ${colors.intents.danger.background};
+                color: ${theme.color(['intents', 'danger', 'text'])};
+                background-color: ${theme.color(['intents', 'danger', 'background'])};
             }
             
             &.primary {

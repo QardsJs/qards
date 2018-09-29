@@ -8,12 +8,10 @@ import CircularProgressbar from 'react-circular-progressbar';
 import theme from "../../../theme/";
 import 'react-circular-progressbar/dist/styles.css';
 
-import colors from "../../../theme/colors"
-
 const Wrapper = styled.div`
     background: white;
     box-shadow: rgba(8, 35, 51, 0.05) 0px 4px 8px;
-    color: ${colors.text};
+    color: ${theme.color(['text'])};
     border-radius: 8px;
     padding: 32px 32px 10px 32px;
     position: relative;
@@ -48,7 +46,7 @@ const CircularFlex = styled(Flex)`
     }
     
     span {
-        color: ${colors.lightText};
+        color: ${theme.color(['lightText'])};
         line-height: 1.6rem;
         font-size: .9rem;
     }
@@ -64,7 +62,7 @@ const PerformanceList = styled.ul`
         
         .measurement {
             display: block;
-            color: ${colors.lightText};
+            color: ${theme.color(['lightText'])};
             text-transform: uppercase;
             margin-bottom: 8px;
             font-size: .8rem;
@@ -104,8 +102,8 @@ export default class SideBySide extends Component<Props & HTMLDivProps, State> {
                                         text={`${100}%`}
                                         strokeWidth={3}
                                         styles={{
-                                            path: {stroke: colors.intents.success.color},
-                                            text: {fill: colors.intents.success.color, fontSize: '16px'},
+                                            path: {stroke: theme.color(['intents', 'success', 'text'])},
+                                            text: {fill: theme.color(['intents', 'success', 'text']), fontSize: '16px'},
                                         }}
                                     />
                                 </div>
@@ -158,8 +156,8 @@ export default class SideBySide extends Component<Props & HTMLDivProps, State> {
                                         text={`${74}%`}
                                         strokeWidth={4}
                                         styles={{
-                                            path: {stroke: colors.intents.warning.color},
-                                            text: {fill: colors.intents.warning.color, fontSize: '16px'},
+                                            path: {stroke: theme.color(['intents', 'warning', 'text'])},
+                                            text: {fill: theme.color(['intents', 'warning', 'text']), fontSize: '16px'},
                                         }}
                                     />
 
@@ -210,7 +208,7 @@ export default class SideBySide extends Component<Props & HTMLDivProps, State> {
                     lineHeight: 1.4,
                     fontSize: ".9rem",
                     marginBottom: 20,
-                    color: colors.lightText,
+                    color: theme.color(['lightText']),
                     padding: "20px 40px"
                 }}>
                     These are <a

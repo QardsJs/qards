@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../../theme";
+import {getThemeConfig} from '../../utils/helpers';
 
 export const Wrapper = styled.div`
 	.name {
@@ -15,7 +16,7 @@ export const Wrapper = styled.div`
 	.bio {
 		text-align: left;
 		line-height: 1.5rem;
-		color: ${theme.colors.lightText};
+		color: ${theme.color(['lightText'])};
 	}
 `;
 

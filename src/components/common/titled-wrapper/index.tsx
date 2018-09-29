@@ -1,18 +1,15 @@
-import React, {Component} from "react";
-import styled from "styled-components";
-import {HTMLDivProps} from "@blueprintjs/core/src/common/props";
+import React, {Component} from 'react';
+import styled from 'styled-components';
+import {HTMLDivProps} from '@blueprintjs/core/src/common/props';
 
-import theme from "../../../theme";
-import {Card, Elevation} from "@blueprintjs/core";
+import theme from '../../../theme';
+import {Elevation} from '@blueprintjs/core';
+import {getThemeConfig} from '../../../utils/helpers';
 
 const Wrapper = styled.div`
 	padding: 12px;
 	border-radius: 8px;
-	background-color: ${theme.colors.faded};
-	
-	h4 {
-	
-	}
+	background-color: ${theme.color(['faded', 'background'])};
 `;
 
 const Title = styled.div`
@@ -22,12 +19,12 @@ const Title = styled.div`
     line-height: 1.2rem;
     margin: 0!important;
     padding: 0 0 8px 0!important;
-    color: ${theme.colors.lightText};
+    color: ${theme.color(['lightText'])};
 `;
 
 const InnerCard = styled.div`
 	background-color: white;
-	border: 1px solid ${theme.colors.borderColor};
+	border: 1px solid ${theme.color(['borders'])};
 	padding: 0!important;
 	margin: 0!important;
 	border-radius: 6px;

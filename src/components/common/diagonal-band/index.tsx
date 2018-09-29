@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import theme from '../../../theme';
+import {getThemeConfig} from '../../../utils/helpers';
 
 
 const DiagonalWrapper = styled.div`
@@ -26,20 +27,20 @@ const DiagonalWrapper = styled.div`
 		transform-origin: 0px center 0px;
 		transform: translate(-${(props: DiagonalBandProps) => props.translate || 40.5}%)
 			skewY(-${(props: DiagonalBandProps) => props.skew || 35}deg);
-		background: ${(props: DiagonalBandProps) => props.background || theme.colors.faded};
+		background: ${(props: DiagonalBandProps) => props.background || theme.color(['faded', 'background'])};
 	}
 `;
 
 export interface DiagonalBandProps {
-    skew?: number;
-    translate?: number;
-    background?: string;
+	skew?: number;
+	translate?: number;
+	background?: string;
 }
 
 export default class DiagonalBand extends React.Component<DiagonalBandProps, any> {
-    public render() {
-        return <DiagonalWrapper skew={this.props.skew} translate={this.props.translate}>
-            <div className="diagonal"/>
-        </DiagonalWrapper>;
-    }
+	public render() {
+		return <DiagonalWrapper skew={this.props.skew} translate={this.props.translate}>
+			<div className="diagonal"/>
+		</DiagonalWrapper>;
+	}
 }

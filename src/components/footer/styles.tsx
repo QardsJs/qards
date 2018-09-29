@@ -1,11 +1,12 @@
-import styled from "styled-components";
-import {Box} from "grid-styled";
-import tinycolor2 from "tinycolor2";
+import styled from 'styled-components';
+import {Box} from 'grid-styled';
+import tinycolor2 from 'tinycolor2';
 
-import theme from "../../theme";
+import theme from '../../theme';
+import {getThemeConfig} from '../../utils/helpers';
 
 export const FooterWrapper = styled.div`
-	background-color: ${theme.colors.faded};
+	background-color: ${theme.color(['faded', 'background'])};
 	position: relative;
 	height: 90px;
 
@@ -39,7 +40,7 @@ export const PageWrapper = styled(Box)`
         
         &:hover {
             text-decoration: none;
-            background: ${tinycolor2(theme.colors.faded).darken(5).toString()};
+            background: ${tinycolor2(theme.color(['faded', 'background'])).darken(5).toString()};
         }
     }
     

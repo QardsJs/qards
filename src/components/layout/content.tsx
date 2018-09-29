@@ -1,9 +1,10 @@
 import React from 'react';
 
-import tinycolor from "tinycolor2";
+import tinycolor from 'tinycolor2';
 import styled from 'styled-components';
 
 import theme from '../../theme';
+import {getThemeConfig} from '../../utils/helpers';
 
 const Wrapper = styled.div`
 	.inner {
@@ -13,9 +14,10 @@ const Wrapper = styled.div`
 	}
 	
 	&.dark {
-		background: ${theme.colors.primary};
-		color: ${theme.colors.bgPrimaryText};
-		background-image: radial-gradient(ellipse at center -50%, ${tinycolor(theme.colors.primary).lighten(20).toString()} 0%,${theme.colors.primary} 56%,${theme.colors.primary} 100%);
+		background: ${theme.color(['primary', 'background'])};
+		color: ${theme.color(['primary', 'text'])};
+		background-image: radial-gradient(ellipse at center -50%, ${tinycolor(theme.color(['primary', 'background'])).lighten(
+	20).toString()} 0%,${theme.color(['primary', 'background'])} 56%,${getThemeConfig((['colors', 'primary', 'background']))} 100%);
 		padding: 80px 0;
 	}
 `;

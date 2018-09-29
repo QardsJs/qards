@@ -8,7 +8,7 @@ import theme from '../../theme';
 import {PostType} from "../../fragments/post";
 import {decodeWidgetDataObject} from "../../cms/utils";
 import {CardHeaderType} from "../qard/header";
-import {cPattern, lineRepresentsEncodedComponent, slugify} from "../../utils/helpers";
+import {cPattern, getThemeConfig, lineRepresentsEncodedComponent, slugify} from '../../utils/helpers';
 
 const Wrapper = styled.ul`
 	list-style-type: none;
@@ -21,7 +21,7 @@ const Wrapper = styled.ul`
 		
 		&.active {
 			a {
-				color: ${theme.colors.accent};
+				color: ${theme.color(['accent', 'text'])};
 				opacity: 1;
 				-webkit-transition: color 300ms linear;
 				-ms-transition: color 300ms linear;
@@ -53,7 +53,7 @@ const Wrapper = styled.ul`
 			font-size: 1rem;
 			margin-top: 1.3rem;
 			padding-top: 1.6rem;
-			border-top: 1px solid ${theme.colors.borderColor};
+			border-top: 1px solid ${theme.color(['borders'])};
 		}
 		
 		&:first-child {

@@ -1,13 +1,13 @@
-import React, {Component} from "react";
-import styled from "styled-components";
+import React, {Component} from 'react';
+import styled from 'styled-components';
 
-import {Flex} from "grid-styled";
-import tinycolor2 from "tinycolor2";
-import {Link} from "gatsby";
+import {Flex} from 'grid-styled';
+import tinycolor2 from 'tinycolor2';
+import {Link} from 'gatsby';
 
-import theme from "../../theme";
-import {PostType} from "../../fragments/post";
-import {slugify} from "../../utils/helpers";
+import theme from '../../theme';
+import {PostType} from '../../fragments/post';
+import {getThemeConfig, slugify} from '../../utils/helpers';
 
 const Wrapper = styled(Flex)`
     padding: 20px 0;
@@ -15,7 +15,7 @@ const Wrapper = styled(Flex)`
     a {
         text-align: center;
         padding: 10px 20px;
-        background: ${theme.colors.faded};
+        background: ${theme.color(['faded', 'background'])};
         border-radius: 6px;
         margin-bottom: 10px;
         margin-right: 6px;
@@ -24,7 +24,7 @@ const Wrapper = styled(Flex)`
         
         &:hover {
             text-decoration: none;
-            background: ${tinycolor2(theme.colors.faded).darken(5).toString()};
+            background: ${tinycolor2(theme.color(['faded', 'background'])).darken(5).toString()};
         }
         
         &:last-child {
@@ -47,12 +47,12 @@ export default class PostTags extends Component<Props, State> {
 		const {tags} = post.frontmatter;
 
 		return (
-			<Wrapper flexWrap={"wrap"} alignItems={"space-between"} {...props}>
+			<Wrapper flexWrap={'wrap'} alignItems={'space-between'} {...props}>
 				{tags.map((tag) => {
 
 					return <Link to={`/tags/${slugify(tag)}/`} key={tag}>
 						{tag}
-					</Link>
+					</Link>;
 				})}
 			</Wrapper>
 		);

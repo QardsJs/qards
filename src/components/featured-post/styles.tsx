@@ -1,11 +1,12 @@
-import {Link} from "gatsby";
+import {Link} from 'gatsby';
 import styled from 'styled-components';
-import {Tag} from "@blueprintjs/core";
+import {Tag} from '@blueprintjs/core';
 
-import theme from "../../theme/index";
+import theme from '../../theme/index';
+import {getThemeConfig} from '../../utils/helpers';
 
 export const Wrapper = styled(Link)`
-	color: ${theme.colors.primary};
+	color: ${theme.color(['primary', 'background'])};
 	display: block;
 	transition: all 0.1s ease-in-out;
 	text-decoration: none;
@@ -18,7 +19,7 @@ export const Wrapper = styled(Link)`
 export const Date = styled.span`
 	font-size: 1.1rem;
     font-weight: 200;
-    color: ${theme.colors.lightText};
+    color: ${theme.color(['lightText'])};
     text-transform: uppercase;
     margin: 0px;
 `;
@@ -35,9 +36,9 @@ export const Image = styled.div`
 	flex-grow: 1;
 	border-radius: 8px;
 	overflow: hidden;
-	-webkit-box-shadow: 0 5px 15px 0 ${theme.colors.faded};
-	-moz-box-shadow: 0 5px 15px 0 ${theme.colors.faded};
-	box-shadow: 0 5px 15px 0 ${theme.colors.faded};
+	-webkit-box-shadow: 0 5px 15px 0 ${theme.color(['faded', 'background'])};
+	-moz-box-shadow: 0 5px 15px 0 ${theme.color(['faded', 'background'])};
+	box-shadow: 0 5px 15px 0 ${theme.color(['faded', 'background'])};
 	max-height: 200px;
 `;
 

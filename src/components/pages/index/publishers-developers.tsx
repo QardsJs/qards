@@ -7,7 +7,6 @@ import Img from "gatsby-image";
 import 'react-circular-progressbar/dist/styles.css';
 
 import theme from "../../../theme/";
-import colors from "../../../theme/colors";
 import {Icon} from "@blueprintjs/core";
 import {IconNames} from "@blueprintjs/icons";
 
@@ -15,7 +14,7 @@ import {graphql, StaticQuery} from "gatsby";
 import {CardImageType} from "../../qard/image";
 
 const Wrapper = styled.div`
-    color: ${colors.primary};
+    color: ${theme.color(['primary', 'background'])};
     margin-top: 80px;
     
     @media screen and (max-width: ${theme.main.breakpoints.xsmall}em) {
@@ -61,7 +60,7 @@ const Section = styled(Flex)`
 const Card = styled.div`
     text-align: justify;
     text-justify: inter-word;
-    border-bottom: 1px dashed ${colors.borderColor};
+    border-bottom: 1px dashed ${theme.color(['borders'])};
     padding: 20px 20px 10px 20px;
     
     &:hover {
@@ -69,7 +68,7 @@ const Card = styled.div`
     }
     
     &:hover, &.active {
-        background: ${colors.faded};
+        background: ${theme.color(['faded', 'background'])};
     }
     
     &:last-child {
@@ -93,13 +92,13 @@ const Card = styled.div`
             border-radius: 50%;
             
             &.success {
-                color: ${colors.intents.success.color};
-                background-color: ${colors.intents.success.background};
+                color: ${theme.color(['intents', 'success', 'text'])};
+                background-color: ${theme.color(['intents', 'success', 'background'])};
             }
             
             &.danger {
-                color: ${colors.intents.danger.color};
-                background-color: ${colors.intents.danger.background};
+                color: ${theme.color(['intents', 'danger', 'text'])};
+                background-color: ${theme.color(['intents', 'danger', 'background'])};
             }
             
             &.primary {
@@ -120,7 +119,7 @@ const Card = styled.div`
         margin-top: 10px;
         line-height: 1.6rem;
         font-size: 1rem;
-        color: ${colors.lightText};
+        color: ${theme.color(['lightText'])};
     }
     
     &.qards {

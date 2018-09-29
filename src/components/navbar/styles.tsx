@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import {Navbar, NavbarGroup} from "@blueprintjs/core";
+import {Navbar, NavbarGroup} from '@blueprintjs/core';
 
-import theme from "../../theme";
+import theme from '../../theme';
+import {getThemeConfig} from '../../utils/helpers';
 
 export const StyledNavbar = styled(Navbar)`
 	border: none;
@@ -47,7 +48,7 @@ export const DrawerLinkList = styled.ul`
             
             &:hover {
                 text-decoration: none;
-                background: ${theme.colors.faded};
+                background: ${theme.color(['faded', 'background'])};
             }
 	    }
 	}

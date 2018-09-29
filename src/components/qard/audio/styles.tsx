@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import theme from "../../../theme";
-import tinycolor from "tinycolor2";
+import styled from 'styled-components';
+import theme from '../../../theme';
+import tinycolor from 'tinycolor2';
 import {omit} from 'lodash';
-import {Button, IButtonProps} from "@blueprintjs/core";
-import * as React from "react";
+import {Button, IButtonProps} from '@blueprintjs/core';
+import * as React from 'react';
 
 export const Wrapper = styled.div`
 
@@ -24,19 +24,25 @@ export const Item = styled.li`
     cursor: pointer;
     margin: 0;
     opacity: 1;
-    border-top: 1px solid ${theme.colors.borderColor};
+    border-top: 1px solid ${theme.color(['borders'])};
     
     &.active {
-        color: ${theme.colors.accent};
+        color: ${theme.color(['accent', 'background'])};
+    }
+    
+    &:last-child {
+    		&:hover {
+    			border-bottom-right-radius: 6px;
+        		border-bottom-left-radius: 6px;
+    		}
     }
     
     &:hover {
-        background-color: ${tinycolor(theme.colors.faded).lighten(2).toString()};
-        border-bottom-right-radius: 6px;
-        border-bottom-left-radius: 6px;
+        color: ${tinycolor(theme.color(['faded', 'text'])).lighten(2).toString()};
+        background-color: ${tinycolor(theme.color(['faded', 'background'])).lighten(2).toString()};
         
         &.active {
-            color: ${tinycolor(theme.colors.accent).lighten(15).toString()};
+            color: ${tinycolor(theme.color(['accent', 'background'])).lighten(15).toString()};
         }
     }
 `;
@@ -98,7 +104,7 @@ export const Main = styled.div`
 `;
 
 interface InterfaceBtnProps {
-    isPlaying?: boolean;
+	isPlaying?: boolean;
 }
 
 /**
@@ -109,15 +115,15 @@ interface InterfaceBtnProps {
  * our custom props before extending that component
  */
 export const InterfaceBtn = styled((props: InterfaceBtnProps & IButtonProps) =>
-    <Button {...omit(props, ['isPlaying'])} />)`
+	<Button {...omit(props, ['isPlaying'])} />)`
 margin-right: 10px;
 opacity: .8;
 
 .bp3-icon {
     color: ${(props: InterfaceBtnProps) => {
-    return props.isPlaying ?
-        tinycolor(theme.colors.accent).lighten(15).toString() :
-        theme.colors.primary
+	return props.isPlaying ?
+		tinycolor(theme.color(['accent', 'background'])).lighten(15).toString() :
+		theme.color(['primary', 'background']);
 }}!important;
 }
 

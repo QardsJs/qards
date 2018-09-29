@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {Box, Flex} from "grid-styled";
 import theme from "../../theme";
+import {getThemeConfig} from '../../utils/helpers';
 
 
 export const Wrapper = styled(Flex)`
@@ -17,7 +18,7 @@ export const Excerpt = styled.p`
 	font-weight: 300;
 	font-size: 1.4rem;
 	line-height: 2.2rem;
-	color: ${theme.colors.lightText};
+	color: ${theme.color(['lightText'])};
 `;
 
 export const Hero = styled.div`
@@ -32,7 +33,7 @@ export const Hero = styled.div`
 export const Date = styled.span`
 	font-size: 1.1rem;
 	font-weight: 200;
-	color: ${theme.colors.lightText};
+	color: ${theme.color(['lightText'])};
 	text-transform: uppercase;
 	margin: 0px;
 `;

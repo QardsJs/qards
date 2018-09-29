@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import styled from 'styled-components';
 
-import siteConfig from "../../../static/config/settings.json";
+import siteConfig from '../../../static/config/settings.json';
 import theme from '../../theme';
 import Toc from './toc';
 import Tags from './tags';
@@ -10,8 +10,8 @@ import Subscribe from '../subscribe';
 import SocialShare from '../social-share';
 import TitledWrapper from '../common/titled-wrapper';
 
-import {HTMLDivProps} from "@blueprintjs/core";
-import {PostType} from "../../fragments/post";
+import {HTMLDivProps} from '@blueprintjs/core';
+import {PostType} from '../../fragments/post';
 
 const Wrapper = styled.div`
     color: black;
@@ -23,7 +23,7 @@ const TocTitle = styled.h4`
     text-align: center;
     font-weight: 400;
     font-size: 1rem;
-    color: ${theme.colors.lightText};
+    color: ${theme.color(['lightText'])};
 `;
 
 const SidebarItem = styled.div`
@@ -38,7 +38,7 @@ const SubscribeWrapper = styled.div`
 	.subtitle {
 		font-size: 0.85rem;
 		margin-bottom: 20px;
-		color: ${theme.colors.lightText};
+		color: ${theme.color(['lightText'])};
 	}
 `;
 
@@ -67,26 +67,26 @@ export default class PostSidebar extends Component<Props, any> {
 		return (
 			<Wrapper {...this.props.wrapperProps}>
 				{(siteConfig.posts && siteConfig.posts.tocShow) &&
-					<SidebarItem>
-						<TitledWrapper title={<TocTitle>Table of contents</TocTitle>}>
-							<Toc post={post}/>
-						</TitledWrapper>
-					</SidebarItem>}
+				<SidebarItem>
+					<TitledWrapper title={<TocTitle>Table of contents</TocTitle>}>
+						<Toc post={post}/>
+					</TitledWrapper>
+				</SidebarItem>}
 
 				{(siteConfig.posts && siteConfig.posts.socialShow) &&
-					<SidebarItem>
-						<SocialShareWrapper>
-							<SocialShare url={currentUrl} message={post.frontmatter.title}/>
-						</SocialShareWrapper>
-					</SidebarItem>}
+				<SidebarItem>
+					<SocialShareWrapper>
+						<SocialShare url={currentUrl} message={post.frontmatter.title}/>
+					</SocialShareWrapper>
+				</SidebarItem>}
 
 
 				{(siteConfig.posts && siteConfig.posts.subscribeShow) &&
-					<SidebarItem>
-						<SubscribeWrapper>
-							<Subscribe/>
-						</SubscribeWrapper>
-					</SidebarItem>}
+				<SidebarItem>
+					<SubscribeWrapper>
+						<Subscribe/>
+					</SubscribeWrapper>
+				</SidebarItem>}
 
 				<TagsWrapper>
 					<b className="title">Tags</b>

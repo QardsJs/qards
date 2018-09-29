@@ -15,6 +15,7 @@ import Hide from '../common/hide';
 import theme from '../../theme';
 import {PostType} from "../../fragments/post";
 import {CategoryType} from "../../templates/category";
+import {getThemeConfig} from '../../utils/helpers';
 
 const Wrapper = styled.div``;
 const SearchResultTag = styled(Tag)`
@@ -26,7 +27,7 @@ const Title = styled.div`
 	margin-bottom: 10px;
 	display: block;
 	padding: 8px 20px 6px 12px;
-	border-bottom: 1px solid ${theme.colors.borderColor};
+	border-bottom: 1px solid ${theme.color(['borders'])};
 `;
 const SearchResult = styled(Link)`
     b {

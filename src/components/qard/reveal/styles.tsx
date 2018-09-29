@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import tinycolor from "tinycolor2";
+import styled from 'styled-components';
+import tinycolor from 'tinycolor2';
 
-import theme from "../../../theme";
+import theme from '../../../theme';
 
 export const ItemsWrapper = styled.div`
 	border-radius: 8px;
-    border: 1px solid ${tinycolor(theme.colors.faded).darken(10).toString()}
+    border: 1px solid ${tinycolor(theme.color(['faded', 'background'])).darken(10).toString()}
 `;
 
 export const Wrapper = styled.div`
@@ -14,8 +14,8 @@ export const Wrapper = styled.div`
 	    padding: 10px;
 	    border-radius: 8px;
 	    border: none;
-	    color: ${theme.colors.primary}!important;
-	    background: ${tinycolor(theme.colors.faded).lighten(0).toString()}!important;
+	    color: ${theme.color(['primary', 'background'])}!important;
+	    background: ${tinycolor(theme.color(['faded', 'background'])).lighten(0).toString()}!important;
 	    
 	    .accordion__item {
 	        border: none!important;
@@ -25,9 +25,9 @@ export const Wrapper = styled.div`
                 font-weight: 500;
                 position: relative;
                 background: white!important;
-                color: ${theme.colors.primary}!important;
+                color: ${theme.color(['primary', 'background'])}!important;
                 padding: 8px 20px 6px 20px;
-                border-bottom: 1px solid ${tinycolor(theme.colors.faded).darken(5).toString()};
+                border-bottom: 1px solid ${tinycolor(theme.color(['faded', 'background'])).darken(5).toString()};
                 
                 .accordion__arrow {
                     right: 20px;
@@ -42,7 +42,7 @@ export const Wrapper = styled.div`
                 background: white;
                 line-height: 1.8rem;
                 font-size: 1.2rem;
-                border-bottom: 1px solid ${tinycolor(theme.colors.faded).darken(5).toString()};
+                border-bottom: 1px solid ${tinycolor(theme.color(['faded', 'background'])).darken(5).toString()};
             }
                 
             &:first-child {
