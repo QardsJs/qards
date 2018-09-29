@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Box, Flex} from 'grid-styled';
-import Img from "gatsby-image";
-import {Intent} from "@blueprintjs/core";
+import Img from 'gatsby-image';
+import {Intent} from '@blueprintjs/core';
 
-import {tokenizePost} from "../../utils/helpers";
-import {PostType} from "../../fragments/post";
-import {Image, Date, FeaturedTag, Text, Wrapper} from "./styles";
+import {tokenizePost} from '../../utils/helpers';
+import {PostType} from '../../fragments/post';
+import {Image, Date, FeaturedTag, Text, Wrapper} from './styles';
 
 interface Props {
 	post: PostType;
@@ -35,7 +35,7 @@ export default class FeaturedPost extends Component<Props, any> {
 	render() {
 		const {post} = this.props;
 
-		if (!post) return "";
+		if (!post) return '';
 
 		const tokenizedPost = tokenizePost(post);
 
@@ -43,10 +43,10 @@ export default class FeaturedPost extends Component<Props, any> {
 			<Wrapper to={tokenizedPost.fields.slug}>
 				<Flex flexWrap="wrap">
 					{tokenizedPost.frontmatter.hero.image && <Box pr={30} width={this.heroImgBoxWidth}>
-							 <Image>
-								 <Img fluid={tokenizedPost.frontmatter.hero.image.sharp.fluid}/>
-							 </Image>
-						 </Box>}
+						<Image>
+							<Img fluid={tokenizedPost.frontmatter.hero.image.sharp.fluid}/>
+						</Image>
+					</Box>}
 					<Box width={this.detailsBoxWidth} pr={10}>
 						<Text>
 							<Date>{tokenizedPost.frontmatter.created_at}</Date>

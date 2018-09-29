@@ -9,33 +9,32 @@ $pt-intent-danger: red;
 $pt-link-color: lighten($pt-intent-primary, 5%);
 // "intent": (default, hover, active colors)
 $button-intents: (
-	'primary': (
-		$pt-intent-primary,
-		lighten($pt-intent-primary, 10%),
-		lighten($pt-intent-primary, 5%),
-	),
-	'success': (
-		$pt-intent-success,
-		#0D8050,
-		#0A6640,
-	),
-	'warning': (
-		$pt-intent-warning,
-		#BF7326,
-		#A66321,
-	),
-	'danger': (
-		$pt-intent-danger,
-		#C23030,
-		#A82A2A,
-	),
+	  'primary': (
+		    $pt-intent-primary,
+		    lighten($pt-intent-primary, 10%),
+		    lighten($pt-intent-primary, 5%),
+	  ),
+	  'success': (
+		    $pt-intent-success,
+		    #0D8050,
+		    #0A6640,
+	  ),
+	  'warning': (
+		    $pt-intent-warning,
+		    #BF7326,
+		    #A66321,
+	  ),
+	  'danger': (
+		    $pt-intent-danger,
+		    #C23030,
+		    #A82A2A,
+	  ),
 ) !default;
-
 
 // "intent": (default, hover, active colors)
 $pt-intent-text-colors: (
-	'primary': $pt-intent-primary,
-	'success': #0D8050,
-	'warning': #BF7326,
-	'danger': #C23030,
+	  'primary': $pt-intent-primary,
+	  'success': #0D8050,
+	  'warning': #BF7326,
+	  'danger': #C23030,
 ) !default;

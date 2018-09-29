@@ -2,7 +2,7 @@ const config = {
 	backend      : {
 		name                  : 'git-gateway',
 		repo                  : 'QardsJs/qards',
-		branch                : 'netlify-cms',
+		branch                : 'website',
 		squash_merges         : true,
 		workflow_branch_prefix: 'qards',
 	},

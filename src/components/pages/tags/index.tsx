@@ -10,6 +10,7 @@ import {Wrapper} from "../styles";
 import PageTitle from "../../page-title";
 import FeaturedPost from '../../featured-post';
 import {PostType} from "../../../fragments/post";
+import {getPluginsConfig} from '../../../utils/helpers';
 
 interface Props {
 	totalCount: number;
@@ -49,9 +50,10 @@ class TagsPage extends React.Component<Props, any> {
 						}}/>
 					</Box>
 
+					{getPluginsConfig(['emailSubscribers', 'enable']) &&
 					<Box mt={[60, 60, 60, 120]} mb={[60, 60, 60, 120]}>
 						<Subscribe subtitle={"Our latest and greatest. No spam."}/>
-					</Box>
+					</Box>}
 				</Content>
 			</Wrapper>
 		</Layout>

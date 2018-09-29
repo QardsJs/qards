@@ -21,7 +21,7 @@ const Wrapper = styled.ul`
 		
 		&.active {
 			a {
-				color: ${theme.color(['accent', 'text'])};
+				color: ${theme.color(['accent', 'background'])};
 				opacity: 1;
 				-webkit-transition: color 300ms linear;
 				-ms-transition: color 300ms linear;

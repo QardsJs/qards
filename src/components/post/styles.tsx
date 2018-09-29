@@ -41,15 +41,15 @@ export const Article = styled.article`
 	font-size: 1.4rem;
 	line-height: 2.2rem;
 	font-weight: 300;
-	
+
 	b, strong {
 		font-weight: 400;
 	}
-	
+
 	ul {
 		margin-left: 1.5rem;
 	}
-	
+
 	@media screen and (min-width: ${theme.main.breakpoints.xsmall}em) {
 		div.paragraphs{
 			text-align: justify;

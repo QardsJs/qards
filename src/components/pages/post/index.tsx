@@ -1,17 +1,16 @@
 import React from 'react';
-import Helmet from "react-helmet";
-import {Box} from "grid-styled";
+import Helmet from 'react-helmet';
+import {Box} from 'grid-styled';
 
-import {Wrapper} from "../styles";
-import {PostType} from "../../../fragments/post";
+import {Wrapper} from '../styles';
+import {PostType} from '../../../fragments/post';
 import Layout from '../../layout';
 import Content from '../../layout/content';
 import Post from '../../post';
 import Subscribe from '../../subscribe';
 import Posts from '../../posts';
-import DiagonalBand from '../../common/diagonal-band';
-import {tokenizePost, prependBaseUrl} from "../../../utils/helpers";
-import config from "../../../../static/config/settings.json";
+import {tokenizePost, prependBaseUrl, getPluginsConfig} from '../../../utils/helpers';
+import config from '../../../../static/config/settings.json';
 
 
 interface PostPageProps {
@@ -28,7 +27,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 		if (post.frontmatter.hero && post.frontmatter.hero.image.sharp.fixed) {
 			return post.frontmatter.hero.image.sharp.fixed.src;
 		} else {
-			return config.socialShareImg ? config.socialShareImg : "";
+			return config.socialShareImg ? config.socialShareImg : '';
 		}
 	}
 
@@ -75,9 +74,9 @@ class PostPage extends React.Component<PostPageProps, any> {
 				<meta property="og:url" content={prependBaseUrl(location.pathname)}/>
 				<meta property="og:site_name" content={config.name}/>
 
-				<meta property="article:tag" content={tokenizedPost.frontmatter.tags.join(", ")}/>
+				<meta property="article:tag" content={tokenizedPost.frontmatter.tags.join(', ')}/>
 				<meta property="article:section"
-					 content={tokenizedPost.categories ? tokenizedPost.categories[0].frontmatter.title : "Uncategorized"}/>
+					 content={tokenizedPost.categories ? tokenizedPost.categories[0].frontmatter.title : 'Uncategorized'}/>
 				<meta property="article:published_time" content={tokenizedPost.frontmatter.created_at.toString()}/>
 				<meta property="article:modified_time" content={tokenizedPost.frontmatter.created_at.toString()}/>
 
@@ -92,32 +91,29 @@ class PostPage extends React.Component<PostPageProps, any> {
 				<meta name="twitter:description" content={tokenizedPost.frontmatter.excerpt}/>
 				<meta name="twitter:title" content={tokenizedPost.frontmatter.title}/>
 				<meta name="twitter:image" content={prependBaseUrl(this.ogImage)}/>
-
 			</Helmet>
 
 			<Wrapper>
-				<DiagonalBand translate={50}/>
-
 				<Content>
 					<Post post={tokenizedPost} location={location}/>
 				</Content>
 
-				<Box mt={[80, 80, 80, 180]} mb={[20, 20, 20, 60]}>
+				<Box mt={[80, 80, 80, 180]}>
 					<Content darkTheme={true}>
 						<Posts darkTheme={true} showExcerpt={true} posts={related} title={`More like this`}
 							  paginate={{
-								  pageSize: 6
+								  pageSize: 6,
 							  }}/>
 					</Content>
 				</Box>
 
-				<Content>
+				{getPluginsConfig(['emailSubscribers', 'enable']) && <Content>
 					<Box mt={[60, 60, 60, 120]} mb={[60, 60, 60, 120]}>
 						<Subscribe/>
 					</Box>
-				</Content>
+				</Content>}
 			</Wrapper>
-		</Layout>
+		</Layout>;
 	}
 }
 

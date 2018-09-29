@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import styled from 'styled-components';
 
-import siteConfig from '../../../static/config/settings.json';
 import theme from '../../theme';
 import Toc from './toc';
 import Tags from './tags';
@@ -12,6 +11,7 @@ import TitledWrapper from '../common/titled-wrapper';
 
 import {HTMLDivProps} from '@blueprintjs/core';
 import {PostType} from '../../fragments/post';
+import {getPostsConfig, getPluginsConfig} from '../../utils/helpers';
 
 const Wrapper = styled.div`
     color: black;
@@ -66,22 +66,20 @@ export default class PostSidebar extends Component<Props, any> {
 
 		return (
 			<Wrapper {...this.props.wrapperProps}>
-				{(siteConfig.posts && siteConfig.posts.tocShow) &&
-				<SidebarItem>
+				{getPostsConfig('tocShow') && <SidebarItem>
 					<TitledWrapper title={<TocTitle>Table of contents</TocTitle>}>
 						<Toc post={post}/>
 					</TitledWrapper>
 				</SidebarItem>}
 
-				{(siteConfig.posts && siteConfig.posts.socialShow) &&
-				<SidebarItem>
+				{getPostsConfig('socialShow') && <SidebarItem>
 					<SocialShareWrapper>
 						<SocialShare url={currentUrl} message={post.frontmatter.title}/>
 					</SocialShareWrapper>
 				</SidebarItem>}
 
 
-				{(siteConfig.posts && siteConfig.posts.subscribeShow) &&
+				{(getPostsConfig('subscribeShow') && getPluginsConfig(['emailSubscribers', 'enable'])) &&
 				<SidebarItem>
 					<SubscribeWrapper>
 						<Subscribe/>

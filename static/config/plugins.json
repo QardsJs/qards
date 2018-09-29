@@ -1,1 +1,25 @@
-{}
+{
+  "tracking": {
+    "enable": true,
+    "analytics": {
+      "trackingId": "UA-36099094-14"
+    }
+  },
+  "emailSubscribers": {
+    "enable": true,
+    "mailchimp": {
+      "endpoint": "https://typely.us16.list-manage.com/subscribe/post?u=0e75dd97bdaae578cc15e3c85&id=d6d8685e38"
+    }
+  },
+  "search": {
+    "enable": true,
+    "algolia": {
+      "appId": "ESDRIIM3R7",
+      "indexName": "qards",
+      "searchKey": "4f9308bded9d1eaf064439279835c69a"
+    }
+  },
+  "rssFeed": {
+    "enable": true
+  }
+}
