@@ -1,3 +1,4 @@
+const configSite = require("./static/config/settings");
 const configPlugins = require("./static/config/plugins");
 
 const query = `{
@@ -191,59 +192,6 @@ const plugins = [
 		},
 	},
 	{
-		resolve: `gatsby-plugin-feed`,
-		options: {
-			query: `
-					{
-						site {
-							siteMetadata {
-								title
-								description
-								siteUrl
-								site_url: siteUrl
-							}
-						}
-					}
-				`,
-			feeds: [
-				{
-					serialize: ({query: {site, allContentfulPost}}) => {
-						return allContentfulPost.edges.map(edge => {
-							return {
-								title          : edge.node.title,
-								description    : edge.node.excerpt,
-								url            : site.siteMetadata.siteUrl + edge.node.slug,
-								guid           : site.siteMetadata.siteUrl + edge.node.slug,
-								custom_elements: [
-									{
-										//"content:encoded": edge.node.html
-									},
-								],
-							};
-						});
-					},
-					query    : `
-							{
-								allContentfulPost(
-									limit: 1000,
-									sort: {fields: [createdAt], order: DESC}
-								) {
-									edges {
-										node {
-											title
-											excerpt
-											slug
-										}
-									}
-								}
-							}
-		  `,
-					output   : '/rss.xml',
-				},
-			],
-		},
-	},
-	{
 		resolve: 'gatsby-plugin-netlify-cms',
 		options: {
 			manualInit: true,
@@ -302,6 +250,61 @@ if (
 				}
 			}], chunkSize: 10000
 		}),
+	})
+}
+
+if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
+	plugins.push({
+
+		resolve: `gatsby-plugin-feed`,
+		options: {
+			feeds: [
+				{
+					serialize: ({query: {allMarkdownRemark}}) => {
+						return allMarkdownRemark.edges.map(edge => {
+							return {
+								title          : edge.node.frontmatter.title,
+								description    : edge.node.frontmatter.excerpt,
+								url            : configSite.baseUrl + edge.node.fields.slug,
+								guid           : configSite.baseUrl + edge.node.fields.slug,
+								custom_elements: [
+									{
+										//"content:encoded": edge.node.html
+									},
+								],
+							};
+						});
+					},
+					query    : `
+							{
+								latest: allMarkdownRemark(
+									limit: 1000,
+									sort: {fields: [frontmatter___created_at], order: DESC},
+									filter: {
+										fileAbsolutePath: {regex: "//collections/posts//"},
+										frontmatter: {isPage: {ne: true}}
+									}
+								) {
+									edges {
+										node {
+											fields {
+												skug
+											}
+										
+											frontmatter {
+												title
+												excerpt
+											}
+										}
+									}
+								}
+							}
+		  `,
+					output   : '/rss.xml',
+				},
+			],
+		},
+
 	})
 }
 

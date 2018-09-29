@@ -7,7 +7,6 @@
     "@blueprintjs/core": "^3.0.1",
     "@reach/router": "^1.1.1",
     "@types/base-64": "^0.1.2",
-    "@types/immutable": "^3.8.7",
     "algoliasearch": "^3.30.0",
     "autoprefixer": "^9.0.1",
     "babel-plugin-styled-components": "^1.5.1",
