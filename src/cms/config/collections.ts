@@ -77,10 +77,10 @@ export const settingsCollection = {
 			}]
 		}]
 	}, {
-		name       : 'plugins',
-		label      : 'Plugins',
-		file       : 'static/config/plugins.json',
-		fields     : [{
+		name  : 'plugins',
+		label : 'Plugins',
+		file  : 'static/config/plugins.json',
+		fields: [{
 			label : 'Tracking',
 			name  : 'tracking',
 			widget: 'object',
@@ -141,6 +141,15 @@ export const settingsCollection = {
 					name  : 'searchKey',
 					widget: 'string'
 				}]
+			}]
+		}, {
+			label : 'RSS Feed',
+			name  : 'rssFeed',
+			widget: 'object',
+			fields: [{
+				label : 'Enable',
+				name  : 'enable',
+				widget: 'boolean'
 			}]
 		}]
 	}]
