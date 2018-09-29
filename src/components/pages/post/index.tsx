@@ -28,7 +28,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 		if (post.frontmatter.hero && post.frontmatter.hero.image.sharp.fixed) {
 			return post.frontmatter.hero.image.sharp.fixed.src;
 		} else {
-			return config.site.social_share_img;
+			return config.socialShareImg ? config.socialShareImg : "";
 		}
 	}
 
@@ -38,7 +38,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 		if (post.frontmatter.hero && post.frontmatter.hero.image) {
 			return post.frontmatter.hero.image.sharp.alt;
 		} else {
-			return config.site.title;
+			return config.title;
 		}
 	}
 
@@ -51,7 +51,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 				height: post.frontmatter.hero.image.sharp.fixed.height,
 			};
 		} else {
-			return config.site.title;
+			return config.title;
 		}
 	}
 
@@ -73,7 +73,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 				<meta property="og:title" content={tokenizedPost.frontmatter.title}/>
 				<meta property="og:description" content={tokenizedPost.frontmatter.excerpt}/>
 				<meta property="og:url" content={prependBaseUrl(location.pathname)}/>
-				<meta property="og:site_name" content={config.site.name}/>
+				<meta property="og:site_name" content={config.name}/>
 
 				<meta property="article:tag" content={tokenizedPost.frontmatter.tags.join(", ")}/>
 				<meta property="article:section"

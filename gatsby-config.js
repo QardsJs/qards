@@ -1,18 +1,5 @@
 const configPlugins = require("./static/config/plugins");
 
-// let algoliaConfig;
-//
-// try {
-// 	algoliaConfig = require('./config/algolia.json');
-// } catch (_) {
-// 	algoliaConfig = {
-// 		appId    : process.env.ALGOLIA_APP_ID,
-// 		apiKey   : process.env.ALGOLIA_API_KEY,
-// 		indexName: process.env.ALGOLIA_INDEX_NAME,
-// 		searchKey: process.env.ALGOLIA_SEARCH_KEY
-// 	};
-// }
-
 const query = `{
 	allMarkdownRemark(
 		filter: {fileAbsolutePath: {regex: "//collections/posts//"}}
@@ -265,39 +252,53 @@ const plugins = [
 	},
 ];
 
-if (configPlugins.tracking_google_analytics_tracking_id && configPlugins.tracking_enable_google_analytics) {
+if (
+	configPlugins.tracking &&
+	configPlugins.tracking.analytic &&
+	configPlugins.tracking.analytics.enable &&
+	configPlugins.tracking.analytics.trackingId) {
 	plugins.push({
 		resolve: `gatsby-plugin-google-analytics`,
 		options: {
-			trackingId: configPlugins.tracking_google_analytics_id,
+			trackingId: configPlugins.tracking.trackingId,
 			head      : false,
 			respectDNT: true,
 		},
 	},)
 }
 
-if (configPlugins.email_subscribers_enable && configPlugins.email_subscribers_mailchimp) {
+if (
+	configPlugins.emailSubscribers &&
+	configPlugins.emailSubscribers.enable &&
+	configPlugins.emailSubscribers.mailchimp) {
 	plugins.push({
 		resolve: 'gatsby-plugin-mailchimp',
 		options: {
-			endpoint: configPlugins.email_subscribers_mailchimp_endpoint
+			endpoint: configPlugins.emailSubscribers.mailchimp.endpoint
 		},
 	})
 }
 
-if (configPlugins.search_enable) {
+if (
+	configPlugins.search &&
+	configPlugins.search.enable &&
+	configPlugins.search.algolia.appId &&
+	configPlugins.search.algolia.indexName &&
+	configPlugins.search.algolia.searchKey
+) {
 	plugins.push({
 		resolve: `gatsby-plugin-algolia`,
 		options: Object.assign({
-			appId    : configPlugins.search_algolia_app_id,
-			indexName: configPlugins.search_algolia_index_name,
-			searchKey: configPlugins.search_algolia_search_key,
+			appId    : configPlugins.search.algolia.appId,
+			indexName: configPlugins.search.algolia.indexName,
+			searchKey: configPlugins.search.algolia.searchKey,
 		}, {
 			queries      : [{
 				query,
 				transformer: ({data}) => {
-					return data.allMarkdownRemark
-						.edges.map(({node}) => concatSearchIndex(node))
+					return data.allMarkdownRemark.edges.map(
+						({node}) => concatSearchIndex(node)
+					)
 				}
 			}], chunkSize: 10000
 		}),

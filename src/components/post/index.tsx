@@ -9,7 +9,7 @@ import ScrollProgress from "../scroll-progress";
 import {SidebarWrapper, Wrapper} from "./styles";
 import PostComponent from "./post";
 import {PostType} from "../../fragments/post";
-import config from "../../../static/config/settings.json";
+import siteConfig from "../../../static/config/settings.json";
 
 export interface Props {
 	post: PostType;
@@ -38,7 +38,8 @@ export default class Post extends React.Component<Props, any> {
 				</SidebarWrapper>
 
 
-				{config.posts.post_progress_show && <ScrollProgress identifier={post.id}/>}
+				{(siteConfig.posts && siteConfig.posts.progressShow) &&
+					<ScrollProgress identifier={post.id}/>}
 			</Wrapper>
 		);
 	}
