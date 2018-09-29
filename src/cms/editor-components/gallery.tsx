@@ -7,6 +7,12 @@ export default base('qards-gallery', 'Gallery', [{
 	widget: 'list',
 	fields: [
 		{name: 'alt', label: 'Alt', widget: 'string'},
+		{
+			name    : 'caption',
+			label   : 'Caption',
+			widget  : 'text',
+			required: false
+		},
 		{name: 'src', label: 'Image', widget: 'image'},
 	],
 },]);

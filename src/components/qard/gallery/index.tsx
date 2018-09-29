@@ -17,14 +17,21 @@ const Wrapper = styled.div`
 	margin: 40px -2px 40px -2px;
 `;
 
+export interface CardGalleryItemType {
+	alt?: string;
+	caption?: string;
+	src: string;
+}
+
 export interface CardGalleryType extends QardProps {
-	items: CardImageType[];
+	items: CardGalleryItemType[];
 }
 
 interface StateImages {
 	width: number;
 	height: number;
-	image: CardImageType;
+	caption?: string;
+	image: CardGalleryItemType;
 }
 
 interface State {
@@ -36,6 +43,7 @@ interface State {
 const ImageComponent = ({photo, onClick, post, margin, ...rest}: any) => {
 	if (photo.src && !photo.srcSet) {
 		return <img
+			alt={photo.alt}
 			src={photo.src}
 			style={{
 				margin,
@@ -53,6 +61,7 @@ const ImageComponent = ({photo, onClick, post, margin, ...rest}: any) => {
 			if (item.image.image.fluid && item.image.image.fluid.src == photo.src) {
 				return <div onClick={(e: any) => onClick(e, rest)}>
 					<Img
+						alt={photo.alt}
 						fluid={item.image.image.fluid}
 						style={{
 							margin,
@@ -106,7 +115,6 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 
 	render() {
 		const {preview, post, items} = this.props;
-
 		const {images, currentImage, lightboxIsOpen} = this.state;
 
 		if (!post && !preview) return null;
@@ -114,18 +122,26 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 		let prepared: any = [];
 
 		if (!images.length && !preview && post) {
-			for (let i = 0; i < post.fields.galleries.length; i++) {
-				const item = post.fields.galleries[i];
+			const allGalleryItems = post.fields.galleries;
 
-				if (!item.image.image.fluid) continue;
+			for (let i = 0; i < allGalleryItems.length; i++) {
+				const allGalleryItem = allGalleryItems[i];
 
-				prepared.push({
-					src    : item.image.image.fluid.src,
-					width  : 100,
-					height : 100 / item.image.image.fluid.aspectRatio,
-					srcSet : item.image.image.fluid.srcSet,
-					caption: items[i].alt
-				});
+				if (!allGalleryItem.image.image.fluid) continue;
+
+				for (let j = 0; j < items.length; j++) {
+					const currentGalleryItem = items[j];
+					if (currentGalleryItem.src && currentGalleryItem.src.indexOf(allGalleryItem.image.fileName) !== -1) {
+						prepared.push({
+							src    : allGalleryItem.image.image.fluid.src,
+							width  : 100,
+							height : 100 / allGalleryItem.image.image.fluid.aspectRatio,
+							srcSet : allGalleryItem.image.image.fluid.srcSet,
+							caption: currentGalleryItem.caption || currentGalleryItem.alt,
+							alt    : allGalleryItem.alt || currentGalleryItem.caption
+						});
+					}
+				}
 			}
 		}
 
@@ -135,7 +151,7 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 				const p: any = {...images[i].image};
 
 				//  we need these for the Gallery widget
-				p.caption = images[i].image.alt;
+				p.caption = images[i].caption || images[i].image.alt;
 				p.width = images[i].width;
 				p.height = images[i].height;
 				prepared.push(p);
@@ -143,8 +159,6 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 		}
 
 		if (!prepared.length) return <React.Fragment/>;
-
-		console.log(prepared);
 
 		return <Wrapper>
 			<Gallery
@@ -174,7 +188,7 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 		return images.length == 1 ? 1 : undefined;
 	}
 
-	getImageDimensions(image: CardImageType) {
+	getImageDimensions(image: CardGalleryItemType) {
 		browserImageSize(image.src).then((result: any) => {
 			const stateImages = this.state.images;
 

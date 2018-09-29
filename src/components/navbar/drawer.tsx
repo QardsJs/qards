@@ -178,7 +178,6 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 						)}
 
 						<Hide medium large larger xlarge>
-
 							{popularCategories.length > 0 && (
 								<div>
 									<DrawerSection>
@@ -195,10 +194,7 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 										{pages.map((page) => {
 											return (
 												<li key={page.id}>
-													<a target={'_blank'} rel={'noopener'}
-													   href={page.fields.slug}>
-														{page.frontmatter.title}
-													</a>
+													<Link to={page.fields.slug}/>
 												</li>
 											);
 										})}

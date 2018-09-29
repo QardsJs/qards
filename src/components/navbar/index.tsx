@@ -27,7 +27,7 @@ export class Categories extends React.Component<CategoriesProps, any> {
 					{popularCategories.slice(0, 10).map((c) => {
 						return (
 							<li key={c.id}>
-								<Link to={`/categories/${c.fields.slug}/`}>{c.frontmatter.title}</Link>
+								<Link to={c.fields.slug}>{c.frontmatter.title}</Link>
 							</li>
 						);
 					})}

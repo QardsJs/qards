@@ -97,8 +97,8 @@ export default class Posts extends Component<Props, State> {
 					<LazyLoad height={210}>
 						<Img
 							alt={post.frontmatter.hero.alt}
-							fluid={post.frontmatter.hero.image.image.fluid}
-							style={{maxHeight: 210}}
+							fluid={post.frontmatter.hero.image.thumb.fluid}
+							style={{height: 210}}
 						/>
 					</LazyLoad>
 				</TrackVisibility>

@@ -37,6 +37,7 @@ export interface PostType {
 		galleries: {
 			alt: string;
 			image: {
+				fileName: string;
 				image: CardImageType;
 			};
 		}[]
@@ -70,10 +71,28 @@ export const _ = graphql`
 			hero{
 				alt
 				image {
-					image: childImageSharp {
+					sharp: childImageSharp {
 						fluid(maxWidth: 2500) {
 							tracedSVG
 							aspectRatio
+							originalImg
+							src
+							srcSet
+							sizes
+						}
+						
+						fixed(width:900){
+							src
+							width
+							height
+						}
+					}
+					
+					thumb: childImageSharp {
+						fluid(maxWidth:450){
+							tracedSVG
+							aspectRatio
+							originalImg
 							src
 							srcSet
 							sizes
@@ -107,10 +126,12 @@ export const _ = graphql`
 			galleries: qardsGallery{
 				alt
 				image: src {
+					fileName: name
 					image: childImageSharp{
 						fluid(maxWidth: 2900) {
 							tracedSVG
 							aspectRatio
+							originalImg
 							src
 							srcSet
 							sizes

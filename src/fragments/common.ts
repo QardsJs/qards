@@ -8,6 +8,7 @@ export interface PageMetaType {
 export interface PageHeroType {
 	alt: string;
 	image: {
-		image: CardImageType;
+		sharp: CardImageType;
+		thumb: CardImageType;
 	};
 }

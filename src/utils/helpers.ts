@@ -5,6 +5,7 @@ import moment from "moment";
 import {CategoryType} from "../templates/category";
 import {CardHeaderType} from "../components/qard/header";
 import {decodeWidgetDataObject} from "../cms/utils";
+import config from "../../static/content/settings.json";
 
 export const cPatternWithId = (id: string): string => {
 	return `{"widget":"${id}","config":"([0-9a-zA-Z+/=]+?)"}`;
@@ -31,6 +32,10 @@ export function getPostPrimaryHeadings(post: PostType): CardHeaderType[] {
 	});
 
 	return headings;
+}
+
+export function prependBaseUrl(path: string): string {
+	return [config.site.base_url, path].join('');
 }
 
 /**

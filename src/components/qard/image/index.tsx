@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Img from "gatsby-image";
 import Lightbox from 'react-images';
-import {pick} from "lodash";
 
 import Markdown from "../../markdown";
 import theme from "../../../theme";
@@ -58,6 +57,7 @@ export interface CardImageType extends QardProps {
 	fluid?: {
 		tracedSVG: any;
 		aspectRatio: any;
+		originalImg: string;
 		src: any;
 		srcSet: any;
 		sizes: any;
@@ -83,7 +83,9 @@ export interface CardImageType extends QardProps {
  * to be rendered.
  */
 const QardImage = ({alt, src, ...rest}: CardImageType) => {
-	return src ? <img src={src} alt={alt} {...rest}/> : <Img {...rest}/>;
+	return (src && !rest.fluid && !rest.fixed) ? <img src={src} alt={alt} {...rest}/> : <Img {...Object.assign(
+		rest, {alt}
+	)}/>;
 };
 
 export interface ContentImageType extends CardImageType {
@@ -107,22 +109,37 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 	};
 
 	render() {
-		const {caption, layout, fluid, fixed, src, alt, ...rest} = this.props;
+		const {caption, layout, fluid, fixed, alt, src, ...rest} = this.props;
 
-		const image: any = (fluid || fixed) ? (fluid ? fluid : fixed) : {src, alt};
-		if (image) image.caption = caption;
+		const images = [{
+			caption: caption || alt,
+			src    : (fluid || fixed) ? (fluid ? fluid.src : (fixed ? fixed.src : src)) : src,
+			srcSet : (fluid || fixed) ? (fluid ? fluid.srcSet : (fixed ? fixed.srcSet : null)) : null,
+
+		}];
+
+		const imgProp: CardImageType = {
+			alt: alt,
+			src: images[0].src
+		};
+
+		if (fluid) {
+			imgProp.fluid = fluid;
+		} else {
+			if (fixed) {
+				imgProp.fixed = fixed;
+			}
+		}
 
 		return <StyledImage
 			{...rest}
 			onClick={() => this.setState({lightboxOpen: true})}
 			className={`layout ${layout}`}>
 
-			<QardImage {...pick(image, ['alt', 'src', 'srcSet'])}/>
+			<QardImage {...imgProp}/>
 
 			<Lightbox
-				images={[
-					{...pick(image, ['caption', 'src', 'srcSet'])}
-				]}
+				images={images}
 				isOpen={this.state.lightboxOpen}
 				backdropClosesModal={true}
 				onClose={() => this.setState({lightboxOpen: false})}

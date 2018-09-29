@@ -44,7 +44,7 @@ export default class FeaturedPost extends Component<Props, any> {
 				<Flex flexWrap="wrap">
 					{tokenizedPost.frontmatter.hero.image && <Box pr={30} width={this.heroImgBoxWidth}>
 							 <Image>
-								 <Img fluid={tokenizedPost.frontmatter.hero.image.image.fluid}/>
+								 <Img fluid={tokenizedPost.frontmatter.hero.image.sharp.fluid}/>
 							 </Image>
 						 </Box>}
 					<Box width={this.detailsBoxWidth} pr={10}>
