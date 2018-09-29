@@ -8,3 +8,4 @@ yarn.lock
 public
 netlify.toml
 cypress/.Trash-0
+cypress/screenshots
