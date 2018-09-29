@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import styled from 'styled-components';
 
-import config from "../../../static/config/settings.json";
+import siteConfig from "../../../static/config/settings.json";
 import theme from '../../theme';
 import Toc from './toc';
 import Tags from './tags';
@@ -66,14 +66,14 @@ export default class PostSidebar extends Component<Props, any> {
 
 		return (
 			<Wrapper {...this.props.wrapperProps}>
-				{config.posts.post_toc_show &&
+				{(siteConfig.posts && siteConfig.posts.tocShow) &&
 					<SidebarItem>
 						<TitledWrapper title={<TocTitle>Table of contents</TocTitle>}>
 							<Toc post={post}/>
 						</TitledWrapper>
 					</SidebarItem>}
 
-				{config.posts.post_social_show &&
+				{(siteConfig.posts && siteConfig.posts.socialShow) &&
 					<SidebarItem>
 						<SocialShareWrapper>
 							<SocialShare url={currentUrl} message={post.frontmatter.title}/>
@@ -81,7 +81,7 @@ export default class PostSidebar extends Component<Props, any> {
 					</SidebarItem>}
 
 
-				{config.posts.post_subscribe_show &&
+				{(siteConfig.posts && siteConfig.posts.subscribeShow) &&
 					<SidebarItem>
 						<SubscribeWrapper>
 							<Subscribe/>

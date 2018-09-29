@@ -12,7 +12,7 @@ import {Icon} from "@blueprintjs/core";
 import {IconNames} from "@blueprintjs/icons";
 
 import {graphql, StaticQuery} from "gatsby";
-import {Image as ImageProps} from "../../../templates/types";
+import {CardImageType} from "../../qard/image";
 
 const Wrapper = styled.div`
     color: ${colors.primary};
@@ -135,22 +135,22 @@ const Card = styled.div`
 `;
 
 interface ImageNode {
-    name: string;
-    extension: string;
-    childImageSharp: ImageProps;
+	name: string;
+	extension: string;
+	childImageSharp: CardImageType;
 }
 
 interface DataProps {
-    allFile: {
-        edges: {
-            node: ImageNode;
-        }[];
-    };
+	allFile: {
+		edges: {
+			node: ImageNode;
+		}[];
+	};
 }
 
 const Index = (props: any) => {
-    return <StaticQuery
-        query={graphql`
+	return <StaticQuery
+		query={graphql`
             query PublishersDevelopersImages {
                 allFile {
                     edges {
@@ -172,96 +172,99 @@ const Index = (props: any) => {
             }
         `}
 
-        render={(data: DataProps) => {
-            return <PublishersDevelopers {...data}/>
-        }}
-    />
+		render={(data: DataProps) => {
+			return <PublishersDevelopers {...data}/>
+		}}
+	/>
 };
 
 export class PublishersDevelopers extends Component<DataProps & HTMLDivProps, {
-    selectedScreenshot: string
+	selectedScreenshot: string
 }> {
-    state = {
-        selectedScreenshot: "vscode"
-    };
+	state = {
+		selectedScreenshot: "vscode"
+	};
 
-    getScreenshot(name: string, extension: string): null | ImageNode {
-        for (let i = 0; i < this.props.allFile.edges.length; i++) {
-            const node = this.props.allFile.edges[i].node;
+	getScreenshot(name: string, extension: string): null | ImageNode {
+		for (let i = 0; i < this.props.allFile.edges.length; i++) {
+			const node = this.props.allFile.edges[i].node;
 
-            if (node.name == name && node.extension == extension) {
-                return node;
-            }
-        }
+			if (node.name == name && node.extension == extension) {
+				return node;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    render() {
-        const {...props} = this.props;
+	render() {
+		const {...props} = this.props;
 
-        const qards: ImageNode | null = this.getScreenshot("qards", "png");
-        const vscode: ImageNode | null = this.getScreenshot("vscode", "png");
-        const contentful: ImageNode | null = this.getScreenshot("contentful", "png");
+		const qards: ImageNode | null = this.getScreenshot("qards", "png");
+		const vscode: ImageNode | null = this.getScreenshot("vscode", "png");
+		const contentful: ImageNode | null = this.getScreenshot("contentful", "png");
 
-        return (
-            <Wrapper {...props}>
-                <Section flexWrap={"wrap"} alignItems={"center"}>
-                    <Box width={[3 / 3, 3 / 3, 3 / 3, 1 / 3]} pr={[0, 0, 0, 4]}>
-                        <Card onMouseEnter={() => this.setState({selectedScreenshot: "vscode"})}>
-                            <div className="heading">
-                                <Flex flexWrap={"wrap"} alignItems={"center"}>
-                                    <Box width={2 / 10} style={{maxWidth: 60}}>
-                                        <div className={`icon success`}>
-                                            <Icon icon={IconNames.CODE} iconSize={Icon.SIZE_LARGE}/>
-                                        </div>
-                                    </Box>
+		return (
+			<Wrapper {...props}>
+				<Section flexWrap={"wrap"} alignItems={"center"}>
+					<Box width={[3 / 3, 3 / 3, 3 / 3, 1 / 3]} pr={[0, 0, 0, 4]}>
+						<Card onMouseEnter={() => this.setState({selectedScreenshot: "vscode"})}>
+							<div className="heading">
+								<Flex flexWrap={"wrap"} alignItems={"center"}>
+									<Box width={2 / 10} style={{maxWidth: 60}}>
+										<div className={`icon success`}>
+											<Icon icon={IconNames.CODE} iconSize={Icon.SIZE_LARGE}/>
+										</div>
+									</Box>
 
-                                    <Box width={8 / 10}>
-                                        <b className={"title"}>Developers</b>
-                                    </Box>
-                                </Flex>
-                            </div>
-                            <p>
-                                Create and publish cards that take various configurations to display the content.
-                                Cards can be updated/re-designed at any time without any additional work required from
-                                the publishers.
-                            </p>
-                        </Card>
-                        <Card onMouseEnter={() => this.setState({selectedScreenshot: "contentful"})}>
-                            <div className="heading">
-                                <Flex flexWrap={"wrap"} alignItems={"center"}>
-                                    <Box width={2 / 10} style={{maxWidth: 60}}>
-                                        <div className={`icon danger`}>
-                                            <Icon icon={IconNames.USER} iconSize={Icon.SIZE_LARGE}/>
-                                        </div>
-                                    </Box>
+									<Box width={8 / 10}>
+										<b className={"title"}>Developers</b>
+									</Box>
+								</Flex>
+							</div>
+							<p>
+								Create and publish cards that take various configurations to display the
+								content.
+								Cards can be updated/re-designed at any time without any additional work
+								required from
+								the publishers.
+							</p>
+						</Card>
+						<Card onMouseEnter={() => this.setState({selectedScreenshot: "contentful"})}>
+							<div className="heading">
+								<Flex flexWrap={"wrap"} alignItems={"center"}>
+									<Box width={2 / 10} style={{maxWidth: 60}}>
+										<div className={`icon danger`}>
+											<Icon icon={IconNames.USER} iconSize={Icon.SIZE_LARGE}/>
+										</div>
+									</Box>
 
-                                    <Box width={8 / 10}>
-                                        <b className="title">Publishers</b>
-                                    </Box>
-                                </Flex>
-                            </div>
-                            <p>
-                                Create content using Contentful CMS and tweak the available configuration points.
-                                No HTML is generated and the content is saved in its original state.
-                            </p>
-                        </Card>
-                    </Box>
+									<Box width={8 / 10}>
+										<b className="title">Publishers</b>
+									</Box>
+								</Flex>
+							</div>
+							<p>
+								Create content using Contentful CMS and tweak the available configuration
+								points.
+								No HTML is generated and the content is saved in its original state.
+							</p>
+						</Card>
+					</Box>
 
-                    <Box width={[3 / 3, 3 / 3, 3 / 3, 2 / 3]} pl={[0, 0, 0, 4]}>
-                        {vscode && this.state.selectedScreenshot == "vscode" &&
-						<Img className={"screenshot"} fluid={vscode.childImageSharp.fluid}/>}
-                        {contentful && this.state.selectedScreenshot == "contentful" &&
-						<Img className={"screenshot"} fluid={contentful.childImageSharp.fluid}/>}
-                    </Box>
+					<Box width={[3 / 3, 3 / 3, 3 / 3, 2 / 3]} pl={[0, 0, 0, 4]}>
+						{vscode && this.state.selectedScreenshot == "vscode" &&
+							  <Img className={"screenshot"} fluid={vscode.childImageSharp.fluid}/>}
+						{contentful && this.state.selectedScreenshot == "contentful" &&
+							  <Img className={"screenshot"} fluid={contentful.childImageSharp.fluid}/>}
+					</Box>
 
-                    <div className="divider"/>
-                </Section>
+					<div className="divider"/>
+				</Section>
 
-            </Wrapper>
-        );
-    }
+			</Wrapper>
+		);
+	}
 }
 
 export default Index;

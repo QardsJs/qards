@@ -126,7 +126,7 @@ export default class Navigation extends React.Component<Props, State> {
 							<Container>
 								<StyledNavbarGroupLeft>
 									<NavbarHeading>
-										<Logo siteName={config.site.name}/>
+										<Logo siteName={config.name}/>
 									</NavbarHeading>
 								</StyledNavbarGroupLeft>
 

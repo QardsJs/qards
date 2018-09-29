@@ -29,11 +29,11 @@ export const settingsCollection = {
 					widget: 'text'
 				}, {
 					label : 'Base url',
-					name  : 'base_url',
+					name  : 'baseUrl',
 					widget: 'string'
 				}, {
 					label : 'Social media share image',
-					name  : 'social_share_img',
+					name  : 'socialShareImg',
 					widget: 'image'
 				}
 			]
@@ -49,11 +49,11 @@ export const settingsCollection = {
 			widget: 'object',
 			fields: [{
 				label : 'Number of posts on frontpage',
-				name  : 'front_limit',
+				name  : 'frontLimit',
 				widget: 'number'
 			}, {
 				label  : 'Show post scroll progress?',
-				name   : 'post_progress_show',
+				name   : 'progressShow',
 				widget : 'boolean',
 				hint   : `When scrolling a post, a progress bar 
 					indicating the current position in page will be 
@@ -61,17 +61,17 @@ export const settingsCollection = {
 				default: true
 			}, {
 				label  : 'Show table of contents?',
-				name   : 'post_toc_show',
+				name   : 'tocShow',
 				widget : 'boolean',
 				default: true
 			}, {
 				label  : 'Show social media share buttons?',
-				name   : 'post_social_show',
+				name   : 'socialShow',
 				widget : 'boolean',
 				default: true
 			}, {
 				label  : 'Show subscribe box?',
-				name   : 'post_subscribe_show',
+				name   : 'subscribeShow',
 				widget : 'boolean',
 				default: true
 			}]
@@ -80,35 +80,65 @@ export const settingsCollection = {
 		name       : 'plugins',
 		label      : 'Plugins',
 		file       : 'static/config/plugins.json',
-		description: 'Enable/disable and config various plugins',
 		fields     : [{
 			label : 'Tracking',
 			name  : 'tracking',
 			widget: 'object',
 			fields: [{
-				label : 'Enable google analytics',
-				name  : 'tracking_enable_google_analytics',
+				label : 'Enable?',
+				name  : 'enable',
 				widget: 'boolean'
 			}, {
-				label : 'Google analytics tracking ID',
-				name  : 'tracking_google_analytics_id',
-				widget: 'string'
+				label : 'Google Analytics',
+				name  : 'analytics',
+				widget: 'object',
+				fields: [{
+					label : 'Tracking ID',
+					name  : 'trackingId',
+					widget: 'string'
+				}]
 			}]
 		}, {
 			label : 'Email subscribers',
-			name  : 'email_subscribers',
+			name  : 'emailSubscribers',
 			widget: 'object',
 			fields: [{
-				label : 'Enable email subscribers?',
-				name  : 'email_subscribers_enable',
+				label : 'Enable?',
+				name  : 'enable',
 				widget: 'boolean'
 			}, {
 				label : 'Mailchimp',
-				name  : 'email_subscribers_mailchimp',
+				name  : 'mailchimp',
 				widget: 'object',
 				fields: [{
 					label : 'Mailchimp list endpoint',
-					name  : 'email_subscribers_mailchimp_endpoint',
+					name  : 'endpoint',
+					widget: 'string'
+				}]
+			}]
+		}, {
+			label : 'Search',
+			name  : 'search',
+			widget: 'object',
+			fields: [{
+				label : 'Enable',
+				name  : 'enable',
+				widget: 'boolean'
+			}, {
+				label : 'Algolia',
+				name  : 'algolia',
+				widget: 'object',
+				fields: [{
+					label : 'App id',
+					name  : 'appId',
+					widget: 'string'
+				}, {
+					label : 'Index name',
+					name  : 'indexName',
+					widget: 'string'
+				}, {
+					label : 'Search key',
+					name  : 'searchKey',
 					widget: 'string'
 				}]
 			}]
