@@ -1,4 +1,4 @@
-const config = require("./static/content/settings");
+const configPlugins = require("./static/config/plugins");
 
 let algoliaConfig;
 
@@ -275,28 +275,30 @@ const plugins = [
 			modulePath: `${__dirname}/src/cms/cms.ts`,
 		},
 	},
-	`gatsby-plugin-netlify`, // make sure to keep it last in the array
 ];
 
-if (config.tracking_google_analytics_tracking_id && config.tracking_enable_google_analytics) {
+if (configPlugins.tracking_google_analytics_tracking_id && configPlugins.tracking_enable_google_analytics) {
 	plugins.push({
 		resolve: `gatsby-plugin-google-analytics`,
 		options: {
-			trackingId: config.tracking_google_analytics_id,
+			trackingId: configPlugins.tracking_google_analytics_id,
 			head      : false,
 			respectDNT: true,
 		},
 	},)
 }
 
-if (config.email_subscribers_enable && config.email_subscribers_mailchimp) {
+if (configPlugins.email_subscribers_enable && configPlugins.email_subscribers_mailchimp) {
 	plugins.push({
 		resolve: 'gatsby-plugin-mailchimp',
 		options: {
-			endpoint: config.email_subscribers_mailchimp_endpoint
+			endpoint: configPlugins.email_subscribers_mailchimp_endpoint
 		},
 	})
 }
+
+//	last
+plugins.push(`gatsby-plugin-netlify`);
 
 module.exports = {
 	siteMetadata: {

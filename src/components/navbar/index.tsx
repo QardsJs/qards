@@ -7,7 +7,7 @@ import Hide from '../common/hide';
 import {extractNodesFromEdges} from '../../utils/helpers';
 import {Container, DrawerLinkList, StyledNavbar, StyledNavbarGroupLeft} from './styles';
 import NavbarDrawer from './drawer';
-import config from '../../../static/content/settings.json';
+import config from '../../../static/config/settings.json';
 import Logo from '../logo';
 import {PostType} from "../../fragments/post";
 import {CategoryType} from "../../templates/category";

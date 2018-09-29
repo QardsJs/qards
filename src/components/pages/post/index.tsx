@@ -11,7 +11,7 @@ import Subscribe from '../../subscribe';
 import Posts from '../../posts';
 import DiagonalBand from '../../common/diagonal-band';
 import {tokenizePost, prependBaseUrl} from "../../../utils/helpers";
-import config from "../../../../static/content/settings.json";
+import config from "../../../../static/config/settings.json";
 
 
 interface PostPageProps {
