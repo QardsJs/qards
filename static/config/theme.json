@@ -1,1 +1,9 @@
-{}
+{
+  "colors": {
+    "intents": {
+      "success": {
+        "text": "#3ccc90"
+      }
+    }
+  }
+}
