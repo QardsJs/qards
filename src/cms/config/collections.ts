@@ -3,7 +3,7 @@ export const settingsCollection = {
 	label : 'Settings',
 	delete: false,
 	editor: {
-		preview: false
+		preview: false,
 	},
 	files : [{
 		name       : 'general',
@@ -11,33 +11,191 @@ export const settingsCollection = {
 		file       : 'static/config/settings.json',
 		description: 'General site settings',
 		fields     : [{
-			label : 'Site settings',
+			label : 'Meta',
 			name  : 'site',
 			widget: 'object',
-			fields: [
-				{
-					label : 'Name',
-					name  : 'name',
-					widget: 'string'
+			fields: [{
+				label : 'Name',
+				name  : 'name',
+				widget: 'string',
+			}, {
+				label : 'Title',
+				name  : 'title',
+				widget: 'string',
+			}, {
+				label : 'Excerpt',
+				name  : 'excerpt',
+				widget: 'text',
+			}, {
+				label : 'Base url',
+				name  : 'baseUrl',
+				widget: 'string',
+			}, {
+				label : 'Social media share image',
+				name  : 'socialShareImg',
+				widget: 'image',
+			}],
+		}],
+	}, {
+		name       : 'theme',
+		label      : 'Theme',
+		file       : 'static/config/theme.json',
+		description: 'Colors and related settings',
+		fields     : [{
+			//	Any color that doesn't target a specific element or type
+			//	of content (text, border, etc) should provide 2 options
+			//	for configuration: background and color (text)
+			label : 'Colors',
+			name  : 'colors',
+			widget: 'object',
+			fields: [{
+				label : 'Intents',
+				name  : 'intents',
+				widget: 'object',
+				hint  : 'Text and background colors used for various message intents',
+				fields: [{
+					label : 'Success',
+					name  : 'success',
+					widget: 'object',
+					fields: [{
+						label  : 'Text',
+						name   : 'text',
+						widget : 'color',
+						default: '#3DCC91',
+					}, {
+						label  : 'Background',
+						name   : 'background',
+						widget : 'color',
+						format : 'hex',
+						default: '#daf5ea',
+					}],
 				}, {
-					label : 'Title',
-					name  : 'title',
-					widget: 'string'
+					label : 'Warning',
+					name  : 'warning',
+					widget: 'object',
+					fields: [{
+						label : 'Text',
+						name  : 'text',
+						widget: 'color',
+						format: 'hex',
+						color : '#ffa100',
+					}, {
+						label  : 'Background',
+						name   : 'background',
+						widget : 'color',
+						format : 'hex',
+						default: '#ffedcc',
+					}],
 				}, {
-					label : 'Excerpt',
-					name  : 'excerpt',
-					widget: 'text'
+					label : 'Danger',
+					name  : 'danger',
+					widget: 'object',
+					fields: [{
+						label  : 'Text',
+						name   : 'text',
+						widget : 'color',
+						format : 'hex',
+						default: '#FF0000',
+					}, {
+						label  : 'Background',
+						name   : 'background',
+						widget : 'color',
+						format : 'hex',
+						default: '#ffcccc',
+					}],
+				}],
+			}, {
+				label : 'Primary',
+				name  : 'primary',
+				widget: 'object',
+				hint  : 'Text and background colors used as primary in your theme',
+				fields: [{
+					label  : 'Text',
+					name   : 'text',
+					widget : 'color',
+					format : 'hex',
+					default: '#FFFFFF',
 				}, {
-					label : 'Base url',
-					name  : 'baseUrl',
-					widget: 'string'
+					label  : 'Background',
+					name   : 'background',
+					widget : 'color',
+					format : 'hex',
+					default: '#1A2835',
+				}],
+			}, {
+				label : 'Secondary',
+				name  : 'secondary',
+				widget: 'object',
+				hint  : 'Text and background colors used as secondary in your theme',
+				fields: [{
+					label  : 'Text',
+					name   : 'text',
+					widget : 'color',
+					format : 'hex',
+					default: '#1A2835',
 				}, {
-					label : 'Social media share image',
-					name  : 'socialShareImg',
-					widget: 'image'
-				}
-			]
-		}]
+					label  : 'Background',
+					name   : 'background',
+					widget : 'color',
+					format : 'hex',
+					default: '#BFCCD6',
+				}],
+			}, {
+				label : 'Accent',
+				name  : 'accent',
+				widget: 'object',
+				hint  : 'Text and background colors used as accent in your theme',
+				fields: [{
+					label  : 'Text',
+					name   : 'text',
+					widget : 'color',
+					format : 'hex',
+					default: '#FFFFFF',
+				}, {
+					label  : 'Background',
+					name   : 'background',
+					widget : 'color',
+					format : 'hex',
+					default: '#41a893',
+				}],
+			}, {
+				label : 'Faded',
+				name  : 'faded',
+				widget: 'object',
+				hint  : 'Text and background colors used for faded content',
+				fields: [{
+					label  : 'Text',
+					name   : 'text',
+					widget : 'color',
+					format : 'hex',
+					default: '#1A2835',
+				}, {
+					label  : 'Background',
+					name   : 'background',
+					widget : 'color',
+					format : 'hex',
+					default: '#f0f4f7',
+				}],
+			}, {
+				label  : 'Text',
+				name   : 'text',
+				widget : 'color',
+				format : 'hex',
+				default: '#333333',
+			}, {
+				label  : 'Light text',
+				name   : 'lightText',
+				widget : 'color',
+				format : 'hex',
+				default: '#5e7180',
+			}, {
+				label  : 'Borders',
+				name   : 'borders',
+				widget : 'color',
+				format : 'hex',
+				default: '#E1E8ED',
+			}],
+		}],
 	}, {
 		name       : 'posts',
 		label      : 'Posts',
@@ -50,7 +208,7 @@ export const settingsCollection = {
 			fields: [{
 				label : 'Number of posts on frontpage',
 				name  : 'frontLimit',
-				widget: 'number'
+				widget: 'number',
 			}, {
 				label  : 'Show post scroll progress?',
 				name   : 'progressShow',
@@ -58,24 +216,24 @@ export const settingsCollection = {
 				hint   : `When scrolling a post, a progress bar 
 					indicating the current position in page will be 
 					shown on the bottom of the page`,
-				default: true
+				default: true,
 			}, {
 				label  : 'Show table of contents?',
 				name   : 'tocShow',
 				widget : 'boolean',
-				default: true
+				default: true,
 			}, {
 				label  : 'Show social media share buttons?',
 				name   : 'socialShow',
 				widget : 'boolean',
-				default: true
+				default: true,
 			}, {
 				label  : 'Show subscribe box?',
 				name   : 'subscribeShow',
 				widget : 'boolean',
-				default: true
-			}]
-		}]
+				default: true,
+			}],
+		}],
 	}, {
 		name  : 'plugins',
 		label : 'Plugins',
@@ -87,7 +245,7 @@ export const settingsCollection = {
 			fields: [{
 				label : 'Enable?',
 				name  : 'enable',
-				widget: 'boolean'
+				widget: 'boolean',
 			}, {
 				label : 'Google Analytics',
 				name  : 'analytics',
@@ -95,9 +253,9 @@ export const settingsCollection = {
 				fields: [{
 					label : 'Tracking ID',
 					name  : 'trackingId',
-					widget: 'string'
-				}]
-			}]
+					widget: 'string',
+				}],
+			}],
 		}, {
 			label : 'Email subscribers',
 			name  : 'emailSubscribers',
@@ -105,7 +263,7 @@ export const settingsCollection = {
 			fields: [{
 				label : 'Enable?',
 				name  : 'enable',
-				widget: 'boolean'
+				widget: 'boolean',
 			}, {
 				label : 'Mailchimp',
 				name  : 'mailchimp',
@@ -113,9 +271,9 @@ export const settingsCollection = {
 				fields: [{
 					label : 'Mailchimp list endpoint',
 					name  : 'endpoint',
-					widget: 'string'
-				}]
-			}]
+					widget: 'string',
+				}],
+			}],
 		}, {
 			label : 'Search',
 			name  : 'search',
@@ -123,7 +281,7 @@ export const settingsCollection = {
 			fields: [{
 				label : 'Enable',
 				name  : 'enable',
-				widget: 'boolean'
+				widget: 'boolean',
 			}, {
 				label : 'Algolia',
 				name  : 'algolia',
@@ -131,17 +289,17 @@ export const settingsCollection = {
 				fields: [{
 					label : 'App id',
 					name  : 'appId',
-					widget: 'string'
+					widget: 'string',
 				}, {
 					label : 'Index name',
 					name  : 'indexName',
-					widget: 'string'
+					widget: 'string',
 				}, {
 					label : 'Search key',
 					name  : 'searchKey',
-					widget: 'string'
-				}]
-			}]
+					widget: 'string',
+				}],
+			}],
 		}, {
 			label : 'RSS Feed',
 			name  : 'rssFeed',
@@ -149,10 +307,10 @@ export const settingsCollection = {
 			fields: [{
 				label : 'Enable',
 				name  : 'enable',
-				widget: 'boolean'
-			}]
-		}]
-	}]
+				widget: 'boolean',
+			}],
+		}],
+	}],
 };
 
 export const authorsCollection = {
@@ -164,9 +322,9 @@ export const authorsCollection = {
 	create        : true,
 	allow_add     : false,
 	fields        : [{
-		label : "Name",
-		name  : "title",
-		widget: 'string'
+		label : 'Name',
+		name  : 'title',
+		widget: 'string',
 	}, {
 		label  : 'Excerpt',
 		name   : 'excerpt',
@@ -174,12 +332,12 @@ export const authorsCollection = {
 		buttons: [
 			'bold',
 			'italic',
-		]
+		],
 	}, {
-		label : "Avatar",
-		name  : "avatar",
-		widget: 'image'
-	}]
+		label : 'Avatar',
+		name  : 'avatar',
+		widget: 'image',
+	}],
 };
 
 export const categoriesCollection = {
@@ -193,11 +351,11 @@ export const categoriesCollection = {
 	fields        : [{
 		label : 'Tag',
 		name  : 'title',
-		widget: 'string'
+		widget: 'string',
 	}, {
 		label : 'Excerpt',
 		name  : 'excerpt',
-		widget: 'text'
+		widget: 'text',
 	}, {
 		label   : 'Header Image',
 		name    : 'header',
@@ -207,12 +365,12 @@ export const categoriesCollection = {
 			label   : 'Image',
 			name    : 'image',
 			widget  : 'image',
-			required: false
+			required: false,
 		}, {
 			label   : 'Alt text',
 			name    : 'alt',
 			widget  : 'string',
-			required: false
+			required: false,
 		}, {
 			label : 'Meta',
 			name  : 'meta',
@@ -221,16 +379,16 @@ export const categoriesCollection = {
 				label   : 'Meta keywords',
 				name    : 'keywords',
 				widget  : 'string',
-				required: false
+				required: false,
 			}, {
 				label   : 'Meta description',
 				name    : 'description',
 				widget  : 'string',
 				required: false,
-				hint    : 'If left empty we will use the excerpt insteads'
-			}]
-		}]
-	}]
+				hint    : 'If left empty we will use the excerpt insteads',
+			}],
+		}],
+	}],
 };
 
 export const postsCollection = {
@@ -240,15 +398,15 @@ export const postsCollection = {
 	folder        : 'static/content/collections/posts',
 	create        : true,
 	slug          : '{{slug}}',
-	sort          : "created_at:desc",
+	sort          : 'created_at:desc',
 	fields        : [{
 		label : 'Title',
 		name  : 'title',
-		widget: 'string'
+		widget: 'string',
 	}, {
 		label : 'Publish Date',
 		name  : 'created_at',
-		widget: 'datetime'
+		widget: 'datetime',
 	}, {
 		label  : 'Body',
 		name   : 'body',
@@ -259,13 +417,13 @@ export const postsCollection = {
 			'link',
 			'quote',
 			'bulleted-list',
-			'numbered-list'
-		]
+			'numbered-list',
+		],
 	}, {
 		label : 'Tags',
 		name  : 'tags',
 		widget: 'list',
-		hint  : 'Comma separated list of tags'
+		hint  : 'Comma separated list of tags',
 	}, {
 		//	currently Netlify-CMS does not allow for a 1-m relation
 		//	but they will implement so I'll let this field on the
@@ -277,7 +435,7 @@ export const postsCollection = {
 		collection   : 'authors',
 		searchFields : ['title'],
 		valueField   : 'title',
-		displayFields: ['title']
+		displayFields: ['title'],
 	}, {
 		label        : 'Categories',
 		name         : 'categories',
@@ -285,7 +443,7 @@ export const postsCollection = {
 		collection   : 'categories',
 		searchFields : ['title', 'excerpt'],
 		valueField   : 'title',
-		displayFields: ['title']
+		displayFields: ['title'],
 	}, {
 		label : 'Meta',
 		name  : 'meta',
@@ -294,26 +452,26 @@ export const postsCollection = {
 			label   : 'Meta keywords',
 			name    : 'keywords',
 			widget  : 'string',
-			required: false
+			required: false,
 		}, {
 			label   : 'Meta description',
 			name    : 'description',
 			widget  : 'string',
 			required: false,
-			hint    : 'If left empty we will use the excerpt instead'
-		}]
+			hint    : 'If left empty we will use the excerpt instead',
+		}],
 	}, {
 		label   : 'Is page?',
 		name    : 'isPage',
 		widget  : 'boolean',
 		required: false,
-		default : false
+		default : false,
 	}, {
 		label   : 'Is featured?',
 		name    : 'isFeatured',
 		widget  : 'boolean',
 		required: false,
-		default : false
+		default : false,
 	}, {
 		label   : 'Hero',
 		name    : 'hero',
@@ -323,16 +481,16 @@ export const postsCollection = {
 			label   : 'Image',
 			name    : 'image',
 			widget  : 'image',
-			required: false
+			required: false,
 		}, {
 			label   : 'Alt text',
 			name    : 'alt',
 			widget  : 'string',
-			required: false
-		}]
+			required: false,
+		}],
 	}, {
 		label : 'Excerpt',
 		name  : 'excerpt',
-		widget: 'text'
-	}]
+		widget: 'text',
+	}],
 };

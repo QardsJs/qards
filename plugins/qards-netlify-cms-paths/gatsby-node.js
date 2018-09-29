@@ -35,7 +35,7 @@ const mapNetlifyMediaPath = (node, options) => {
  * the blocks and create a node for each of them images and hope that
  * this will be enough for Gatsby to kick in those optimization incantations.
  */
-const createPostImageNodes = (node, actions) => {
+const createPostImageNodes = async (node, actions) => {
 	if (!node.rawMarkdownBody) return;
 
 	// TODO: This regex is in three places right now!
@@ -48,7 +48,7 @@ const createPostImageNodes = (node, actions) => {
 
 	const {createNodeField} = actions;
 
-	node.rawMarkdownBody.split("\n").map((line) => {
+	node.rawMarkdownBody.split('\n').map((line) => {
 		//	for the sake of simplicity we will only search for fields
 		//	that are named `src` (to identify an image) so keep that
 		//	in mind when creating components with images that don't
@@ -67,7 +67,7 @@ const createPostImageNodes = (node, actions) => {
 			matches.concat(subMatches);
 
 			createNodeField({
-				node, name: `${_.camelCase(widget)}`, value: matches
+				node, name: `${_.camelCase(widget)}`, value: matches,
 			});
 		}
 	});
@@ -99,7 +99,6 @@ const scanObjForImagesAndCreateNodes = (matches, obj) => {
 	return matches;
 };
 
-exports.onCreateNode = ({node, actions}, options) => {
-	createPostImageNodes(node, actions);
-	mapNetlifyMediaPath(node, options)
+exports.onCreateNode = async ({node, actions}, options) => {
+	createPostImageNodes(node, actions).then(() => mapNetlifyMediaPath(node, options));
 };

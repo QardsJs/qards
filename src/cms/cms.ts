@@ -9,6 +9,9 @@ import {settingsCollection, categoriesCollection, postsCollection, authorsCollec
 //	typography styles
 import typography from "../utils/typography";
 
+//	widgets
+import * as ColorWidget from "netlify-cms-widget-color";
+
 //  editor components
 import Code from './editor-components/code';
 import Audio from './editor-components/audio';
@@ -38,6 +41,9 @@ init({
 //	load stylesheets
 CMS.registerPreviewStyle(typography.toString(), {raw: true});
 CMS.registerPreviewStyle(appStyles.toString(), {raw: true});
+
+//	register widgets
+CMS.registerWidget("color", ColorWidget.Control);
 
 //	register editor components
 CMS.registerEditorComponent(Code);
