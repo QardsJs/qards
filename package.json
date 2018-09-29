@@ -5,6 +5,7 @@
   "author": "Romeo Mihalcea <romeo.mihalcea@gmail.com>",
   "dependencies": {
     "@blueprintjs/core": "^3.0.1",
+    "@pake/react-color": "^3.0.0",
     "@reach/router": "^1.1.1",
     "@types/base-64": "^0.1.2",
     "algoliasearch": "^3.30.0",
@@ -46,6 +47,7 @@
     "lodash.debounce": "^4.0.8",
     "moment": "^2.22.2",
     "netlify-cms": "^2.1.2",
+    "netlify-cms-widget-color": "^3.0.1",
     "node-sass": "^4.9.2",
     "npm": "^6.3.0",
     "react": "^16.5.2",
@@ -104,8 +106,8 @@
     "@types/react-share": "^2.1.1",
     "@types/react-transition-group": "^2.0.13",
     "@types/tinycolor2": "^1.4.1",
-    "prettier": "^1.13.7",
     "cypress": "^3.1.0",
+    "prettier": "^1.13.7",
     "redux-devtools-extension": "^2.13.5"
   },
   "repository": {

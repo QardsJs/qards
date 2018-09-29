@@ -7,6 +7,7 @@ declare module 'react-images';
 declare module 'react-custom-scrollbars';
 declare module 'react-accessible-accordion';
 declare module 'gatsby-plugin-mailchimp';
+declare module 'netlify-cms-widget-color';
 declare module 'react-motion-drawer';
 
 declare module "*.svg" {
