@@ -263,8 +263,6 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 		const {isPlaying, currentTrack} = this.state;
 		const {title, subtitle, url, poster} = currentTrack;
 
-		console.log(poster);
-
 		return (
 			<TitledWrapper>
 				<Wrapper>

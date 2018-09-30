@@ -13,9 +13,8 @@ import {Response} from 'algoliasearch';
 import Hide from '../common/hide';
 
 import theme from '../../theme';
-import {PostType} from "../../fragments/post";
-import {CategoryType} from "../../templates/category";
-import {getThemeConfig} from '../../utils/helpers';
+import {PostType} from '../../fragments/post';
+import {CategoryType} from '../../templates/category';
 
 const Wrapper = styled.div``;
 const SearchResultTag = styled(Tag)`
@@ -96,7 +95,7 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 		const {searchResults, searchingWrite, searchPerformed} = this.state;
 
 		const childrenWithProps = React.cloneElement(children, {
-			onClick: this.toggleDrawer.bind(this)
+			onClick: this.toggleDrawer.bind(this),
 		});
 
 		return (
@@ -117,12 +116,12 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 									this.setState({
 										searchResults  : results,
 										searchingWrite : false,
-										searchPerformed: true
+										searchPerformed: true,
 									});
 								}}
 								onWrite={() => {
 									this.setState({
-										searchingWrite: true
+										searchingWrite: true,
 									});
 								}}
 							/>
@@ -138,6 +137,9 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 									{searchResults.length > 0 && (
 										<DrawerLinkList>
 											{searchResults.map((result: PostType) => {
+												if (!result.fields || !result.frontmatter) {
+													return;
+												}
 												return (
 													<li key={result.fields.slug}>
 														<SearchResult
@@ -168,7 +170,7 @@ export default class NavbarDrawer extends Component<Props & HTMLDivProps, State>
 										<p
 											style={{
 												marginTop: 20,
-												textAlign: 'center'
+												textAlign: 'center',
 											}}
 										>
 											No results

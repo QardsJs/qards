@@ -32,31 +32,6 @@ const query = `{
 	}
 }`;
 
-function concatSearchIndex(node) {
-	const tags = [];
-	const categories = [];
-
-	if (node.tags)
-		for (let i = 0; i < node.tags.length; i++) {
-			tags.push(node.tags[i]);
-		}
-
-	if (node.categories) {
-		for (let i = 0; i < node.categories.length; i++) {
-			categories.push(node.categories[i].frontmatter.title);
-		}
-	}
-
-	return {
-		objectID : node.objectID,
-		title    : node.frontmatter.title,
-		slug     : node.fields.slug,
-		createdAt: node.frontmatter.created_at,
-		excerpt  : node.frontmatter.excerpt,
-		tags, categories,
-	};
-}
-
 const plugins = [
 	`gatsby-plugin-sharp`,
 	`gatsby-transformer-sharp`,
@@ -246,7 +221,12 @@ if (
 				query,
 				transformer: ({data}) => {
 					return data.allMarkdownRemark.edges.map(
-						({node}) => concatSearchIndex(node),
+						({node}) => {
+							return {
+								objectID: node.objectID,
+								...node,
+							};
+						},
 					);
 				},
 			}], chunkSize: 10000,
@@ -256,7 +236,6 @@ if (
 
 if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
 	plugins.push({
-
 		resolve: `gatsby-plugin-feed`,
 		options: {
 			feeds: [
@@ -278,7 +257,7 @@ if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
 					},
 					query    : `
 							{
-								latest: allMarkdownRemark(
+								allMarkdownRemark(
 									limit: 1000,
 									sort: {fields: [frontmatter___created_at], order: DESC},
 									filter: {
@@ -289,7 +268,7 @@ if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
 									edges {
 										node {
 											fields {
-												skug
+												slug
 											}
 										
 											frontmatter {
@@ -313,5 +292,10 @@ if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
 plugins.push(`gatsby-plugin-netlify`);
 
 module.exports = {
+	siteMetadata: {
+		title      : configSite.title,
+		siteUrl    : configSite.baseUrl,
+		description: configSite.excerpt,
+	},
 	plugins,
 };
