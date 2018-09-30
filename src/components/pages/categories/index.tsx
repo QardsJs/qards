@@ -19,11 +19,12 @@ interface Props {
 	category: CategoryType;
 	posts: PostType[];
 	featured: PostType[];
+	location: any;
 }
 
 class CategoryPage extends React.Component<Props, any> {
 	render() {
-		const {posts, category, featured, totalCount} = this.props;
+		const {posts, category, featured, totalCount, location} = this.props;
 		const tagHeader = `${totalCount} post${totalCount === 1 ? '' : 's'} in "${category.frontmatter.title}" category`;
 
 		return <Layout>
