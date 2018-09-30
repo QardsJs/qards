@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import Img from "gatsby-image";
+import Img from 'gatsby-image';
 import Lightbox from 'react-images';
+import TrackVisibility from 'react-on-screen';
 
-import Markdown from "../../markdown";
-import theme from "../../../theme";
-import {QardProps} from "../base";
-import {HTMLDivProps} from "@blueprintjs/core";
-import {getThemeConfig} from '../../../utils/helpers';
+import Markdown from '../../markdown';
+import theme from '../../../theme';
+import {QardProps} from '../base';
+import {HTMLDivProps} from '@blueprintjs/core';
 
 const StyledImage = styled.figure`
 	img {
@@ -85,7 +85,7 @@ export interface CardImageType extends QardProps {
  */
 const QardImage = ({alt, src, ...rest}: CardImageType) => {
 	return (src && !rest.fluid && !rest.fixed) ? <img src={src} alt={alt} {...rest}/> : <Img {...Object.assign(
-		rest, {alt}
+		rest, {alt},
 	)}/>;
 };
 
@@ -106,7 +106,7 @@ interface State {
 export class QardImageContent extends React.Component<ContentImageType & HTMLDivProps, State> {
 	state = {
 		lightboxOpen: false,
-		currentImage: 0
+		currentImage: 0,
 	};
 
 	render() {
@@ -121,7 +121,7 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 
 		const imgProp: CardImageType = {
 			alt: alt,
-			src: images[0].src
+			src: images[0].src,
 		};
 
 		if (fluid) {
@@ -137,7 +137,9 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 			onClick={() => this.setState({lightboxOpen: true})}
 			className={`layout ${layout}`}>
 
-			<QardImage {...imgProp}/>
+			<TrackVisibility once>
+				<QardImage {...imgProp}/>
+			</TrackVisibility>
 
 			<Lightbox
 				images={images}
@@ -147,8 +149,8 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 			/>
 
 			{caption && <div className="alt">
-				   <Markdown component={"figcaption"} md={caption}/>
-			   </div>}
+				<Markdown component={'figcaption'} md={caption}/>
+			</div>}
 		</StyledImage>;
 	}
 }

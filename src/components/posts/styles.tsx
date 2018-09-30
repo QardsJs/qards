@@ -15,17 +15,17 @@ export const Wrapper = styled.div`
             border: none;
             border-radius: 0!important;
             
-            -webkit-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['primary', 'background'])).darken(20).toString()} !important;
-            -moz-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['primary', 'background'])).darken(20).toString()} !important;
-            box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['primary', 'background'])).darken(20).toString()} !important;
+            -webkit-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
+            -moz-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
+            box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
         
             &:hover {
                 text-decoration: inherit!important;
                 transform: scale(1.001);
                 
-                -webkit-box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(['primary', 'background'])).darken(20).toString()} !important;
-                -moz-box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(['primary', 'background'])).darken(20).toString()} !important;
-                box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(['primary', 'background'])).darken(20).toString()} !important;
+                -webkit-box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
+                -moz-box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
+                box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
             }
             
             .post-card-cover {
