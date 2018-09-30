@@ -14,10 +14,10 @@ const Wrapper = styled.div`
 	}
 	
 	&.dark {
-		background: ${theme.color(['primary', 'background'])};
-		color: ${theme.color(['primary', 'text'])};
-		background-image: radial-gradient(ellipse at center -50%, ${tinycolor(theme.color(['primary', 'background'])).lighten(
-	20).toString()} 0%,${theme.color(['primary', 'background'])} 56%,${getThemeConfig((['colors', 'primary', 'background']))} 100%);
+		background: ${theme.color(['accent', 'background'])};
+		color: ${theme.color(['accent', 'text'])};
+		background-image: radial-gradient(ellipse at center -50%, ${tinycolor(theme.color(['accent', 'background'])).lighten(
+	20).toString()} 0%,${theme.color(['accent', 'background'])} 56%,${getThemeConfig((['colors', 'accent', 'background']))} 100%);
 		padding: 80px 0;
 	}
 `;

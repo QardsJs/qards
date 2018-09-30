@@ -1,9 +1,10 @@
 import React from 'react';
-import {graphql, StaticQuery} from "gatsby";
+import {graphql, StaticQuery} from 'gatsby';
 
-import IndexRoute from "../components/pages/index";
-import Route from "../components/common/route";
-import {PostType} from "../fragments/post";
+import IndexRoute from '../components/pages/blog';
+import Route from '../components/common/route';
+import {PostType} from '../fragments/post';
+import {extractNodesFromEdges} from '../utils/helpers';
 
 interface DataProps {
 	latest: {
@@ -37,15 +38,13 @@ const Index = (props: IndexPageProps) => {
         `}
 
 		render={(data: DataProps) => {
-			const latest: PostType[] = [];
-
-			for (let i = 0; i < data.latest.edges.length; i++) {
-				latest.push(data.latest.edges[i].node);
-			}
-
-			return <Route component={IndexRoute} latest={latest} path="/"/>
+			return <Route
+				component={IndexRoute}
+				latest={extractNodesFromEdges(data.latest.edges)}
+				path="/"
+			/>;
 		}}
-	/>
+	/>;
 };
 
 export default Index;

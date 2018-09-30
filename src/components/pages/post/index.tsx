@@ -12,7 +12,6 @@ import Posts from '../../posts';
 import {tokenizePost, prependBaseUrl, getPluginsConfig} from '../../../utils/helpers';
 import config from '../../../../static/config/settings.json';
 
-
 interface PostPageProps {
 	post: PostType;
 	related: PostType[];

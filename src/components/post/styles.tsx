@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import {Box, Flex} from "grid-styled";
-import theme from "../../theme";
+import styled from 'styled-components';
+import {Box, Flex} from 'grid-styled';
+import theme from '../../theme';
+import tinycolor2 from 'tinycolor2';
 
 
 export const Wrapper = styled(Flex)`
@@ -54,6 +55,43 @@ export const Article = styled.article`
 		div.paragraphs{
 			text-align: justify;
 			text-justify: inter-word;
+		}
+	}
+	
+	.paragraphs {
+		pre, code {
+			font-size: 1rem;
+			padding: 0 4px;
+			border-radius: 4px;
+			color: ${tinycolor2(theme.color(['intents', 'danger', 'text'])).darken(20).toString()};
+			background: ${tinycolor2(theme.color(['intents', 'danger', 'background'])).lighten(10).toString()};
+		}
+		
+		p {
+			margin-bottom: 20px;
+		}
+		
+		strong, b {
+			font-weight: 400;
+		}
+		
+		ul {
+			li {
+				padding: 0;
+				font-size: .9em;
+				color: ${tinycolor2(theme.color(['lightText'])).darken(20).toString()};
+			}
+		}
+		
+		a {
+			color: ${tinycolor2(theme.color(['accent', 'text'])).darken(5).toString()};
+			font-weight: 500;
+			border-bottom: 1px solid ${theme.color(['accent', 'text'])};
+		
+			&:hover {
+				text-decoration: none;
+				color: ${tinycolor2(theme.color(['accent', 'text'])).darken(5).toString()};
+			}
 		}
 	}
 `;
