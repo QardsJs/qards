@@ -4,7 +4,7 @@ import {graphql, StaticQuery} from 'gatsby';
 import IndexRoute from '../components/pages/blog';
 import Route from '../components/common/route';
 import {PostType} from '../fragments/post';
-import {extractNodesFromEdges} from '../utils/helpers';
+import {extractNodesFromEdges, getSettingsConfig} from '../utils/helpers';
 
 interface DataProps {
 	latest: {
@@ -41,7 +41,7 @@ const Index = (props: IndexPageProps) => {
 			return <Route
 				component={IndexRoute}
 				latest={extractNodesFromEdges(data.latest.edges)}
-				path="/"
+				path={getSettingsConfig(['blogPagePath'])}
 			/>;
 		}}
 	/>;

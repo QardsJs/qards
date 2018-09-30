@@ -6,10 +6,10 @@ export const settingsCollection = {
 		preview: false,
 	},
 	files : [{
-		name       : 'general',
-		label      : 'Site Settings',
-		file       : 'static/config/settings.json',
-		fields     : [{
+		name  : 'general',
+		label : 'Site Settings',
+		file  : 'static/config/settings.json',
+		fields: [{
 			label : 'Name',
 			name  : 'name',
 			widget: 'string',
@@ -26,15 +26,24 @@ export const settingsCollection = {
 			name  : 'baseUrl',
 			widget: 'string',
 		}, {
+			label  : 'Blog page path',
+			name   : 'blogPagePath',
+			widget : 'string',
+			default: '/',
+			hint   : `What is the path for the blog page? This setting is to avoid locking
+			the root path '/' to a page with blog posts. If you want to reserve that route
+			for a custom page you can set this value here to '/blog' or whatever value suits
+			you best. This value will NOT be prepended to posts slugs!`,
+		}, {
 			label : 'Social media share image',
 			name  : 'socialShareImg',
 			widget: 'image',
 		}],
 	}, {
-		name       : 'theme',
-		label      : 'Theme',
-		file       : 'static/config/theme.json',
-		fields     : [{
+		name  : 'theme',
+		label : 'Theme',
+		file  : 'static/config/theme.json',
+		fields: [{
 			//	Any color that doesn't target a specific element or type
 			//	of content (text, border, etc) should provide 2 options
 			//	for configuration: background and color (text)

@@ -27,6 +27,7 @@
     "gatsby-plugin-netlify": "^2.0.0-beta.6",
     "gatsby-plugin-netlify-cms": "latest",
     "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-page-creator": "^2.0.0",
     "gatsby-plugin-purgecss": "^2.4.0",
     "gatsby-plugin-react-helmet": "latest",
     "gatsby-plugin-sass": "latest",

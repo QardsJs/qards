@@ -149,6 +149,12 @@ const plugins = [
 		},
 	},
 	{
+		resolve: `gatsby-plugin-page-creator`,
+		options: {
+			path: `${__dirname}/user_pages`,
+		},
+	},
+	{
 		resolve: `fix-external-links`,
 		options: {
 			attributes: {
