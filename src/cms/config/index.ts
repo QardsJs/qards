@@ -1,8 +1,7 @@
 const config = {
 	backend      : {
 		name                  : 'git-gateway',
-		repo                  : 'QardsJs/qards',
-		branch                : 'website',
+		branch                : 'master',
 		squash_merges         : true,
 		workflow_branch_prefix: 'qards',
 	},

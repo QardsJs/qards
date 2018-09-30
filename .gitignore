@@ -12,3 +12,5 @@ cypress/screenshots
 ./static/config
 ./static/content
 ./static/images
+
+./tmp
