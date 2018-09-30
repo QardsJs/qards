@@ -45,3 +45,13 @@ A gallery can contain a single picture or multiple ones. When multiple images ar
 {"widget":"qards-video","config":"eyJ1cmwiOiJodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD90aW1lX2NvbnRpbnVlPTMwMSZ2PUpwbFJTSnI4Sy1nIn0="}
 
 A rare footage of a very young Mike Tyson sparring Jimmy Clark in 1983
+
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IkNhbGxvdXRzIiwic3VidGl0bGUiOiJDYWxsb3V0cyB2aXN1YWxseSBoaWdobGlnaHQgaW1wb3J0YW50IGNvbnRlbnQgZm9yIHRoZSB1c2VyLiBUaGV5IGNhbiBjb250YWluIGEgdGl0bGUsIGFuIGljb24gYW5kIGEgbWVzc2FnZS4iLCJ0eXBlIjoicHJpbWFyeSJ9"}
+
+{"widget":"qards-callout","config":"eyJ0aXRsZSI6IlN1Y2Nlc3MiLCJpbnRlbnQiOiJzdWNjZXNzIiwibWVzc2FnZSI6IlRoZSBnZW5lcmFsIHBvcHVsYXRpb24gZG9lc24ndCBrbm93IHdoYXRzIGhhcHBlbmluZyBhbmQgKippdCBkb2Vzbid0IGV2ZW4ga25vdyoqIHRoYXQgaXQgZG9lc24ndCBrbm93In0="}
+
+{"widget":"qards-callout","config":"eyJpbnRlbnQiOiJwcmltYXJ5IiwibWVzc2FnZSI6IlRoZSBnZW5lcmFsIHBvcHVsYXRpb24gZG9lc24ndCBrbm93IHdoYXRzIGhhcHBlbmluZyBhbmQgKippdCBkb2Vzbid0IGV2ZW4ga25vdyoqIHRoYXQgaXQgZG9lc24ndCBrbm93IiwidGl0bGUiOiJJbmZvIn0="}
+
+{"widget":"qards-callout","config":"eyJtZXNzYWdlIjoiVGhlIGdlbmVyYWwgcG9wdWxhdGlvbiBkb2Vzbid0IGtub3cgd2hhdHMgaGFwcGVuaW5nIGFuZCAqKml0IGRvZXNuJ3QgZXZlbiBrbm93KiogdGhhdCBpdCBkb2Vzbid0IGtub3ciLCJ0aXRsZSI6Ildhcm5pbmciLCJpbnRlbnQiOiJ3YXJuaW5nIn0="}
+
+{"widget":"qards-callout","config":"eyJ0aXRsZSI6IkRhbmdlciIsImludGVudCI6ImRhbmdlciIsIm1lc3NhZ2UiOiJUaGUgZ2VuZXJhbCBwb3B1bGF0aW9uIGRvZXNuJ3Qga25vdyB3aGF0cyBoYXBwZW5pbmcgYW5kICoqaXQgZG9lc24ndCBldmVuIGtub3cqKiB0aGF0IGl0IGRvZXNuJ3Qga25vdyJ9"}
