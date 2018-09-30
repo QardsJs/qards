@@ -1,10 +1,10 @@
 import React from 'react';
 import {graphql, StaticQuery} from 'gatsby';
 
-import IndexRoute from '../components/pages/blog';
+import BlogRoute from '../components/pages/blog';
 import Route from '../components/common/route';
 import {PostType} from '../fragments/post';
-import {extractNodesFromEdges, getSettingsConfig} from '../utils/helpers';
+import {extractNodesFromEdges} from '../utils/helpers';
 
 interface DataProps {
 	latest: {
@@ -14,13 +14,10 @@ interface DataProps {
 	};
 }
 
-interface IndexPageProps {
-}
-
-const Index = (props: IndexPageProps) => {
+const Blog = () => {
 	return <StaticQuery
 		query={graphql`
-			query IndexPageQuery {
+			query BlogPageQuery {
 				latest: allMarkdownRemark(
 					sort: {fields: [frontmatter___created_at], order: DESC},
 					filter: {
@@ -39,12 +36,12 @@ const Index = (props: IndexPageProps) => {
 
 		render={(data: DataProps) => {
 			return <Route
-				component={IndexRoute}
+				component={BlogRoute}
 				latest={extractNodesFromEdges(data.latest.edges)}
-				path={getSettingsConfig(['blogPagePath'])}
+				path={'/blog'}
 			/>;
 		}}
 	/>;
 };
 
-export default Index;
+export default Blog;

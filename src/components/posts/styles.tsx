@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import {Box, Flex} from "grid-styled";
-import {Link} from "gatsby";
+import { Box, Flex } from "grid-styled";
+import { Link } from "gatsby";
 import theme from "../../theme";
 import tinycolor from "tinycolor2";
 
@@ -8,24 +8,24 @@ export const Wrapper = styled.div`
     &.darktheme {
         h3 {
             font-weight: 200;
-            color: ${theme.color(['primary', 'text'])};
+            color: ${theme.color(["primary", "text"])};
         }
         
         .post-card {
             border: none;
             border-radius: 0!important;
             
-            -webkit-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
-            -moz-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
-            box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
+            -webkit-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(["accent", "background"])).darken(20).toString()} !important;
+            -moz-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(["accent", "background"])).darken(20).toString()} !important;
+            box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(["accent", "background"])).darken(20).toString()} !important;
         
             &:hover {
                 text-decoration: inherit!important;
                 transform: scale(1.001);
                 
-                -webkit-box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
-                -moz-box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
-                box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(['accent', 'background'])).darken(20).toString()} !important;
+                -webkit-box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(["accent", "background"])).darken(20).toString()} !important;
+                -moz-box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(["accent", "background"])).darken(20).toString()} !important;
+                box-shadow: 0 10px 22px 0 ${tinycolor(theme.color(["accent", "background"])).darken(20).toString()} !important;
             }
             
             .post-card-cover {
@@ -33,6 +33,24 @@ export const Wrapper = styled.div`
                     border-radius: 0!important;
                 }
             }
+            
+            &.performance {
+				-webkit-box-shadow: none!important;
+				-moz-box-shadow: none!important;
+				box-shadow: none!important;
+			
+				&:hover {
+					-webkit-transform: none!important;
+					-moz-transform: none!important;
+					-o-transform: none!important;
+					-ms-transform: none!important;
+					transform: none!important;
+					
+					-webkit-box-shadow: none!important;
+					-moz-box-shadow: none!important;
+					box-shadow: none!important;
+				}
+			}
         }
     }
     
@@ -40,7 +58,7 @@ export const Wrapper = styled.div`
         text-align: center;
         margin-bottom: 50px;
         font-size: 1.8rem;
-        color: ${theme.color(['primary', 'background'])};
+        color: ${theme.color(["primary", "background"])};
     }
 `;
 
@@ -50,11 +68,11 @@ export const StyledCard = styled(Link)`
 	margin-bottom: 40px;
 	border-radius: 4px !important;
 	position: relative;
-	border: 1px solid ${tinycolor(theme.color(['faded', 'background'])).darken(20).toString()};
+	border: 1px solid ${tinycolor(theme.color(["faded", "background"])).darken(20).toString()};
 
-	-webkit-box-shadow: 0 5px 15px 0 ${theme.color(['faded', 'background'])};
-	-moz-box-shadow: 0 5px 15px 0 ${theme.color(['faded', 'background'])};
-	box-shadow: 0 5px 15px 0 ${theme.color(['faded', 'background'])};
+	-webkit-box-shadow: 0 5px 15px 0 ${theme.color(["faded", "background"])};
+	-moz-box-shadow: 0 5px 15px 0 ${theme.color(["faded", "background"])};
+	box-shadow: 0 5px 15px 0 ${theme.color(["faded", "background"])};
 
 	&:hover {
 	    text-decoration: inherit!important;
@@ -64,9 +82,27 @@ export const StyledCard = styled(Link)`
         -ms-transform: translate3d(0, -2px, 0);
         transform: translate3d(0, -2px, 0);
         
-        -webkit-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['faded', 'background'])).darken(10).toString()};
-        -moz-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['faded', 'background'])).darken(10).toString()};
-        box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(['faded', 'background'])).darken(10).toString()};
+        -webkit-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(["faded", "background"])).darken(10).toString()};
+        -moz-box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(["faded", "background"])).darken(10).toString()};
+        box-shadow: 0 5px 15px 0 ${tinycolor(theme.color(["faded", "background"])).darken(10).toString()};
+	}
+	
+	&.performance {
+		-webkit-box-shadow: none!important;
+		-moz-box-shadow: none!important;
+		box-shadow: none!important;
+	
+		&:hover {
+			-webkit-transform: none!important;
+			-moz-transform: none!important;
+			-o-transform: none!important;
+			-ms-transform: none!important;
+			transform: none!important;
+			
+			-webkit-box-shadow: none!important;
+			-moz-box-shadow: none!important;
+			box-shadow: none!important;
+		}
 	}
 `;
 
@@ -111,13 +147,13 @@ export const Content = styled.div`
 		font-size: 1rem;
 		line-height: 1.3;
 		font-weight: 300;
-		color: ${theme.color(['lightText'])};
+		color: ${theme.color(["lightText"])};
 	}
 
 	span.date {
 		font-size: 0.8rem;
 		font-weight: 400;
-		color: ${theme.color(['lightText'])};
+		color: ${theme.color(["lightText"])};
 		text-transform: uppercase;
 	}
 `;
@@ -153,6 +189,18 @@ export const AuthorContent = styled.div`
 		line-height: 1.85;
 		font-size: 13px;
 		white-space: nowrap;
+	}
+	
+	&.no-avatar {
+		padding: 0;
+		
+		.name {
+			line-height: 18px;
+		}
+	
+		.info {
+			line-height: 1.2;
+		}
 	}
 `;
 

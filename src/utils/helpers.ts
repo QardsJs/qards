@@ -1,16 +1,16 @@
-import _ from 'lodash';
-import rTime from 'reading-time';
-import {PostType} from '../fragments/post';
-import moment from 'moment';
-import {CategoryType} from '../templates/category';
-import {CardHeaderType} from '../components/qard/header';
-import {decodeWidgetDataObject} from '../cms/utils';
-import Immutable from 'immutable';
+import _ from "lodash";
+import rTime from "reading-time";
+import { PostType } from "../fragments/post";
+import moment from "moment";
+import { CategoryType } from "../templates/category";
+import { CardHeaderType } from "../components/qard/header";
+import { decodeWidgetDataObject } from "../cms/utils";
+import Immutable from "immutable";
 
-import settingsConfig from '../../static/config/settings.json';
-import postsConfig from '../../static/config/posts.json';
-import pluginsConfig from '../../static/config/plugins.json';
-import themeConfig from '../../static/config/theme.json';
+import settingsConfig from "../../static/config/settings.json";
+import postsConfig from "../../static/config/posts.json";
+import pluginsConfig from "../../static/config/plugins.json";
+import themeConfig from "../../static/config/theme.json";
 
 export const cPatternWithId = (id: string): string => {
 	return `{"widget":"${id}","config":"([0-9a-zA-Z+/=]+?)"}`;
@@ -18,19 +18,19 @@ export const cPatternWithId = (id: string): string => {
 export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+/=]+?)"}/;
 
 export function lineRepresentsEncodedComponent(line: string) {
-	if (!line || line.replace(/\s+/g, '') === '') return false;
+	if (!line || line.replace(/\s+/g, "") === "") return false;
 	return RegExp(cPattern).test(line);
 }
 
 export function getPostPrimaryHeadings(post: PostType): CardHeaderType[] {
 	const headings: CardHeaderType[] = [];
 
-	post.md.split('\n').map((line, k) => {
+	post.md.split("\n").map((line, k) => {
 		if (lineRepresentsEncodedComponent(line)) {
 			const params = line.match(cPattern);
 			if (!params || params.length < 3) return;
 
-			if (params[1] == 'qards-section-heading') {
+			if (params[1] == "qards-section-heading") {
 				headings.push(decodeWidgetDataObject(params[2]));
 			}
 		}
@@ -40,7 +40,7 @@ export function getPostPrimaryHeadings(post: PostType): CardHeaderType[] {
 }
 
 export function prependBaseUrl(path: string): string {
-	return [getSettingsConfig([ 'baseUrl']), path].join('');
+	return [getSettingsConfig(["baseUrl"]), path].join("");
 }
 
 /**
@@ -56,8 +56,8 @@ export function tokenizePost(post: PostType): PostType {
 		{
 			//  Will replace the token `{cardsNum}` with the number of cards found in this post
 			perform: (input: string): string => {
-				return input.replace('{cardsNum}', `${getPostPrimaryHeadings(post).length}`);
-			},
+				return input.replace("{cardsNum}", `${getPostPrimaryHeadings(post).length}`);
+			}
 		}, {
 			//  Will replace the token with a `createdAt` derrived date (the date format is specified)
 			//  using a formatter that is applied with moment
@@ -68,7 +68,7 @@ export function tokenizePost(post: PostType): PostType {
 				if (!match) return input;
 				const format = match[1];
 				return input.replace(r, moment(post.frontmatter.created_at).format(format));
-			},
+			}
 		}, {
 			//  Will replace the token with derrived date (from current date) (the date format is specified)
 			//  using a formatter that is applied with moment
@@ -79,8 +79,8 @@ export function tokenizePost(post: PostType): PostType {
 				if (!match) return input;
 				const format = match[1];
 				return input.replace(r, moment().format(format));
-			},
-		},
+			}
+		}
 	];
 
 	for (let i = 0; i < tokens.length; i++) {
@@ -93,11 +93,11 @@ export function tokenizePost(post: PostType): PostType {
 
 export function slugify(text: string) {
 	return text.toString().toLowerCase()
-		.replace(/\s+/g, '-')           // Replace spaces with -
-		.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-		.replace(/\-\-+/g, '-')         // Replace multiple - with single -
-		.replace(/^-+/, '')             // Trim - from start of text
-		.replace(/-+$/, '');            // Trim - from end of text
+		.replace(/\s+/g, "-")           // Replace spaces with -
+		.replace(/[^\w\-]+/g, "")       // Remove all non-word chars
+		.replace(/\-\-+/g, "-")         // Replace multiple - with single -
+		.replace(/^-+/, "")             // Trim - from start of text
+		.replace(/-+$/, "");            // Trim - from end of text
 }
 
 export function deGatsbyFyContentfulId(id: string): string {
@@ -107,7 +107,7 @@ export function deGatsbyFyContentfulId(id: string): string {
 	const firstChar = id.charAt(0);
 	const secondChar = id.charAt(1);
 
-	if (firstChar == 'c' && '0123456789'.indexOf(secondChar) !== -1) {
+	if (firstChar == "c" && "0123456789".indexOf(secondChar) !== -1) {
 		return id.substring(1);
 	}
 	return id;
@@ -141,24 +141,24 @@ export function getPopularCategories(categories: CategoryType[]): PopularCategor
 		if (!found) {
 			res.push({
 				occurence: 1,
-				category : category,
+				category : category
 			});
 		}
 	});
 
 	//  Sort by occurence descending and return
-	return _.sortBy(res, 'occurence').reverse();
+	return _.sortBy(res, "occurence").reverse();
 }
 
 /**
  * Will return an array of node values from edges and stuff
  * returned by a grapql query of multiple children
  */
-export function extractNodesFromEdges(edges: any, path: string = ''): any {
+export function extractNodesFromEdges(edges: any, path: string = ""): any {
 	const res: any = [];
 
 	_.each(edges, e => {
-		if (path == '') {
+		if (path == "") {
 			res.push(e.node);
 		} else {
 			if (e.node[path]) {
@@ -188,11 +188,11 @@ export function getConfig(path: string[]): string {
 	const cfg = path.shift();
 
 	switch (cfg) {
-		case 'theme':
+		case "theme":
 			return Immutable.fromJS(themeConfig).getIn(path);
-		case 'posts':
+		case "posts":
 			return Immutable.fromJS(postsConfig).getIn(path);
-		case 'plugins':
+		case "plugins":
 			return Immutable.fromJS(pluginsConfig).getIn(path);
 		default:
 			return Immutable.fromJS(settingsConfig).getIn(path);
@@ -200,29 +200,29 @@ export function getConfig(path: string[]): string {
 }
 
 function normalizeCfgPath(path: string | string[]): string[] {
-	return (typeof path === 'string') ? [path] : path;
+	return (typeof path === "string") ? [path] : path;
 }
 
-export function getThemeConfig(path: string[] | string): string {
+export function getThemeConfig(path: string[] | string): string | number | boolean {
 	path = normalizeCfgPath(path);
-	path.unshift('theme');
+	path.unshift("theme");
 	return getConfig(path);
 }
 
-export function getPostsConfig(path: string[] | string): string {
+export function getPostsConfig(path: string[] | string): string | number | boolean {
 	path = normalizeCfgPath(path);
-	path.unshift('posts');
+	path.unshift("posts");
 	return getConfig(path);
 }
 
-export function getSettingsConfig(path: string[] | string): string {
+export function getSettingsConfig(path: string[] | string): string | number | boolean {
 	path = normalizeCfgPath(path);
-	path.unshift('settings');
+	path.unshift("settings");
 	return getConfig(path);
 }
 
-export function getPluginsConfig(path: string[] | string): string {
+export function getPluginsConfig(path: string[] | string): string | number | boolean {
 	path = normalizeCfgPath(path);
-	path.unshift('plugins');
+	path.unshift("plugins");
 	return getConfig(path);
 }

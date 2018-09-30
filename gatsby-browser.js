@@ -1,4 +1,9 @@
+const config = require("./static/config/settings");
+
 exports.onInitialClientRender = () => {
-	require('typeface-roboto');
-	require('./src/styles/index.scss');
+  if (!config.performanceMode) {
+    require("typeface-roboto");
+  }
+
+  require("./src/styles/index.scss");
 };

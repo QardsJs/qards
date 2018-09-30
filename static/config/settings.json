@@ -3,6 +3,6 @@
   "title": "Qards - the blogging platform for professionals",
   "excerpt": "Qards is a blogging platform for professionals",
   "baseUrl": "https://qards.io",
-  "blogPagePath": "/blog",
+  "performanceMode": true,
   "socialShareImg": ""
 }

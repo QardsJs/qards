@@ -1,12 +1,23 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import Img from "gatsby-image";
 import TrackVisibility from "react-on-screen";
 import LazyLoad from "react-lazyload";
 
-import {PostType} from "../../fragments/post";
-import {readingTime, tokenizePost} from "../../utils/helpers";
-import {Article, Author, AuthorContent, Content, Cover, Gravatar, List, ListItem, StyledCard, Wrapper} from "./styles";
-import {StyledButton} from "../pages/styles";
+import { PostType } from "../../fragments/post";
+import { readingTime, tokenizePost, getSettingsConfig } from "../../utils/helpers";
+import {
+	Article,
+	Author,
+	AuthorContent,
+	Content,
+	Cover,
+	Gravatar,
+	List,
+	ListItem,
+	StyledCard,
+	Wrapper
+} from "./styles";
+import { StyledButton } from "../pages/styles";
 
 
 interface Props {
@@ -34,7 +45,7 @@ export default class Posts extends Component<Props, State> {
 	ticking: boolean | undefined = undefined;
 
 	get paginationLimit(): number {
-		const {paginate} = this.props;
+		const { paginate } = this.props;
 		if (paginate) {
 			return paginate.pageSize;
 		}
@@ -42,13 +53,13 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	update() {
-		const {paginate} = this.props;
+		const { paginate } = this.props;
 
 		if (!paginate) return;
 
 		const distanceToBottom = document.documentElement.offsetHeight - (window.scrollY + window.innerHeight);
 		if (this.state.showingMore && distanceToBottom < 100) {
-			this.setState({postsToShow: this.state.postsToShow + paginate.pageSize})
+			this.setState({ postsToShow: this.state.postsToShow + paginate.pageSize });
 		}
 		this.ticking = false;
 	}
@@ -56,12 +67,12 @@ export default class Posts extends Component<Props, State> {
 	handleScroll = () => {
 		if (!this.ticking) {
 			this.ticking = true;
-			requestAnimationFrame(() => this.update())
+			requestAnimationFrame(() => this.update());
 		}
 	};
 
 	componentDidMount() {
-		if (typeof window != undefined) window.addEventListener(`scroll`, this.handleScroll)
+		if (typeof window != undefined) window.addEventListener(`scroll`, this.handleScroll);
 	}
 
 	componentWillUnmount() {
@@ -69,15 +80,18 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	static renderAuthor(post: PostType) {
+		const performance = getSettingsConfig("performanceMode");
+
 		if (post.authors && post.authors.length) {
 			return <Author className={"post-card-author"}>
-				{post.authors[0].frontmatter.avatar && <TrackVisibility once>
-						<Gravatar>
-							<Img fixed={post.authors[0].frontmatter.avatar.image.fixed}/>
-						</Gravatar>
-					</TrackVisibility>}
+				{post.authors[0].frontmatter.avatar && !performance &&
+				<TrackVisibility once>
+					<Gravatar>
+						<Img fixed={post.authors[0].frontmatter.avatar.image.fixed}/>
+					</Gravatar>
+				</TrackVisibility>}
 
-				<AuthorContent>
+				<AuthorContent className={performance ? "no-avatar" : ""}>
 					<div className="name">
 						{post.authors[0].frontmatter.title}
 					</div>
@@ -86,28 +100,31 @@ export default class Posts extends Component<Props, State> {
 						0 min in <b>test</b>
 					</div>
 				</AuthorContent>
-			</Author>
+			</Author>;
 		}
 	}
 
 	static renderHero(post: PostType) {
-		if (post.frontmatter.hero) {
+		const performance = getSettingsConfig("performanceMode");
+
+		if (post.frontmatter.hero && !performance) {
 			return <Cover className={"post-card-cover"}>
 				<TrackVisibility once>
 					<LazyLoad height={210}>
 						<Img
 							alt={post.frontmatter.hero.alt}
 							fluid={post.frontmatter.hero.image.thumb.fluid}
-							style={{height: 210}}
+							style={{ height: 210 }}
 						/>
 					</LazyLoad>
 				</TrackVisibility>
-			</Cover>
+			</Cover>;
 		}
 	}
 
 	render() {
-		const {posts, title, paginate, showExcerpt, darkTheme} = this.props;
+		const { posts, title, paginate, showExcerpt, darkTheme } = this.props;
+		const performance = getSettingsConfig("performanceMode");
 
 		const result: PostType[] = [];
 		let slicedPosts: PostType[] = [];
@@ -132,7 +149,7 @@ export default class Posts extends Component<Props, State> {
 					{result.map((post, key) => {
 						return <ListItem
 							width={[6 / 6, 3 / 6, 2 / 6]}
-							px={'20px'}
+							px={"20px"}
 							is="li"
 							key={key}
 							className={`itemli`}
@@ -140,7 +157,7 @@ export default class Posts extends Component<Props, State> {
 							<Article className={"post-card-article"}>
 								<StyledCard
 									to={post.fields.slug}
-									className="post-card unselectable"
+									className={`post-card unselectable ${performance ? "performance" : ""}`}
 								>
 									{Posts.renderHero(post)}
 
@@ -148,26 +165,26 @@ export default class Posts extends Component<Props, State> {
 										<span className={`date`}>{post.frontmatter.created_at}</span>
 										<h5 className={`title`}>{post.frontmatter.title}</h5>
 										{showExcerpt !== false &&
-												  <p className={`excerpt`}>{post.frontmatter.excerpt}</p>}
+										<p className={`excerpt`}>{post.frontmatter.excerpt}</p>}
 									</Content>
 
 									{Posts.renderAuthor(post)}
 								</StyledCard>
 							</Article>
-						</ListItem>
+						</ListItem>;
 					})}
 
 				</List>
 
 				{paginate && !this.state.showingMore && posts.length > this.state.postsToShow &&
-					<StyledButton large minimal active icon="refresh" onClick={() => {
+				<StyledButton large minimal active icon="refresh" onClick={() => {
 					this.setState({
 						postsToShow: this.state.postsToShow + paginate.pageSize,
-						showingMore: true,
-					})
+						showingMore: true
+					});
 				}}>
-						<b>Load more articles</b>
-					</StyledButton>}
+					<b>Load more articles</b>
+				</StyledButton>}
 			</Wrapper>
 		);
 	}

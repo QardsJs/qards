@@ -3,7 +3,7 @@
 	"parser": "typescript",
 	"trailingComma": "es5",
 	"singleQuote": true,
-	"tabWidth": 5,
+	"tabWidth": 4,
 	"printWidth": 100,
 	"useTabs": true,
 	"semi": true,

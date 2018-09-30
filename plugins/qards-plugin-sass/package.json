@@ -1,0 +1,5 @@
+{
+  "peerDependencies": {
+    "node-sass-json-importer": "^4.1.0"
+  }
+}

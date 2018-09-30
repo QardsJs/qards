@@ -2,16 +2,16 @@
   "colors": {
     "intents": {
       "success": {
-        "text": "#3ccc90",
-        "background": "#d8f3e8"
+        "text": "#2fb57d",
+        "background": "#7cd6b1"
       },
       "warning": {
         "text": "#ffa000",
-        "background": "#ffeccd"
+        "background": "#ffd796"
       },
       "danger": {
         "text": "#f74444",
-        "background": "#ffdddd"
+        "background": "#ffb2b2"
       }
     },
     "primary": {

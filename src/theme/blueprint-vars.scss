@@ -1,40 +1,42 @@
+@import "../../static/config/theme.json";
+
 $pt-font-family: 'Montseratt, sans-serif';
 
 //@at-rootintents
-$pt-intent-primary: #032538;
-$pt-intent-success: #3DCC91;
-$pt-intent-warning: orange;
-$pt-intent-danger: red;
+$pt-intent-primary: map-get(map-get($colors, primary), background);
+$pt-intent-success: map-get(map-get(map-get($colors, intents), success), background);
+$pt-intent-warning: map-get(map-get(map-get($colors, intents), warning), background);
+$pt-intent-danger: map-get(map-get(map-get($colors, intents), danger), background);
 
 $pt-link-color: lighten($pt-intent-primary, 5%);
 // "intent": (default, hover, active colors)
 $button-intents: (
 	  'primary': (
 		    $pt-intent-primary,
-		    lighten($pt-intent-primary, 10%),
+		    lighten($pt-intent-primary, 15%),
 		    lighten($pt-intent-primary, 5%),
 	  ),
 	  'success': (
 		    $pt-intent-success,
-		    #0D8050,
-		    #0A6640,
+		    darken($pt-intent-success, 5%),
+		    darken($pt-intent-success, 10%),
 	  ),
 	  'warning': (
 		    $pt-intent-warning,
-		    #BF7326,
-		    #A66321,
+		    darken($pt-intent-warning, 5%),
+		    darken($pt-intent-warning, 10%),
 	  ),
 	  'danger': (
 		    $pt-intent-danger,
-		    #C23030,
-		    #A82A2A,
+		    darken($pt-intent-danger, 5%),
+		    darken($pt-intent-danger, 10%),
 	  ),
 ) !default;
 
 // "intent": (default, hover, active colors)
 $pt-intent-text-colors: (
 	  'primary': $pt-intent-primary,
-	  'success': #0D8050,
-	  'warning': #BF7326,
-	  'danger': #C23030,
+	  'success': map-get(map-get(map-get($colors, intents), success), text),
+	  'warning': map-get(map-get(map-get($colors, intents), warning), text),
+	  'danger': map-get(map-get(map-get($colors, intents), danger), text),
 ) !default;

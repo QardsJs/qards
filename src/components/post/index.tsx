@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import {Box} from 'grid-styled';
+import { Box } from "grid-styled";
 
-import Hide from '../common/hide';
-import Sidebar from './sidebar';
-import Author from '../author';
+import Hide from "../common/hide";
+import Sidebar from "./sidebar";
+import Author from "../author";
 import ScrollProgress from "../scroll-progress";
-import {SidebarWrapper, Wrapper} from "./styles";
+import { SidebarWrapper, Wrapper } from "./styles";
 import PostComponent from "./post";
-import {PostType} from "../../fragments/post";
-import siteConfig from "../../../static/config/settings.json";
+import { PostType } from "../../fragments/post";
+import { getPostsConfig, getSettingsConfig } from "../../utils/helpers";
 
 export interface Props {
 	post: PostType;
@@ -20,7 +20,7 @@ export interface Props {
 
 export default class Post extends React.Component<Props, any> {
 	public render() {
-		const {post, location} = this.props;
+		const { post, location } = this.props;
 
 		return (
 			<Wrapper data-rpi-area>
@@ -32,14 +32,13 @@ export default class Post extends React.Component<Props, any> {
 					</Box>
 				</Box>
 				<SidebarWrapper width={[0, 0, 0, 2 / 5]} mt={[0, 0, 0, 60]}>
-					<Hide medium small xsmall className={'sidebar'}>
-						<Sidebar wrapperProps={{style: {marginLeft: 60}}} post={post} currentUrl={location.href}/>
+					<Hide medium small xsmall className={"sidebar"}>
+						<Sidebar wrapperProps={{ style: { marginLeft: 60 } }} post={post} currentUrl={location.href}/>
 					</Hide>
 				</SidebarWrapper>
 
-
-				{(siteConfig.posts && siteConfig.posts.progressShow) &&
-					<ScrollProgress identifier={post.id}/>}
+				{(getPostsConfig("progressShow") && !getSettingsConfig("performanceMode")) &&
+				<ScrollProgress identifier={post.id}/>}
 			</Wrapper>
 		);
 	}
