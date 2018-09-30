@@ -9,38 +9,31 @@ export const settingsCollection = {
 		name       : 'general',
 		label      : 'Site Settings',
 		file       : 'static/config/settings.json',
-		description: 'General site settings',
 		fields     : [{
-			label : 'Meta',
-			name  : 'site',
-			widget: 'object',
-			fields: [{
-				label : 'Name',
-				name  : 'name',
-				widget: 'string',
-			}, {
-				label : 'Title',
-				name  : 'title',
-				widget: 'string',
-			}, {
-				label : 'Excerpt',
-				name  : 'excerpt',
-				widget: 'text',
-			}, {
-				label : 'Base url',
-				name  : 'baseUrl',
-				widget: 'string',
-			}, {
-				label : 'Social media share image',
-				name  : 'socialShareImg',
-				widget: 'image',
-			}],
+			label : 'Name',
+			name  : 'name',
+			widget: 'string',
+		}, {
+			label : 'Title',
+			name  : 'title',
+			widget: 'string',
+		}, {
+			label : 'Excerpt',
+			name  : 'excerpt',
+			widget: 'text',
+		}, {
+			label : 'Base url',
+			name  : 'baseUrl',
+			widget: 'string',
+		}, {
+			label : 'Social media share image',
+			name  : 'socialShareImg',
+			widget: 'image',
 		}],
 	}, {
 		name       : 'theme',
 		label      : 'Theme',
 		file       : 'static/config/theme.json',
-		description: 'Colors and related settings',
 		fields     : [{
 			//	Any color that doesn't target a specific element or type
 			//	of content (text, border, etc) should provide 2 options
@@ -201,38 +194,34 @@ export const settingsCollection = {
 		label      : 'Posts',
 		file       : 'static/config/posts.json',
 		description: 'Posts related settings',
+		widget     : 'object',
 		fields     : [{
-			label : 'Post Settings',
-			name  : 'posts',
-			widget: 'object',
-			fields: [{
-				label : 'Number of posts on frontpage',
-				name  : 'frontLimit',
-				widget: 'number',
-			}, {
-				label  : 'Show post scroll progress?',
-				name   : 'progressShow',
-				widget : 'boolean',
-				hint   : `When scrolling a post, a progress bar 
+			label : 'Number of posts on frontpage',
+			name  : 'frontLimit',
+			widget: 'number',
+		}, {
+			label  : 'Show post scroll progress?',
+			name   : 'progressShow',
+			widget : 'boolean',
+			hint   : `When scrolling a post, a progress bar 
 					indicating the current position in page will be 
 					shown on the bottom of the page`,
-				default: true,
-			}, {
-				label  : 'Show table of contents?',
-				name   : 'tocShow',
-				widget : 'boolean',
-				default: true,
-			}, {
-				label  : 'Show social media share buttons?',
-				name   : 'socialShow',
-				widget : 'boolean',
-				default: true,
-			}, {
-				label  : 'Show subscribe box?',
-				name   : 'subscribeShow',
-				widget : 'boolean',
-				default: true,
-			}],
+			default: true,
+		}, {
+			label  : 'Show table of contents?',
+			name   : 'tocShow',
+			widget : 'boolean',
+			default: true,
+		}, {
+			label  : 'Show social media share buttons?',
+			name   : 'socialShow',
+			widget : 'boolean',
+			default: true,
+		}, {
+			label  : 'Show subscribe box?',
+			name   : 'subscribeShow',
+			widget : 'boolean',
+			default: true,
 		}],
 	}, {
 		name  : 'plugins',

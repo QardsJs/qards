@@ -40,30 +40,30 @@ export class IndexPage extends React.Component<Props, any> {
 
 		return (
 			<Layout>
-				<Helmet title={getSettingsConfig('title')}>
+				<Helmet title={getSettingsConfig([ 'title'])}>
 					<html lang="en"/>
-					<meta name="description" content={getSettingsConfig('excerpt')}/>
+					<meta name="description" content={getSettingsConfig([ 'excerpt'])}/>
 
 					<link rel="canonical" href={location.pathname}/>
 
 					<meta property="og:locale" content="en_US"/>
 					<meta property="og:type" content="article"/>
-					<meta property="og:title" content={getSettingsConfig('title')}/>
-					<meta property="og:description" content={getSettingsConfig('excerpt')}/>
+					<meta property="og:title" content={getSettingsConfig([ 'title'])}/>
+					<meta property="og:description" content={getSettingsConfig([ 'excerpt'])}/>
 					<meta property="og:url" content={prependBaseUrl(location.pathname)}/>
-					<meta property="og:site_name" content={getSettingsConfig('name')}/>
+					<meta property="og:site_name" content={getSettingsConfig([ 'name'])}/>
 
-					<meta property="og:image" content={prependBaseUrl(getSettingsConfig('socialShareImg'))}/>
+					<meta property="og:image" content={prependBaseUrl(getSettingsConfig([ 'socialShareImg']))}/>
 					<meta property="og:image:secure_url"
-						 content={prependBaseUrl(getSettingsConfig('socialShareImg'))}/>
+						 content={prependBaseUrl(getSettingsConfig([ 'socialShareImg']))}/>
 					<meta property="og:image:width" content={'900'}/>
 					<meta property="og:image:height" content={'450'}/>
-					<meta property="og:image:alt" content={getSettingsConfig('excerpt')}/>
+					<meta property="og:image:alt" content={getSettingsConfig([ 'excerpt'])}/>
 
 					<meta name="twitter:card" content="summary_large_image"/>
-					<meta name="twitter:description" content={getSettingsConfig('excerpt')}/>
-					<meta name="twitter:title" content={getSettingsConfig('title')}/>
-					<meta name="twitter:image" content={prependBaseUrl(getSettingsConfig('socialShareImg'))}/>
+					<meta name="twitter:description" content={getSettingsConfig([ 'excerpt'])}/>
+					<meta name="twitter:title" content={getSettingsConfig([ 'title'])}/>
+					<meta name="twitter:image" content={prependBaseUrl(getSettingsConfig([ 'socialShareImg']))}/>
 				</Helmet>
 
 				<Wrapper>

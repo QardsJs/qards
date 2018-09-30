@@ -40,7 +40,7 @@ export function getPostPrimaryHeadings(post: PostType): CardHeaderType[] {
 }
 
 export function prependBaseUrl(path: string): string {
-	return [getSettingsConfig('baseUrl'), path].join('');
+	return [getSettingsConfig([ 'baseUrl']), path].join('');
 }
 
 /**

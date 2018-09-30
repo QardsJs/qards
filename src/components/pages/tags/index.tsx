@@ -37,10 +37,11 @@ class TagsPage extends React.Component<Props, any> {
 				<meta property="og:title" content={tag}/>
 				<meta property="og:description" content={`Posts tagged with ${tag}`}/>
 				<meta property="og:url" content={prependBaseUrl(location.pathname)}/>
-				<meta property="og:site_name" content={getSettingsConfig('name')}/>
+				<meta property="og:site_name" content={getSettingsConfig(['name'])}/>
 
-				<meta property="og:image" content={prependBaseUrl(getSettingsConfig('socialShareImg'))}/>
-				<meta property="og:image:secure_url" content={prependBaseUrl(getSettingsConfig('socialShareImg'))}/>
+				<meta property="og:image" content={prependBaseUrl(getSettingsConfig(['socialShareImg']))}/>
+				<meta property="og:image:secure_url"
+					 content={prependBaseUrl(getSettingsConfig(['socialShareImg']))}/>
 				<meta property="og:image:width" content={'900'}/>
 				<meta property="og:image:height" content={'450'}/>
 				<meta property="og:image:alt" content={`Posts tagged with ${tag}`}/>
@@ -48,7 +49,7 @@ class TagsPage extends React.Component<Props, any> {
 				<meta name="twitter:card" content="summary_large_image"/>
 				<meta name="twitter:description" content={`Posts tagged with ${tag}`}/>
 				<meta name="twitter:title" content={tag}/>
-				<meta name="twitter:image" content={prependBaseUrl(getSettingsConfig('socialShareImg'))}/>
+				<meta name="twitter:image" content={prependBaseUrl(getSettingsConfig(['socialShareImg']))}/>
 			</Helmet>
 
 			<Wrapper>
