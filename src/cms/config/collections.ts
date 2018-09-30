@@ -74,11 +74,11 @@ export const settingsCollection = {
 					name  : 'warning',
 					widget: 'object',
 					fields: [{
-						label : 'Text',
-						name  : 'text',
-						widget: 'color',
-						format: 'hex',
-						default : '#ffa100',
+						label  : 'Text',
+						name   : 'text',
+						widget : 'color',
+						format : 'hex',
+						default: '#ffa100',
 					}, {
 						label  : 'Background',
 						name   : 'background',
@@ -282,6 +282,13 @@ export const settingsCollection = {
 				label : 'Enable',
 				name  : 'enable',
 				widget: 'boolean',
+				hint  : `Make sure you also add an environment variable in Netlify \`deploys\`
+				settings page. The environment variable must be called ALGOLIA_ADMIN_API_KEY. If
+				you're not usong Netlify to deploy you need to make sure this ENV var is set
+				when your site is built otherwise it won't be able to manage the search index
+				and your website will fail to build. The value of this ENV var must hold your 
+				Algolia admin api key.`,
+
 			}, {
 				label : 'Algolia',
 				name  : 'algolia',

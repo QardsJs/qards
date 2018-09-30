@@ -1,5 +1,5 @@
-const configSite = require("./static/config/settings");
-const configPlugins = require("./static/config/plugins");
+const configSite = require('./static/config/settings');
+const configPlugins = require('./static/config/plugins');
 
 const query = `{
 	allMarkdownRemark(
@@ -53,7 +53,7 @@ function concatSearchIndex(node) {
 		slug     : node.fields.slug,
 		createdAt: node.frontmatter.created_at,
 		excerpt  : node.frontmatter.excerpt,
-		tags, categories
+		tags, categories,
 	};
 }
 
@@ -98,7 +98,7 @@ const plugins = [
 		resolve: `qards-netlify-cms-paths`,
 		options: {
 			cmsConfigPath: `${__dirname}/src/cms/config/index.ts`,
-		}
+		},
 	},
 	{
 		resolve: `gatsby-transformer-remark`,
@@ -109,7 +109,7 @@ const plugins = [
 					resolve: `qards-netlify-cms-paths`,
 					options: {
 						cmsConfigPath: `${__dirname}/src/cms/config/index.ts`,
-					}
+					},
 				},
 				{
 					resolve: `gatsby-remark-images`,
@@ -118,7 +118,7 @@ const plugins = [
 						// the content container as this plugin uses this as the
 						// base for generating different widths of each image.
 						maxWidth       : 2500,
-						backgroundColor: 'transparent'
+						backgroundColor: 'transparent',
 					},
 				}, {
 					resolve: 'gatsby-remark-emojis',
@@ -136,9 +136,9 @@ const plugins = [
 							'margin-top': '1px',
 							position    : 'relative',
 							top         : '5px',
-							width       : '25px'
-						}
-					}
+							width       : '25px',
+						},
+					},
 				}],
 		},
 	},
@@ -212,7 +212,7 @@ if (
 			head      : false,
 			respectDNT: true,
 		},
-	},)
+	});
 }
 
 if (
@@ -222,9 +222,9 @@ if (
 	plugins.push({
 		resolve: 'gatsby-plugin-mailchimp',
 		options: {
-			endpoint: configPlugins.emailSubscribers.mailchimp.endpoint
+			endpoint: configPlugins.emailSubscribers.mailchimp.endpoint,
 		},
-	})
+	});
 }
 
 if (
@@ -239,18 +239,19 @@ if (
 		options: Object.assign({
 			appId    : configPlugins.search.algolia.appId,
 			indexName: configPlugins.search.algolia.indexName,
+			apiKey   : process.env.ALGOLIA_ADMIN_API_KEY || '',
 			searchKey: configPlugins.search.algolia.searchKey,
 		}, {
 			queries      : [{
 				query,
 				transformer: ({data}) => {
 					return data.allMarkdownRemark.edges.map(
-						({node}) => concatSearchIndex(node)
-					)
-				}
-			}], chunkSize: 10000
+						({node}) => concatSearchIndex(node),
+					);
+				},
+			}], chunkSize: 10000,
 		}),
-	})
+	});
 }
 
 if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
@@ -305,7 +306,7 @@ if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
 			],
 		},
 
-	})
+	});
 }
 
 //	last
