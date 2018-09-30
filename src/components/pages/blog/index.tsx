@@ -31,11 +31,12 @@ export const Wrapper = styled.div`padding-bottom: 120px;`;
 export interface Props {
 	latest: PostType[];
 	featured: PostType;
+	location: any;
 }
 
 export class IndexPage extends React.Component<Props, any> {
 	public render() {
-		const {latest, featured} = this.props;
+		const {latest, featured, location} = this.props;
 
 		return (
 			<Layout>

@@ -15,13 +15,14 @@ import {getPluginsConfig, getSettingsConfig, prependBaseUrl} from '../../../util
 interface Props {
 	totalCount: number;
 	tag: string;
+	location: any;
 	posts: PostType[];
 	featured: PostType[];
 }
 
 class TagsPage extends React.Component<Props, any> {
 	render() {
-		const {posts, tag, featured, totalCount} = this.props;
+		const {posts, tag, featured, totalCount, location} = this.props;
 		const tagHeader = `${totalCount} post${totalCount === 1 ? '' : 's'} tagged with "${tag}"`;
 
 		return <Layout>

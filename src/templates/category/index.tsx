@@ -1,11 +1,11 @@
-import React from "react";
-import {graphql} from "gatsby";
+import React from 'react';
+import {graphql} from 'gatsby';
 
-import Route from "../../components/common/route";
-import {PostType} from "../../fragments/post";
+import Route from '../../components/common/route';
+import {PostType} from '../../fragments/post';
 
-import CategoriesPage from "../../components/pages/categories";
-import {extractNodesFromEdges} from "../../utils/helpers";
+import CategoriesPage from '../../components/pages/categories';
+import {extractNodesFromEdges} from '../../utils/helpers';
 
 
 export interface CategoryType {
@@ -22,6 +22,7 @@ export interface CategoryType {
 }
 
 interface Props {
+	location: any;
 	data: {
 		posts: {
 			totalCount: number;
@@ -47,19 +48,15 @@ class CategoryTemplate extends React.Component<Props, any> {
 		const {featured, category} = data;
 		const {edges} = data.posts;
 
-		const posts: PostType[] = [];
-		for (let i = 0; i < edges.length; i++) {
-			posts.push(edges[i].node);
-		}
-
 		return <Route
 			path={category.fields.slug}
 			component={CategoriesPage}
 			totalCount={data.posts.totalCount}
-			posts={posts}
+			location={location}
+			posts={extractNodesFromEdges(edges)}
 			category={category}
-			featured={featured ? extractNodesFromEdges(featured.edges, "") : []}
-		/>
+			featured={featured ? extractNodesFromEdges(featured.edges, '') : []}
+		/>;
 	}
 }
 

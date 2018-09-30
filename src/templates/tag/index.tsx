@@ -24,6 +24,7 @@ interface DataProps {
 
 interface Props {
 	data: DataProps;
+	location: any;
 	pageContext: {
 		tag: string;
 		slug: string;
@@ -40,6 +41,7 @@ const TagTemplate = (props: Props) => {
 		component={TagsPage}
 		totalCount={posts.totalCount}
 		tag={tag}
+		location={location}
 		posts={posts.edges.length ? extractNodesFromEdges(posts.edges) : []}
 		featured={featured ? extractNodesFromEdges(featured.edges, "") : []}
 	/>;
