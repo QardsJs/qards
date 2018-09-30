@@ -22,7 +22,6 @@ export interface CategoryType {
 }
 
 interface Props {
-	location: any;
 	data: {
 		posts: {
 			totalCount: number;
@@ -52,7 +51,6 @@ class CategoryTemplate extends React.Component<Props, any> {
 			path={category.fields.slug}
 			component={CategoriesPage}
 			totalCount={data.posts.totalCount}
-			location={location}
 			posts={extractNodesFromEdges(edges)}
 			category={category}
 			featured={featured ? extractNodesFromEdges(featured.edges, '') : []}
