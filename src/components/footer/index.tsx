@@ -1,8 +1,8 @@
-import * as React from 'react';
-import {graphql, Link, StaticQuery} from "gatsby";
-import {Box, Flex} from "grid-styled";
-import {CreditsContainer, FooterContainer, FooterWrapper, PageWrapper} from "./styles";
-import {PostType} from "../../fragments/post";
+import * as React from "react";
+import { graphql, Link, StaticQuery } from "gatsby";
+import { Box, Flex } from "grid-styled";
+import { CreditsContainer, FooterContainer, FooterWrapper, PageWrapper } from "./styles";
+import { PostType } from "../../fragments/post";
 
 interface DataProps {
 	pages: {
@@ -39,7 +39,7 @@ export default class Footer extends React.Component<Props, any> {
 			render={(data: DataProps) => {
 
 				const pages: PostType[] = [];
-				for (let i = 0; i < data.pages.edges.length; i++) {
+				if (data.pages) for (let i = 0; i < data.pages.edges.length; i++) {
 					pages.push(data.pages.edges[i].node);
 				}
 
@@ -55,23 +55,23 @@ export default class Footer extends React.Component<Props, any> {
 							</Box>
 
 							<Box width={[4 / 4, 4 / 4, 3 / 4]}>
-								{pages && <Flex flexWrap={"wrap"} justifyContent={'flex-end'}>
+								{pages && <Flex flexWrap={"wrap"} justifyContent={"flex-end"}>
 									{pages.map((page) => {
 										return <PageWrapper pr={1} mt={2} width={[4 / 4, 2 / 4, 1 / 4]}
-														key={page.id}>
+															key={page.id}>
 											<div key={page.id}>
-												<Link className={'bp3-button bp3-minimal'}
-													 to={page.fields.slug}>
+												<Link className={"bp3-button bp3-minimal"}
+													  to={page.fields.slug}>
 													{page.frontmatter.title}
 												</Link>
 											</div>
-										</PageWrapper>
+										</PageWrapper>;
 									})}
-										</Flex>}
+								</Flex>}
 							</Box>
 						</Flex>
 					</FooterContainer>
-				</FooterWrapper>
+				</FooterWrapper>;
 			}}
 		/>;
 	}

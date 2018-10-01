@@ -1,16 +1,16 @@
-import React from 'react';
-import Helmet from 'react-helmet';
-import {Box} from 'grid-styled';
+import React from "react";
+import Helmet from "react-helmet";
+import { Box } from "grid-styled";
 
-import {Wrapper} from '../styles';
-import {PostType} from '../../../fragments/post';
-import Layout from '../../layout';
-import Content from '../../layout/content';
-import Post from '../../post';
-import Subscribe from '../../subscribe';
-import Posts from '../../posts';
-import {tokenizePost, prependBaseUrl, getPluginsConfig} from '../../../utils/helpers';
-import config from '../../../../static/config/settings.json';
+import { Wrapper } from "../styles";
+import { PostType } from "../../../fragments/post";
+import Layout from "../../layout";
+import Content from "../../layout/content";
+import Post from "../../post";
+import Subscribe from "../../subscribe";
+import Posts from "../../posts";
+import { tokenizePost, prependBaseUrl, getPluginsConfig } from "../../../utils/helpers";
+import config from "../../../../static/config/settings.json";
 
 interface PostPageProps {
 	post: PostType;
@@ -21,17 +21,17 @@ interface PostPageProps {
 class PostPage extends React.Component<PostPageProps, any> {
 
 	get ogImage() {
-		const {post} = this.props;
+		const { post } = this.props;
 
 		if (post.frontmatter.hero && post.frontmatter.hero.image.sharp.fixed) {
 			return post.frontmatter.hero.image.sharp.fixed.src;
 		} else {
-			return config.socialShareImg ? config.socialShareImg : '';
+			return config.socialShareImg ? config.socialShareImg : "";
 		}
 	}
 
 	get ogImageAlt() {
-		const {post} = this.props;
+		const { post } = this.props;
 
 		if (post.frontmatter.hero && post.frontmatter.hero.image) {
 			return post.frontmatter.hero.image.sharp.alt;
@@ -41,12 +41,12 @@ class PostPage extends React.Component<PostPageProps, any> {
 	}
 
 	get ogImageDimensions() {
-		const {post} = this.props;
+		const { post } = this.props;
 
 		if (post.frontmatter.hero && post.frontmatter.hero.image.sharp.fixed) {
 			return {
 				width : post.frontmatter.hero.image.sharp.fixed.width,
-				height: post.frontmatter.hero.image.sharp.fixed.height,
+				height: post.frontmatter.hero.image.sharp.fixed.height
 			};
 		} else {
 			return config.title;
@@ -55,7 +55,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 
 
 	render() {
-		const {post, related, location} = this.props;
+		const { post, related, location } = this.props;
 
 		const tokenizedPost = tokenizePost(post);
 
@@ -73,9 +73,9 @@ class PostPage extends React.Component<PostPageProps, any> {
 				<meta property="og:url" content={prependBaseUrl(location.pathname)}/>
 				<meta property="og:site_name" content={config.name}/>
 
-				<meta property="article:tag" content={tokenizedPost.frontmatter.tags.join(', ')}/>
+				<meta property="article:tag" content={tokenizedPost.frontmatter.tags.join(", ")}/>
 				<meta property="article:section"
-					 content={tokenizedPost.categories ? tokenizedPost.categories[0].frontmatter.title : 'Uncategorized'}/>
+					  content={tokenizedPost.categories ? tokenizedPost.categories[0].frontmatter.title : "Uncategorized"}/>
 				<meta property="article:published_time" content={tokenizedPost.frontmatter.created_at.toString()}/>
 				<meta property="article:modified_time" content={tokenizedPost.frontmatter.created_at.toString()}/>
 
@@ -97,16 +97,16 @@ class PostPage extends React.Component<PostPageProps, any> {
 					<Post post={tokenizedPost} location={location}/>
 				</Content>
 
-				<Box mt={[80, 80, 80, 180]}>
+				{related.length > 0 && <Box mt={[80, 80, 80, 180]}>
 					<Content darkTheme={true}>
 						<Posts darkTheme={true} showExcerpt={true} posts={related} title={`More like this`}
-							  paginate={{
-								  pageSize: 6,
-							  }}/>
+							   paginate={{
+								   pageSize: 6
+							   }}/>
 					</Content>
-				</Box>
+				</Box>}
 
-				{getPluginsConfig(['emailSubscribers', 'enable']) && <Content>
+				{getPluginsConfig(["emailSubscribers", "enable"]) && <Content>
 					<Box mt={[60, 60, 60, 120]} mb={[60, 60, 60, 120]}>
 						<Subscribe/>
 					</Box>

@@ -1,16 +1,16 @@
-import * as React from 'react';
-import {uniqBy} from 'lodash';
-import {graphql, Link, StaticQuery} from 'gatsby';
-import {Alignment, Button, Intent, Menu, NavbarGroup, NavbarHeading, Popover} from '@blueprintjs/core';
+import * as React from "react";
+import { uniqBy } from "lodash";
+import { graphql, Link, StaticQuery } from "gatsby";
+import { Alignment, Button, Intent, Menu, NavbarGroup, NavbarHeading, Popover } from "@blueprintjs/core";
 
-import Hide from '../common/hide';
-import {extractNodesFromEdges} from '../../utils/helpers';
-import {Container, DrawerLinkList, StyledNavbar, StyledNavbarGroupLeft} from './styles';
-import NavbarDrawer from './drawer';
-import config from '../../../static/config/settings.json';
-import Logo from '../logo';
-import {PostType} from "../../fragments/post";
-import {CategoryType} from "../../templates/category";
+import Hide from "../common/hide";
+import { extractNodesFromEdges, getPluginsConfig } from "../../utils/helpers";
+import { Container, DrawerLinkList, StyledNavbar, StyledNavbarGroupLeft } from "./styles";
+import NavbarDrawer from "./drawer";
+import config from "../../../static/config/settings.json";
+import Logo from "../logo";
+import { PostType } from "../../fragments/post";
+import { CategoryType } from "../../templates/category";
 
 export interface CategoriesProps {
 	isInDrawer?: boolean;
@@ -19,7 +19,7 @@ export interface CategoriesProps {
 
 export class Categories extends React.Component<CategoriesProps, any> {
 	render() {
-		const {popularCategories, isInDrawer} = this.props;
+		const { popularCategories, isInDrawer } = this.props;
 
 		if (isInDrawer) {
 			return (
@@ -110,10 +110,11 @@ export default class Navigation extends React.Component<Props, State> {
 					}
 				`}
 				render={(data: DataProps) => {
-					const {categories} = data;
+					const { categories } = data;
 
 					const pages: PostType[] = [];
-					for (let i = 0; i < data.pages.edges.length; i++) {
+
+					if (data.pages) for (let i = 0; i < data.pages.edges.length; i++) {
 						pages.push(data.pages.edges[i].node);
 					}
 
@@ -132,31 +133,35 @@ export default class Navigation extends React.Component<Props, State> {
 
 								<Hide small xsmall>
 									<NavbarGroup align={Alignment.RIGHT}>
-										{typeof document !== 'undefined' && (
+										{typeof document !== "undefined" && getPluginsConfig(["search", "enable"]) &&
+										<div>
 											<NavbarDrawer
 												width={600}
 												pages={pages}
 												popularCategories={popularCategories}
 											>
+
 												<Button minimal icon="search"
-													   className="qards-navbar-searchBtn"/>
+														className="qards-navbar-searchBtn"/>
 											</NavbarDrawer>
-										)}
 
-										<span className="bp3-navbar-divider">&nbsp;</span>
+											<span className="bp3-navbar-divider">&nbsp;</span>
+										</div>}
 
-										{pages.map((page) => {
-											return (
-												<div key={page.id}>
-													<Link className={'bp3-button bp3-minimal'}
-														 to={page.fields.slug}>
-														{page.frontmatter.title}
-													</Link>
-												</div>
-											);
-										})}
+										{pages.length > 0 && <div>
+											{pages.map((page) => {
+												return (
+													<div key={page.id}>
+														<Link className={"bp3-button bp3-minimal"}
+															  to={page.fields.slug}>
+															{page.frontmatter.title}
+														</Link>
+													</div>
+												);
+											})}
 
-										<span className="bp3-navbar-divider">&nbsp;</span>
+											<span className="bp3-navbar-divider">&nbsp;</span>
+										</div>}
 
 										{popularCategories.length > 0 && (
 											<Popover
@@ -178,9 +183,9 @@ export default class Navigation extends React.Component<Props, State> {
 
 								<Hide medium large larger xlarge>
 									<NavbarGroup align={Alignment.RIGHT}>
-										{typeof document !== 'undefined' && (
+										{typeof document !== "undefined" && (
 											<NavbarDrawer
-												width={'90%'}
+												width={"90%"}
 												pages={pages}
 												popularCategories={popularCategories}
 											>
