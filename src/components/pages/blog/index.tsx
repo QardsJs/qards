@@ -72,26 +72,26 @@ export class IndexPage extends React.Component<Props, any> {
 
 						<Box mt={[80, 80, 80, 180]} mb={[40, 40, 40, 120]}>
 							{latest.length && <Posts
-                              showExcerpt={false}
-                              posts={latest}
-                              title={`Latest articles`}
-                              paginate={{
-								  pageSize: 6
-							  }}
-                            />}
+								showExcerpt={false}
+								posts={latest}
+								title={`Latest articles`}
+								paginate={{
+									pageSize: 6
+								}}
+							/>}
 
 							{!latest.length &&
-                            <Box mt={200} mb={200} style={{
+							<Box mt={200} mb={200} style={{
 								textAlign: "center"
 							}}>
-                              <h1>Nothing to see here yet</h1>
-                            </Box>}
+								<h1>Nothing to see here yet</h1>
+							</Box>}
 						</Box>
 
 						{getPluginsConfig(["emailSubscribers", "enable"]) &&
-                        <Box mt={[80, 80, 80, 120]} mb={[80, 80, 80, 120]}>
-                          <Subscribe/>
-                        </Box>}
+						<Box mt={[80, 80, 80, 120]} mb={[80, 80, 80, 120]}>
+							<Subscribe/>
+						</Box>}
 					</Content>
 				</Wrapper>
 			</Layout>

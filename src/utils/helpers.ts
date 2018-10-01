@@ -203,25 +203,25 @@ function normalizeCfgPath(path: string | string[]): string[] {
 	return (typeof path === "string") ? [path] : path;
 }
 
-export function getThemeConfig(path: string[] | string): string | number | boolean {
+export function getThemeConfig(path: string[] | string): any {
 	path = normalizeCfgPath(path);
 	path.unshift("theme");
 	return getConfig(path);
 }
 
-export function getPostsConfig(path: string[] | string): string | number | boolean {
+export function getPostsConfig(path: string[] | string): any {
 	path = normalizeCfgPath(path);
 	path.unshift("posts");
 	return getConfig(path);
 }
 
-export function getSettingsConfig(path: string[] | string): string | number | boolean {
+export function getSettingsConfig(path: string[] | string): any {
 	path = normalizeCfgPath(path);
 	path.unshift("settings");
 	return getConfig(path);
 }
 
-export function getPluginsConfig(path: string[] | string): string | number | boolean {
+export function getPluginsConfig(path: string[] | string): any {
 	path = normalizeCfgPath(path);
 	path.unshift("plugins");
 	return getConfig(path);
