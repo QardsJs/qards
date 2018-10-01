@@ -1,8 +1,10 @@
 @import '../theme/blueprint-vars';
+
 @import "~@blueprintjs/core/src/common/variables";
 @import "~@blueprintjs/core/src/common/colors";
 @import "~@blueprintjs/core/src/accessibility";
 @import "~@blueprintjs/core/src/typography";
+
 //	blueprint components that we use
 @import "~@blueprintjs/core/src/components/tag/tag";
 @import "~@blueprintjs/core/src/components/breadcrumbs/breadcrumbs";
@@ -19,11 +21,6 @@
 
 :focus {
 	outline: none !important;
-}
-
-::selection {
-	background: $accent;
-	color: #fff;
 }
 
 body {
