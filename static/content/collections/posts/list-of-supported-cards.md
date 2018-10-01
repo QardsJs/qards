@@ -11,6 +11,7 @@ meta:
   description: A list of all the supported widgets by Qards
   keywords: 'Qards, widgets, components, blog'
 isPage: true
+isFeatured: false
 hero:
   alt: Qards - List of supported cards
   image: /images/uploads/eugenio-mazzone-190204-unsplash.jpg
