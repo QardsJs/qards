@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import tinycolor from 'tinycolor2';
-import styled from 'styled-components';
+import tinycolor from "tinycolor2";
+import styled from "styled-components";
 
-import theme from '../../theme';
-import {getThemeConfig} from '../../utils/helpers';
+import theme from "../../theme";
+import { getSettingsConfig } from "../../utils/helpers";
 
 const Wrapper = styled.div`
 	.inner {
@@ -14,16 +14,24 @@ const Wrapper = styled.div`
 	}
 	
 	&.dark {
-		background: ${theme.color(['accent', 'background'])};
-		color: ${theme.color(['accent', 'text'])};
-		background-image: radial-gradient(ellipse at center -50%, ${tinycolor(theme.color(['accent', 'background'])).lighten(
-	20).toString()} 0%,${theme.color(['accent', 'background'])} 56%,${getThemeConfig((['colors', 'accent', 'background']))} 100%);
+		background: ${theme.color(["accent", "background"])};
+		color: ${theme.color(["accent", "text"])};
+		background-image: radial-gradient(
+			ellipse at center -50%, 
+			${tinycolor(theme.color(["accent", "background"])).lighten(20).toString()} 0%,
+			${theme.color(["accent", "background"])} 56%,
+			${theme.color((["accent", "background"]))} 100%
+		);
 		padding: 80px 0;
+	}
+	
+	&.performance {
+		background-image: none;
 	}
 `;
 
-const Content = ({children, ...props}: any) => <Wrapper
-	className={`content ${props.darkTheme ? 'dark' : ''}`} {...props}>
+const Content = ({ children, ...props }: any) => <Wrapper
+	className={`content ${props.darkTheme ? "dark" : ""} ${getSettingsConfig("performanceMode") ? "performance" : ""}`} {...props}>
 	<div className="inner">{children}</div>
 </Wrapper>;
 
