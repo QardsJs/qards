@@ -63,6 +63,13 @@ const plugins = [
 			name: "images"
 		}
 	},
+	{
+		resolve: "gatsby-source-filesystem",
+		options: {
+			path: `${__dirname}/src/app/static`,
+			name: "app_images"
+		}
+	},
 	`gatsby-plugin-offline`,
 	"gatsby-plugin-react-helmet",
 	`gatsby-plugin-typescript`,
