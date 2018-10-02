@@ -144,8 +144,6 @@ export default class Navigation extends React.Component<Props, State> {
 												<Button minimal icon="search"
 														className="qards-navbar-searchBtn"/>
 											</NavbarDrawer>
-
-											<span className="bp3-navbar-divider">&nbsp;</span>
 										</div>}
 
 										{pages.length > 0 && <div>
@@ -159,8 +157,6 @@ export default class Navigation extends React.Component<Props, State> {
 													</div>
 												);
 											})}
-
-											<span className="bp3-navbar-divider">&nbsp;</span>
 										</div>}
 
 										{popularCategories.length > 0 && (
