@@ -196,7 +196,7 @@ if (
 	plugins.push({
 		resolve: `gatsby-plugin-google-analytics`,
 		options: {
-			trackingId: configPlugins.tracking.trackingId,
+			trackingId: configPlugins.tracking.analytics.trackingId,
 			head      : false,
 			respectDNT: true
 		}
