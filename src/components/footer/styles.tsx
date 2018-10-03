@@ -3,12 +3,12 @@ import {Box} from 'grid-styled';
 import tinycolor2 from 'tinycolor2';
 
 import theme from '../../theme';
-import {getThemeConfig} from '../../utils/helpers';
 
 export const FooterWrapper = styled.div`
 	background-color: ${theme.color(['faded', 'background'])};
 	position: relative;
 	height: 90px;
+	margin-top: 60px;
 
     @media screen and (max-width: ${theme.main.breakpoints.xsmall}em) {
         height: auto;

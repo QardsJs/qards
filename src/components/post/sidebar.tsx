@@ -17,16 +17,7 @@ const Wrapper = styled.div`
     color: black;
 `;
 
-const TocTitle = styled.h4`
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    font-weight: 400;
-    font-size: 1rem;
-    color: ${theme.color(['lightText'])};
-`;
-
-const SidebarItem = styled.div`
+export const SidebarItem = styled.div`
 	margin-bottom: 80px;
 `;
 
@@ -66,11 +57,7 @@ export default class PostSidebar extends Component<Props, any> {
 
 		return (
 			<Wrapper {...this.props.wrapperProps}>
-				{getPostsConfig('tocShow') && <SidebarItem>
-					<TitledWrapper title={<TocTitle>Table of contents</TocTitle>}>
-						<Toc post={post}/>
-					</TitledWrapper>
-				</SidebarItem>}
+				{getPostsConfig('tocShow') && <Toc post={post}/>}
 
 				{getPostsConfig('socialShow') && <SidebarItem>
 					<SocialShareWrapper>

@@ -4,14 +4,23 @@ import theme from '../../../theme';
 import {Tag} from '@blueprintjs/core';
 
 export const Wrapper = styled.div`
+	margin-top: 40px;
+	
 	.header {
-		min-height: 90px;
+		position: relative;
+		text-align: center;
+		margin-top: 30px;
+		margin-bottom: 40px;
+		padding-bottom: 20px;
+		border-top: 1px solid ${theme.color(['borders'])};
+		border-bottom: 1px solid ${theme.color(['borders'])};
 	}
 `;
 
 export const Title = styled.div`
 	font-size: 1.5rem;
-	margin-bottom: 10px;
+	font-weight: 400;
+	margin: 40px 0 10px 0;
 	vertical-align: middle;
 `;
 
@@ -42,8 +51,18 @@ export const Indicator = styled.div`
 `;
 
 export const EndedTag = styled(Tag)`
-	float: left;
+	position: absolute!important;
+	display: inline!important;
+	top: 6px;
+	left: 0;
 	text-transform: uppercase;
 	margin-top: 2px;
 	margin-right: 4px;
+	line-height: 1rem;
+	
+	&.tz {
+		top: 6px;
+		right: 0;
+		left: auto;
+	}
 `;

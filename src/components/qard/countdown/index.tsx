@@ -1,11 +1,13 @@
 import * as React from 'react';
 
-import moment from 'moment';
+// @ts-ignore
+import moment from 'moment-timezone';
 import {Flex, Box} from 'grid-styled';
 
 import QardBase, {QardProps} from '../base';
 import {Wrapper, Title, Subtitle, Counter, Indicator, EndedTag} from './styles';
 import {Intent} from '@blueprintjs/core';
+import Hide from '../../common/hide';
 
 export interface CardCountdownType extends QardProps {
 	title: string;
@@ -60,50 +62,68 @@ export default class QardCountdown extends QardBase<CardCountdownType, State> {
 	}
 
 	public render() {
-		const {title, subtitle} = this.props;
+		const {title, subtitle, event} = this.props;
 		const {d, m, h, s} = this.state;
 
 		const isEnded = d <= 0 && m <= 0 && h <= 0 && s <= 0;
 		const isEnding = d <= 0 && m <= 0 && h <= 0 && s > 0;
 
+		const userTz = moment.tz.guess();
+		const dateRelativeToUser = moment.utc(event).tz(userTz).format('YYYY-MM-DD HH:mm:ss');
+
 		return <Wrapper>
 			<Flex flexWrap={`wrap`}>
-				<Box width={[2 / 2, 2 / 2, 2 / 2, 1 / 2]}>
+				<Box width={1}>
 					<Flex justifyContent={'center'}>
-						<Box width={1 / 3} px={2}>
+						<Box width={[1 / 2, 1 / 3, 1 / 4, 1 / 4]} px={2}>
 							<Counter>{d}</Counter>
 						</Box>
-						<Box width={1 / 3} px={2}>
+						<Box width={[1 / 2, 1 / 3, 1 / 4, 1 / 4]} px={2}>
 							<Counter>{h}</Counter>
 						</Box>
-						<Box width={1 / 3} px={2}>
-							<Counter>{m}</Counter>
+						<Box width={[0, 1 / 3, 1 / 4, 1 / 4]} px={2}>
+							<Hide small>
+								<Counter>{m}</Counter>
+							</Hide>
+						</Box>
+
+						<Box width={[0, 0, 1 / 4, 1 / 4]} px={2}>
+							<Hide small xsmall>
+								<Counter>{s}</Counter>
+							</Hide>
 						</Box>
 					</Flex>
 
 					<Flex>
-						<Box width={1 / 3} px={2}>
+						<Box width={[1 / 2, 1 / 3, 1 / 4, 1 / 4]} px={2}>
 							<Indicator>Days</Indicator>
 						</Box>
-						<Box width={1 / 3} px={2}>
+						<Box width={[1 / 2, 1 / 3, 1 / 4, 1 / 4]} px={2}>
 							<Indicator>Hours</Indicator>
 						</Box>
-						<Box width={1 / 3} px={2}>
-							<Indicator>Minutes</Indicator>
+						<Box width={[0, 1 / 3, 1 / 4, 1 / 4]} px={2}>
+							<Hide small>
+								<Indicator>Minutes</Indicator>
+							</Hide>
+						</Box>
+
+						<Box width={[0, 0, 1 / 4, 1 / 4]} px={2}>
+							<Hide small xsmall>
+								<Indicator>Seconds</Indicator>
+							</Hide>
 						</Box>
 					</Flex>
 				</Box>
-				<Box width={[2 / 2, 2 / 2, 2 / 2, 1 / 2]}>
-					<Flex className={'header'} justifyContent={['center', 'center', 'center', 'left']}>
-						<Box mt={2}>
-							{title && <Title>
-								{isEnded && <EndedTag intent={Intent.DANGER}>ENDED</EndedTag>}
-								{isEnding && <EndedTag intent={Intent.WARNING}>{s}</EndedTag>}
-								{title}
-							</Title>}
-							{subtitle && <Subtitle>{subtitle}</Subtitle>}
-						</Box>
-					</Flex>
+				<Box width={1} className={'header'}>
+					{title && <Title>
+						<EndedTag intent={isEnded ? Intent.DANGER : Intent.SUCCESS}>
+							{isEnded && <span>Ended on</span>} {dateRelativeToUser}
+						</EndedTag>
+
+						<EndedTag intent={Intent.PRIMARY} className={'tz'}>{userTz}</EndedTag>
+						{title}
+					</Title>}
+					{subtitle && <Subtitle>{subtitle}</Subtitle>}
 				</Box>
 			</Flex>
 		</Wrapper>;

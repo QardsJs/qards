@@ -1,14 +1,16 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import { throttle, maxBy } from "lodash";
+import React, {Component} from 'react';
+import styled from 'styled-components';
+import {throttle, maxBy} from 'lodash';
 // @ts-ignore
-import SP from "scrollprogress";
+import SP from 'scrollprogress';
 
-import theme from "../../theme";
-import { PostType } from "../../fragments/post";
-import { decodeWidgetDataObject } from "../../cms/utils";
-import { CardHeaderType } from "../qard/header";
-import { cPattern, getSettingsConfig, lineRepresentsEncodedComponent, slugify } from "../../utils/helpers";
+import theme from '../../theme';
+import {PostType} from '../../fragments/post';
+import {decodeWidgetDataObject} from '../../cms/utils';
+import {CardHeaderType} from '../qard/header';
+import {cPattern, getSettingsConfig, lineRepresentsEncodedComponent, slugify} from '../../utils/helpers';
+import TitledWrapper from '../common/titled-wrapper';
+import {SidebarItem} from './sidebar';
 
 const Wrapper = styled.ul`
 	list-style-type: none;
@@ -21,7 +23,7 @@ const Wrapper = styled.ul`
 		
 		&.active {
 			a {
-				color: ${theme.color(["accent", "background"])};
+				color: ${theme.color(['accent', 'background'])};
 				opacity: 1;
 				-webkit-transition: color 300ms linear;
 				-ms-transition: color 300ms linear;
@@ -53,7 +55,7 @@ const Wrapper = styled.ul`
 			font-size: 1rem;
 			margin-top: 1.3rem;
 			padding-top: 1.6rem;
-			border-top: 1px solid ${theme.color(["borders"])};
+			border-top: 1px solid ${theme.color(['borders'])};
 		}
 		
 		&:first-child {
@@ -86,6 +88,15 @@ const Wrapper = styled.ul`
 	}
 `;
 
+const TocTitle = styled.h4`
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-weight: 400;
+    font-size: 1rem;
+    color: ${theme.color(['lightText'])};
+`;
+
 interface Props {
 	post: PostType;
 }
@@ -96,14 +107,16 @@ interface State {
 
 class Toc extends Component<Props, State> {
 	state: State = {
-		activeItemId: null
+		activeItemId: null,
 	};
 
 	progressObserver: any;
 
 	updateScrollPosition() {
 		const scrollDistance = window.pageYOffset || document.documentElement.scrollTop;
-		const items = document.getElementsByClassName("h-item") as HTMLCollectionOf<HTMLElement>;
+		const items = document.getElementsByClassName('h-item') as HTMLCollectionOf<HTMLElement>;
+
+		if (!items.length) return;
 
 		let lastId: string = items[0].id;
 		//	find the lastId and farthest item before calling setstate
@@ -117,7 +130,7 @@ class Toc extends Component<Props, State> {
 		}
 
 		if (this.state.activeItemId !== lastId) this.setState({
-			activeItemId: lastId
+			activeItemId: lastId,
 		});
 	}
 
@@ -132,32 +145,32 @@ class Toc extends Component<Props, State> {
 
 	scrollPosUpgrade = throttle(this.updateScrollPosition, 400, {
 		leading : false,
-		trailing: true
+		trailing: true,
 	});
 
 	componentDidMount() {
-		if (!getSettingsConfig("performanceMode")) this.initObserver();
+		if (!getSettingsConfig('performanceMode')) this.initObserver();
 	}
 
 	componentWillUnmount() {
-		if (!getSettingsConfig("performanceMode")) this.progressObserver.destroy();
+		if (!getSettingsConfig('performanceMode')) this.progressObserver.destroy();
 	}
 
 	get headings() {
-		const { post } = this.props;
+		const {post} = this.props;
 		const md = post.md;
 		const headings: CardHeaderType[] = [];
 
-		md.split("\n").map((line, k) => {
+		md.split('\n').map((line, k) => {
 			if (lineRepresentsEncodedComponent(line)) {
 				const params = line.match(cPattern);
 				if (!params || params.length < 3) return;
 
 				const widget = params[1];
 
-				if (widget == "qards-section-heading") {
+				if (widget == 'qards-section-heading') {
 					const config = decodeWidgetDataObject(params[2]);
-					headings.push({ ...config });
+					headings.push({...config});
 				}
 			}
 		});
@@ -166,26 +179,30 @@ class Toc extends Component<Props, State> {
 	}
 
 	render() {
-		return <Wrapper>
-			{this.headings.length > 0 && this.headings.map((header: CardHeaderType, key: number) => {
-				return (
-					<li
-						key={key}
-						id={`toc-header-${slugify(header.title)}`}
-						className={`toc-item ${
-							this.state.activeItemId ==
-							`h-item-${slugify(header.title)}`
-								? "active"
-								: ""
-							} type-${header.type}`}
-					>
-						<a href={`#h-item-${slugify(header.title)}`}>
-							<b>{header.title}</b>
-						</a>
-					</li>
-				);
-			})}
-		</Wrapper>;
+		return this.headings.length > 0 ? <Wrapper>
+			<SidebarItem>
+				<TitledWrapper title={<TocTitle>Table of contents</TocTitle>}>
+					{this.headings.map((header: CardHeaderType, key: number) => {
+						return (
+							<li
+								key={key}
+								id={`toc-header-${slugify(header.title)}`}
+								className={`toc-item ${
+									this.state.activeItemId ==
+									`h-item-${slugify(header.title)}`
+										? 'active'
+										: ''
+									} type-${header.type}`}
+							>
+								<a href={`#h-item-${slugify(header.title)}`}>
+									<b>{header.title}</b>
+								</a>
+							</li>
+						);
+					})}
+				</TitledWrapper>
+			</SidebarItem>
+		</Wrapper> : '';
 	}
 }
 
