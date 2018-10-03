@@ -15,6 +15,7 @@ import QardDivider from "../qard/divider";
 import QardHeader from "../qard/header";
 import QardGallery from "../qard/gallery";
 import QardCode from "../qard/code";
+import QardCountdown from "../qard/countdown";
 import { QardImageContent } from "../qard/image";
 
 import { PostType } from "../../fragments/post";
@@ -54,6 +55,7 @@ export default class Post extends React.Component<Props, any> {
 			"qards-video"          : QardVideo,
 			"qards-divider"        : QardDivider,
 			"qards-gallery"        : QardGallery,
+			"qards-countdown"      : QardCountdown,
 			"qards-section-heading": QardHeader
 		};
 

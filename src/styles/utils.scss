@@ -36,6 +36,12 @@
 	user-select: none;
 }
 
+.vcenter {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
 .clearfix::after {
 	content: "";
 	clear: both;
