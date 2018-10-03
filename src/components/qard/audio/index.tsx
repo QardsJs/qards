@@ -1,12 +1,12 @@
-import * as React from 'react';
-import ReactPlayer from 'react-player';
-import {Icon} from '@blueprintjs/core';
-import moment from 'moment';
+import * as React from "react";
+import ReactPlayer from "react-player";
+import { Icon } from "@blueprintjs/core";
+import moment from "moment";
 
-import TitledWrapper from '../../common/titled-wrapper';
-import QardImage, {CardImageType} from '../image';
-import QardBase, {QardProps} from '../base';
-import {InterfaceBtn, Item, Main, Playlist, Wrapper} from './styles';
+import TitledWrapper from "../../common/titled-wrapper";
+import QardImage, { CardImageType } from "../image";
+import QardBase, { QardProps } from "../base";
+import { InterfaceBtn, Item, Main, Playlist, Wrapper } from "./styles";
 
 export interface CardAudioItemType {
 	url: string;
@@ -45,7 +45,7 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 	constructor(props: CardAudioType) {
 		super(props);
 
-		const {items} = this.props;
+		const { items } = this.props;
 
 		this.state = {
 			readyToPlay : false,
@@ -55,31 +55,16 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 	}
 
 	hasPrev = () => {
-		const {items} = this.props;
-
-		for (let i = 0; i < items.length; i++) {
-			if (items[i].url === this.state.currentTrack.url) {
-				return i > 0;
-			}
-		}
-
-		return false;
+		return this.getCurrentKey() > 0;
 	};
 
 	hasNext = () => {
-		const {items} = this.props;
-
-		for (let i = 0; i < items.length; i++) {
-			if (items[i].url === this.state.currentTrack.url) {
-				return i < items.length - 1;
-			}
-		}
-
-		return false;
+		const { items } = this.props;
+		return items.length > this.getCurrentKey() + 1;
 	};
 
 	onReadyToPlay = () => {
-		this.setState({readyToPlay: true});
+		this.setState({ readyToPlay: true });
 	};
 
 	play = (audio: CardAudioItemType) => {
@@ -88,7 +73,8 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 
 			this.resetTimer();
 
-			this.setState({currentTrack: audio, isPlaying: true});
+			this.setState({ isPlaying: false }, () =>
+				this.setState({ currentTrack: audio, isPlaying: true }));
 		});
 	};
 
@@ -108,71 +94,46 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 		this.player = player;
 	};
 
+	reset = () => {
+		this.setState({ isPlaying: false, currentTrack: this.props.items[0] });
+	};
+
 	playPrev = () => {
 		this.notAvailableInPreview(() => {
-			if (!this.hasPrev() && !this.props.infinite) return;
-
-			this.resetTimer();
-
-			const {items} = this.props;
-
-			for (let i = 0; i < items.length; i++) {
-				if (items[i].url === this.state.currentTrack.url) {
-					let prevTrack;
-					//  if we're the first item we need to go to last
-					const isFirst = items[i].url == items[0].url;
-
-					if (isFirst) {
-						prevTrack = items[items.length - 1];
-					} else {
-						prevTrack = items[i - 1];
-					}
-
-					if (this.state.isPlaying) {
-						this.setState({isPlaying: false});
-						this.setState({currentTrack: prevTrack, isPlaying: true});
-					} else {
-						this.setState({currentTrack: prevTrack});
-					}
-				}
+			if (!this.hasPrev() && !this.props.infinite) {
+				return this.reset();
 			}
+			this.resetTimer();
+			const { items } = this.props;
+			this.play(this.hasPrev() ? items[this.getCurrentKey() - 1] : items[0]);
 		});
 	};
 
 	playNext = () => {
 		this.notAvailableInPreview(() => {
-			if (!this.hasNext() && !this.props.infinite) return;
-
-			this.resetTimer();
-
-			const {items} = this.props;
-
-			for (let i = 0; i < items.length; i++) {
-				if (items[i].url === this.state.currentTrack.url) {
-					let nextTrack;
-					//  if we're the last item we need to start from first one
-					const isLast = items.length == i + 1;
-
-					if (isLast) {
-						nextTrack = items[0];
-					} else {
-						nextTrack = items[i + 1];
-					}
-
-					if (this.state.isPlaying) {
-						this.setState({isPlaying: false});
-						this.setState({currentTrack: nextTrack, isPlaying: true});
-					} else {
-						this.setState({currentTrack: nextTrack});
-					}
-				}
+			if (!this.hasNext() && !this.props.infinite) {
+				return this.reset();
 			}
+			this.resetTimer();
+			const { items } = this.props;
+			this.play(this.hasNext() ? items[this.getCurrentKey() + 1] : items[0]);
 		});
+	};
+
+	getCurrentKey = (): number => {
+		//	returns the array key of the current song within all songs/items
+		const { items } = this.props;
+		for (let i = 0; i < items.length; i++) {
+			if (items[i].url === this.state.currentTrack.url) {
+				return i;
+			}
+		}
+		return -1;
 	};
 
 	togglePlay = () => {
 		this.notAvailableInPreview(() => {
-			this.setState({isPlaying: !this.state.isPlaying});
+			this.setState({ isPlaying: !this.state.isPlaying });
 		});
 	};
 
@@ -180,43 +141,45 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 		//this.setState({duration: parseInt(Number(seconds).toFixed(0))});
 	};
 
+	seconds = (s: number): number => parseInt(Number(s).toFixed(0));
+
 	setProgress = (progress: Progress) => {
 		this.setState({
 			//	the `onDuration` callback is faulty in react player
 			//	https://github.com/CookPete/react-player/issues/488
-			duration: parseInt(Number(this.player.getDuration()).toFixed(0)),
+			duration: this.seconds(this.player.getDuration()),
 			progress: {
-				loaded       : parseInt(Number(progress.loaded).toFixed(0)),
-				played       : parseInt(Number(progress.played).toFixed(0)),
-				loadedSeconds: parseInt(Number(progress.loadedSeconds).toFixed(0)),
-				playedSeconds: parseInt(Number(progress.playedSeconds).toFixed(0))
+				loaded       : this.seconds(progress.loaded),
+				played       : this.seconds(progress.played),
+				loadedSeconds: this.seconds(progress.loadedSeconds),
+				playedSeconds: this.seconds(progress.playedSeconds)
 			}
 		});
 	};
 
 	get playedTimer() {
-		const {duration, progress} = this.state;
+		const { duration, progress } = this.state;
 
 		if (!duration || !progress) return <i>loading</i>;
 
 		const remainingSeconds = duration - progress.playedSeconds;
 
-		let format: string = 'mm:ss';
+		let format: string = "mm:ss";
 		if (remainingSeconds > 3600) {
-			format = 'hh:mm:ss';
+			format = "hh:mm:ss";
 		}
 
-		const dur = moment.duration(remainingSeconds, 'seconds');
+		const dur = moment.duration(remainingSeconds, "seconds");
 		return moment.utc(dur.asMilliseconds()).format(format);
 	}
 
 	componentDidMount() {
 		const items = this.prepareItems();
-		this.setState({currentTrack: items[0]});
+		this.setState({ currentTrack: items[0] });
 	}
 
 	prepareItems(): CardAudioItemType[] {
-		const {items, preview} = this.props;
+		const { items, preview } = this.props;
 
 		const audioItems: CardAudioItemType[] = [];
 
@@ -260,8 +223,8 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 
 		if (!audioItems.length) return <React.Fragment/>;
 
-		const {isPlaying, currentTrack} = this.state;
-		const {title, subtitle, url, poster} = currentTrack;
+		const { isPlaying, currentTrack } = this.state;
+		const { title, subtitle, url, poster } = currentTrack;
 
 		return (
 			<TitledWrapper>
@@ -274,11 +237,11 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 						onEnded={this.playNext}
 						onReady={this.onReadyToPlay}
 						onDuration={this.setDuration}
-						onError={e => console.error('player error:', e)}
+						onError={e => console.error("player error:", e)}
 						onProgress={this.setProgress}
 						className='qard-audio-player'
 						style={{
-							display: 'none'
+							display: "none"
 						}}
 					/>
 
@@ -300,7 +263,7 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 									minimal
 									onClick={this.togglePlay}
 									isPlaying={isPlaying}
-									icon={<Icon icon={isPlaying ? 'pause' : 'play'} iconSize={62}/>}
+									icon={<Icon icon={isPlaying ? "pause" : "play"} iconSize={62}/>}
 								/>
 								<InterfaceBtn
 									minimal
@@ -322,7 +285,7 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 								<Item
 									key={key}
 									onClick={() => this.play(audio)}
-									className={currentTrack.url == audio.url ? `active` : ''}
+									className={currentTrack.url == audio.url ? `active` : ""}
 								>
 									{audio.title}
 								</Item>
