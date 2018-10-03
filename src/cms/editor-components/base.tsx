@@ -9,6 +9,7 @@ export interface FieldType {
 	label: string;
 	widget: string;
 	default?: string;
+	hint?: string;
 	required?: boolean;
 	options?: string[];
 	buttons?: string[];

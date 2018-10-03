@@ -48,6 +48,7 @@ export const Indicator = styled.div`
 	color: ${theme.color(['lightText'])};
 	text-align: center;
 	text-transform: uppercase;
+	font-size: .9rem;
 `;
 
 export const EndedTag = styled(Tag)`

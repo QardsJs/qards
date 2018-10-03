@@ -34,7 +34,7 @@ export default class QardCountdown extends QardBase<CardCountdownType, State> {
 	setCountdown() {
 		const {event} = this.props;
 
-		const eventTime = moment(event).unix();
+		const eventTime = moment.utc(event).unix();
 		const currentTime = moment().unix();
 		const diffTime = eventTime - currentTime;
 		const duration = moment.duration(diffTime * 1000, 'milliseconds');
@@ -53,6 +53,7 @@ export default class QardCountdown extends QardBase<CardCountdownType, State> {
 	}
 
 	componentDidMount() {
+		this.setCountdown();
 		if (this.setInterval) clearInterval(this.setInterval);
 		this.setInterval = setInterval(this.setCountdown.bind(this), 1000);
 	}
@@ -61,13 +62,13 @@ export default class QardCountdown extends QardBase<CardCountdownType, State> {
 		clearInterval(this.setInterval);
 	}
 
+	//	!IMPORTANT: Pick the date relative to your timezone. The widget will converti it
+	//	to UTC by default so here you get a UTC date but in the widget (when setting time)
+	//	you have to think relative to your timezone
 	public render() {
 		const {title, subtitle, event} = this.props;
 		const {d, m, h, s} = this.state;
-
 		const isEnded = d <= 0 && m <= 0 && h <= 0 && s <= 0;
-		const isEnding = d <= 0 && m <= 0 && h <= 0 && s > 0;
-
 		const userTz = moment.tz.guess();
 		const dateRelativeToUser = moment.utc(event).tz(userTz).format('YYYY-MM-DD HH:mm:ss');
 

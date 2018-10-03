@@ -1,20 +1,21 @@
-import React from "react";
-import base from "./base";
+import React from 'react';
+import base from './base';
 
 export default base(
-	"qards-countdown", "Countdown", [
+	'qards-countdown', 'Countdown', [
 		{
-			name  : "title",
-			label : "Title",
-			widget: "string"
+			name  : 'title',
+			label : 'Title',
+			widget: 'string',
 		}, {
-			name  : "subtitle",
-			label : "Subtitle",
-			widget: "string"
+			name  : 'subtitle',
+			label : 'Subtitle',
+			widget: 'string',
 		}, {
-			name  : "event",
-			label : "Event date",
-			widget: "datetime"
-		}
-	]
+			name  : 'event',
+			label : 'Event date',
+			widget: 'datetime',
+			hint  : 'Pick the date relative to your timezone',
+		},
+	],
 );
