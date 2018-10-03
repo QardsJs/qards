@@ -190,7 +190,7 @@ const plugins = [
 
 if (
 	configPlugins.tracking &&
-	configPlugins.tracking.analytic &&
+	configPlugins.tracking.analytics &&
 	configPlugins.tracking.analytics.enable &&
 	configPlugins.tracking.analytics.trackingId) {
 	plugins.push({
