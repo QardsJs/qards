@@ -190,8 +190,8 @@ const plugins = [
 
 if (
 	configPlugins.tracking &&
+	configPlugins.tracking.enable &&
 	configPlugins.tracking.analytics &&
-	configPlugins.tracking.analytics.enable &&
 	configPlugins.tracking.analytics.trackingId) {
 	plugins.push({
 		resolve: `gatsby-plugin-google-analytics`,
