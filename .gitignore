@@ -9,8 +9,8 @@ netlify.toml
 cypress/.Trash-0
 cypress/screenshots
 
-./static/config/
-./static/collections/
-./static/images/
+static/config/
+static/content/
+static/images/
 
 ./tmp
