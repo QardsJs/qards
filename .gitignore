@@ -13,4 +13,4 @@ static/config/
 static/content/
 static/images/
 
-./tmp
+tmp/
