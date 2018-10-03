@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import Img from 'gatsby-image';
-import Lightbox from 'react-images';
-import TrackVisibility from 'react-on-screen';
+import React from "react";
+import styled from "styled-components";
+import Img from "gatsby-image";
+import Lightbox from "react-images";
+import TrackVisibility from "react-on-screen";
 
-import Markdown from '../../markdown';
-import theme from '../../../theme';
-import {QardProps} from '../base';
-import {HTMLDivProps} from '@blueprintjs/core';
+import Markdown from "../../markdown";
+import theme from "../../../theme";
+import { QardProps } from "../base";
+import { HTMLDivProps } from "@blueprintjs/core";
 
 const StyledImage = styled.figure`
 	img {
@@ -38,7 +38,7 @@ const StyledImage = styled.figure`
 		
 		figcaption {
 			font-size: .9rem;
-			color: ${theme.color(['lightText'])};
+			color: ${theme.color(["lightText"])};
 			padding: 8px 0;
 			line-height: 1rem;
 			text-align: center;
@@ -83,9 +83,9 @@ export interface CardImageType extends QardProps {
  * This component should be used in every place where an image needs
  * to be rendered.
  */
-const QardImage = ({alt, src, ...rest}: CardImageType) => {
+const QardImage = ({ alt, src, ...rest }: CardImageType) => {
 	return (src && !rest.fluid && !rest.fixed) ? <img src={src} alt={alt} {...rest}/> : <Img {...Object.assign(
-		rest, {alt},
+		rest, { alt }
 	)}/>;
 };
 
@@ -106,22 +106,26 @@ interface State {
 export class QardImageContent extends React.Component<ContentImageType & HTMLDivProps, State> {
 	state = {
 		lightboxOpen: false,
-		currentImage: 0,
+		currentImage: 0
 	};
 
 	render() {
-		const {caption, layout, fluid, fixed, alt, src, ...rest} = this.props;
+		const { caption, layout, fluid, fixed, alt, src, ...rest } = this.props;
 
 		const images = [{
 			caption: caption || alt,
 			src    : (fluid || fixed) ? (fluid ? fluid.src : (fixed ? fixed.src : src)) : src,
-			srcSet : (fluid || fixed) ? (fluid ? fluid.srcSet : (fixed ? fixed.srcSet : null)) : null,
+			srcSet : (fluid || fixed) ? (fluid ? fluid.srcSet : (fixed ? fixed.srcSet : null)) : null
 
 		}];
 
+		if (!images.length || !images[0].src) {
+			return <div/>;
+		}
+
 		const imgProp: CardImageType = {
 			alt: alt,
-			src: images[0].src,
+			src: images[0].src
 		};
 
 		if (fluid) {
@@ -134,7 +138,7 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 
 		return <StyledImage
 			{...rest}
-			onClick={() => this.setState({lightboxOpen: true})}
+			onClick={() => this.setState({ lightboxOpen: true })}
 			className={`layout ${layout}`}>
 
 			<TrackVisibility once>
@@ -145,11 +149,11 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 				images={images}
 				isOpen={this.state.lightboxOpen}
 				backdropClosesModal={true}
-				onClose={() => this.setState({lightboxOpen: false})}
+				onClose={() => this.setState({ lightboxOpen: false })}
 			/>
 
 			{caption && <div className="alt">
-				<Markdown component={'figcaption'} md={caption}/>
+				<Markdown component={"figcaption"} md={caption}/>
 			</div>}
 		</StyledImage>;
 	}

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import * as React from "react";
 
-import QardsDivider from '../divider';
-import QardBase, {QardProps} from '../base';
-import {slugify} from '../../../utils/helpers';
-import {Wrapper, PrimaryTitle, SecondaryTitle, SubTitle} from './styles';
+import QardsDivider from "../divider";
+import QardBase, { QardProps } from "../base";
+import { slugify } from "../../../utils/helpers";
+import { Wrapper, PrimaryTitle, SecondaryTitle, SubTitle } from "./styles";
 
 export interface CardHeaderType extends QardProps {
 	title: string;
@@ -15,15 +15,17 @@ export interface CardHeaderType extends QardProps {
 
 export default class QardHeader extends QardBase<CardHeaderType, any> {
 	public render() {
-		const {title, subtitle, type} = this.props;
+		const { title, subtitle, type } = this.props;
+
+		if (!title) return <div/>;
 
 		let Title = PrimaryTitle;
-		if (type == 'secondary') {
+		if (type == "secondary") {
 			Title = SecondaryTitle;
 		}
 
 		return <Wrapper className="h-item" id={`h-item-${slugify(title)}`}>
-			{!type || type === 'primary' && <QardsDivider type={'line'}/>}
+			{!type || type === "primary" && <QardsDivider type={"line"}/>}
 			<Title>{title}</Title>
 			{subtitle && <SubTitle>{subtitle}</SubTitle>}
 		</Wrapper>;
