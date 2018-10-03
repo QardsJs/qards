@@ -5,7 +5,7 @@ $pt-font-family: 'Montseratt, sans-serif';
 $accent: map-get(map-get($colors, accent), background);
 
 //@at-rootintents
-$pt-intent-primary: map-get(map-get($colors, primary), text);
+$pt-intent-primary: map-get(map-get($colors, primary), background);
 $pt-intent-success: map-get(map-get(map-get($colors, intents), success), text);
 $pt-intent-warning: map-get(map-get(map-get($colors, intents), warning), text);
 $pt-intent-danger: map-get(map-get(map-get($colors, intents), danger), text);
