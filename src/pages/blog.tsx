@@ -6,8 +6,6 @@ import Route from '../components/common/route';
 import {PostType} from '../fragments/post';
 import {extractNodesFromEdges} from '../utils/helpers';
 
-import QardCountdown from '../components/qard/countdown';
-
 interface DataProps {
 	latest: {
 		edges: {

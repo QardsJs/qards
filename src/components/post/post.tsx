@@ -16,7 +16,7 @@ import QardHeader from "../qard/header";
 import QardGallery from "../qard/gallery";
 import QardCode from "../qard/code";
 import QardCountdown from "../qard/countdown";
-//import QardReference from "../qard/reference";
+import QardReference from "../qard/reference";
 import {QardImageContent} from "../qard/image";
 
 import {PostType} from "../../fragments/post";
@@ -57,7 +57,7 @@ export default class Post extends React.Component<Props, any> {
 			'qards-divider'        : QardDivider,
 			'qards-gallery'        : QardGallery,
 			'qards-countdown'      : QardCountdown,
-			//'qards-reference'      : QardReference,
+			'qards-reference'      : QardReference,
 			'qards-section-heading': QardHeader
 		};
 
@@ -130,6 +130,35 @@ export default class Post extends React.Component<Props, any> {
 				{created_at && <Date>{created_at.toString()}</Date>}
 				{hero && <Hero><QardImageContent {...hero}/></Hero>}
 				{excerpt && <Excerpt>{excerpt}</Excerpt>}
+
+				<QardReference displayStyle={'default'} preview={true} posts={[{
+					post: "Test post with default style"
+				}, {
+					post: "Test post with default style"
+				}]}/>
+
+				<br/>
+				<br/>
+
+				<br/>
+				<br/>
+				<QardReference displayStyle={'minimal'} preview={true} posts={[{
+					post: "Test post with minimal style"
+				}, {
+					post: "Test post with minimal style"
+				}]}/>
+
+				<br/>
+				<br/>
+
+				<br/>
+				<br/>
+				<QardReference displayStyle={'compact'} preview={true} posts={[{
+					post: "Test post with compact style"
+				}, {
+					post: "Test post with compact style"
+				}]}/>
+
 				{this.renderBody(md)}
 			</Article>
 		);
