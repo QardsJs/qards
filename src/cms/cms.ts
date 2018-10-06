@@ -21,6 +21,7 @@ import Calout from "./editor-components/callout";
 import Reveal from "./editor-components/reveal";
 import Divider from "./editor-components/divider";
 import Gallery from "./editor-components/gallery";
+import Reference from "./editor-components/reference";
 import Countdown from "./editor-components/countdown";
 import SectionHeading from "./editor-components/section-heading";
 
@@ -55,6 +56,7 @@ CMS.registerEditorComponent(Reveal);
 CMS.registerEditorComponent(Calout);
 CMS.registerEditorComponent(Divider);
 CMS.registerEditorComponent(Gallery);
+CMS.registerEditorComponent(Reference);
 CMS.registerEditorComponent(Countdown);
 CMS.registerEditorComponent(SectionHeading);
 

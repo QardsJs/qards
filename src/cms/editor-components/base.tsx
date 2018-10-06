@@ -10,6 +10,10 @@ export interface FieldType {
 	widget: string;
 	default?: string;
 	hint?: string;
+	valueField?: string;
+	collection?: string;
+	searchFields?: string[];
+	displayFields?: string[];
 	required?: boolean;
 	options?: string[];
 	buttons?: string[];

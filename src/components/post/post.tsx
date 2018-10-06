@@ -2,10 +2,10 @@ import React from "react";
 
 import TrackVisibility from "react-on-screen";
 
-import { Article, Date, Excerpt, Hero, Title } from "./styles";
+import {Article, Date, Excerpt, Hero, Title} from "./styles";
 import MarkdownRender from "../markdown";
-import { cPattern, lineRepresentsEncodedComponent } from "../../utils/helpers";
-import { decodeWidgetDataObject } from "../../cms/utils";
+import {cPattern, lineRepresentsEncodedComponent} from "../../utils/helpers";
+import {decodeWidgetDataObject} from "../../cms/utils";
 
 import QardReveal from "../qard/reveal";
 import QardCallout from "../qard/callout";
@@ -16,9 +16,10 @@ import QardHeader from "../qard/header";
 import QardGallery from "../qard/gallery";
 import QardCode from "../qard/code";
 import QardCountdown from "../qard/countdown";
-import { QardImageContent } from "../qard/image";
+//import QardReference from "../qard/reference";
+import {QardImageContent} from "../qard/image";
 
-import { PostType } from "../../fragments/post";
+import {PostType} from "../../fragments/post";
 
 export interface Props {
 	post?: PostType;
@@ -38,7 +39,7 @@ export interface Props {
 
 export default class Post extends React.Component<Props, any> {
 	renderComponent(line: string) {
-		const { preview, post } = this.props;
+		const {preview, post} = this.props;
 
 		const params = line.match(cPattern);
 		if (!params || params.length < 3) return;
@@ -46,17 +47,18 @@ export default class Post extends React.Component<Props, any> {
 		const widget = params[1];
 		const config = decodeWidgetDataObject(params[2]);
 
-		const cards: { [s: string]: any; } = {
-			"image"                : QardImageContent,
-			"qards-code"           : QardCode,
-			"qards-reveal"         : QardReveal,
-			"qards-callout"        : QardCallout,
-			"qards-audio"          : QardAudio,
-			"qards-video"          : QardVideo,
-			"qards-divider"        : QardDivider,
-			"qards-gallery"        : QardGallery,
-			"qards-countdown"      : QardCountdown,
-			"qards-section-heading": QardHeader
+		const cards: { [s: string]: any } = {
+			'image'                : QardImageContent,
+			'qards-code'           : QardCode,
+			'qards-reveal'         : QardReveal,
+			'qards-callout'        : QardCallout,
+			'qards-audio'          : QardAudio,
+			'qards-video'          : QardVideo,
+			'qards-divider'        : QardDivider,
+			'qards-gallery'        : QardGallery,
+			'qards-countdown'      : QardCountdown,
+			//'qards-reference'      : QardReference,
+			'qards-section-heading': QardHeader
 		};
 
 		let Component: any = cards[widget];
@@ -64,7 +66,7 @@ export default class Post extends React.Component<Props, any> {
 		return Component ? <TrackVisibility once>
 				<Component post={post} preview={preview} {...config}/>
 			</TrackVisibility> :
-			<p style={{ color: "red", display: "block" }}>Unknown widget: <b>{widget}</b></p>;
+			<p style={{color: "red", display: "block"}}>Unknown widget: <b>{widget}</b></p>;
 	}
 
 	renderBody(body: string) {
@@ -101,7 +103,7 @@ export default class Post extends React.Component<Props, any> {
 	}
 
 	render() {
-		const { post, previewData } = this.props;
+		const {post, previewData} = this.props;
 
 		//	Normalize some items by being prepared for preview (netlify cms) and production
 		const title = post ? post.frontmatter.title : (previewData ? previewData.title : "");

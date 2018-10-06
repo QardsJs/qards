@@ -21,7 +21,6 @@ export const Title = styled.div`
 	font-size: 1.5rem;
 	font-weight: 400;
 	margin: 40px 0 10px 0;
-	vertical-align: middle;
 `;
 
 export const Counter = styled.pre`

@@ -1,0 +1,25 @@
+{
+  "tracking": {
+    "enable": false,
+    "analytics": {
+      "trackingId": ""
+    }
+  },
+  "emailSubscribers": {
+    "enable": false,
+    "mailchimp": {
+      "endpoint": ""
+    }
+  },
+  "search": {
+    "enable": false,
+    "algolia": {
+      "appId": "",
+      "indexName": "",
+      "searchKey": ""
+    }
+  },
+  "rssFeed": {
+    "enable": true
+  }
+}
