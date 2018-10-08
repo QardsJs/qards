@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Post from "../../components/post/post";
+import Post from '../../components/post/post';
 
-import StylesLoader from "../styles-loader";
+import StylesLoader from '../styles-loader';
 
 const PostPreview = ({entry}: any) => {
 	const title: string = entry.getIn(['data', 'title']);
@@ -18,12 +18,18 @@ const PostPreview = ({entry}: any) => {
 	};
 
 	return <StylesLoader>
-		<Post
-			previewData={{
-				title, created_at, excerpt, heroImage: hero, md: body,
-			}}
-			preview={true}
-		/>
+		<div style={{padding: "20px 10px"}}>
+			<Post
+				preview={true}
+				previewData={{
+					title,
+					created_at,
+					excerpt,
+					heroImage: hero,
+					md       : body,
+				}}
+			/>
+		</div>
 	</StylesLoader>;
 };
 

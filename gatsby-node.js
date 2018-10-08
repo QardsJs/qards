@@ -1,9 +1,9 @@
 require('typescript-require');
 
 const _ = require('lodash');
-const crypto = require('crypto');
 const Promise = require('bluebird');
 const path = require('path');
+const base64 = require('base-64');
 const {createFilePath} = require('gatsby-source-filesystem');
 
 
@@ -101,8 +101,8 @@ exports.createPages = ({graphql, actions}) => {
 							slug,
 							previous,
 							next,
-							tags: edge.node.frontmatter.tags
-						}
+							tags: edge.node.frontmatter.tags,
+						},
 					});
 				});
 
@@ -112,8 +112,8 @@ exports.createPages = ({graphql, actions}) => {
 						path     : `/tags/${slugify(tag)}/`,
 						component: tagTemplate,
 						context  : {
-							slug: slugify(tag), tag
-						}
+							slug: slugify(tag), tag,
+						},
 					});
 				});
 
@@ -123,16 +123,16 @@ exports.createPages = ({graphql, actions}) => {
 						path     : category.fields.slug,
 						component: categoryTemplate,
 						context  : {
-							slug: category.fields.slug
-						}
+							slug: category.fields.slug,
+						},
 					});
 				});
-			})
+			}),
 		);
 	});
 };
 
-const isNodeOfCollection = (node, collection) => node.internal.type === "MarkdownRemark" &&
+const isNodeOfCollection = (node, collection) => node.internal.type === 'MarkdownRemark' &&
 	node.fileAbsolutePath.match(`collections/${collection}`);
 
 //	Will return only nodes that are from a given collection
@@ -143,17 +143,16 @@ const getCollectionNodes = (collection, getNodes) => {
 //	Given a post node, returns the node of the author
 const getPostAuthorNode = (postNode, getNodes) => {
 	return getCollectionNodes('authors', getNodes).find(node => {
-		return node.frontmatter.title === postNode.frontmatter.authors
+		return node.frontmatter.title === postNode.frontmatter.authors;
 	});
 };
 
 //	Given a post node, returns the node of the category
 const getPostCategoryNode = (postNode, getNodes) => {
 	return getCollectionNodes('categories', getNodes).find(node => {
-		return node.frontmatter.title === postNode.frontmatter.categories
+		return node.frontmatter.title === postNode.frontmatter.categories;
 	});
 };
-
 
 const mapCategoriesToPostNode = (node, getNodes) => {
 	const category = getPostCategoryNode(node, getNodes);
@@ -177,15 +176,56 @@ exports.sourceNodes = ({actions, getNodes, getNode}) => {
 	const {createNodeField} = actions;
 
 	getCollectionNodes('categories', getNodes).forEach(node => {
-		createNodeField({node, name: "slug", value: `categories${createFilePath({node, getNode})}`});
+		createNodeField({node, name: 'slug', value: `categories${createFilePath({node, getNode})}`});
 	});
 
 	getCollectionNodes('posts', getNodes).forEach(node => {
 		mapAuthorsToPostNode(node, getNodes);
 		mapCategoriesToPostNode(node, getNodes);
 		//	create the post slug
-		createNodeField({node, name: "slug", value: `posts${createFilePath({node, getNode})}`});
+		createNodeField({node, name: 'slug', value: `posts${createFilePath({node, getNode})}`});
 	});
+};
+
+const createReferencesField = (node, actions, getNodes) => {
+	const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+/=]+?)"}/;
+
+	function decodeWidgetDataObject(data) {
+		return JSON.parse(base64.decode(data));
+	}
+
+	const {createNodeField} = actions;
+
+	if (!node.rawMarkdownBody) return;
+
+	node.rawMarkdownBody.split('\n').map(line => {
+		if (RegExp(cPattern).test(line)) {
+			const params = line.match(cPattern);
+			const widget = params[1];
+			const config = decodeWidgetDataObject(params[2]);
+
+			if (widget === 'qards-reference') {
+				//	find the post that is referenced based on title
+				//	TODO: check back with Netlify CMS and see if they made it possible to
+				//	put an id in the valueField or a slug because the `title` field can
+				//	change at any time and it's only a matter of time before we get into
+				//	trouble
+				const references = [];
+				getCollectionNodes('posts', getNodes).forEach(searchNode => {
+					if (searchNode.frontmatter.title === config.reference) {
+						references.push(searchNode.id);
+					}
+				});
+
+				node.references___NODES = references;
+			}
+		}
+	});
+};
+
+//	Creates a `references` field that holds the references to other posts
+exports.onCreateNode = async ({node, actions, getNodes}) => {
+	if (isNodeOfCollection(node, 'posts')) createReferencesField(node, actions, getNodes);
 };
 
 //	Netlify cms fix for netlify deploys?

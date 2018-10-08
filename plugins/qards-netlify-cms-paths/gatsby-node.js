@@ -49,11 +49,6 @@ const createPostImageNodes = async (node, actions) => {
 	const {createNodeField} = actions;
 
 	node.rawMarkdownBody.split('\n').map((line) => {
-		//	for the sake of simplicity we will only search for fields
-		//	that are named `src` (to identify an image) so keep that
-		//	in mind when creating components with images that don't
-		//	have src as their name because they will be ignored by this
-		//	parser
 		if (RegExp(cPattern).test(line)) {// this is one of the custom components
 			const params = line.match(cPattern);
 			const widget = params[1];

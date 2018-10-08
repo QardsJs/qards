@@ -1,8 +1,8 @@
 import {graphql} from 'gatsby';
-import {CardImageType} from "../components/qard/image";
-import {AuthorType} from "./author";
-import {PageHeroType, PageMetaType} from "./common";
-import {CategoryType} from "./category";
+import {CardImageType} from '../components/qard/image';
+import {AuthorType} from './author';
+import {PageHeroType, PageMetaType} from './common';
+import {CategoryType} from './category';
 
 export interface PostType {
 	id: string;
@@ -19,6 +19,7 @@ export interface PostType {
 		meta: PageMetaType;
 	}
 
+	references?: PostType[];
 	authors: AuthorType[];
 	categories: CategoryType[];
 
@@ -55,6 +56,36 @@ export const _ = graphql`
 		
 		categories {
 			...categoryFragment
+		}
+
+		references {
+			id
+			
+			fields {
+				slug
+			}
+
+			frontmatter{
+				title
+				excerpt
+				created_at(formatString: "MMMM DD, YYYY")
+				
+				hero{
+					alt
+					image {
+						thumb: childImageSharp {
+							fluid(maxWidth:240){
+								tracedSVG
+								aspectRatio
+								originalImg
+								src
+								srcSet
+								sizes
+							}
+						}
+					}
+				}
+			}
 		}
 
 		frontmatter{

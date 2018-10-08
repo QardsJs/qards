@@ -71,6 +71,7 @@
     "remark-react": "^4.0.3",
     "resize-observer-polyfill": "^1.5.0",
     "scrollprogress": "^3.0.2",
+    "stringz": "^1.0.0",
     "styled-components": "^3.3.3",
     "tinycolor2": "^1.4.1",
     "typeface-roboto": "^0.0.54",
@@ -96,6 +97,10 @@
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.11",
+    "@storybook/addon-links": "^3.4.11",
+    "@storybook/addons": "^3.4.11",
+    "@storybook/react": "^3.4.11",
     "@types/algoliasearch": "^3.27.6",
     "@types/grid-styled": "^4.2.0",
     "@types/lodash": "^4.14.115",
@@ -109,15 +114,11 @@
     "@types/react-share": "^2.1.1",
     "@types/react-transition-group": "^2.0.13",
     "@types/tinycolor2": "^1.4.1",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
     "cypress": "^3.1.0",
     "prettier": "^1.13.7",
-    "redux-devtools-extension": "^2.13.5",
-    "@storybook/react": "^3.4.11",
-    "@storybook/addon-actions": "^3.4.11",
-    "@storybook/addon-links": "^3.4.11",
-    "@storybook/addons": "^3.4.11",
-    "babel-core": "^6.26.3",
-    "babel-runtime": "^6.26.0"
+    "redux-devtools-extension": "^2.13.5"
   },
   "repository": {
     "type": "git",

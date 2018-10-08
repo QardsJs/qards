@@ -131,34 +131,6 @@ export default class Post extends React.Component<Props, any> {
 				{hero && <Hero><QardImageContent {...hero}/></Hero>}
 				{excerpt && <Excerpt>{excerpt}</Excerpt>}
 
-				<QardReference displayStyle={'default'} preview={true} posts={[{
-					post: "Test post with default style"
-				}, {
-					post: "Test post with default style"
-				}]}/>
-
-				<br/>
-				<br/>
-
-				<br/>
-				<br/>
-				<QardReference displayStyle={'minimal'} preview={true} posts={[{
-					post: "Test post with minimal style"
-				}, {
-					post: "Test post with minimal style"
-				}]}/>
-
-				<br/>
-				<br/>
-
-				<br/>
-				<br/>
-				<QardReference displayStyle={'compact'} preview={true} posts={[{
-					post: "Test post with compact style"
-				}, {
-					post: "Test post with compact style"
-				}]}/>
-
 				{this.renderBody(md)}
 			</Article>
 		);

@@ -1,48 +1,88 @@
 import * as React from 'react';
-import {Link} from "gatsby";
+import {Link} from 'gatsby';
+import {Flex, Box, div} from 'grid-styled';
+import {limit} from 'stringz';
+
 import QardBase, {QardProps} from '../base';
 import {Wrapper} from './styles';
-import {PostType} from "../../../fragments/post";
-
-interface PreviewPostType {
-	post: string;
-}
+import {PostType} from '../../../fragments/post';
+import Img from 'gatsby-image';
 
 export interface CardReferenceType extends QardProps {
-	displayStyle: string;
-	posts: PostType[] | PreviewPostType[];
+	reference: PostType | string;
 }
 
 interface State {
 }
 
+class LinkWrapper extends React.Component<any, any> {
+	render() {
+		const {preview, reference, children} = this.props;
+
+		if (preview) {
+			return <a onClick={(e) => e.preventDefault()}>{children}</a>;
+		}
+
+		return <Link to={reference.fields.slug}>{children}</Link>;
+	}
+}
+
 export default class QardReference extends QardBase<CardReferenceType, State> {
-	public render() {
-		const {posts, preview, displayStyle} = this.props;
+	get referenceObject() {
+		const {reference, post} = this.props;
 
-		if (!posts || !posts.length) return "";
+		if (!post || !post.references) return null;
 
-		return <Wrapper className={`display-${displayStyle || 'default'}`}>{
-			// @ts-ignore
-			posts.map((post: any, k: number) => {
-				if (preview) {
-					return <Link to={'#'} key={k}>
-						<b className={`title`}>{post.post}</b>
-						<span className={'excerpt'}>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-							sed do eiusmod tempor incididunt ut labore et dolore
-							magna aliqua.
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-							sed do eiusmod tempor incididunt ut labore et dolore
-							magna aliqua.
-						</span>
-					</Link>;
-				}
-				return <Link to={post.fields.slug} key={k}>
-					<b className={'title'}>{post.frontmatter.title}</b>
-					<span>{post.frontmatter.excerpt}</span>
-				</Link>
-			})
-		}</Wrapper>;
+		for (let i = 0; i < post.references.length; i++) {
+			if (post.references[i].frontmatter.title == reference) {
+				return post.references[i];
+			}
+		}
+
+		return null;
+	}
+
+	get previewRender() {
+		const {reference} = this.props;
+
+		return <React.Fragment>
+			<b className={`title`}>{reference}</b>
+			<span className="bp3-skeleton">&nbsp;</span>
+			<span className="bp3-skeleton">&nbsp;</span>
+			<span className="bp3-skeleton">&nbsp;</span>
+		</React.Fragment>;
+	}
+
+	get referenceRender() {
+		if (!this.referenceObject) return '';
+
+		return <React.Fragment>
+			<b className={'title'}>{this.referenceObject.frontmatter.title}</b>
+			<span className={'excerpt'}>{limit(this.referenceObject.frontmatter.excerpt, 180, '')}</span>
+		</React.Fragment>;
+	}
+
+	get referenceHero() {
+		if (!this.referenceObject) return '';
+		return <Img fluid={this.referenceObject.frontmatter.hero.image.thumb.fluid}/>;
+	}
+
+	render() {
+		const {reference, preview} = this.props;
+
+		if (!reference || (!preview && !this.referenceObject)) return '';
+
+		return <Wrapper>
+			<LinkWrapper reference={this.referenceObject} preview={preview}>
+				<Flex alignItems={'top'} mb={10}>
+					<Box width={[0, 0, 1 / 4]}>
+						{preview ? <div className="cover-placeholder bp3-skeleton"/> : this.referenceHero}
+					</Box>
+					<Box width={[1, 1, 3 / 4]} mx={[0, 0, 2]} px={2}>
+						{preview ? this.previewRender : this.referenceRender}
+					</Box>
+				</Flex>
+			</LinkWrapper>
+		</Wrapper>;
 	}
 }
