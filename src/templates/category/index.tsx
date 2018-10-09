@@ -45,6 +45,9 @@ class CategoryTemplate extends React.Component<Props, any> {
 		const {data} = this.props;
 
 		const {featured, category} = data;
+
+		if (!data.posts) return '';
+
 		const {edges} = data.posts;
 
 		return <Route

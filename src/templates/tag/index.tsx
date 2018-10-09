@@ -35,6 +35,8 @@ const TagTemplate = (props: Props) => {
 	const {tag, slug} = props.pageContext;
 	const {featured, posts} = data;
 
+	if(!posts) return "";
+
 	return <Route
 		path={`/tags/${slug}/`}
 		component={TagsPage}
