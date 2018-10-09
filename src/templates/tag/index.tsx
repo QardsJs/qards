@@ -1,11 +1,11 @@
-import React from "react"
+import React from 'react';
 
-import {graphql} from "gatsby"
+import {graphql} from 'gatsby';
 
-import TagsPage from "../../components/pages/tags";
-import Route from "../../components/common/route";
-import {extractNodesFromEdges} from "../../utils/helpers";
-import {PostType} from "../../fragments/post";
+import TagsPage from '../../components/pages/tags';
+import Route from '../../components/common/route';
+import {extractNodesFromEdges} from '../../utils/helpers';
+import {PostType} from '../../fragments/post';
 
 interface DataProps {
 	posts: {
@@ -35,15 +35,13 @@ const TagTemplate = (props: Props) => {
 	const {tag, slug} = props.pageContext;
 	const {featured, posts} = data;
 
-	if(!posts) return "";
-
 	return <Route
 		path={`/tags/${slug}/`}
 		component={TagsPage}
-		totalCount={posts.totalCount}
+		totalCount={posts ? posts.totalCount : 0}
 		tag={tag}
-		posts={posts.edges.length ? extractNodesFromEdges(posts.edges) : []}
-		featured={featured ? extractNodesFromEdges(featured.edges, "") : []}
+		posts={posts && posts.edges && posts.edges.length ? extractNodesFromEdges(posts.edges) : []}
+		featured={featured ? extractNodesFromEdges(featured.edges, '') : []}
 	/>;
 };
 

@@ -1,10 +1,10 @@
-import React from "react";
-import { graphql, StaticQuery } from "gatsby";
+import React from 'react';
+import {graphql, StaticQuery} from 'gatsby';
 
-import BlogRoute from "../../components/pages/blog";
-import Route from "../../components/common/route";
-import { PostType } from "../../fragments/post";
-import { extractNodesFromEdges } from "../../utils/helpers";
+import BlogRoute from '../../components/pages/blog';
+import Route from '../../components/common/route';
+import {PostType} from '../../fragments/post';
+import {extractNodesFromEdges} from '../../utils/helpers';
 
 interface DataProps {
 	latest: {
@@ -37,8 +37,8 @@ const Blog = () => {
 		render={(data: DataProps) => {
 			return <Route
 				component={BlogRoute}
-				latest={extractNodesFromEdges(data.latest.edges)}
-				path={"/"}
+				latest={data.latest ? extractNodesFromEdges(data.latest.edges) : []}
+				path={'/'}
 			/>;
 		}}
 	/>;
