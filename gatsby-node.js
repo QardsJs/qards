@@ -194,8 +194,6 @@ const createReferencesField = (node, actions, getNodes) => {
 		return JSON.parse(base64.decode(data));
 	}
 
-	const {createNodeField} = actions;
-
 	if (!node.rawMarkdownBody) return;
 
 	const references = [];
@@ -215,6 +213,7 @@ const createReferencesField = (node, actions, getNodes) => {
 				getCollectionNodes('posts', getNodes).forEach(searchNode => {
 					//	this title match is inneficient! See above
 					if (searchNode.frontmatter.title === config.reference) {
+						console.log("yes", searchNode.frontmatter.title)
 						references.push(searchNode.id);
 					}
 				});
@@ -222,6 +221,8 @@ const createReferencesField = (node, actions, getNodes) => {
 		}
 	});
 
+
+	console.log(`Creating references for ${node.frontmatter.title}`, references);
 	node.references___NODES = references;
 };
 

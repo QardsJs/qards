@@ -46,7 +46,7 @@ export default class QardReference extends QardBase<CardReferenceType, State> {
 		const {reference} = this.props;
 
 		return <React.Fragment>
-			<b className={`title`}>{reference}</b>
+			<b className={`title ellipsis`}>{reference}</b>
 			<span className="bp3-skeleton">&nbsp;</span>
 			<span className="bp3-skeleton">&nbsp;</span>
 			<span className="bp3-skeleton">&nbsp;</span>
@@ -57,7 +57,7 @@ export default class QardReference extends QardBase<CardReferenceType, State> {
 		if (!this.referenceObject) return '';
 
 		return <React.Fragment>
-			<b className={'title'}>{this.referenceObject.frontmatter.title}</b>
+			<b className={'title ellipsis'}>{this.referenceObject.frontmatter.title}</b>
 			<span className={'excerpt'}>{limit(this.referenceObject.frontmatter.excerpt, 180, '')}</span>
 		</React.Fragment>;
 	}
@@ -78,7 +78,7 @@ export default class QardReference extends QardBase<CardReferenceType, State> {
 					<Box width={[0, 0, 1 / 4]} pl={1}>
 						{preview ? <div className="cover-placeholder bp3-skeleton"/> : this.referenceHero}
 					</Box>
-					<Box width={[1, 1, 3 / 4]} mx={[0, 0, 2]} px={2} py={0}>
+					<Box width={[1, 1, 3 / 4]} mx={[0, 0, 2]} px={2} py={1}>
 						{preview ? this.previewRender : this.referenceRender}
 					</Box>
 				</Flex>

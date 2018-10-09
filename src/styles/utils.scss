@@ -42,6 +42,12 @@
 	flex-direction: column;
 }
 
+.ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .clearfix::after {
 	content: "";
 	clear: both;
