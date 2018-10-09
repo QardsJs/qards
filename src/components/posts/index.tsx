@@ -97,7 +97,7 @@ export default class Posts extends Component<Props, State> {
 					</div>
 
 					<div className="info">
-						0 min in <b>test</b>
+						{Number(readingTime(post).minutes).toFixed(0)} min in <b>{post.categories[0].frontmatter.title}</b>
 					</div>
 				</AuthorContent>
 			</Author>;

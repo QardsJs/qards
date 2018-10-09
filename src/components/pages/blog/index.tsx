@@ -10,7 +10,7 @@ import Subscribe from '../../subscribe';
 import Layout from '../../layout';
 import Content from '../../layout/content';
 import {PostType} from '../../../fragments/post';
-import {getSettingsConfig, getPluginsConfig, prependBaseUrl} from '../../../utils/helpers';
+import {getSettingsConfig, getPluginsConfig, prependBaseUrl, getPostsConfig} from '../../../utils/helpers';
 
 //  exported because they are used in other templates
 export const Hero = styled.div`
@@ -72,7 +72,7 @@ export class IndexPage extends React.Component<Props, any> {
 
 						<Box mt={[80, 80, 80, 180]} mb={[40, 40, 40, 120]}>
 							{latest.length > 0 && <Posts
-								showExcerpt={false}
+								showExcerpt={getPostsConfig(['showExcerpts'], true)}
 								posts={latest}
 								title={`Latest articles`}
 								paginate={{

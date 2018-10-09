@@ -213,7 +213,6 @@ const createReferencesField = (node, actions, getNodes) => {
 				getCollectionNodes('posts', getNodes).forEach(searchNode => {
 					//	this title match is inneficient! See above
 					if (searchNode.frontmatter.title === config.reference) {
-						console.log("yes", searchNode.frontmatter.title)
 						references.push(searchNode.id);
 					}
 				});

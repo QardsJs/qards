@@ -64,7 +64,13 @@ export default class QardReference extends QardBase<CardReferenceType, State> {
 
 	get referenceHero() {
 		if (!this.referenceObject) return '';
-		return <Img fluid={this.referenceObject.frontmatter.hero.image.thumb.fluid}/>;
+
+		const hero = this.referenceObject.frontmatter.hero;
+
+		if (!hero || !hero.image) {
+			return <div className="cover-placeholder"/>;
+		}
+		return <Img fluid={hero.image.thumb.fluid}/>;
 	}
 
 	render() {
