@@ -78,8 +78,8 @@ export default class QardReference extends QardBase<CardReferenceType, State> {
 					<Box width={[0, 0, 1 / 4]} pl={1}>
 						{preview ? <div className="cover-placeholder bp3-skeleton"/> : this.referenceHero}
 					</Box>
-					<Box width={[1, 1, 3 / 4]} mx={[0, 0, 2]}>
-						<Box px={2} py={1}>
+					<Box width={[1, 1, 3 / 4]}>
+						<Box px={2} py={1} mx={[0, 0, 2]}>
 							{preview ? this.previewRender : this.referenceRender}
 						</Box>
 					</Box>
