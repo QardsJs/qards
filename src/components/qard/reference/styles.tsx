@@ -35,10 +35,6 @@ export const Wrapper = styled.div`
 			display: block;
 			height: 12px;
 			margin-bottom: 12px;
-			
-			&:last-of-type {
-				margin-bottom: 0;
-			}
 		}
 	}
 `;
