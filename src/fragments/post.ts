@@ -26,6 +26,7 @@ export interface PostType {
 	fields: {
 		slug: string;
 
+
 		audios: {
 			url: string;
 			title: string;
@@ -56,36 +57,6 @@ export const _ = graphql`
 		
 		categories {
 			...categoryFragment
-		}
-
-		references {
-			id
-			
-			fields {
-				slug
-			}
-
-			frontmatter{
-				title
-				excerpt
-				created_at(formatString: "MMMM DD, YYYY")
-				
-				hero{
-					alt
-					image {
-						thumb: childImageSharp {
-							fluid(maxWidth:240){
-								tracedSVG
-								aspectRatio
-								originalImg
-								src
-								srcSet
-								sizes
-							}
-						}
-					}
-				}
-			}
 		}
 
 		frontmatter{
@@ -127,6 +98,36 @@ export const _ = graphql`
 							src
 							srcSet
 							sizes
+						}
+					}
+				}
+			}
+		}
+		
+		references {
+			id
+			
+			fields {
+				slug
+			}
+
+			frontmatter{
+				title
+				excerpt
+				created_at(formatString: "MMMM DD, YYYY")
+				
+				hero{
+					alt
+					image {
+						thumb: childImageSharp {
+							fluid(maxWidth:240){
+								tracedSVG
+								aspectRatio
+								originalImg
+								src
+								srcSet
+								sizes
+							}
 						}
 					}
 				}

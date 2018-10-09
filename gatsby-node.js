@@ -198,6 +198,8 @@ const createReferencesField = (node, actions, getNodes) => {
 
 	if (!node.rawMarkdownBody) return;
 
+	const references = [];
+
 	node.rawMarkdownBody.split('\n').map(line => {
 		if (RegExp(cPattern).test(line)) {
 			const params = line.match(cPattern);
@@ -209,18 +211,18 @@ const createReferencesField = (node, actions, getNodes) => {
 				//	TODO: check back with Netlify CMS and see if they made it possible to
 				//	put an id in the valueField or a slug because the `title` field can
 				//	change at any time and it's only a matter of time before we get into
-				//	trouble
-				const references = [];
+				//	trouble with missing referenced posts
 				getCollectionNodes('posts', getNodes).forEach(searchNode => {
+					//	this title match is inneficient! See above
 					if (searchNode.frontmatter.title === config.reference) {
 						references.push(searchNode.id);
 					}
 				});
-
-				node.references___NODES = references;
 			}
 		}
 	});
+
+	node.references___NODES = references;
 };
 
 //	Creates a `references` field that holds the references to other posts

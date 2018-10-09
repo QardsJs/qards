@@ -65,7 +65,7 @@ export const pageQuery = graphql`
 		posts: allMarkdownRemark(
 			sort: {fields: [frontmatter___created_at], order: DESC},
 			filter: {
-				fileAbsolutePath: {regex: "//collections/posts//"},
+				fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 				categories: {fields: {slug: {eq: $slug}}}
 			}
 		) {
@@ -80,7 +80,7 @@ export const pageQuery = graphql`
 		featured: allMarkdownRemark(
 			sort: {fields: [frontmatter___created_at], order: DESC},
 			filter: {
-				fileAbsolutePath: {regex: "//collections/posts//"},
+				fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 				categories: {fields: {slug: {eq: $slug}}},
 				frontmatter: {isFeatured: {eq: true}}
 			}

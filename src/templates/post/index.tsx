@@ -49,7 +49,7 @@ export const pageQuery = graphql`
 		related: allMarkdownRemark(
 			sort: {fields: [frontmatter___created_at], order: DESC},
 			filter: {
-				fileAbsolutePath: {regex: "//collections/posts//"},
+				fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 				frontmatter: {tags: {in: $tags}},
 				fields: {slug: {ne: $slug}}
 			}

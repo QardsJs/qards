@@ -5,6 +5,7 @@ import theme from "../../../theme";
 export const Wrapper = styled.div`
 	a {
 		display: block;
+		background: ${theme.color(['faded', 'background'])};
 		
 		b.title {
 			display: block;
@@ -14,14 +15,14 @@ export const Wrapper = styled.div`
 		
 		span.excerpt {
 			display: block;
-			font-size: 1.1rem;
+			font-size: 1rem;
 			line-height: 1.4rem;
 			color: ${theme.color(['lightText'])};
 		}
 		
 		&:hover {
 			text-decoration: none;
-			background: ${theme.color(['faded', 'background'])};
+			background: transparent;
 		}
 		
 		.cover-placeholder {

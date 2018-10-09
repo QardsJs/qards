@@ -23,7 +23,7 @@ export default class Footer extends React.Component<Props, any> {
                 query {
                     pages: allMarkdownRemark(
 					filter: {
-						fileAbsolutePath: {regex: "//collections/posts//"},
+						fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 						frontmatter: {isPage: {eq: true}}
 					}
 				) {

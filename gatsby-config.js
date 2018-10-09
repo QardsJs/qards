@@ -45,6 +45,13 @@ const plugins = [
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
+			name: `dummy-posts`,
+			path: `${__dirname}/src/content/collections/posts`
+		}
+	},
+	{
+		resolve: `gatsby-source-filesystem`,
+		options: {
 			name: `authors`,
 			path: `${__dirname}/static/content/collections/authors`
 		}
@@ -52,8 +59,22 @@ const plugins = [
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
+			name: `dummy-authors`,
+			path: `${__dirname}/src/content/collections/authors`
+		}
+	},
+	{
+		resolve: `gatsby-source-filesystem`,
+		options: {
 			name: `categories`,
 			path: `${__dirname}/static/content/collections/categories`
+		}
+	},
+	{
+		resolve: `gatsby-source-filesystem`,
+		options: {
+			name: `dummy-categories`,
+			path: `${__dirname}/src/content/collections/categories`
 		}
 	},
 	{

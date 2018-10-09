@@ -21,7 +21,7 @@ const Blog = () => {
 				latest: allMarkdownRemark(
 					sort: {fields: [frontmatter___created_at], order: DESC},
 					filter: {
-						fileAbsolutePath: {regex: "//collections/posts//"},
+						fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 						frontmatter: {isPage: {ne: true}}
 					}
 				) {
@@ -37,7 +37,7 @@ const Blog = () => {
 		render={(data: DataProps) => {
 			return <Route
 				component={BlogRoute}
-				latest={extractNodesFromEdges(data.latest.edges)}
+				latest={data.latest ? extractNodesFromEdges(data.latest.edges) : []}
 				path={'/blog'}
 			/>;
 		}}

@@ -74,11 +74,11 @@ export default class QardReference extends QardBase<CardReferenceType, State> {
 
 		return <Wrapper>
 			<LinkWrapper reference={this.referenceObject} preview={preview}>
-				<Flex alignItems={'top'} mb={10}>
-					<Box width={[0, 0, 1 / 4]}>
+				<Flex alignItems={'center'} mb={10}>
+					<Box width={[0, 0, 1 / 4]} pl={1}>
 						{preview ? <div className="cover-placeholder bp3-skeleton"/> : this.referenceHero}
 					</Box>
-					<Box width={[1, 1, 3 / 4]} mx={[0, 0, 2]} px={2}>
+					<Box width={[1, 1, 3 / 4]} mx={[0, 0, 2]} px={2} py={0}>
 						{preview ? this.previewRender : this.referenceRender}
 					</Box>
 				</Flex>

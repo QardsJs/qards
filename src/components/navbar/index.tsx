@@ -78,7 +78,7 @@ export default class Navigation extends React.Component<Props, State> {
 					query {
 						pages: allMarkdownRemark(
 							filter: {
-								fileAbsolutePath: {regex: "//collections/posts//"},
+								fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 								frontmatter: {isPage: {eq: true}}
 							}
 						) {
@@ -91,7 +91,7 @@ export default class Navigation extends React.Component<Props, State> {
 
 						categories: allMarkdownRemark(
 							filter: {
-								fileAbsolutePath: {regex: "//collections/categories//"}
+								fileAbsolutePath: {regex: "//static/content/collections/categories//"}
 							}
 						) {
 							edges {
@@ -118,9 +118,9 @@ export default class Navigation extends React.Component<Props, State> {
 						pages.push(data.pages.edges[i].node);
 					}
 
-					const popularCategories = uniqBy(
+					const popularCategories = categories ? uniqBy(
 						extractNodesFromEdges(categories.edges), JSON.stringify
-					);
+					) : [];
 
 					return (
 						<StyledNavbar className="qards-navbar" fixedToTop={false}>

@@ -11,7 +11,7 @@ const LayoutWrapper = styled.div`
 	margin: 0;
 	padding: 0;
 	/** This has to be the height of the footer!! **/
-	min-height: calc(100vh - 90px)!important;
+	min-height: calc(100vh - 150px)!important;
 `;
 
 interface Props {

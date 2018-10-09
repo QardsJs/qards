@@ -53,7 +53,7 @@ export const pageQuery = graphql`
 			sort: {fields: [frontmatter___created_at], order: DESC},
 			filter: {
 				fileAbsolutePath: {
-					regex: "//collections/posts//"
+					regex: "//static/content/collections/posts//"
 				},
 				frontmatter: {
 					tags: {
@@ -74,7 +74,7 @@ export const pageQuery = graphql`
 			sort: {fields: [frontmatter___created_at], order: DESC},
 			filter: {
 				fileAbsolutePath: {
-					regex: "//collections/posts//"
+					regex: "//static/content/collections/posts//"
 				},
 				frontmatter: {
 					tags: {

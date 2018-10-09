@@ -8,9 +8,4 @@ public
 netlify.toml
 cypress/.Trash-0
 cypress/screenshots
-
-static/config/
-static/content/
-static/images/
-
 tmp/
