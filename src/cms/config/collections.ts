@@ -32,10 +32,14 @@ export const settingsCollection = {
 			default: false,
 			hint   : `In performance mode Qards does its best to operate with
 			minimum of resources. The overall experience should be noticeably
-			faster both for or users and search engines. In performance mode
+			faster both for your users and search engines. In performance mode
 			we won't load many posters (when showing posts results), we will
 			not be using too many css effects and we will not load an external
 			font`,
+		}, {
+			label : 'Logo',
+			name  : 'logo',
+			widget: 'image',
 		}, {
 			label : 'Social media share image',
 			name  : 'socialShareImg',

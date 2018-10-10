@@ -220,8 +220,6 @@ const createReferencesField = (node, actions, getNodes) => {
 		}
 	});
 
-
-	console.log(`Creating references for ${node.frontmatter.title}`, references);
 	node.references___NODES = references;
 };
 

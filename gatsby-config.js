@@ -148,7 +148,7 @@ const plugins = [
 	{
 		resolve: `gatsby-plugin-favicon`,
 		options: {
-			logo          : `${__dirname}/src/static/images/logo.png`,
+			logo          : `${__dirname}/static/images/uploads/logo.png`,
 			appName       : "Qards", // Inferred with your package.json
 			appDescription: null,
 			developerName : "Romeo Mihalcea",

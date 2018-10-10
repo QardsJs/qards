@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {Link} from 'gatsby';
+import {graphql, Link, StaticQuery} from 'gatsby';
+import Img from 'gatsby-image';
 
 import LazyLoad from 'react-lazyload';
 import {Box, Flex} from 'grid-styled';
 import styled from 'styled-components';
 
-import LogoImage from '../static/images/logo.svg';
+import {CardImageType} from './qard/image';
 
 const StyledLogo = styled(Link)`
 	display: block;
@@ -29,27 +30,62 @@ const StyledLogo = styled(Link)`
 	}
 `;
 
+export interface DataProps {
+	logo: {
+		edges: {
+			node: {
+				thumb: CardImageType;
+			};
+		}[];
+	};
+}
+
 export interface Props {
 	siteName: string;
 }
 
 export default class Logo extends React.Component<Props, any> {
 	render() {
-		const {siteName} = this.props;
 		return (
-			<StyledLogo to={'/'}>
-				<Flex flexDirection={'row'} alignItems={'center'}>
-					<Box width={1 / 2} mr={0} style={{minWidth: 50}}>
-						<LazyLoad height={50}>
-							<img src={LogoImage} alt={siteName} className={'logo'}/>
-						</LazyLoad>
-					</Box>
+			<StaticQuery
+				query={graphql`
+					query {
+						logo: allFile(filter: {absolutePath: {regex: "/images\/uploads\/logo\\.(jpg|png)/"}}) {
+							edges {
+								node {
+									thumb: childImageSharp {
+										fixed(width: 50) {
+											tracedSVG
+											aspectRatio
+											src
+											srcSet
+											width
+											height
+										}
+									}
+								}
+							}
+						}
+					}
+				`}
+				render={(data: DataProps) => {
+					return (
+						<StyledLogo to={'/'}>
+							<Flex flexDirection={'row'} alignItems={'center'}>
+								<Box width={1 / 2} mr={0} style={{minWidth: 50}}>
+									{data.logo && <LazyLoad height={50}>
+										<Img fixed={data.logo.edges[0].node.thumb.fixed}/>
+									</LazyLoad>}
+								</Box>
 
-					<Box width={1 / 2} ml={2}>
-						<span className={'brand'}>Qards</span>
-					</Box>
-				</Flex>
-			</StyledLogo>
+								<Box width={1 / 2} ml={2}>
+									<span className={'brand'}>Qards</span>
+								</Box>
+							</Flex>
+						</StyledLogo>
+					);
+				}}
+			/>
 		);
 	}
 }
