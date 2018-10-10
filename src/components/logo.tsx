@@ -7,6 +7,7 @@ import {Box, Flex} from 'grid-styled';
 import styled from 'styled-components';
 
 import {CardImageType} from './qard/image';
+import {getSettingsConfig} from '../utils/helpers';
 
 const StyledLogo = styled(Link)`
 	display: block;
@@ -79,7 +80,7 @@ export default class Logo extends React.Component<Props, any> {
 								</Box>
 
 								<Box width={1 / 2} ml={2}>
-									<span className={'brand'}>Qards</span>
+									<span className={'brand'}>{getSettingsConfig('name', 'Qards')}</span>
 								</Box>
 							</Flex>
 						</StyledLogo>

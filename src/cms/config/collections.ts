@@ -56,6 +56,7 @@ export const settingsCollection = {
 			entries will be arranged in a board according to their status, and they 
 			can be further reviewed and edited before going live.`,
 			default: false,
+			required: false,
 		}],
 	}, {
 		name  : 'theme',
