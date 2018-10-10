@@ -48,14 +48,14 @@ export const settingsCollection = {
 			name  : 'socialShareImg',
 			widget: 'image',
 		}, {
-			label  : 'Publish mode',
-			name   : 'publishMode',
-			widget : 'select',
-			options: ['default', 'editorial_workflow'],
-			hint   : `The publish mode option allows you to enable "Editorial Workflow" 
+			label  : 'Editorial mode?',
+			name   : 'editorialMode',
+			widget : 'boolean',
+			hint   : `The editorial mode option allows you to enable "Editorial Workflow" 
 			mode for more control over the content publishing phases. All unpublished 
 			entries will be arranged in a board according to their status, and they 
 			can be further reviewed and edited before going live.`,
+			default: false,
 		}],
 	}, {
 		name  : 'theme',
