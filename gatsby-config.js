@@ -243,7 +243,6 @@ if (
 	configPlugins.search.algolia.indexName &&
 	configPlugins.search.algolia.searchKey
 ) {
-	console.log("ENABLING: algolia");
 	plugins.push({
 		resolve: `gatsby-plugin-algolia`,
 		options: Object.assign({
