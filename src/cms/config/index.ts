@@ -1,3 +1,5 @@
+import {getSettingsConfig} from '../../utils/helpers';
+
 const config = {
 	backend      : {
 		name                  : 'git-gateway',
@@ -5,7 +7,7 @@ const config = {
 		squash_merges         : true,
 		workflow_branch_prefix: 'qards',
 	},
-	publish_mode : 'editorial_workflow',
+	publish_mode : getSettingsConfig(['publishMode'], 'default'),
 	media_folder : 'static/images/uploads',
 	public_folder: '/images/uploads',
 	slug         : {

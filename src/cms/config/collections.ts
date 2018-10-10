@@ -40,10 +40,22 @@ export const settingsCollection = {
 			label : 'Logo',
 			name  : 'logo',
 			widget: 'image',
+			hint  : `If you want to change the logo you have to delete the existing
+			one (delete the file from media library also) first and then upload 
+			the new one which MUST be named logo.png`,
 		}, {
 			label : 'Social media share image',
 			name  : 'socialShareImg',
 			widget: 'image',
+		}, {
+			label  : 'Publish mode',
+			name   : 'publishMode',
+			widget : 'select',
+			options: ['default', 'editorial_workflow'],
+			hint   : `The publish mode option allows you to enable "Editorial Workflow" 
+			mode for more control over the content publishing phases. All unpublished 
+			entries will be arranged in a board according to their status, and they 
+			can be further reviewed and edited before going live.`,
 		}],
 	}, {
 		name  : 'theme',
