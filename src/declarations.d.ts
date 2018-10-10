@@ -2,6 +2,7 @@ declare module 'graphql';
 declare module 'typography';
 declare module 'remark';
 declare module 'remark-react';
+declare module 'netlify-cms';
 declare module 'react-prism';
 declare module 'react-images';
 declare module 'react-custom-scrollbars';

@@ -100,7 +100,7 @@ const plugins = [
 	{
 		resolve: `qards-netlify-cms-paths`,
 		options: {
-			cmsConfigPath: `${__dirname}/src/cms/config/index.ts`
+			cmsConfigPath: `${__dirname}/src/cms/config/base.ts`
 		}
 	},
 	{
@@ -111,7 +111,7 @@ const plugins = [
 				{
 					resolve: `qards-netlify-cms-paths`,
 					options: {
-						cmsConfigPath: `${__dirname}/src/cms/config/index.ts`
+						cmsConfigPath: `${__dirname}/src/cms/config/base.ts`
 					}
 				},
 				{
