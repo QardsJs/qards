@@ -73,7 +73,7 @@ export default class Logo extends React.Component<Props, any> {
 					return (
 						<StyledLogo to={'/'}>
 							<Flex flexDirection={'row'} alignItems={'center'}>
-								<Box width={1 / 2} mr={0} style={{minWidth: 50}}>
+								<Box width={60} mr={0} style={{minWidth: 50}}>
 									{data.logo && <LazyLoad height={50}>
 										<Img fixed={data.logo.edges[0].node.thumb.fixed}/>
 									</LazyLoad>}
