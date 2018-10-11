@@ -58,6 +58,14 @@ export const Article = styled.article`
 		}
 	}
 	
+	blockquote {
+		font-style: italic;
+		color: ${theme.color(['lightText'])};
+		margin: 40px 0;
+		padding-left: 30px;
+		border-left: 4px solid ${theme.color(['borders'])};
+	}
+	
 	.paragraphs {
 		pre, code {
 			font-size: 1rem;

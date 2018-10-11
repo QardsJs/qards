@@ -42,6 +42,8 @@ A rare footage of a very young Mike Tyson sparring Jimmy Clark in 1983
 Sometimes you want to inform your users of certain events. Dealing with dates, events and timezones has always been a struggle. This widget renders a countdown to a specified date and it shows the remaining time and event date in the user's timezone which is detected by the browser. Everything is clear and confusion-free.
 {"widget":"qards-divider","config":"eyJ0eXBlIjoiYnVsbGV0cyJ9"}
 {"widget":"qards-countdown","config":"eyJldmVudCI6IjIwMjUtMTAtMDRUMTQ6MDA6MDAuMDAwWiIsInRpdGxlIjoiVGltZSB1bnRpbCByb2JvdHMgdGFrZSBvdmVyIHRoZSB3b3JsZCIsInN1YnRpdGxlIjoiVGhlIHNpbmd1bGFyaXR5IGlzIG5lYXIifQ=="}
-{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlJlZmVyZW5jZSIsInN1YnRpdGxlIjoiUmVmZXJlbmNlIGFub3RoZXIgcG9zdCB3aXRoaW4gYSBjYXJkIn0="}
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlJlZmVyZW5jZSIsInN1YnRpdGxlIjoiUmVmZXJlbmNlIGFub3RoZXIgcG9zdCB3aXRoaW4gYSBjYXJkIiwgInR5cGUiOiJwcmltYXJ5In0="}
 Using references you can link to other posts. A card is automatically created with the post title, excerpt and post cover (if exists). The card is meant to refer to other posts and keep your readers engaged.
 {"widget":"qards-reference","config":"eyJyZWZlcmVuY2UiOiJTdXBwb3J0ZWQgY2FyZHMifQ=="}
+
+> Quote test: These data indicate that low serum testosterone levels are associated with an adverse metabolic profile and suggest a novel unifying mechanism for the previously independent observations that low testosterone levels and impaired mitochondrial function promote insulin resistance in men.
