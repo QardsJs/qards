@@ -1,5 +1,5 @@
-const configSite = require("./static/config/settings");
-const configPlugins = require("./static/config/plugins");
+const configSite = require('./static/config/settings');
+const configPlugins = require('./static/config/plugins');
 
 const query = `{
 	allMarkdownRemark(
@@ -39,60 +39,60 @@ const plugins = [
 		resolve: `gatsby-source-filesystem`,
 		options: {
 			name: `posts`,
-			path: `${__dirname}/static/content/collections/posts`
-		}
+			path: `${__dirname}/static/content/collections/posts`,
+		},
 	},
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
 			name: `dummy-posts`,
-			path: `${__dirname}/src/content/collections/posts`
-		}
+			path: `${__dirname}/src/content/collections/posts`,
+		},
 	},
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
 			name: `authors`,
-			path: `${__dirname}/static/content/collections/authors`
-		}
+			path: `${__dirname}/static/content/collections/authors`,
+		},
 	},
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
 			name: `dummy-authors`,
-			path: `${__dirname}/src/content/collections/authors`
-		}
+			path: `${__dirname}/src/content/collections/authors`,
+		},
 	},
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
 			name: `categories`,
-			path: `${__dirname}/static/content/collections/categories`
-		}
+			path: `${__dirname}/static/content/collections/categories`,
+		},
 	},
 	{
 		resolve: `gatsby-source-filesystem`,
 		options: {
 			name: `dummy-categories`,
-			path: `${__dirname}/src/content/collections/categories`
-		}
+			path: `${__dirname}/src/content/collections/categories`,
+		},
 	},
 	{
-		resolve: "gatsby-source-filesystem",
+		resolve: 'gatsby-source-filesystem',
 		options: {
 			path: `${__dirname}/static/images/uploads`,
-			name: "images"
-		}
+			name: 'images',
+		},
 	},
 	{
-		resolve: "gatsby-source-filesystem",
+		resolve: 'gatsby-source-filesystem',
 		options: {
 			path: `${__dirname}/src/app/static`,
-			name: "app_images"
-		}
+			name: 'app_images',
+		},
 	},
 	`gatsby-plugin-offline`,
-	"gatsby-plugin-react-helmet",
+	'gatsby-plugin-react-helmet',
 	`gatsby-plugin-typescript`,
 	`qards-plugin-sass`,
 	`gatsby-plugin-catch-links`,
@@ -100,8 +100,8 @@ const plugins = [
 	{
 		resolve: `qards-netlify-cms-paths`,
 		options: {
-			cmsConfigPath: `${__dirname}/src/cms/config/base.ts`
-		}
+			cmsConfigPath: `${__dirname}/src/cms/config/base.ts`,
+		},
 	},
 	{
 		resolve: `gatsby-transformer-remark`,
@@ -111,8 +111,8 @@ const plugins = [
 				{
 					resolve: `qards-netlify-cms-paths`,
 					options: {
-						cmsConfigPath: `${__dirname}/src/cms/config/base.ts`
-					}
+						cmsConfigPath: `${__dirname}/src/cms/config/base.ts`,
+					},
 				},
 				{
 					resolve: `gatsby-remark-images`,
@@ -121,46 +121,46 @@ const plugins = [
 						// the content container as this plugin uses this as the
 						// base for generating different widths of each image.
 						maxWidth       : 2500,
-						backgroundColor: "transparent"
-					}
+						backgroundColor: 'transparent',
+					},
 				}, {
-					resolve: "gatsby-remark-emojis",
+					resolve: 'gatsby-remark-emojis',
 					options: {
 						// Deactivate the plugin globally (default: true)
 						active: true,
 						// Add a custom css class
-						class : "emoji-icon",
+						class : 'emoji-icon',
 						// Select the size (available size: 16, 24, 32, 64)
 						size  : 64,
 						// Add custom styles
 						styles: {
-							display     : "inline",
-							margin      : "0",
-							"margin-top": "1px",
-							position    : "relative",
-							top         : "5px",
-							width       : "25px"
-						}
-					}
-				}]
-		}
+							display     : 'inline',
+							margin      : '0',
+							'margin-top': '1px',
+							position    : 'relative',
+							top         : '5px',
+							width       : '25px',
+						},
+					},
+				}],
+		},
 	},
 	{
 		resolve: `gatsby-plugin-favicon`,
 		options: {
 			logo          : `${__dirname}/static/images/uploads/logo.png`,
-			appName       : "Qards", // Inferred with your package.json
-			appDescription: null,
-			developerName : "Romeo Mihalcea",
+			appName       : configSite.name,
+			appDescription: configSite.excerpt,
+			developerName : 'Romeo Mihalcea',// @TODO: get this from package.json
 			developerURL  : null,
-			dir           : "auto",
-			lang          : "en-US",
-			background    : "transparent",
-			theme_color   : "#fff",
-			display       : "standalone",
-			orientation   : "any",
-			start_url     : "/",
-			version       : "1.0",
+			dir           : 'auto',
+			lang          : 'en-US',
+			background    : 'transparent',// @TODO: get this from theme
+			theme_color   : '#fff',// @TODO: get this from theme
+			display       : 'standalone',
+			orientation   : 'any',
+			start_url     : '/',
+			version       : '1.0',// @TODO: get this from package.json
 
 			icons: {
 				android     : true,
@@ -172,15 +172,15 @@ const plugins = [
 				opengraph   : false,
 				twitter     : false,
 				yandex      : false,
-				windows     : false
-			}
-		}
+				windows     : false,
+			},
+		},
 	},
 	{
 		resolve: `gatsby-plugin-page-creator`,
 		options: {
-			path: `${__dirname}/src/app/pages`
-		}
+			path: `${__dirname}/src/app/pages`,
+		},
 	},
 	{
 		resolve: `fix-external-links`,
@@ -189,24 +189,24 @@ const plugins = [
 				nofollow: {
 					skipMatch: [
 						/** regex that will be matched against external link */
-					]
-				}
-			}
-		}
+					],
+				},
+			},
+		},
 	},
 	{
 		resolve: `gatsby-plugin-typography`,
 		options: {
-			pathToConfigModule: `src/utils/typography.ts`
-		}
+			pathToConfigModule: `src/utils/typography.ts`,
+		},
 	},
 	{
-		resolve: "gatsby-plugin-netlify-cms",
+		resolve: 'gatsby-plugin-netlify-cms',
 		options: {
 			manualInit: true,
-			modulePath: `${__dirname}/src/cms/cms.ts`
-		}
-	}
+			modulePath: `${__dirname}/src/cms/cms.ts`,
+		},
+	},
 ];
 
 if (
@@ -219,8 +219,8 @@ if (
 		options: {
 			trackingId: configPlugins.tracking.analytics.trackingId,
 			head      : false,
-			respectDNT: true
-		}
+			respectDNT: true,
+		},
 	});
 }
 
@@ -229,10 +229,10 @@ if (
 	configPlugins.emailSubscribers.enable &&
 	configPlugins.emailSubscribers.mailchimp) {
 	plugins.push({
-		resolve: "gatsby-plugin-mailchimp",
+		resolve: 'gatsby-plugin-mailchimp',
 		options: {
-			endpoint: configPlugins.emailSubscribers.mailchimp.endpoint
-		}
+			endpoint: configPlugins.emailSubscribers.mailchimp.endpoint,
+		},
 	});
 }
 
@@ -248,23 +248,23 @@ if (
 		options: Object.assign({
 			appId    : configPlugins.search.algolia.appId,
 			indexName: configPlugins.search.algolia.indexName,
-			apiKey   : process.env.ALGOLIA_ADMIN_API_KEY || "",
-			searchKey: configPlugins.search.algolia.searchKey
+			apiKey   : process.env.ALGOLIA_ADMIN_API_KEY || '',
+			searchKey: configPlugins.search.algolia.searchKey,
 		}, {
 			queries      : [{
 				query,
-				transformer: ({ data }) => {
+				transformer: ({data}) => {
 					return data.allMarkdownRemark.edges.map(
-						({ node }) => {
+						({node}) => {
 							return {
 								objectID: node.objectID,
-								...node
+								...node,
 							};
-						}
+						},
 					);
-				}
-			}], chunkSize: 10000
-		})
+				},
+			}], chunkSize: 10000,
+		}),
 	});
 }
 
@@ -274,7 +274,7 @@ if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
 		options: {
 			feeds: [
 				{
-					serialize: ({ query: { allMarkdownRemark } }) => {
+					serialize: ({query: {allMarkdownRemark}}) => {
 						return allMarkdownRemark.edges.map(edge => {
 							return {
 								title          : edge.node.frontmatter.title,
@@ -284,8 +284,8 @@ if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
 								custom_elements: [
 									{
 										//"content:encoded": edge.node.html
-									}
-								]
+									},
+								],
 							};
 						});
 					},
@@ -314,10 +314,10 @@ if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
 								}
 							}
 		  `,
-					output   : "/rss.xml"
-				}
-			]
-		}
+					output   : '/rss.xml',
+				},
+			],
+		},
 
 	});
 }
@@ -329,7 +329,7 @@ module.exports = {
 	siteMetadata: {
 		title      : configSite.title,
 		siteUrl    : configSite.baseUrl,
-		description: configSite.excerpt
+		description: configSite.excerpt,
 	},
-	plugins
+	plugins,
 };

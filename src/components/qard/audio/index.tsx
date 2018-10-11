@@ -1,12 +1,12 @@
-import * as React from "react";
-import ReactPlayer from "react-player";
-import { Icon } from "@blueprintjs/core";
-import moment from "moment";
+import * as React from 'react';
+import ReactPlayer from 'react-player';
+import {Icon} from '@blueprintjs/core';
+import moment from 'moment';
 
-import TitledWrapper from "../../common/titled-wrapper";
-import QardImage, { CardImageType } from "../image";
-import QardBase, { QardProps } from "../base";
-import { InterfaceBtn, Item, Main, Playlist, Wrapper } from "./styles";
+import TitledWrapper from '../../common/titled-wrapper';
+import QardImage, {CardImageType} from '../image';
+import QardBase, {QardProps} from '../base';
+import {InterfaceBtn, Item, Main, Playlist, Wrapper} from './styles';
 
 export interface CardAudioItemType {
 	url: string;
@@ -45,12 +45,12 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 	constructor(props: CardAudioType) {
 		super(props);
 
-		const { items } = this.props;
+		const {items} = this.props;
 
 		this.state = {
 			readyToPlay : false,
 			isPlaying   : false,
-			currentTrack: items[0]
+			currentTrack: items[0],
 		};
 	}
 
@@ -59,12 +59,12 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 	};
 
 	hasNext = () => {
-		const { items } = this.props;
+		const {items} = this.props;
 		return items.length > this.getCurrentKey() + 1;
 	};
 
 	onReadyToPlay = () => {
-		this.setState({ readyToPlay: true });
+		this.setState({readyToPlay: true});
 	};
 
 	play = (audio: CardAudioItemType) => {
@@ -73,8 +73,8 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 
 			this.resetTimer();
 
-			this.setState({ isPlaying: false }, () =>
-				this.setState({ currentTrack: audio, isPlaying: true }));
+			this.setState({isPlaying: false}, () =>
+				this.setState({currentTrack: audio, isPlaying: true}));
 		});
 	};
 
@@ -85,8 +85,8 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 				played       : 0,
 				playedSeconds: 0,
 				loaded       : 0,
-				loadedSeconds: 0
-			}
+				loadedSeconds: 0,
+			},
 		});
 	};
 
@@ -95,7 +95,7 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 	};
 
 	reset = () => {
-		this.setState({ isPlaying: false, currentTrack: this.props.items[0] });
+		this.setState({isPlaying: false, currentTrack: this.props.items[0]});
 	};
 
 	playPrev = () => {
@@ -104,7 +104,7 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 				return this.reset();
 			}
 			this.resetTimer();
-			const { items } = this.props;
+			const {items} = this.props;
 			this.play(this.hasPrev() ? items[this.getCurrentKey() - 1] : items[0]);
 		});
 	};
@@ -115,14 +115,14 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 				return this.reset();
 			}
 			this.resetTimer();
-			const { items } = this.props;
+			const {items} = this.props;
 			this.play(this.hasNext() ? items[this.getCurrentKey() + 1] : items[0]);
 		});
 	};
 
 	getCurrentKey = (): number => {
 		//	returns the array key of the current song within all songs/items
-		const { items } = this.props;
+		const {items} = this.props;
 		for (let i = 0; i < items.length; i++) {
 			if (items[i].url === this.state.currentTrack.url) {
 				return i;
@@ -133,7 +133,7 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 
 	togglePlay = () => {
 		this.notAvailableInPreview(() => {
-			this.setState({ isPlaying: !this.state.isPlaying });
+			this.setState({isPlaying: !this.state.isPlaying});
 		});
 	};
 
@@ -152,34 +152,48 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 				loaded       : this.seconds(progress.loaded),
 				played       : this.seconds(progress.played),
 				loadedSeconds: this.seconds(progress.loadedSeconds),
-				playedSeconds: this.seconds(progress.playedSeconds)
-			}
+				playedSeconds: this.seconds(progress.playedSeconds),
+			},
 		});
 	};
 
 	get playedTimer() {
-		const { duration, progress } = this.state;
+		const {duration, progress} = this.state;
 
 		if (!duration || !progress) return <i>loading</i>;
 
 		const remainingSeconds = duration - progress.playedSeconds;
 
-		let format: string = "mm:ss";
+		let format: string = 'mm:ss';
 		if (remainingSeconds > 3600) {
-			format = "hh:mm:ss";
+			format = 'hh:mm:ss';
 		}
 
-		const dur = moment.duration(remainingSeconds, "seconds");
+		const dur = moment.duration(remainingSeconds, 'seconds');
 		return moment.utc(dur.asMilliseconds()).format(format);
 	}
 
 	componentDidMount() {
 		const items = this.prepareItems();
-		this.setState({ currentTrack: items[0] });
+		this.setState({currentTrack: items[0]});
+	}
+
+	getItemFromPostFields(item: CardAudioItemType) {
+		const {post} = this.props;
+
+		if (!post) return null;
+
+		const {audios} = post.fields;
+
+		for (let i = 0; i < audios.length; i++) {
+			if (audios[i].url == item.url && audios[i].title == item.title) {
+				return audios[i];
+			}
+		}
 	}
 
 	prepareItems(): CardAudioItemType[] {
-		const { items, preview } = this.props;
+		const {items, preview} = this.props;
 
 		const audioItems: CardAudioItemType[] = [];
 
@@ -198,8 +212,8 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 			if (preview) audioItems.push(Object.assign(items[i], audio.poster ? {
 				poster: {
 					alt: items[i].title,
-					src: items[i].poster
-				}
+					src: items[i].poster,
+				},
 			} : {}));
 
 			if (!preview) audioItems.push(items[i]);
@@ -210,12 +224,12 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 
 	render() {
 		if (!this.state) {
-			console.warn("state was not set");
+			console.warn('state was not set');
 			return <React.Fragment/>;
 		}
 
 		if (!this.props.items || !this.props.items.length) {
-			console.warn("no items received");
+			console.warn('no items received');
 			return <React.Fragment/>;
 		}
 
@@ -223,8 +237,15 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 
 		if (!audioItems.length) return <React.Fragment/>;
 
-		const { isPlaying, currentTrack } = this.state;
-		const { title, subtitle, url, poster } = currentTrack;
+		const {isPlaying, currentTrack} = this.state;
+		const {title, subtitle, url} = currentTrack;
+
+		const postCurrentTrack = this.getItemFromPostFields(currentTrack);
+		if (!postCurrentTrack) {
+			console.error('Unable to find audio file');
+		}
+
+		const poster = postCurrentTrack && postCurrentTrack.poster ? postCurrentTrack.poster.image : null;
 
 		return (
 			<TitledWrapper>
@@ -237,11 +258,11 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 						onEnded={this.playNext}
 						onReady={this.onReadyToPlay}
 						onDuration={this.setDuration}
-						onError={e => console.error("player error:", e)}
+						onError={e => console.error('player error:', e)}
 						onProgress={this.setProgress}
 						className='qard-audio-player'
 						style={{
-							display: "none"
+							display: 'none',
 						}}
 					/>
 
@@ -263,7 +284,7 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 									minimal
 									onClick={this.togglePlay}
 									isPlaying={isPlaying}
-									icon={<Icon icon={isPlaying ? "pause" : "play"} iconSize={62}/>}
+									icon={<Icon icon={isPlaying ? 'pause' : 'play'} iconSize={62}/>}
 								/>
 								<InterfaceBtn
 									minimal
@@ -285,7 +306,7 @@ export default class QardAudio extends QardBase<CardAudioType, State> {
 								<Item
 									key={key}
 									onClick={() => this.play(audio)}
-									className={currentTrack.url == audio.url ? `active` : ""}
+									className={currentTrack.url == audio.url ? `active` : ''}
 								>
 									{audio.title}
 								</Item>
