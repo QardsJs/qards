@@ -42,7 +42,9 @@ export const settingsCollection = {
 			widget: 'image',
 			hint  : `If you want to change the logo you have to delete the existing
 			one (delete the file from media library also) first and then upload 
-			the new one which MUST be named logo.png`,
+			the new one which MUST be named logo.png. IMPORTANT: Please upload a
+			high-res version that is bigger than 512px because we will use it for the
+			manifest as well`,
 		}, {
 			label : 'Social media share image',
 			name  : 'socialShareImg',

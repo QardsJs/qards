@@ -64,7 +64,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 				<html lang="en"/>
 				<meta name="description" content={tokenizedPost.frontmatter.excerpt}/>
 
-				<link rel="canonical" href={location.pathname}/>
+				<link rel="canonical" href={prependBaseUrl(location.pathname)}/>
 
 				<meta property="og:locale" content="en_US"/>
 				<meta property="og:type" content="article"/>

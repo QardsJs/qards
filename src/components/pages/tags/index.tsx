@@ -30,7 +30,7 @@ class TagsPage extends React.Component<Props, any> {
 				<html lang="en"/>
 				<meta name="description" content={`Posts tagged with ${tag}`}/>
 
-				<link rel="canonical" href={location.pathname}/>
+				<link rel="canonical" href={prependBaseUrl(location.pathname)}/>
 
 				<meta property="og:locale" content="en_US"/>
 				<meta property="og:type" content="article"/>
