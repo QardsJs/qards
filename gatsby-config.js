@@ -1,5 +1,7 @@
 const configSite = require('./static/config/settings');
 const configPlugins = require('./static/config/plugins');
+const configTheme = require('./static/config/theme');
+const packageJson = require('./package');
 
 const query = `{
 	allMarkdownRemark(
@@ -151,16 +153,16 @@ const plugins = [
 			logo          : `${__dirname}/static/images/uploads/logo.png`,
 			appName       : configSite.name,
 			appDescription: configSite.excerpt,
-			developerName : 'Romeo Mihalcea',// @TODO: get this from package.json
+			developerName : configSite.name,
 			developerURL  : null,
 			dir           : 'auto',
 			lang          : 'en-US',
-			background    : 'transparent',// @TODO: get this from theme
-			theme_color   : '#fff',// @TODO: get this from theme
+			background    : 'transparent',
+			theme_color   : configTheme.colors.accent.background || '#3ea38f',
 			display       : 'standalone',
 			orientation   : 'any',
 			start_url     : '/',
-			version       : '1.0',// @TODO: get this from package.json
+			version       : packageJson.version,
 
 			icons: {
 				android     : true,
