@@ -7,15 +7,28 @@ import {CardHeaderType} from '../components/qard/header';
 import {decodeWidgetDataObject} from '../cms/utils';
 import Immutable from 'immutable';
 
-import settingsConfig from '../../static/config/settings.json';
-import postsConfig from '../../static/config/posts.json';
-import pluginsConfig from '../../static/config/plugins.json';
-import themeConfig from '../../static/config/theme.json';
+let settingsConfig = require('../../static/config/settings.json');
+let postsConfig = require('../../static/config/posts.json');
+let pluginsConfig = require('../../static/config/plugins.json');
+let themeConfig = require('../../static/config/theme.json');
 
+if (process.env.SETTINGS_CONFIG_FILE) {
+	settingsConfig = require(process.env.SETTINGS_CONFIG_FILE);
+}
+if (process.env.POSTS_CONFIG_FILE) {
+	postsConfig = require(process.env.POSTS_CONFIG_FILE);
+}
+if (process.env.PLUGINS_CONFIG_FILE) {
+	pluginsConfig = require(process.env.PLUGINS_CONFIG_FILE);
+}
+if (process.env.THEME_CONFIG_FILE) {
+	themeConfig = require(process.env.THEME_CONFIG_FILE);
+}
+
+export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+/=]+?)"}/;
 export const cPatternWithId = (id: string): string => {
 	return `{"widget":"${id}","config":"([0-9a-zA-Z+/=]+?)"}`;
 };
-export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+/=]+?)"}/;
 
 export function lineRepresentsEncodedComponent(line: string) {
 	if (!line || line.replace(/\s+/g, '') === '') return false;

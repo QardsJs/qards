@@ -26,6 +26,10 @@
       "text": "#ffffff",
       "background": "#3ea38f"
     },
+    "secondaryAccent": {
+      "text": "#ffffff",
+      "background": "#F432AC"
+    },
     "faded": {
       "text": "#192533",
       "background": "#ecf0f3"

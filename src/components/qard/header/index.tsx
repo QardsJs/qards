@@ -24,7 +24,7 @@ export default class QardHeader extends QardBase<CardHeaderType, any> {
 			Title = SecondaryTitle;
 		}
 
-		return <Wrapper className="h-item" id={`h-item-${slugify(title)}`}>
+		return <Wrapper className="h-item qards-widget-hero" id={`h-item-${slugify(title)}`}>
 			{!type || type === "primary" && <QardsDivider type={"line"}/>}
 			<Title>{title}</Title>
 			{subtitle && <SubTitle>{subtitle}</SubTitle>}

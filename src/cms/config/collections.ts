@@ -182,6 +182,24 @@ export const settingsCollection = {
 					default: '#41a893',
 				}],
 			}, {
+				label : 'Secondary accent',
+				name  : 'secondaryAccent',
+				widget: 'object',
+				hint  : 'Text and background colors used as secondary accent in your theme',
+				fields: [{
+					label  : 'Text',
+					name   : 'text',
+					widget : 'color',
+					format : 'hex',
+					default: '#FFFFFF',
+				}, {
+					label  : 'Background',
+					name   : 'background',
+					widget : 'color',
+					format : 'hex',
+					default: '#F432AC',
+				}],
+			}, {
 				label : 'Faded',
 				name  : 'faded',
 				widget: 'object',

@@ -16,9 +16,10 @@ hero:
   alt: Qards - List of supported cards
   image: /images/uploads/eugenio-mazzone-190204-unsplash.jpg
 excerpt: >-
-  This is a list with all the supported types of cards. This list will be
-  updated with each additions so make sure you check it out regularly.
+  This page serves as a testing ground for qards and we use it to 
+  showcase various features and also test it with cypress.
 ---
+
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IkNhcmQgSGVybyIsInN1YnRpdGxlIjoiV2VsbCwgeW91J3JlIGxvb2tpbmcgYXQgaXQuIEl0IGhhcyBhIHRpdGxlIGFuZCBzdWJ0aXRsZS4iLCJ0eXBlIjoicHJpbWFyeSJ9"}
 The hero (name subject to change as I'm not sure it's the right one) is like a heading. It is being used to separate chapters and its title will be included in the Table of contents that follows every post.
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IkdhbGxlcmllcyIsInN1YnRpdGxlIjoiT25lIG9yIG11bHRpcGxlIGltYWdlcyB0aGF0IHdpbGwgYmUgaW5zZXJ0ZWQgYWNjb3JkaW5nbHkiLCJ0eXBlIjoicHJpbWFyeSJ9"}
