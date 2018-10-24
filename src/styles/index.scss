@@ -23,9 +23,9 @@
 	outline: none !important;
 }
 
-::selection {
+::selection, .selected {
 	background: $accent;
-	color: #fff;
+	color: $accent-text;
 }
 
 body {
