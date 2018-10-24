@@ -150,7 +150,7 @@ const plugins = [
 	{
 		resolve: `gatsby-plugin-favicon`,
 		options: {
-			logo          : `${__dirname}/static/images/uploads/logo.png`,
+			logo          : `${__dirname}/src/app/static/images/uploads/logo.png`,
 			appName       : configSite.name,
 			appDescription: configSite.excerpt,
 			developerName : configSite.name,
