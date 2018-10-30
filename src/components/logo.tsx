@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import {CardImageType} from './qard/image';
 import {getSettingsConfig} from '../utils/helpers';
 
-const StyledLogo = styled(Link)`
+export const StyledLogo = styled(Link)`
 	display: block;
 	margin: 0;
 	padding: 0;
