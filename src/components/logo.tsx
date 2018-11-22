@@ -23,8 +23,6 @@ export const StyledLogo = styled(Link)`
 	
 	span {
 	    font-size: .8em;
-	    font-weight: 200;
-	    text-transform: uppercase;
 	}
 	
 	&:hover {
