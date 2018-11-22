@@ -5,6 +5,7 @@ import Img from 'gatsby-image';
 import LazyLoad from 'react-lazyload';
 import {Box, Flex} from 'grid-styled';
 import styled from 'styled-components';
+import {HTMLDivProps} from '@blueprintjs/core/src/common/props';
 
 import {CardImageType} from './qard/image';
 import {getSettingsConfig} from '../utils/helpers';
@@ -42,11 +43,13 @@ export interface DataProps {
 }
 
 export interface Props {
-	siteName: string;
+	siteName: any;
 }
 
-export default class Logo extends React.Component<Props, any> {
+export default class Logo extends React.Component<Props & HTMLDivProps, any> {
 	render() {
+		const {siteName} = this.props;
+
 		return (
 			<StaticQuery
 				query={graphql`
@@ -80,7 +83,8 @@ export default class Logo extends React.Component<Props, any> {
 								</Box>
 
 								<Box width={1 / 2} ml={2}>
-									<span className={'brand'}>{getSettingsConfig('name', 'Qards')}</span>
+									{siteName && <span className={'brand'}>{siteName}</span>}
+									{!siteName && <span className={'brand'}>{getSettingsConfig('name', 'Qards')}</span>}
 								</Box>
 							</Flex>
 						</StyledLogo>
