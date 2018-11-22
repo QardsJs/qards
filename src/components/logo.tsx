@@ -44,11 +44,12 @@ export interface DataProps {
 
 export interface Props {
 	siteName: any;
+	brandProps?: HTMLDivProps;
 }
 
 export default class Logo extends React.Component<Props & HTMLDivProps, any> {
 	render() {
-		const {siteName} = this.props;
+		const {siteName, brandProps} = this.props;
 
 		return (
 			<StaticQuery
@@ -83,8 +84,10 @@ export default class Logo extends React.Component<Props & HTMLDivProps, any> {
 								</Box>
 
 								<Box width={1 / 2} ml={2}>
-									{siteName && <span className={'brand'}>{siteName}</span>}
-									{!siteName && <span className={'brand'}>{getSettingsConfig('name', 'Qards')}</span>}
+									{siteName && <span className={'brand'} {...brandProps}>{siteName}</span>}
+									{!siteName && <span className={'brand'} {...brandProps}>
+										{getSettingsConfig('name', 'Qards')}
+									</span>}
 								</Box>
 							</Flex>
 						</StyledLogo>
