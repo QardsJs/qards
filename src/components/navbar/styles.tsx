@@ -9,7 +9,7 @@ export const StyledNavbar = styled(Navbar)`
 	padding: 0 !important;
 	box-shadow: none !important;
 	background: transparent !important;
-	
+	height: auto;
 
 	a[role='button'],
 	button {
