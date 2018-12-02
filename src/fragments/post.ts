@@ -10,12 +10,12 @@ export interface PostType {
 
 	frontmatter: {
 		isPage: boolean;
+		isFeatured: boolean;
 		showAuthor: boolean;
 		title: string;
 		excerpt: string;
 		created_at: string;
 		tags: string[];
-
 		hero: PageHeroType;
 		meta: PageMetaType;
 	}
@@ -65,6 +65,10 @@ export const _ = graphql`
 			excerpt
 			created_at(formatString: "MMMM DD, YYYY")
 			tags
+			
+			showAuthor
+			isPage
+			isFeatured
 			
 			meta{
 				keywords
