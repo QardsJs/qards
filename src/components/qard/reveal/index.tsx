@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import MarkdownRenderer from '../../markdown';
 import {Accordion, AccordionItem, AccordionItemBody, AccordionItemTitle} from 'react-accessible-accordion';
 
 import QardBase, {QardProps} from '../base';
@@ -7,7 +8,6 @@ import {Wrapper, ItemsWrapper} from './styles';
 
 import 'react-accessible-accordion/dist/minimal-example.css';
 import 'react-accessible-accordion/dist/fancy-example.css';
-import MarkdownRenderer from '../../markdown';
 
 
 export interface RevealType {
