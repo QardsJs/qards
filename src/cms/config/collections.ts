@@ -518,6 +518,12 @@ export const postsCollection = {
 		required: false,
 		default : false,
 	}, {
+		label   : 'Show author?',
+		name    : 'showAuthor',
+		widget  : 'boolean',
+		required: false,
+		default : true,
+	}, {
 		label   : 'Is featured?',
 		name    : 'isFeatured',
 		widget  : 'boolean',

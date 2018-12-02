@@ -10,6 +10,7 @@ export interface PostType {
 
 	frontmatter: {
 		isPage: boolean;
+		showAuthor: boolean;
 		title: string;
 		excerpt: string;
 		created_at: string;
