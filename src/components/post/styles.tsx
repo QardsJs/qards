@@ -95,13 +95,6 @@ export const Article = styled.article`
 			color: ${theme.color(['text'])};
 			font-weight: 400;
 			border-bottom: 1px solid ${theme.color(['text'])};
-			transition: all 100ms cubic-bezier(0.4, 0, 0.2, 1);
-    		box-shadow: inset 0 -2px 0px 0px ${theme.color(['text'])};
-		
-			&:hover {
-				text-decoration: none;
-				background: ${tinycolor2(theme.color(['accent', 'background'])).lighten(38).toString()};
-			}
 		}
 	}
 `;
