@@ -95,6 +95,10 @@ export const Article = styled.article`
 			color: ${theme.color(['text'])};
 			font-weight: 400;
 			border-bottom: 1px solid ${theme.color(['text'])};
+			
+			&:hover {
+				text-decoration: none;
+			}
 		}
 	}
 `;
