@@ -1,14 +1,14 @@
 import React from 'react';
-import Immutable from "immutable";
+import Immutable from 'immutable';
 
-import {cPatternWithId} from "../../utils/helpers";
-import {encodeWidgetDataObject, decodeWidgetDataObject} from "../utils";
+import {cPatternWithId} from '../../utils/helpers';
+import {encodeWidgetDataObject, decodeWidgetDataObject} from '../utils';
 
 export interface FieldType {
 	name: string;
 	label: string;
 	widget: string;
-	default?: string;
+	default?: string | boolean | number;
 	hint?: string;
 	valueField?: string;
 	collection?: string;
@@ -20,7 +20,7 @@ export interface FieldType {
 	fields?: FieldType[];
 }
 
-export default function (id: string, label: string, fields: FieldType[]) {
+export default function(id: string, label: string, fields: FieldType[]) {
 	return {
 		id, label, fields,
 
@@ -38,5 +38,5 @@ export default function (id: string, label: string, fields: FieldType[]) {
 		},
 
 		toPreview: (obj: any) => <div/>,
-	}
+	};
 }
