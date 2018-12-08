@@ -59,6 +59,7 @@ const StyledImage = styled.figure`
 export interface CardImageType extends QardProps {
 	alt: string;
 	src?: string;
+
 	fluid?: {
 		tracedSVG: any;
 		aspectRatio: any;
@@ -67,6 +68,7 @@ export interface CardImageType extends QardProps {
 		srcSet: any;
 		sizes: any;
 	};
+
 	fixed?: {
 		width: number;
 		height: number;
@@ -96,7 +98,12 @@ const QardImage = ({alt, src, ...rest}: CardImageType) => {
 export interface ContentImageType extends CardImageType {
 	layout?: string;
 	caption?: string;
+
+	//	When false, we won't be rendering a lightbox to open the image
 	lightbox?: boolean;
+
+	//	If we want the image to be contained within a link
+	href?: string;
 }
 
 interface State {
@@ -115,13 +122,12 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 	};
 
 	render() {
-		const {caption, lightbox, layout, fluid, fixed, alt, src, ...rest} = this.props;
+		const {caption, lightbox, layout, fluid, fixed, alt, src, href, ...rest} = this.props;
 
 		const images = [{
 			caption: caption || alt,
 			src    : (fluid || fixed) ? (fluid ? fluid.src : (fixed ? fixed.src : src)) : src,
 			srcSet : (fluid || fixed) ? (fluid ? fluid.srcSet : (fixed ? fixed.srcSet : null)) : null,
-
 		}];
 
 		if (!images.length || !images[0].src) {
@@ -141,7 +147,7 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 			}
 		}
 
-		return <StyledImage
+		const img = <StyledImage
 			lightbox={lightbox} {...rest}
 			onClick={() => this.setState({lightboxOpen: true})}
 			className={`layout ${layout}`}>
@@ -161,6 +167,11 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 				<Markdown component={'figcaption'} md={caption}/>
 			</div>}
 		</StyledImage>;
+
+		if (href) {
+			return <a href={href} target="_blank">{img}</a>;
+		}
+		return img;
 	}
 }
 

@@ -11,6 +11,12 @@ export default base(
 		label : 'Alt text',
 		widget: 'string',
 	}, {
+		name    : 'href',
+		label   : 'Link address',
+		widget  : 'string',
+		required: false,
+		hint    : 'Only if you want a link with image',
+	}, {
 		name   : 'caption',
 		label  : 'Caption',
 		widget : 'markdown',
