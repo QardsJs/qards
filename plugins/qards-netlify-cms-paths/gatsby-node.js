@@ -40,7 +40,7 @@ const createPostImageNodes = async (node, actions) => {
 
 	// TODO: This regex is in three places right now!
 	// TODO: We need a better regex here (the base64 part:  ([0-9a-zA-Z+/=]+?) )
-	const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+=]+?)"}/;
+	const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"(.*?)"}/;
 
 	function decodeWidgetDataObject(data) {
 		return JSON.parse(base64.decode(data));

@@ -25,9 +25,9 @@ if (process.env.THEME_CONFIG_FILE) {
 	themeConfig = require(process.env.THEME_CONFIG_FILE);
 }
 
-export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+=]+?)"}/;
+export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"(.*?)"}/;
 export const cPatternWithId = (id: string): string => {
-	return `{"widget":"${id}","config":"([0-9a-zA-Z+=]+?)"}`;
+	return `{"widget":"${id}","config":"(.*?)"}`;
 };
 
 export function lineRepresentsEncodedComponent(line: string) {

@@ -188,7 +188,7 @@ exports.sourceNodes = ({actions, getNodes, getNode}) => {
 };
 
 const createReferencesField = (node, actions, getNodes) => {
-	const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"([0-9a-zA-Z+/=]+?)"}/;
+	const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"(.*?)"}/;
 
 	function decodeWidgetDataObject(data) {
 		return JSON.parse(base64.decode(data));
