@@ -27,7 +27,6 @@ export interface PostType {
 	fields: {
 		slug: string;
 
-
 		audios: {
 			url: string;
 			title: string;
@@ -35,7 +34,7 @@ export interface PostType {
 			poster?: {
 				image: CardImageType;
 			}
-		}[]
+		}[];
 
 		galleries: {
 			alt: string;
@@ -43,7 +42,7 @@ export interface PostType {
 				fileName: string;
 				image: CardImageType;
 			};
-		}[]
+		}[];
 	}
 }
 

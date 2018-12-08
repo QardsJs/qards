@@ -43,11 +43,11 @@ export function computeSizes({photos, columns, width, margin}: any) {
 		//    else (all photos are on a single row)
 		//      ...
 		const height =
-				 row.length === columns
-					 ? rowWidth / totalRatio
-					 : photos.length < columns
-					 ? rowWidth / totalRatio * (row.length / columns)
-					 : rowWidth / (ratios.reduce((acc: any, item: any) => acc + item, 0) / (rows.length - 1));
+				  row.length === columns
+					  ? rowWidth / totalRatio
+					  : photos.length < columns
+					  ? rowWidth / totalRatio * (row.length / columns)
+					  : rowWidth / (ratios.reduce((acc: any, item: any) => acc + item, 0) / (rows.length - 1));
 
 		return row.map((photo: any) => ({
 			...photo,
