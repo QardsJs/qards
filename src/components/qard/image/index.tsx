@@ -162,7 +162,10 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 		//	if we have a post...this image must be pulled from the `images` field (GraphQl)
 		if (post) {
 			const postImage = this.findImageFromPost(imgProp.src);
-			imgProp = Object.assign(imgProp, postImage);
+
+			if (postImage) {
+				imgProp = Object.assign(imgProp, postImage);
+			}
 		}
 
 		const img = <StyledImage

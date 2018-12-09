@@ -48,10 +48,16 @@ const createPostImageNodes = async (node, actions) => {
 
 	const {createNodeField} = actions;
 
+	//	This is an accumulator that holds all the matches of the same type
+	//	otherwise...if we had multiple galleries or multiple images in the same
+	//	post they would get overwritten by the new one each time so we put everything
+	//	inside the accumulator and create the nodes at the end
+	const accMatches = {};
+
 	node.rawMarkdownBody.split('\n').map((line) => {
 		if (RegExp(cPattern).test(line)) {// this is one of the custom components
 			const params = line.match(cPattern);
-			const widget = params[1];
+			let widget = params[1];
 			const config = decodeWidgetDataObject(params[2]);
 			const matches = [];
 
@@ -61,10 +67,19 @@ const createPostImageNodes = async (node, actions) => {
 			const subMatches = scanObjForImagesAndCreateNodes(matches, config, node);
 			matches.concat(subMatches);
 
-			createNodeField({
-				node, name: `${_.camelCase(widget)}`, value: matches,
-			});
+			const formattedName = _.camelCase(widget);
+			if (accMatches[formattedName]) {
+				accMatches[formattedName] = accMatches[formattedName].concat(matches);
+			} else {
+				accMatches[formattedName] = matches;
+			}
 		}
+	});
+
+	Object.keys(accMatches).map((val) => {
+		createNodeField({
+			node, name: val, value: accMatches[val],
+		});
 	});
 };
 
