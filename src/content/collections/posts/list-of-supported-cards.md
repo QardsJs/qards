@@ -12,6 +12,7 @@ meta:
   keywords: 'Qards, widgets, components, blog'
 isPage: false
 isFeatured: false
+showAuthor: true
 hero:
   alt: Qards - List of supported cards
   image: /images/uploads/eugenio-mazzone-190204-unsplash.jpg
@@ -44,7 +45,11 @@ Sometimes you want to inform your users of certain events. Dealing with dates, e
 {"widget":"qards-divider","config":"eyJ0eXBlIjoiYnVsbGV0cyJ9"}
 {"widget":"qards-countdown","config":"eyJldmVudCI6IjIwMjUtMTAtMDRUMTQ6MDA6MDAuMDAwWiIsInRpdGxlIjoiVGltZSB1bnRpbCByb2JvdHMgdGFrZSBvdmVyIHRoZSB3b3JsZCIsInN1YnRpdGxlIjoiVGhlIHNpbmd1bGFyaXR5IGlzIG5lYXIifQ=="}
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlJlZmVyZW5jZSIsInN1YnRpdGxlIjoiUmVmZXJlbmNlIGFub3RoZXIgcG9zdCB3aXRoaW4gYSBjYXJkIiwgInR5cGUiOiJwcmltYXJ5In0="}
+
 Using references you can link to other posts. A card is automatically created with the post title, excerpt and post cover (if exists). The card is meant to refer to other posts and keep your readers engaged.
 {"widget":"qards-reference","config":"eyJyZWZlcmVuY2UiOiJTdXBwb3J0ZWQgY2FyZHMifQ=="}
+
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlNpbXBsZSBpbWFnZSIsInN1YnRpdGxlIjoiQW4gaW1hZ2UgdGhhdCBzdXBwb3J0cyB2YXJpb3VzIHNldHRpbmdzOiBsYXlvdXQsIGFsdCB0ZXh0LCBsaWdodGJveCIsICJ0eXBlIjoicHJpbWFyeSJ9"}
+{"widget":"image","config":"eyJzcmMiOiIvaW1hZ2VzL3VwbG9hZHMvbWlrZS1kb3JuZXItMTczNTAyLXVuc3BsYXNoLmpwZyIsImFsdCI6IkhvdyBjYW4geW91IHN0YXJ0IGEgYmxvZyBmcmVlIiwibGlnaHRib3giOnRydWUsImNhcHRpb24iOiJIb3cgY2FuIHlvdSBzdGFydCBhIGJsb2cgZnJlZSJ9"}
 
 > Quote test: These data indicate that low serum testosterone levels are associated with an adverse metabolic profile and suggest a novel unifying mechanism for the previously independent observations that low testosterone levels and impaired mitochondrial function promote insulin resistance in men.

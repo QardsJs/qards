@@ -43,6 +43,14 @@ export interface PostType {
 				image: CardImageType;
 			};
 		}[];
+
+		images: {
+			alt: string;
+			image: {
+				fileName: string;
+				image: CardImageType;
+			};
+		}[];
 	}
 }
 
@@ -160,6 +168,23 @@ export const _ = graphql`
 			}
 			
 			galleries: qardsGallery{
+				alt
+				image: src {
+					fileName: name
+					image: childImageSharp{
+						fluid(maxWidth: 2900) {
+							tracedSVG
+							aspectRatio
+							originalImg
+							src
+							srcSet
+							sizes
+						}
+					}
+				}
+			}
+			
+			images: image {
 				alt
 				image: src {
 					fileName: name

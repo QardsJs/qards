@@ -121,8 +121,20 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 		currentImage: 0,
 	};
 
+	findImageFromPost(imageSrc: string) {
+		const {post} = this.props;
+
+		for (let i = 0; i < post.fields.images.length; i++) {
+			const item = post.fields.images[i];
+
+			if (imageSrc.indexOf(item.image.fileName) != -1) {
+				return item.image.image;
+			}
+		}
+	}
+
 	render() {
-		const {caption, lightbox, layout, fluid, fixed, alt, src, href, ...rest} = this.props;
+		const {caption, lightbox, layout, fluid, fixed, alt, src, href, post, ...rest} = this.props;
 
 		const images = [{
 			caption: caption || alt,
@@ -134,7 +146,7 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 			return <div/>;
 		}
 
-		const imgProp: CardImageType = {
+		let imgProp: CardImageType = {
 			alt: alt,
 			src: images[0].src,
 		};
@@ -145,6 +157,11 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 			if (fixed) {
 				imgProp.fixed = fixed;
 			}
+		}
+
+		//	if we have a post...this image must be pulled from the `images` field (GraphQl)
+		if (post) {
+			imgProp = this.findImageFromPost(imgProp.src);
 		}
 
 		const img = <StyledImage
