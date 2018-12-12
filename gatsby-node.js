@@ -184,7 +184,7 @@ exports.sourceNodes = ({actions, getNodes, getNode}) => {
 		mapAuthorsToPostNode(node, getNodes);
 		mapCategoriesToPostNode(node, getNodes);
 		//	create the post slug
-		createNodeField({node, name: 'slug', value: `posts${createFilePath({node, getNode})}`});
+		createNodeField({node, name: 'slug', value: createFilePath({node, getNode})});
 	});
 };
 
