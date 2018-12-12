@@ -57,6 +57,7 @@ export default class Posts extends Component<Props, State> {
 
 		if (!paginate) return;
 
+		// @ts-ignore
 		const distanceToBottom = document.documentElement.offsetHeight - (window.scrollY + window.innerHeight);
 		if (this.state.showingMore && distanceToBottom < 100) {
 			this.setState({ postsToShow: this.state.postsToShow + paginate.pageSize });

@@ -13,6 +13,8 @@ const Wrapper = styled.div`
 		padding: 0 20px;
 	}
 	
+	padding: 80px 0;
+	
 	&.dark {
 		background: ${theme.color(["accent", "background"])};
 		color: ${theme.color(["accent", "text"])};
@@ -22,7 +24,6 @@ const Wrapper = styled.div`
 			${theme.color(["accent", "background"])} 56%,
 			${theme.color((["accent", "background"]))} 100%
 		);
-		padding: 80px 0;
 	}
 	
 	&.performance {
