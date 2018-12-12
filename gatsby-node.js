@@ -67,6 +67,7 @@ exports.createPages = ({graphql, actions}) => {
 					categories: allMarkdownRemark(filter: {fileAbsolutePath: {regex: "//collections/categories//"}}) {
 						edges {
 							node {
+								id
 								fields{
 									slug
 								}
