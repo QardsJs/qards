@@ -45,7 +45,7 @@ export const pageQuery = graphql`
 		post: markdownRemark(fields: { slug: { eq: $slug } }) {
 			...postFragment
 		}
-		
+
 		related: allMarkdownRemark(
 			sort: {fields: [frontmatter___created_at], order: DESC},
 			filter: {

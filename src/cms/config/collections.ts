@@ -50,15 +50,24 @@ export const settingsCollection = {
 			name  : 'socialShareImg',
 			widget: 'image',
 		}, {
-			label  : 'Editorial mode?',
-			name   : 'editorialMode',
-			widget : 'boolean',
-			hint   : `The editorial mode option allows you to enable "Editorial Workflow" 
+			label   : 'Editorial mode?',
+			name    : 'editorialMode',
+			widget  : 'boolean',
+			hint    : `The editorial mode option allows you to enable "Editorial Workflow" 
 			mode for more control over the content publishing phases. All unpublished 
 			entries will be arranged in a board according to their status, and they 
 			can be further reviewed and edited before going live.`,
-			default: false,
+			default : false,
 			required: false,
+		}, {
+			label   : 'Post slug definition',
+			name    : 'postSlugDefinition',
+			widget  : 'string',
+			hint    : `Allows you to fine tune the structure and details present in the
+			posts slug. The available tokens are can be found on netlify-cms documentation
+			page: https://www.netlifycms.org/docs/configuration-options/#slug`,
+			default : '{{slug}}',
+			required: true,
 		}],
 	}, {
 		name  : 'theme',

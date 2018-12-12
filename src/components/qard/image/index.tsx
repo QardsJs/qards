@@ -124,11 +124,13 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 	findImageFromPost(imageSrc: string) {
 		const {post} = this.props;
 
-		for (let i = 0; i < post.fields.images.length; i++) {
-			const item = post.fields.images[i];
+		if (post) {
+			for (let i = 0; i < post.fields.images.length; i++) {
+				const item = post.fields.images[i];
 
-			if (imageSrc.indexOf(item.image.fileName) != -1) {
-				return item.image.image;
+				if (imageSrc.indexOf(item.image.fileName) != -1) {
+					return item.image.image;
+				}
 			}
 		}
 	}
@@ -160,7 +162,7 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 		}
 
 		//	if we have a post...this image must be pulled from the `images` field (GraphQl)
-		if (post) {
+		if (post && imgProp.src) {
 			const postImage = this.findImageFromPost(imgProp.src);
 
 			if (postImage) {
