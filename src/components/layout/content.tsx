@@ -13,8 +13,6 @@ const Wrapper = styled.div`
 		padding: 0 20px;
 	}
 	
-	padding: 80px 0;
-	
 	&.dark {
 		background: ${theme.color(["accent", "background"])};
 		color: ${theme.color(["accent", "text"])};

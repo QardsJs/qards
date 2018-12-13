@@ -3,5 +3,6 @@
   "progressShow": true,
   "tocShow": true,
   "socialShow": true,
-  "subscribeShow": true
+  "subscribeShow": true,
+  "slugStructure": "{{slug}}"
 }
