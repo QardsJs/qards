@@ -63,12 +63,6 @@ export default class SocialShare extends Component<Props, State> {
                     </Box>
 
                     <Box px={2}>
-                        <GooglePlusShareButton url={url}>
-                            <Btn icon={<GooglePlusIcon size={48}/>}/>
-                        </GooglePlusShareButton>
-                    </Box>
-
-                    <Box px={2}>
                         <LinkedinShareButton url={url} title={message} windowWidth={750} windowHeight={600}>
                             <Btn icon={<LinkedinIcon size={48}/>}/>
                         </LinkedinShareButton>
