@@ -70,7 +70,7 @@ export class IndexPage extends React.Component<Props, any> {
 					<Content>
 						{featured && <FeaturedPost post={featured}/>}
 
-						<Box mt={[80, 80, 80, 180]} mb={[40, 40, 40, 120]}>
+						<Box mt={[40, 40, 40, 80]} mb={[40, 40, 40, 80]}>
 							{latest.length > 0 && <Posts
 								showExcerpt={getPostsConfig(['showExcerpts'], true)}
 								posts={latest}
