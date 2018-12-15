@@ -71,14 +71,16 @@ const createFinalSlug = (post) => {
 	const minute = dt.getMinutes();
 	const second = dt.getSeconds();
 
-	return slugConfig
+	return `/${slugConfig}/`
 		.replace('{{slug}}', post.fields.slug)
 		.replace('{{year}}', year)
 		.replace('{{month}}', mo)
 		.replace('{{day}}', day)
 		.replace('{{hour}}', hour)
 		.replace('{{minute}}', minute)
-		.replace('{{second}}', second);
+		.replace('{{second}}', second)
+		//	replace double slashes with a single one
+		.replace(/\/+/, '/');
 };
 
 exports.createPages = ({graphql, actions}) => {
