@@ -6,6 +6,7 @@ const path = require('path');
 const base64 = require('base-64');
 const {createFilePath} = require('gatsby-source-filesystem');
 
+const postsSettings = require('./static/config/posts.json');
 
 const getTags = (edges) => {
 	const tags = [];
@@ -40,6 +41,46 @@ const slugify = (text) => {
 		.replace(/-+$/, '');            // Trim - from end of text
 };
 
+/**
+ *    Netlify cms supports custom slugs but not fully
+ *    For example you can't add a slug config like: {{year}}/{{month}}/{{day}}
+ *    and expect for it to work because the slashes will get replaced with
+ *    dashes since Netlify CMS does NOT know how to deal with subfolders
+ *    For a new blog this is not a big deal but it might be for a blog that
+ *    is being imported from Wordpress which has this type of urls (I know
+ *    because I faced this issue). The solution is to create the slug here
+ */
+const createFinalSlug = (post) => {
+	//	based on the posts settings
+	const slugConfig = postsSettings.slugStructure;
+
+	//	SUPPORTED TOKENS
+	//
+	// {{slug}}:   a url-safe version of the title field for the file
+	// {{year}}:   4-digit year of the file creation date
+	// {{month}}:  2-digit month of the file creation date
+	// {{day}}:    2-digit day of the month of the file creation date
+	// {{hour}}:   2-digit hour of the file creation date
+	// {{minute}}: 2-digit minute of the file creation date
+	// {{second}}: 2-digit second of the file creation date
+	const dt = new Date(post.frontmatter.created_at);
+	const mo = ('0' + (dt.getMonth() + 1)).slice(-2);
+	const day = ('0' + dt.getDate()).slice(-2);
+	const year = dt.getFullYear();
+	const hour = dt.getHours();
+	const minute = dt.getMinutes();
+	const second = dt.getSeconds();
+
+	return slugConfig
+		.replace('{{slug}}', post.fields.slug)
+		.replace('{{year}}', year)
+		.replace('{{month}}', mo)
+		.replace('{{day}}', day)
+		.replace('{{hour}}', hour)
+		.replace('{{minute}}', minute)
+		.replace('{{second}}', second);
+};
+
 exports.createPages = ({graphql, actions}) => {
 	const {createPage} = actions;
 
@@ -59,7 +100,7 @@ exports.createPages = ({graphql, actions}) => {
 								}
 								frontmatter {
 									tags
-									slug
+									created_at
 								}
 							}
 						}
@@ -90,24 +131,15 @@ exports.createPages = ({graphql, actions}) => {
 
 				// Create posts and pages.
 				_.each(postsEdges, (edge, index) => {
-					//	Netlify cms supports custom slugs but not fully
-					//	For example you can't add a slug config like: {{year}}/{{month}}/{{day}}
-					//	and expect for it to work because the slashes will get replaced with
-					//	dashes since Netlify CMS does NOT know how to deal with subfolders
-					//	For a new blog this is not a big deal but it might be for a blog that
-					//	is being imported from Wordpress which has this type of urls (I know
-					//	because I faced this issue). The solution is to write the desired slug
-					//	to the frontmatter when importing posts and, when generating the static
-					//	website with Gatsby, we look for this field before looking for a slug
-					//	inside the `fields` part of the post (suggestions welcome)
-					const slug = edge.node.frontmatter.slug || edge.node.fields.slug;
+
+					const slug = edge.node.fields.slug;
 
 					const previous = index === postsEdges.length - 1 ? null : postsEdges[index + 1].node;
 					const next = index === 0 ? null : postsEdges[index - 1].node;
 
 					// create posts
 					createPage({
-						path     : slug,
+						path     : createFinalSlug(edge.node),
 						component: postTemplate,
 						context  : {
 							slug,
