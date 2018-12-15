@@ -80,7 +80,7 @@ const createFinalSlug = (post) => {
 		.replace('{{minute}}', minute)
 		.replace('{{second}}', second)
 		//	replace double slashes with a single one
-		.replace(/\/+/, '/');
+		.replace(/\/+/g, '/');
 };
 
 exports.createPages = ({graphql, actions}) => {
