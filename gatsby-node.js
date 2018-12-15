@@ -59,6 +59,7 @@ exports.createPages = ({graphql, actions}) => {
 								}
 								frontmatter {
 									tags
+									slug
 								}
 							}
 						}
@@ -89,7 +90,17 @@ exports.createPages = ({graphql, actions}) => {
 
 				// Create posts and pages.
 				_.each(postsEdges, (edge, index) => {
-					const slug = edge.node.fields.slug;
+					//	Netlify cms supports custom slugs but not fully
+					//	For example you can't add a slug config like: {{year}}/{{month}}/{{day}}
+					//	and expect for it to work because the slashes will get replaced with
+					//	dashes since Netlify CMS does NOT know how to deal with subfolders
+					//	For a new blog this is not a big deal but it might be for a blog that
+					//	is being imported from Wordpress which has this type of urls (I know
+					//	because I faced this issue). The solution is to write the desired slug
+					//	to the frontmatter when importing posts and, when generating the static
+					//	website with Gatsby, we look for this field before looking for a slug
+					//	inside the `fields` part of the post (suggestions welcome)
+					const slug = edge.node.frontmatter.slug || edge.node.fields.slug;
 
 					const previous = index === postsEdges.length - 1 ? null : postsEdges[index + 1].node;
 					const next = index === 0 ? null : postsEdges[index - 1].node;
