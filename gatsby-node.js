@@ -32,57 +32,6 @@ const getCategories = (edges) => {
 	return categories;
 };
 
-const slugify = (text) => {
-	return text.toString().toLowerCase()
-		.replace(/\s+/g, '-')           // Replace spaces with -
-		.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-		.replace(/\-\-+/g, '-')         // Replace multiple - with single -
-		.replace(/^-+/, '')             // Trim - from start of text
-		.replace(/-+$/, '');            // Trim - from end of text
-};
-
-/**
- *    Netlify cms supports custom slugs but not fully
- *    For example you can't add a slug config like: {{year}}/{{month}}/{{day}}
- *    and expect for it to work because the slashes will get replaced with
- *    dashes since Netlify CMS does NOT know how to deal with subfolders
- *    For a new blog this is not a big deal but it might be for a blog that
- *    is being imported from Wordpress which has this type of urls (I know
- *    because I faced this issue). The solution is to create the slug here
- */
-const createFinalSlug = (post) => {
-	//	based on the posts settings
-	const slugConfig = postsSettings.slugStructure;
-
-	//	SUPPORTED TOKENS
-	//
-	// {{slug}}:   a url-safe version of the title field for the file
-	// {{year}}:   4-digit year of the file creation date
-	// {{month}}:  2-digit month of the file creation date
-	// {{day}}:    2-digit day of the month of the file creation date
-	// {{hour}}:   2-digit hour of the file creation date
-	// {{minute}}: 2-digit minute of the file creation date
-	// {{second}}: 2-digit second of the file creation date
-	const dt = new Date(post.frontmatter.created_at);
-	const mo = ('0' + (dt.getMonth() + 1)).slice(-2);
-	const day = ('0' + dt.getDate()).slice(-2);
-	const year = dt.getFullYear();
-	const hour = dt.getHours();
-	const minute = dt.getMinutes();
-	const second = dt.getSeconds();
-
-	return `/${slugConfig}/`
-		.replace('{{slug}}', post.fields.slug)
-		.replace('{{year}}', year)
-		.replace('{{month}}', mo)
-		.replace('{{day}}', day)
-		.replace('{{hour}}', hour)
-		.replace('{{minute}}', minute)
-		.replace('{{second}}', second)
-		//	replace double slashes with a single one
-		.replace(/\/+/g, '/');
-};
-
 exports.createPages = ({graphql, actions}) => {
 	const {createPage} = actions;
 
@@ -141,7 +90,7 @@ exports.createPages = ({graphql, actions}) => {
 
 					// create posts
 					createPage({
-						path     : createFinalSlug(edge.node),
+						path     : slug,
 						component: postTemplate,
 						context  : {
 							slug,
@@ -216,6 +165,57 @@ const mapAuthorsToPostNode = (node, getNodes) => {
 	if (author) node.authors___NODES = [author.id];
 };
 
+const slugify = (text) => {
+	return text.toString().toLowerCase()
+		.replace(/\s+/g, '-')           // Replace spaces with -
+		.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+		.replace(/\-\-+/g, '-')         // Replace multiple - with single -
+		.replace(/^-+/, '')             // Trim - from start of text
+		.replace(/-+$/, '');            // Trim - from end of text
+};
+
+/**
+ *    Netlify cms supports custom slugs but not fully
+ *    For example you can't add a slug config like: {{year}}/{{month}}/{{day}}
+ *    and expect for it to work because the slashes will get replaced with
+ *    dashes since Netlify CMS does NOT know how to deal with subfolders
+ *    For a new blog this is not a big deal but it might be for a blog that
+ *    is being imported from Wordpress which has this type of urls (I know
+ *    because I faced this issue). The solution is to create the slug here
+ */
+const createFinalSlug = (post, slug) => {
+	//	based on the posts settings
+	const slugConfig = postsSettings.slugStructure;
+
+	//	SUPPORTED TOKENS
+	//
+	// {{slug}}:   a url-safe version of the title field for the file
+	// {{year}}:   4-digit year of the file creation date
+	// {{month}}:  2-digit month of the file creation date
+	// {{day}}:    2-digit day of the month of the file creation date
+	// {{hour}}:   2-digit hour of the file creation date
+	// {{minute}}: 2-digit minute of the file creation date
+	// {{second}}: 2-digit second of the file creation date
+	const dt = new Date(post.frontmatter.created_at);
+	const mo = ('0' + (dt.getMonth() + 1)).slice(-2);
+	const day = ('0' + dt.getDate()).slice(-2);
+	const year = dt.getFullYear();
+	const hour = dt.getHours();
+	const minute = dt.getMinutes();
+	const second = dt.getSeconds();
+
+	return `/${slugConfig}/`
+		.replace('{{slug}}', slug)
+		.replace('{{year}}', year)
+		.replace('{{month}}', mo)
+		.replace('{{day}}', day)
+		.replace('{{hour}}', hour)
+		.replace('{{minute}}', minute)
+		.replace('{{second}}', second)
+		//	replace double slashes with a single one
+		.replace(/\/+/g, '/');
+};
+
 //	Creates a mapping between posts and authors, sets the slug
 //	and other required attributes
 exports.sourceNodes = ({actions, getNodes, getNode}) => {
@@ -228,8 +228,10 @@ exports.sourceNodes = ({actions, getNodes, getNode}) => {
 	getCollectionNodes('posts', getNodes).forEach(node => {
 		mapAuthorsToPostNode(node, getNodes);
 		mapCategoriesToPostNode(node, getNodes);
+
 		//	create the post slug
-		createNodeField({node, name: 'slug', value: createFilePath({node, getNode})});
+		const slugPath = createFilePath({node, getNode});
+		createNodeField({node, name: 'slug', value: createFinalSlug(node, slugPath)});
 	});
 };
 
