@@ -158,7 +158,7 @@ export default class Posts extends Component<Props, State> {
 						>
 							<Article className={'post-card-article'}>
 								<StyledCard
-									to={post.frontmatter.slug || post.fields.slug}
+									to={post.fields.slug}
 									className={`post-card unselectable ${performance ? 'performance' : ''}`}
 								>
 									{Posts.renderHero(post)}
