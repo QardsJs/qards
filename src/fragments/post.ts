@@ -13,6 +13,7 @@ export interface PostType {
 		isFeatured: boolean;
 		showAuthor: boolean;
 		title: string;
+		slug: string;
 		excerpt: string;
 		created_at: string;
 		tags: string[];
@@ -72,7 +73,7 @@ export const _ = graphql`
 			excerpt
 			created_at(formatString: "MMMM DD, YYYY")
 			tags
-			
+			slug
 			showAuthor
 			isPage
 			isFeatured

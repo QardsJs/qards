@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import Img from "gatsby-image";
-import TrackVisibility from "react-on-screen";
-import LazyLoad from "react-lazyload";
+import React, {Component} from 'react';
+import Img from 'gatsby-image';
+import TrackVisibility from 'react-on-screen';
+import LazyLoad from 'react-lazyload';
 
-import { PostType } from "../../fragments/post";
-import { readingTime, tokenizePost, getSettingsConfig } from "../../utils/helpers";
+import {PostType} from '../../fragments/post';
+import {readingTime, tokenizePost, getSettingsConfig} from '../../utils/helpers';
 import {
 	Article,
 	Author,
@@ -15,9 +15,9 @@ import {
 	List,
 	ListItem,
 	StyledCard,
-	Wrapper
-} from "./styles";
-import { StyledButton } from "../pages/styles";
+	Wrapper,
+} from './styles';
+import {StyledButton} from '../pages/styles';
 
 
 interface Props {
@@ -40,12 +40,12 @@ interface State {
 export default class Posts extends Component<Props, State> {
 	state: State = {
 		showingMore: false,
-		postsToShow: 6
+		postsToShow: 6,
 	};
 	ticking: boolean | undefined = undefined;
 
 	get paginationLimit(): number {
-		const { paginate } = this.props;
+		const {paginate} = this.props;
 		if (paginate) {
 			return paginate.pageSize;
 		}
@@ -53,14 +53,14 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	update() {
-		const { paginate } = this.props;
+		const {paginate} = this.props;
 
 		if (!paginate) return;
 
 		// @ts-ignore
 		const distanceToBottom = document.documentElement.offsetHeight - (window.scrollY + window.innerHeight);
 		if (this.state.showingMore && distanceToBottom < 100) {
-			this.setState({ postsToShow: this.state.postsToShow + paginate.pageSize });
+			this.setState({postsToShow: this.state.postsToShow + paginate.pageSize});
 		}
 		this.ticking = false;
 	}
@@ -81,10 +81,10 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	static renderAuthor(post: PostType) {
-		const performance = getSettingsConfig("performanceMode");
+		const performance = getSettingsConfig('performanceMode');
 
 		if (post.authors && post.authors.length) {
-			return <Author className={"post-card-author"}>
+			return <Author className={'post-card-author'}>
 				{post.authors[0].frontmatter.avatar && !performance &&
 				<TrackVisibility once>
 					<Gravatar>
@@ -92,13 +92,14 @@ export default class Posts extends Component<Props, State> {
 					</Gravatar>
 				</TrackVisibility>}
 
-				<AuthorContent className={performance ? "no-avatar" : ""}>
+				<AuthorContent className={performance ? 'no-avatar' : ''}>
 					<div className="name">
 						{post.authors[0].frontmatter.title}
 					</div>
 
 					<div className="info">
-						{Number(readingTime(post).minutes).toFixed(0)} min in <b>{post.categories[0].frontmatter.title}</b>
+						{Number(readingTime(post).minutes).toFixed(0)} min
+						in <b>{post.categories[0].frontmatter.title}</b>
 					</div>
 				</AuthorContent>
 			</Author>;
@@ -106,16 +107,16 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	static renderHero(post: PostType) {
-		const performance = getSettingsConfig("performanceMode");
+		const performance = getSettingsConfig('performanceMode');
 
 		if (post.frontmatter.hero && !performance) {
-			return <Cover className={"post-card-cover"}>
+			return <Cover className={'post-card-cover'}>
 				<TrackVisibility once>
 					<LazyLoad height={210}>
 						<Img
 							alt={post.frontmatter.hero.alt}
 							fluid={post.frontmatter.hero.image.thumb.fluid}
-							style={{ height: 210 }}
+							style={{height: 210}}
 						/>
 					</LazyLoad>
 				</TrackVisibility>
@@ -124,8 +125,8 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	render() {
-		const { posts, title, paginate, showExcerpt, darkTheme } = this.props;
-		const performance = getSettingsConfig("performanceMode");
+		const {posts, title, paginate, showExcerpt, darkTheme} = this.props;
+		const performance = getSettingsConfig('performanceMode');
 
 		const result: PostType[] = [];
 		let slicedPosts: PostType[] = [];
@@ -141,28 +142,28 @@ export default class Posts extends Component<Props, State> {
 		}
 
 		return (
-			<Wrapper className={darkTheme ? "darktheme" : ""}>
+			<Wrapper className={darkTheme ? 'darktheme' : ''}>
 				{title && <h3>{title}</h3>}
 
 				<List is="ul" style={{
-					margin: "0 -20px"
+					margin: '0 -20px',
 				}}>
 					{result.map((post, key) => {
 						return <ListItem
 							width={[6 / 6, 3 / 6, 2 / 6]}
-							px={"20px"}
+							px={'20px'}
 							is="li"
 							key={key}
 							className={`itemli`}
 						>
-							<Article className={"post-card-article"}>
+							<Article className={'post-card-article'}>
 								<StyledCard
-									to={post.fields.slug}
-									className={`post-card unselectable ${performance ? "performance" : ""}`}
+									to={post.frontmatter.slug || post.fields.slug}
+									className={`post-card unselectable ${performance ? 'performance' : ''}`}
 								>
 									{Posts.renderHero(post)}
 
-									<Content className={"post-card-content"}>
+									<Content className={'post-card-content'}>
 										<span className={`date`}>{post.frontmatter.created_at}</span>
 										<h5 className={`title`}>{post.frontmatter.title}</h5>
 										{showExcerpt !== false &&
@@ -181,7 +182,7 @@ export default class Posts extends Component<Props, State> {
 				<StyledButton large minimal active icon="refresh" onClick={() => {
 					this.setState({
 						postsToShow: this.state.postsToShow + paginate.pageSize,
-						showingMore: true
+						showingMore: true,
 					});
 				}}>
 					<b>Load more articles</b>
