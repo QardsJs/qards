@@ -1,7 +1,7 @@
 import React from 'react';
 import {graphql, StaticQuery} from 'gatsby';
 
-import BlogRoute from '../../components/pages/blog';
+import BlogRoute from '../../components/pages/posts';
 import Route from '../../components/common/route';
 import {PostType} from '../../fragments/post';
 import {extractNodesFromEdges} from '../../utils/helpers';

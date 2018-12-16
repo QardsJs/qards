@@ -12,7 +12,7 @@ class PageTitle extends React.Component<Props, any> {
     render() {
         const {title, subtitle} = this.props;
 
-        return <Box mt={[60, 60, 60, 120]} mb={[60, 60, 60, 120]}>
+        return <Box mt={[30, 30, 30, 60]} mb={[30, 30, 30, 60]}>
             <Title>{title}</Title>
             {subtitle && <SubTitle>{subtitle}</SubTitle>}
         </Box>

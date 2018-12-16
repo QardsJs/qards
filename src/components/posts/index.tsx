@@ -3,6 +3,8 @@ import Img from 'gatsby-image';
 import TrackVisibility from 'react-on-screen';
 import LazyLoad from 'react-lazyload';
 
+import Pagination from '../pagination';
+import {Pagination as PaginationType} from '../rogue-interfaces';
 import {PostType} from '../../fragments/post';
 import {readingTime, tokenizePost, getSettingsConfig} from '../../utils/helpers';
 import {
@@ -17,7 +19,6 @@ import {
 	StyledCard,
 	Wrapper,
 } from './styles';
-import {StyledButton} from '../pages/styles';
 
 
 interface Props {
@@ -27,58 +28,15 @@ interface Props {
 
 	//  if these cards are rendered using a dark theme
 	darkTheme?: boolean;
-	paginate?: {
-		pageSize: number;
-	};
+	pagination?: PaginationType;
 }
 
 interface State {
-	postsToShow: number;
-	showingMore: boolean;
+
 }
 
 export default class Posts extends Component<Props, State> {
-	state: State = {
-		showingMore: false,
-		postsToShow: 6,
-	};
 	ticking: boolean | undefined = undefined;
-
-	get paginationLimit(): number {
-		const {paginate} = this.props;
-		if (paginate) {
-			return paginate.pageSize;
-		}
-		return 0;
-	}
-
-	update() {
-		const {paginate} = this.props;
-
-		if (!paginate) return;
-
-		// @ts-ignore
-		const distanceToBottom = document.documentElement.offsetHeight - (window.scrollY + window.innerHeight);
-		if (this.state.showingMore && distanceToBottom < 100) {
-			this.setState({postsToShow: this.state.postsToShow + paginate.pageSize});
-		}
-		this.ticking = false;
-	}
-
-	handleScroll = () => {
-		if (!this.ticking) {
-			this.ticking = true;
-			requestAnimationFrame(() => this.update());
-		}
-	};
-
-	componentDidMount() {
-		if (typeof window != undefined) window.addEventListener(`scroll`, this.handleScroll);
-	}
-
-	componentWillUnmount() {
-		if (typeof window != undefined) window.removeEventListener(`scroll`, this.handleScroll);
-	}
 
 	static renderAuthor(post: PostType) {
 		const performance = getSettingsConfig('performanceMode');
@@ -109,7 +67,7 @@ export default class Posts extends Component<Props, State> {
 	static renderHero(post: PostType) {
 		const performance = getSettingsConfig('performanceMode');
 
-		if (post.frontmatter.hero && !performance) {
+		if (post.frontmatter.hero && post.frontmatter.hero.image && !performance) {
 			return <Cover className={'post-card-cover'}>
 				<TrackVisibility once>
 					<LazyLoad height={210}>
@@ -125,20 +83,13 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	render() {
-		const {posts, title, paginate, showExcerpt, darkTheme} = this.props;
+		const {posts, title, pagination, showExcerpt, darkTheme} = this.props;
 		const performance = getSettingsConfig('performanceMode');
 
 		const result: PostType[] = [];
-		let slicedPosts: PostType[] = [];
 
-		if (paginate) {
-			slicedPosts = posts.slice(0, this.state.postsToShow);
-		} else {
-			slicedPosts = posts;
-		}
-
-		for (let i = 0; i < slicedPosts.length; i++) {
-			result.push(tokenizePost(slicedPosts[i]));
+		for (let i = 0; i < posts.length; i++) {
+			result.push(tokenizePost(posts[i]));
 		}
 
 		return (
@@ -178,15 +129,7 @@ export default class Posts extends Component<Props, State> {
 
 				</List>
 
-				{paginate && !this.state.showingMore && posts.length > this.state.postsToShow &&
-				<StyledButton large minimal active icon="refresh" onClick={() => {
-					this.setState({
-						postsToShow: this.state.postsToShow + paginate.pageSize,
-						showingMore: true,
-					});
-				}}>
-					<b>Load more articles</b>
-				</StyledButton>}
+				{pagination && <Pagination {...pagination}/>}
 			</Wrapper>
 		);
 	}

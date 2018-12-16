@@ -288,6 +288,14 @@ export const settingsCollection = {
 			page: https://www.netlifycms.org/docs/configuration-options/#slug`,
 			default : '{{slug}}',
 			required: true,
+		}, {
+			label   : 'Path prefix',
+			name    : 'pathPrefix',
+			widget  : 'string',
+			hint    : `Specify the path where your index should be. This value can be something like
+			"/posts" or "/blog". Your prefix should start with a slash "/" but NOT end with one!`,
+			default : '/posts',
+			required: true,
 		}],
 	}, {
 		name  : 'plugins',

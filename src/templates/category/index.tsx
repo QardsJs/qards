@@ -37,32 +37,53 @@ interface Props {
 		};
 		category: CategoryType
 	};
+	pageContext: {
+		slug: string;
+		numPages: number;
+		currentPage: number;
+	};
 }
 
 
-class CategoryTemplate extends React.Component<Props, any> {
+export default class CategoryTemplate extends React.Component<Props, any> {
 	public render() {
-		const {data} = this.props;
+		const {data, pageContext} = this.props;
+		const {slug} = pageContext;
+		const {featured, posts, category} = data;
 
-		const {featured, category} = data;
+		const {currentPage, numPages} = pageContext;
+
+		const isFirst = currentPage === 1;
+		const isLast = currentPage === numPages;
+
+		const postsExtracted = posts && posts.edges ? extractNodesFromEdges(posts.edges) : [];
+
+		const prevPage = slug + (currentPage - 1 === 1 ? '' : (currentPage - 1).toString());
+		const nextPage = slug + ((currentPage + 1).toString());
+
+		let path = slug;
+		if (currentPage != 1) {
+			path += `${currentPage}`;
+		}
 
 		return <Route
-			path={category.fields.slug}
+			path={path}
 			component={CategoriesPage}
-			totalCount={data.posts ? data.posts.totalCount : 0}
-			posts={data.posts ? extractNodesFromEdges(data.posts.edges) : []}
+			totalCount={posts ? posts.totalCount : 0}
 			category={category}
+			posts={postsExtracted}
 			featured={featured ? extractNodesFromEdges(featured.edges, '') : []}
+			pagination={{isLast, isFirst, numPages, prevPage, nextPage, currentPage}}
 		/>;
 	}
 }
 
-export default CategoryTemplate;
-
 export const pageQuery = graphql`
-	query($slug: String) {
+	query($slug: String, $skip: Int!, $limit: Int!) {
 		posts: allMarkdownRemark(
 			sort: {fields: [frontmatter___created_at], order: DESC},
+			limit: $limit,
+			skip: $skip,
 			filter: {
 				fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 				categories: {fields: {slug: {eq: $slug}}}

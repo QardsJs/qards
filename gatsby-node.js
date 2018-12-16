@@ -8,6 +8,11 @@ const {createFilePath} = require('gatsby-source-filesystem');
 
 const postsSettings = require('./static/config/posts.json');
 
+const postTemplate = path.resolve('./src/templates/post/index.tsx');
+const postsTemplate = path.resolve('./src/templates/posts.tsx');
+const tagTemplate = path.resolve('./src/templates/tag/index.tsx');
+const categoryTemplate = path.resolve('./src/templates/category/index.tsx');
+
 const getTags = (edges) => {
 	const tags = [];
 
@@ -32,14 +37,135 @@ const getCategories = (edges) => {
 	return categories;
 };
 
+const paginatePosts = (createPage, postsEdges, postsTemplate, postTemplate) => {
+	const pathPrefix = postsSettings.pathPrefix || 'posts';
+
+	//	Setup pagination
+	const posts = postsEdges;
+	const postsPerPage = 6;
+
+	const numPages = Math.ceil(posts.length / postsPerPage);
+
+	_.times(numPages, i => {
+		createPage({
+			path     : i === 0 ? `${pathPrefix}` : `${pathPrefix}/${i + 1}`,
+			component: postsTemplate,
+			context  : {
+				limit      : postsPerPage,
+				skip       : i * postsPerPage,
+				numPages,
+				currentPage: i + 1,
+			},
+		});
+	});
+
+	// Create posts and pages.
+	_.each(postsEdges, (edge, index) => {
+		const slug = edge.node.fields.slug;
+		const previous = index === postsEdges.length - 1 ? null : postsEdges[index + 1].node;
+		const next = index === 0 ? null : postsEdges[index - 1].node;
+
+		// create posts
+		createPage({
+			path     : slug,
+			component: postTemplate,
+			context  : {
+				slug,
+				previous,
+				next,
+				tags: edge.node.frontmatter.tags,
+			},
+		});
+	});
+};
+
+const paginateTags = (createPage, posts, tagTemplate) => {
+	//	Setup pagination
+	const tags = _.uniq(getTags(posts));
+
+	if (tags.length <= 0) return;
+
+	const getPostsByTag = (tag) => {
+		const postsByTag = [];
+		posts.map((post) => {
+			const p = post.node;
+
+			if (p.frontmatter.tags && p.frontmatter.tags.length > 0 && p.frontmatter.tags.includes(tag)) {
+				postsByTag.push(p.node);
+			}
+		});
+		return postsByTag;
+	};
+
+	const paginateTag = (tag) => {
+		const postsPerPage = 6;
+		const tagPosts = getPostsByTag(tag);
+		const numPages = Math.ceil(tagPosts.length / postsPerPage);
+		const slug = slugify(tag);
+
+		_.times(numPages, i => {
+			createPage({
+				path     : i === 0 ? `tag/${slug}` : `tag/${slug}/${i + 1}`,
+				component: tagTemplate,
+				context  : {
+					limit      : postsPerPage,
+					skip       : i * postsPerPage,
+					numPages,
+					currentPage: i + 1,
+					tag,
+					slug,
+				},
+			});
+		});
+	};
+
+	//	Make tag pages
+	tags.forEach(paginateTag);
+};
+
+const paginateCategories = (createPage, posts, categories, categoryTemplate) => {
+	if (categories.length <= 0) return;
+
+	const getPostsByCategory = (category) => {
+		const postsByCategory = [];
+		posts.map((post) => {
+			const p = post.node;
+
+			if (p.frontmatter.categories === category.title) {
+				postsByCategory.push(p.node);
+			}
+		});
+		return postsByCategory;
+	};
+
+	_.uniqBy(categories, 'id').forEach((category) => {
+		const c = category.node;
+		const postsPerPage = 6;
+		const categoryPosts = getPostsByCategory(c);
+		const numPages = Math.ceil(categoryPosts.length / postsPerPage);
+		const slug = c.fields.slug;
+
+		_.times(numPages, i => {
+			createPage({
+				path     : i === 0 ? slug : `${slug}${i + 1}`,
+				component: categoryTemplate,
+				context  : {
+					limit      : postsPerPage,
+					skip       : i * postsPerPage,
+					numPages,
+					currentPage: i + 1,
+					category   : c,
+					slug,
+				},
+			});
+		});
+	});
+};
+
 exports.createPages = ({graphql, actions}) => {
 	const {createPage} = actions;
 
 	return new Promise((resolve, reject) => {
-		const postTemplate = path.resolve('./src/templates/post/index.tsx');
-		const tagTemplate = path.resolve('./src/templates/tag/index.tsx');
-		const categoryTemplate = path.resolve('./src/templates/category/index.tsx');
-
 		resolve(
 			graphql(`
 				{
@@ -77,51 +203,9 @@ exports.createPages = ({graphql, actions}) => {
 				const postsEdges = result.data.posts.edges;
 				const categoriesEdges = result.data.categories.edges;
 
-				const tags = getTags(postsEdges);
-				const categories = getCategories(categoriesEdges);
-
-				// Create posts and pages.
-				_.each(postsEdges, (edge, index) => {
-
-					const slug = edge.node.fields.slug;
-
-					const previous = index === postsEdges.length - 1 ? null : postsEdges[index + 1].node;
-					const next = index === 0 ? null : postsEdges[index - 1].node;
-
-					// create posts
-					createPage({
-						path     : slug,
-						component: postTemplate,
-						context  : {
-							slug,
-							previous,
-							next,
-							tags: edge.node.frontmatter.tags,
-						},
-					});
-				});
-
-				// Make tag pages
-				_.uniq(tags).forEach((tag) => {
-					createPage({
-						path     : `/tags/${slugify(tag)}/`,
-						component: tagTemplate,
-						context  : {
-							slug: slugify(tag), tag,
-						},
-					});
-				});
-
-				// Make category pages
-				_.uniqBy(categories, 'id').forEach((category) => {
-					createPage({
-						path     : category.fields.slug,
-						component: categoryTemplate,
-						context  : {
-							slug: category.fields.slug,
-						},
-					});
-				});
+				paginatePosts(createPage, postsEdges, postsTemplate, postTemplate);
+				paginateTags(createPage, postsEdges, tagTemplate);
+				paginateCategories(createPage, postsEdges, categoriesEdges, categoryTemplate);
 			}),
 		);
 	});
@@ -222,7 +306,7 @@ exports.sourceNodes = ({actions, getNodes, getNode}) => {
 	const {createNodeField} = actions;
 
 	getCollectionNodes('categories', getNodes).forEach(node => {
-		createNodeField({node, name: 'slug', value: `categories${createFilePath({node, getNode})}`});
+		createNodeField({node, name: 'slug', value: `category${createFilePath({node, getNode})}`});
 	});
 
 	getCollectionNodes('posts', getNodes).forEach(node => {

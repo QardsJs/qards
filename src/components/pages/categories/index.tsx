@@ -13,6 +13,7 @@ import FeaturedPost from '../../featured-post';
 import {CategoryType} from '../../../templates/category';
 import {PostType} from '../../../fragments/post';
 import {getSettingsConfig, getPluginsConfig, prependBaseUrl} from '../../../utils/helpers';
+import {Pagination} from '../../rogue-interfaces';
 
 interface Props {
 	totalCount: number;
@@ -20,11 +21,13 @@ interface Props {
 	posts: PostType[];
 	featured: PostType[];
 	location: any;
+	pagination: Pagination;
 }
 
 class CategoryPage extends React.Component<Props, any> {
 	render() {
-		const {posts, category, featured, totalCount, location} = this.props;
+		const {posts, category, featured, totalCount, location, pagination} = this.props;
+
 		const tagHeader = `${totalCount} post${totalCount === 1 ? '' : 's'} in "${category.frontmatter.title}" category`;
 
 		return <Layout>
@@ -39,10 +42,10 @@ class CategoryPage extends React.Component<Props, any> {
 				<meta property="og:title" content={category.frontmatter.title}/>
 				<meta property="og:description" content={category.frontmatter.excerpt}/>
 				<meta property="og:url" content={prependBaseUrl(location.pathname)}/>
-				<meta property="og:site_name" content={getSettingsConfig([ 'name'])}/>
+				<meta property="og:site_name" content={getSettingsConfig(['name'])}/>
 
-				<meta property="og:image" content={prependBaseUrl(getSettingsConfig([ 'socialShareImg']))}/>
-				<meta property="og:image:secure_url" content={prependBaseUrl(getSettingsConfig([ 'socialShareImg']))}/>
+				<meta property="og:image" content={prependBaseUrl(getSettingsConfig(['socialShareImg']))}/>
+				<meta property="og:image:secure_url" content={prependBaseUrl(getSettingsConfig(['socialShareImg']))}/>
 				<meta property="og:image:width" content={'900'}/>
 				<meta property="og:image:height" content={'450'}/>
 				<meta property="og:image:alt" content={category.frontmatter.excerpt}/>
@@ -50,7 +53,7 @@ class CategoryPage extends React.Component<Props, any> {
 				<meta name="twitter:card" content="summary_large_image"/>
 				<meta name="twitter:description" content={category.frontmatter.excerpt}/>
 				<meta name="twitter:title" content={category.frontmatter.title}/>
-				<meta name="twitter:image" content={prependBaseUrl(getSettingsConfig([ 'socialShareImg']))}/>
+				<meta name="twitter:image" content={prependBaseUrl(getSettingsConfig(['socialShareImg']))}/>
 			</Helmet>
 
 			<Wrapper>
@@ -59,14 +62,12 @@ class CategoryPage extends React.Component<Props, any> {
 				</Content>
 
 				<Content>
-					{featured && <Box mt={[20, 20, 20, 120]}>
+					{featured.length > 1 && <Box mt={[20, 20, 20, 40]}>
 						{featured.map((f) => <FeaturedPost key={f.id} post={f}/>)}
 					</Box>}
 
-					{posts.length && <Box mt={[20, 20, 20, 120]}>
-						<Posts showExcerpt={true} posts={posts} paginate={{
-							pageSize: 6,
-						}}/>
+					{posts.length && <Box mt={[20, 20, 20, 40]}>
+						<Posts showExcerpt={true} posts={posts} pagination={pagination}/>
 					</Box>}
 
 					{!posts.length &&

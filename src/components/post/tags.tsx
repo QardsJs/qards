@@ -50,7 +50,7 @@ export default class PostTags extends Component<Props, State> {
 			<Wrapper flexWrap={"wrap"} alignItems={"space-between"} {...props}>
 				{tags.map((tag) => {
 
-					return <Link to={`/tags/${slugify(tag)}/`} key={tag}>
+					return <Link to={`/tag/${slugify(tag)}/`} key={tag}>
 						{tag}
 					</Link>;
 				})}

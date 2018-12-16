@@ -10,6 +10,7 @@ import Subscribe from '../../subscribe';
 import Layout from '../../layout';
 import Content from '../../layout/content';
 import {PostType} from '../../../fragments/post';
+import {Pagination} from '../../rogue-interfaces';
 import {getSettingsConfig, getPluginsConfig, prependBaseUrl, getPostsConfig} from '../../../utils/helpers';
 
 //  exported because they are used in other templates
@@ -26,17 +27,21 @@ export const Hero = styled.div`
 	}
 `;
 
-export const Wrapper = styled.div`padding-bottom: 120px;`;
+export const Wrapper = styled.div``;
 
 export interface Props {
-	latest: PostType[];
+	posts: PostType[];
 	featured: PostType;
 	location: any;
+	pagination: Pagination;
 }
 
 export class IndexPage extends React.Component<Props, any> {
 	public render() {
-		const {latest, featured, location} = this.props;
+		const {posts, featured, location, pagination} = this.props;
+
+		const emailSubscribersEnabled = getPluginsConfig(['emailSubscribers', 'enable']);
+		const postsMb = emailSubscribersEnabled ? [40, 40, 40, 80] : 0;
 
 		return (
 			<Layout>
@@ -70,17 +75,15 @@ export class IndexPage extends React.Component<Props, any> {
 					<Content>
 						{featured && <FeaturedPost post={featured}/>}
 
-						<Box mt={[40, 40, 40, 80]} mb={[40, 40, 40, 80]}>
-							{latest.length > 0 && <Posts
+						<Box mb={postsMb}>
+							{posts.length > 0 && <Posts
 								showExcerpt={getPostsConfig(['showExcerpts'], true)}
-								posts={latest}
+								posts={posts}
 								title={`Latest articles`}
-								paginate={{
-									pageSize: 6,
-								}}
+								pagination={pagination}
 							/>}
 
-							{latest.length <= 0 &&
+							{posts.length <= 0 &&
 							<Box mt={200} mb={200} style={{
 								textAlign: 'center',
 							}}>
@@ -88,8 +91,7 @@ export class IndexPage extends React.Component<Props, any> {
 							</Box>}
 						</Box>
 
-						{getPluginsConfig(['emailSubscribers', 'enable']) &&
-						<Box mt={[80, 80, 80, 120]} mb={[80, 80, 80, 120]}>
+						{emailSubscribersEnabled && <Box mt={[80, 80, 80, 120]} mb={[80, 80, 80, 120]}>
 							<Subscribe/>
 						</Box>}
 					</Content>

@@ -4,5 +4,6 @@
   "tocShow": true,
   "socialShow": true,
   "subscribeShow": true,
-  "slugStructure": "{{slug}}"
+  "slugStructure": "{{slug}}",
+  "pathPrefix": "/posts"
 }

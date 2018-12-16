@@ -4,6 +4,8 @@
     "node_modules/@types/node/index.d.ts", "cypress/integration/qards/pages/homepage.spec.js"
   ],
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "*": ["types/*"] },
     "target": "esnext",
     "module": "commonjs",
     "lib": [

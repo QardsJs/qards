@@ -101,10 +101,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 
 				{related.length > 0 && <Box mt={[80, 80, 80, 120]}>
 					<Content darkTheme={true}>
-						<Posts darkTheme={true} showExcerpt={true} posts={related} title={`More like this`}
-							   paginate={{
-								   pageSize: 6,
-							   }}/>
+						<Posts darkTheme={true} showExcerpt={true} posts={related} title={`More like this`}/>
 					</Content>
 				</Box>}
 
