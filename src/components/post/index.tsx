@@ -38,8 +38,8 @@ export default class Post extends React.Component<Props, any> {
 					</Box>}
 
 
-					{disqusEnabled && <div style={{
-						marginTop: 80
+					{disqusEnabled && window != undefined && <div style={{
+						marginTop: 80,
 					}}>
 						<Disqus
 							url={window.location.href}
