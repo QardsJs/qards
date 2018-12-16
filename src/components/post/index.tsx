@@ -38,7 +38,7 @@ export default class Post extends React.Component<Props, any> {
 					</Box>}
 
 
-					{disqusEnabled && window != undefined && <div style={{
+					{disqusEnabled && typeof window != undefined && <div style={{
 						marginTop: 80,
 					}}>
 						<Disqus
