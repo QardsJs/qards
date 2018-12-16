@@ -138,7 +138,7 @@ const paginateCategories = (createPage, posts, categories, categoryTemplate) => 
 		return postsByCategory;
 	};
 
-	_.uniqBy(categories, 'id').forEach((category) => {
+	_.uniqBy(categories, 'node.id').forEach((category) => {
 		const c = category.node;
 		const postsPerPage = 6;
 		const categoryPosts = getPostsByCategory(c);
