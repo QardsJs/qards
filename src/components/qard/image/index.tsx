@@ -128,7 +128,7 @@ export class QardImageContent extends React.Component<ContentImageType & HTMLDiv
 			for (let i = 0; i < post.fields.images.length; i++) {
 				const item = post.fields.images[i];
 
-				if (imageSrc.indexOf(item.image.fileName) != -1) {
+				if (item.image && imageSrc.indexOf(item.image.fileName) != -1) {
 					return item.image.image;
 				}
 			}
