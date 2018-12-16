@@ -338,6 +338,19 @@ export const settingsCollection = {
 				}],
 			}],
 		}, {
+			label : 'Disqus comments',
+			name  : 'disqus',
+			widget: 'object',
+			fields: [{
+				label : 'Enable?',
+				name  : 'enable',
+				widget: 'boolean',
+			}, {
+				label : 'Shortname',
+				name  : 'shortname',
+				widget: 'string',
+			}],
+		}, {
 			label : 'Search',
 			name  : 'search',
 			widget: 'object',

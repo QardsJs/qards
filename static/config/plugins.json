@@ -19,6 +19,10 @@
       "searchKey": ""
     }
   },
+  "disqus": {
+    "enable": false,
+    "shortname": ""
+  },
   "rssFeed": {
     "enable": true
   }

@@ -10,20 +10,21 @@ declare module 'react-accessible-accordion';
 declare module 'gatsby-plugin-mailchimp';
 declare module 'netlify-cms-widget-color';
 declare module 'react-motion-drawer';
+declare module 'disqus-react';
 
-declare module "*.svg" {
+declare module '*.svg' {
 	const content: any;
 	export default content;
 }
-declare module "*.png" {
+declare module '*.png' {
 	const content: any;
 	export default content;
 }
-declare module "*.scss" {
+declare module '*.scss' {
 	const content: any;
 	export default content;
 }
-declare module "*.json" {
+declare module '*.json' {
 	const content: any;
 	export default content;
 }

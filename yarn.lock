@@ -4350,6 +4350,14 @@ disposables@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/disposables/-/disposables-1.0.2.tgz#36c6a674475f55a2d6913567a601444e487b4b6e"
 
+disqus-react@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/disqus-react/-/disqus-react-1.0.5.tgz#828ea186bd241c5e2a6dfebab5135e52a2d91d11"
+  integrity sha1-go6hhr0kHF4qbf66tRNeUqLZHRE=
+  dependencies:
+    react "^15.6.1"
+    react-dom "^15.6.1"
+
 dnd-core@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-2.6.0.tgz#12bad66d58742c6e5f7cf2943fb6859440f809c4"
@@ -11505,6 +11513,16 @@ react-dom-core@0.0.3:
     fbjs "*"
     object-assign "*"
 
+react-dom@^15.6.1:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.2.tgz#41cfadf693b757faf2708443a1d1fd5a02bef730"
+  integrity sha1-Qc+t9pO3V/rycIRDodH9WgK+9zA=
+  dependencies:
+    fbjs "^0.8.9"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.0"
+    prop-types "^15.5.10"
+
 react-dom@^16.0.0, react-dom@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.5.2.tgz#b69ee47aa20bab5327b2b9d7c1fe2a30f2cfa9d7"
@@ -11820,7 +11838,7 @@ react-waypoint@^7.1.0:
     consolidated-events "^1.1.0"
     prop-types "^15.0.0"
 
-react@15:
+react@15, react@^15.6.1:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
   dependencies:
