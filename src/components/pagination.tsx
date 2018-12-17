@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'gatsby-link';
 import {Icon} from '@blueprintjs/core';
-import {Box, Flex} from 'grid-styled';
+import {Box, Flex} from '@rebass/grid';
 import styled from 'styled-components';
 
 import {Pagination as PaginationType} from './rogue-interfaces';

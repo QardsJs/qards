@@ -3,7 +3,7 @@ import {graphql, Link, StaticQuery} from 'gatsby';
 import Img from 'gatsby-image';
 
 import LazyLoad from 'react-lazyload';
-import {Box, Flex} from 'grid-styled';
+import {Box, Flex} from '@rebass/grid';
 import styled from 'styled-components';
 import {HTMLDivProps} from '@blueprintjs/core/src/common/props';
 

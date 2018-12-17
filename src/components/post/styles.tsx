@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Box, Flex} from 'grid-styled';
+import {Box, Flex} from '@rebass/grid';
 import theme from '../../theme';
 import tinycolor2 from 'tinycolor2';
 

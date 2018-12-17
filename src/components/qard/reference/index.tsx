@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Link} from 'gatsby';
-import {Flex, Box, div} from 'grid-styled';
+import {Flex, Box, div} from '@rebass/grid';
 import {limit} from 'stringz';
 
 import QardBase, {QardProps} from '../base';

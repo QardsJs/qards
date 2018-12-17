@@ -2,7 +2,7 @@ import * as React from 'react';
 
 // @ts-ignore
 import moment from 'moment-timezone';
-import {Flex, Box} from 'grid-styled';
+import {Flex, Box} from '@rebass/grid';
 
 import QardBase, {QardProps} from '../base';
 import {Wrapper, Title, Subtitle, Counter, Indicator, EndedTag} from './styles';

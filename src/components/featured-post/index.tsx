@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Box, Flex} from 'grid-styled';
+import {Box, Flex} from '@rebass/grid';
 import Img from 'gatsby-image';
 import {Intent} from '@blueprintjs/core';
 

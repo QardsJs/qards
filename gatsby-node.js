@@ -33,7 +33,8 @@ const paginatePosts = (createPage, postsEdges) => {
 	const filterOutPages = (edges) => {
 		const filteredPosts = [];
 		edges.map((post) => {
-			if (post.node.frontmatter.isPage !== true) {
+			//	We need to filter out from pagination the default post also (supported cards)
+			if (post.node.frontmatter.isPage !== true && post.node.fileAbsolutePath.indexOf('static/content/collections/posts') !== -1) {
 				filteredPosts.push(post);
 			}
 		});
@@ -183,6 +184,7 @@ exports.createPages = ({graphql, actions}) => {
 									created_at
 									categories
 								}
+								fileAbsolutePath
 							}
 						}
 					}

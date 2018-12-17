@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Box, div} from 'grid-styled';
+import {Box, div} from '@rebass/grid';
 // @ts-ignore
 
 import Hide from '../common/hide';

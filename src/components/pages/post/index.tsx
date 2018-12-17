@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import {Box} from 'grid-styled';
+import {Box} from '@rebass/grid';
 
 import {Wrapper} from '../styles';
 import {PostType} from '../../../fragments/post';

@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import {Box} from 'grid-styled';
+import {Box} from '@rebass/grid';
 
 import Layout from '../../layout';
 import Content from '../../layout/content';

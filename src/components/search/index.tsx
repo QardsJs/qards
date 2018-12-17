@@ -7,7 +7,7 @@ import {HTMLDivProps} from '@blueprintjs/core/src/common/props';
 import {getPluginsConfig} from '../../utils/helpers';
 
 import Algolia from './algolia.svg';
-import {div} from 'grid-styled';
+import {div} from '@rebass/grid';
 
 const Wrapper = styled.div`
     img {

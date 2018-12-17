@@ -2,7 +2,7 @@ import React from 'react';
 
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
-import {Box} from 'grid-styled';
+import {Box} from '@rebass/grid';
 
 import FeaturedPost from '../../featured-post';
 import Posts from '../../posts';
