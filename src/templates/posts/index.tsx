@@ -1,11 +1,11 @@
 import React from 'react';
 import {graphql} from 'gatsby';
 
-import PostsRoute from '../components/pages/posts';
+import PostsRoute from '../../components/pages/posts';
 
-import Route from '../components/common/route';
-import {PostType} from '../fragments/post';
-import {extractNodesFromEdges, getPostsConfig} from '../utils/helpers';
+import Route from '../../components/common/route';
+import {PostType} from '../../fragments/post';
+import {extractNodesFromEdges, getPostsConfig} from '../../utils/helpers';
 
 interface Props {
 	pageContext: {
