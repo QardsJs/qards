@@ -40,8 +40,20 @@ const getCategories = (edges) => {
 const paginatePosts = (createPage, postsEdges, postsTemplate, postTemplate) => {
 	const pathPrefix = postsSettings.pathPrefix || 'posts';
 
-	//	Setup pagination
-	const posts = postsEdges;
+	const filterOutPages = () => {
+		const posts = [];
+		postsEdges.map((post) => {
+			if (post.node.frontmatter.isPage === false) {
+				posts.push(post);
+			}
+		});
+		return posts;
+	};
+
+	//	Setup pagination but start with filtering out the
+	//	posts that are pages otherwise we will have more pagination
+	//	pages and the template will fail to recognize some
+	const posts = filterOutPages();
 	const postsPerPage = 6;
 
 	const numPages = Math.ceil(posts.length / postsPerPage);
