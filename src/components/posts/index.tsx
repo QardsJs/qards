@@ -96,14 +96,14 @@ export default class Posts extends Component<Props, State> {
 			<Wrapper className={darkTheme ? 'darktheme' : ''}>
 				{title && <h3>{title}</h3>}
 
-				<List is="ul" style={{
+				<List as="ul" style={{
 					margin: '0 -20px',
 				}}>
 					{result.map((post, key) => {
 						return <ListItem
 							width={[6 / 6, 3 / 6, 2 / 6]}
 							px={'20px'}
-							is="li"
+							as="li"
 							key={key}
 							className={`itemli`}
 						>
