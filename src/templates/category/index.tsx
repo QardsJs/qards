@@ -86,7 +86,11 @@ export const pageQuery = graphql`
 			skip: $skip,
 			filter: {
 				fileAbsolutePath: {regex: "//static/content/collections/posts//"},
-				categories: {fields: {slug: {eq: $slug}}}
+				categories:{
+					elemMatch: {
+						fields:{slug: {eq: $slug}}
+					}
+				}
 			}
 		) {
 			totalCount
@@ -101,7 +105,11 @@ export const pageQuery = graphql`
 			sort: {fields: [frontmatter___created_at], order: DESC},
 			filter: {
 				fileAbsolutePath: {regex: "//static/content/collections/posts//"},
-				categories: {fields: {slug: {eq: $slug}}},
+				categories:{
+					elemMatch: {
+						fields:{slug: {eq: $slug}}
+					}
+				},
 				frontmatter: {isFeatured: {eq: true}}
 			}
 		) {
