@@ -8,7 +8,7 @@ import browserImageSize from "browser-image-size";
 
 import {CardImageType} from "../image";
 import QardBase, {QardProps} from "../base";
-import {div} from "grid-styled";
+import {div} from '@rebass/grid';
 
 //  -2px is the margin set by the gallery for each image
 //	so we're substracting that from left/right edges

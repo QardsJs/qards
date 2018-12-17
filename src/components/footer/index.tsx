@@ -1,6 +1,6 @@
 import * as React from "react";
 import { graphql, Link, StaticQuery } from "gatsby";
-import { Box, Flex } from "grid-styled";
+import { Box, Flex } from '@rebass/grid';
 import { CreditsContainer, FooterContainer, FooterWrapper, PageWrapper } from "./styles";
 import { PostType } from "../../fragments/post";
 

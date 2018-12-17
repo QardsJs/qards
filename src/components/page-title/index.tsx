@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box} from "grid-styled";
+import {Box} from '@rebass/grid';
 
 import {Title, SubTitle} from "./styles";
 

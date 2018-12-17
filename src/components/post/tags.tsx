@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-import { Flex } from "grid-styled";
+import { Flex } from '@rebass/grid';
 import tinycolor2 from "tinycolor2";
 import { Link } from "gatsby";
 
