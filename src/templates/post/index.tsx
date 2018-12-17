@@ -40,7 +40,7 @@ const PostTemplate = ({data, location}: Props) => {
 
 export default PostTemplate;
 
-export const pageQuery = graphql`
+export const query = graphql`
 	query($slug: String, $tags: [String]) {
 		post: markdownRemark(fields: { slug: { eq: $slug } }) {
 			...postFragment

@@ -54,7 +54,7 @@ export default class PostsTemplate extends React.Component<Props & React.HTMLAtt
 	}
 }
 
-export const pageQuery = graphql`
+export const query = graphql`
 	query PostsPageQuery($skip: Int!, $limit: Int!) {
 		latest: allMarkdownRemark(
 			sort: {fields: [frontmatter___created_at], order: DESC},

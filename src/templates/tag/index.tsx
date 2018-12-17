@@ -71,7 +71,7 @@ export default class TagTemplate extends React.Component<Props & React.HTMLAttri
 	}
 }
 
-export const pageQuery = graphql`
+export const query = graphql`
 	query($tag: String!, $skip: Int!, $limit: Int!) {
 		posts: allMarkdownRemark(
 			sort: {fields: [frontmatter___created_at], order: DESC},

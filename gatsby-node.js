@@ -9,7 +9,7 @@ const {createFilePath} = require('gatsby-source-filesystem');
 const postsSettings = require('./static/config/posts.json');
 
 const postTemplate = path.resolve('./src/templates/post/index.tsx');
-const postsTemplate = path.resolve('./src/templates/posts.tsx');
+const postsTemplate = path.resolve('./src/templates/posts/index.tsx');
 const tagTemplate = path.resolve('./src/templates/tag/index.tsx');
 const categoryTemplate = path.resolve('./src/templates/category/index.tsx');
 
@@ -27,33 +27,23 @@ const getTags = (edges) => {
 	return tags;
 };
 
-const getCategories = (edges) => {
-	const categories = [];
-
-	_.each(edges, (edge) => {
-		categories.push(edge.node);
-	});
-
-	return categories;
-};
-
-const paginatePosts = (createPage, postsEdges, postsTemplate, postTemplate) => {
+const paginatePosts = (createPage, postsEdges) => {
 	const pathPrefix = postsSettings.pathPrefix || 'posts';
 
-	const filterOutPages = () => {
-		const posts = [];
-		postsEdges.map((post) => {
-			if (post.node.frontmatter.isPage === false) {
-				posts.push(post);
+	const filterOutPages = (edges) => {
+		const filteredPosts = [];
+		edges.map((post) => {
+			if (post.node.frontmatter.isPage !== true) {
+				filteredPosts.push(post);
 			}
 		});
-		return posts;
+		return filteredPosts;
 	};
 
 	//	Setup pagination but start with filtering out the
 	//	posts that are pages otherwise we will have more pagination
 	//	pages and the template will fail to recognize some
-	const posts = filterOutPages();
+	const posts = filterOutPages(postsEdges);
 	const postsPerPage = 6;
 
 	const numPages = Math.ceil(posts.length / postsPerPage);
@@ -91,7 +81,7 @@ const paginatePosts = (createPage, postsEdges, postsTemplate, postTemplate) => {
 	});
 };
 
-const paginateTags = (createPage, posts, tagTemplate) => {
+const paginateTags = (createPage, posts) => {
 	//	Setup pagination
 	const tags = _.uniq(getTags(posts));
 
@@ -135,7 +125,7 @@ const paginateTags = (createPage, posts, tagTemplate) => {
 	tags.forEach(paginateTag);
 };
 
-const paginateCategories = (createPage, posts, categories, categoryTemplate) => {
+const paginateCategories = (createPage, posts, categories) => {
 	if (categories.length <= 0) return;
 
 	const getPostsByCategory = (category) => {
@@ -143,7 +133,7 @@ const paginateCategories = (createPage, posts, categories, categoryTemplate) => 
 		posts.map((post) => {
 			const p = post.node;
 
-			if (p.frontmatter.categories === category.title) {
+			if (p.frontmatter.categories === category.frontmatter.title) {
 				postsByCategory.push(p.node);
 			}
 		});
@@ -189,7 +179,9 @@ exports.createPages = ({graphql, actions}) => {
 								}
 								frontmatter {
 									tags
+									isPage
 									created_at
+									categories
 								}
 							}
 						}
@@ -201,6 +193,9 @@ exports.createPages = ({graphql, actions}) => {
 								id
 								fields{
 									slug
+								}
+								frontmatter {
+									title
 								}
 							}
 						}
@@ -215,9 +210,9 @@ exports.createPages = ({graphql, actions}) => {
 				const postsEdges = result.data.posts.edges;
 				const categoriesEdges = result.data.categories.edges;
 
-				paginatePosts(createPage, postsEdges, postsTemplate, postTemplate);
-				paginateTags(createPage, postsEdges, tagTemplate);
-				paginateCategories(createPage, postsEdges, categoriesEdges, categoryTemplate);
+				paginatePosts(createPage, postsEdges);
+				paginateTags(createPage, postsEdges);
+				paginateCategories(createPage, postsEdges, categoriesEdges);
 			}),
 		);
 	});

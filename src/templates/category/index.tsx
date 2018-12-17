@@ -78,7 +78,7 @@ export default class CategoryTemplate extends React.Component<Props, any> {
 	}
 }
 
-export const pageQuery = graphql`
+export const query = graphql`
 	query($slug: String, $skip: Int!, $limit: Int!) {
 		posts: allMarkdownRemark(
 			sort: {fields: [frontmatter___created_at], order: DESC},
