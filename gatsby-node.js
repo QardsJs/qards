@@ -364,6 +364,17 @@ const createReferencesField = (node, actions, getNodes) => {
 	node.references___NODES = references;
 };
 
+exports.onCreateWebpackConfig = ({stage, actions}) => {
+	switch (stage) {
+		case `build-javascript`:
+			actions.setWebpackConfig({
+				plugins: [new webpack.ContextReplacementPlugin(
+					`/highlight.js/lib/languages$/`, new RegExp(`^./(javascript)$`),
+				)],
+			});
+	}
+};
+
 //	Creates a `references` field that holds the references to other posts
 exports.onCreateNode = async ({node, actions, getNodes}) => {
 	if (isNodeOfCollection(node, 'posts')) createReferencesField(node, actions, getNodes);
