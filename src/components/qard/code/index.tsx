@@ -1,10 +1,9 @@
 import * as React from 'react';
 
-import {omit} from "lodash";
 import styled from 'styled-components';
 
 // @ts-ignore
-import Highlight from 'react-highlight';
+import Highlight from 'react-highlight/lib/optimized';
 
 import {Scrollbars} from 'react-custom-scrollbars';
 

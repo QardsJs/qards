@@ -7,16 +7,6 @@ import MarkdownRender from '../markdown';
 import {cPattern, lineRepresentsEncodedComponent} from '../../utils/helpers';
 import {decodeWidgetDataObject} from '../../cms/utils';
 
-import QardReveal from '../qard/reveal';
-import QardCallout from '../qard/callout';
-import QardVideo from '../qard/video';
-import QardAudio from '../qard/audio';
-import QardDivider from '../qard/divider';
-import QardHeader from '../qard/header';
-import QardGallery from '../qard/gallery';
-import QardCode from '../qard/code';
-import QardCountdown from '../qard/countdown';
-import QardReference from '../qard/reference';
 import {QardImageContent} from '../qard/image';
 
 import {PostType} from '../../fragments/post';
@@ -38,6 +28,16 @@ export interface Props {
 }
 
 export default class Post extends React.Component<Props, any> {
+	/**
+	 * I can't stress this enough but we should import only what
+	 * is required by the post. We will have huge pages otherwise
+	 * and our speed will have to suffer.
+	 *
+	 * Currently not working and the template seems to load all
+	 * of the following require statements regardless of the post's
+	 * own requirements in terms of qards components so...consider
+	 * this a work in progress.
+	 */
 	renderComponent(line: string) {
 		const {preview, post} = this.props;
 
@@ -47,21 +47,43 @@ export default class Post extends React.Component<Props, any> {
 		const widget = params[1];
 		const config = decodeWidgetDataObject(params[2]);
 
-		const cards: {[s: string]: any} = {
-			'image'                : QardImageContent,
-			'qards-code'           : QardCode,
-			'qards-reveal'         : QardReveal,
-			'qards-callout'        : QardCallout,
-			'qards-audio'          : QardAudio,
-			'qards-video'          : QardVideo,
-			'qards-divider'        : QardDivider,
-			'qards-gallery'        : QardGallery,
-			'qards-countdown'      : QardCountdown,
-			'qards-reference'      : QardReference,
-			'qards-section-heading': QardHeader,
-		};
+		let Component;
 
-		let Component: any = cards[widget];
+		switch (widget) {
+			case 'image':
+				Component = QardImageContent;
+				break;
+			case 'qards-code':
+				Component = require('../qard/code').default;
+				break;
+			case 'qards-reveal':
+				Component = require('../qard/reveal').default;
+				break;
+			case 'qards-callout':
+				Component = require('../qard/callout').default;
+				break;
+			case 'qards-audio':
+				Component = require('../qard/audio').default;
+				break;
+			case 'qards-video':
+				Component = require('../qard/video').default;
+				break;
+			case 'qards-divider':
+				Component = require('../qard/divider').default;
+				break;
+			case 'qards-gallery':
+				Component = require('../qard/gallery').default;
+				break;
+			case 'qards-countdown':
+				Component = require('../qard/countdown').default;
+				break;
+			case 'qards-reference':
+				Component = require('../qard/reference').default;
+				break;
+			case 'qards-section-heading':
+				Component = require('../qard/header').default;
+				break;
+		}
 
 		return Component ? <TrackVisibility once>
 				<Component post={post} preview={preview} {...config}/>
