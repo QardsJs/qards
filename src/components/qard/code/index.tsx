@@ -2,14 +2,9 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-// @ts-ignore
-import Highlight from 'react-highlight/lib/optimized';
-
 import {Scrollbars} from 'react-custom-scrollbars';
 
-import QardBase, {QardProps} from "../base";
-
-import "./theme.scss";
+import QardBase, {QardProps} from '../base';
 
 const Wrapper = styled.div`
 	font-size: 0.85rem;
@@ -78,7 +73,9 @@ export default class QardCodeBlock extends QardBase<CardCodeType, any> {
 						<div {...props} style={{backgroundColor: '#A8FF60'}}/>
 					)}
 				>
-					<Highlight className={language}>{code}</Highlight>
+					<pre>
+						<code>{code}</code>
+					</pre>
 				</Scrollbars>
 			</Wrapper>
 		);

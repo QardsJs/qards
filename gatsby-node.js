@@ -365,13 +365,19 @@ const createReferencesField = (node, actions, getNodes) => {
 };
 
 exports.onCreateWebpackConfig = ({stage, actions}) => {
+	const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+
 	switch (stage) {
+		case `develop`:
 		case `build-javascript`:
+		case `build-html`:
+		case `develop-html`:
 			actions.setWebpackConfig({
-				plugins: [new webpack.ContextReplacementPlugin(
-					`/highlight.js/lib/languages$/`, new RegExp(`^./(javascript)$`),
-				)],
+				plugins: [
+					new MomentLocalesPlugin(),
+				],
 			});
+			break;
 	}
 };
 
