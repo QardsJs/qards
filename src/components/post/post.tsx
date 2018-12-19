@@ -11,6 +11,7 @@ import {decodeWidgetDataObject} from '../../cms/utils';
 import QardImageContent from '../qard/image/content';
 import {PostType} from '../../fragments/post';
 import {HTMLDivProps} from '@blueprintjs/core';
+import {div} from '@rebass/grid';
 
 // const LoadableQardHeader = Loadable({
 // 	loader : () => import('../qard/header'),
@@ -56,69 +57,64 @@ export default class Post extends React.Component<Props, State> {
 	 * own requirements in terms of qards components so...consider
 	 * this a work in progress.
 	 */
-	async renderComponent(line: string): Promise<HTMLDivProps> {
-		return new Promise((resolve, reject) => {
-			const {preview, post} = this.props;
+	renderComponent(line: string) {
+		const {preview, post} = this.props;
 
-			const params = line.match(cPattern);
-			if (!params || params.length < 3) return;
+		const params = line.match(cPattern);
+		if (!params || params.length < 3) return <React.Fragment/>;
 
-			const widget = params[1];
-			const config = decodeWidgetDataObject(params[2]);
+		const widget = params[1];
+		const config = decodeWidgetDataObject(params[2]);
 
-			let module: Promise<any> | null, Component;
+		let Component = null;
 
-			switch (widget) {
-				case 'image':
-					module = import('../qard/image/content');
-					break;
-				case 'qards-code':
-					module = import('../qard/code');
-					break;
-				case 'qards-reveal':
-					module = import('../qard/reveal');
-					break;
-				case 'qards-callout':
-					module = import('../qard/callout');
-					break;
-				case 'qards-audio':
-					module = import('../qard/audio');
-					break;
-				case 'qards-video':
-					module = import('../qard/video');
-					break;
-				case 'qards-divider':
-					module = import('../qard/divider');
-					break;
-				case 'qards-gallery':
-					module = import('../qard/gallery');
-					break;
-				case 'qards-countdown':
-					module = import('../qard/countdown');
-					break;
-				case 'qards-reference':
-					module = import('../qard/reference');
-					break;
-				case 'qards-section-heading':
-					module = import('../qard/header/');
-					break;
-				default:
-					module = null;
-			}
+		switch (widget) {
+			case 'image':
+				Component = require('../qard/image/content').default;
+				break;
+			case 'qards-code':
+				Component = require('../qard/code').default;
+				break;
+			case 'qards-reveal':
+				Component = require('../qard/reveal').default;
+				break;
+			case 'qards-callout':
+				Component = require('../qard/callout').default;
+				break;
+			case 'qards-audio':
+				Component = require('../qard/audio').default;
+				break;
+			case 'qards-video':
+				Component = require('../qard/video').default;
+				break;
+			case 'qards-divider':
+				Component = require('../qard/divider').default;
+				break;
+			case 'qards-gallery':
+				Component = require('../qard/gallery').default;
+				break;
+			case 'qards-countdown':
+				Component = require('../qard/countdown').default;
+				break;
+			case 'qards-reference':
+				Component = require('../qard/reference').default;
+				break;
+			case 'qards-section-heading':
+				Component = require('../qard/header/').default;
+				break;
+			default:
+				Component = null;
+		}
 
-			if (module) {
-				return module.then(({default: Component}) => {
-					resolve(<TrackVisibility once>
-						<Component post={post} preview={preview} {...config}/>
-					</TrackVisibility>);
-				});
-			} else {
-				reject(`Unknown widget: ${widget}`);
-			}
-		});
+		if (Component) {
+			return <TrackVisibility once>
+				<Component post={post} preview={preview} {...config}/>
+			</TrackVisibility>;
+		}
 	}
 
-	async componentDidMount(): Promise<void> {
+
+	componentDidMount() {
 		const {post, previewData} = this.props;
 
 		let md: string = post ? post.md : (previewData ? previewData.md : '');
@@ -132,7 +128,7 @@ export default class Post extends React.Component<Props, State> {
 			const line = lines[i];
 
 			if (lineRepresentsEncodedComponent(line)) {
-				const rendered = await this.renderComponent(line);
+				const rendered = this.renderComponent(line);
 
 				bodyLines.push({
 					line, rendered, isWidget: true,
