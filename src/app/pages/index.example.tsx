@@ -23,7 +23,8 @@ const Blog = () => {
 					filter: {
 						fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 						frontmatter: {isPage: {ne: true}}
-					}
+					},
+					limit: 6
 				) {
 					edges {
 						node {

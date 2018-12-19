@@ -25,11 +25,18 @@ export default class Footer extends React.Component<Props, any> {
 					filter: {
 						fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 						frontmatter: {isPage: {eq: true}}
-					}
+					},
+					limit: 8
 				) {
 					edges {
 						node {
-							...postFragment
+							id
+							fields {
+								slug
+							}
+							frontmatter {
+								title
+							}
 						}
 					}
 				}

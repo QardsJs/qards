@@ -53,7 +53,7 @@ export default class Logo extends React.Component<Props & HTMLDivProps, any> {
 			<StaticQuery
 				query={graphql`
 					query {
-						logo: allFile(filter: {absolutePath: {regex: "/images\/uploads\/logo\\.(jpg|png)/"}}) {
+						logo: allFile(limit: 1, filter: {absolutePath: {regex: "/images\/uploads\/logo\\.(jpg|png)/"}}) {
 							edges {
 								node {
 									thumb: childImageSharp {
