@@ -6,6 +6,7 @@ import {QardProps} from '../base';
 export interface CardImageType extends QardProps {
 	alt: string;
 	src?: string;
+	style?: React.CSSProperties;
 
 	fluid?: {
 		tracedSVG: any;
@@ -36,10 +37,9 @@ export interface CardImageType extends QardProps {
  * This component should be used in every place where an image needs
  * to be rendered.
  */
-const QardImage = ({alt, src, ...rest}: CardImageType) => {
-	return (src && !rest.fluid && !rest.fixed) ? <img src={src} alt={alt} {...rest}/> : <Img {...Object.assign(
-		rest, {alt},
-	)}/>;
+const QardImage = ({alt, src, fluid, fixed, style, ...rest}: CardImageType) => {
+	return (src && !fluid && !fixed) ? <img src={src} alt={alt} style={style}/> :
+		<Img fluid={fluid} fixed={fixed} alt={alt} style={style} {...rest}/>;
 };
 
 export interface ContentImageType extends CardImageType {

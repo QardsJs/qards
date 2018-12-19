@@ -8,15 +8,10 @@ import MarkdownRender from '../markdown';
 import {cPattern, lineRepresentsEncodedComponent} from '../../utils/helpers';
 import {decodeWidgetDataObject} from '../../cms/utils';
 
+import QardHeader from '../qard/header';
 import QardImageContent from '../qard/image/content';
 import {PostType} from '../../fragments/post';
 import {HTMLDivProps} from '@blueprintjs/core';
-import {div} from '@rebass/grid';
-
-// const LoadableQardHeader = Loadable({
-// 	loader : () => import('../qard/header'),
-// 	loading: Loading,
-// });
 
 export interface Props {
 	post?: PostType;
@@ -36,7 +31,7 @@ export interface Props {
 
 interface bodyLine {
 	line: string;
-	rendered: any;
+	computed: any;
 	isWidget: boolean;
 }
 
@@ -47,95 +42,139 @@ interface State {
 export default class Post extends React.Component<Props, State> {
 	state = {bodyLines: []};
 
+	staticWidgets = ['image', 'qards-section-heading'];
+
 	/**
 	 * I can't stress this enough but we should import only what
 	 * is required by the post. We will have huge pages otherwise
-	 * and our speed will have to suffer.
+	 * and our responsiveness will suffer.
 	 *
-	 * Currently not working and the template seems to load all
-	 * of the following require statements regardless of the post's
-	 * own requirements in terms of qards components so...consider
-	 * this a work in progress.
+	 * The only exception here is the QardHeader module which I
+	 * consider to be required in order to output a SEO friendly
+	 * post page that renders headings and paragraphs before anything
+	 * else that gets resolved meanwhile.
 	 */
-	renderComponent(line: string) {
-		const {preview, post} = this.props;
+	async renderComponent(line: string): Promise<HTMLDivProps> {
+		return new Promise((resolve, reject) => {
+			const {preview, post} = this.props;
 
+			const params = line.match(cPattern);
+			if (!params || params.length < 3) return;
+
+			const widget = params[1];
+			const config = decodeWidgetDataObject(params[2]);
+
+			let module: Promise<any> | null, Component;
+
+			//	image and header are loaded for all posts immediately
+			switch (widget) {
+				case 'qards-code':
+					module = import(/* webpackPrefetch: true */ '../qard/code');
+					break;
+				case 'qards-reveal':
+					module = import(/* webpackPrefetch: true */ '../qard/reveal');
+					break;
+				case 'qards-callout':
+					module = import(/* webpackPrefetch: true */ '../qard/callout');
+					break;
+				case 'qards-audio':
+					module = import(/* webpackPrefetch: true */ '../qard/audio');
+					break;
+				case 'qards-video':
+					module = import(/* webpackPrefetch: true */ '../qard/video');
+					break;
+				case 'qards-divider':
+					module = import(/* webpackPrefetch: true */ '../qard/divider');
+					break;
+				case 'qards-gallery':
+					module = import(/* webpackPrefetch: true */ '../qard/gallery');
+					break;
+				case 'qards-countdown':
+					module = import(/* webpackPrefetch: true */ '../qard/countdown');
+					break;
+				case 'qards-reference':
+					module = import(/* webpackPrefetch: true */ '../qard/reference');
+					break;
+				case 'qards-section-heading':
+					module = import(/* webpackPrefetch: true */ '../qard/header/');
+					break;
+				default:
+					module = null;
+			}
+
+			if (module) {
+				return module.then(({default: Component}) => {
+					resolve(<TrackVisibility once>
+						<Component post={post} preview={preview} {...config}/>
+					</TrackVisibility>);
+				});
+			} else {
+				reject(`Unknown widget: ${widget}`);
+			}
+		});
+	}
+
+	renderImage(config: any) {
+		const {preview, post} = this.props;
+		return <QardImageContent post={post} preview={preview} {...config}/>;
+	}
+
+	renderHeading(config: any) {
+		return <QardHeader {...config}/>;
+	}
+
+	renderStaticWidget(line: string) {
 		const params = line.match(cPattern);
-		if (!params || params.length < 3) return <React.Fragment/>;
+
+		if (!params || params.length < 3) return;
 
 		const widget = params[1];
 		const config = decodeWidgetDataObject(params[2]);
 
-		let Component = null;
-
 		switch (widget) {
 			case 'image':
-				Component = require('../qard/image/content').default;
-				break;
-			case 'qards-code':
-				Component = require('../qard/code').default;
-				break;
-			case 'qards-reveal':
-				Component = require('../qard/reveal').default;
-				break;
-			case 'qards-callout':
-				Component = require('../qard/callout').default;
-				break;
-			case 'qards-audio':
-				Component = require('../qard/audio').default;
-				break;
-			case 'qards-video':
-				Component = require('../qard/video').default;
-				break;
-			case 'qards-divider':
-				Component = require('../qard/divider').default;
-				break;
-			case 'qards-gallery':
-				Component = require('../qard/gallery').default;
-				break;
-			case 'qards-countdown':
-				Component = require('../qard/countdown').default;
-				break;
-			case 'qards-reference':
-				Component = require('../qard/reference').default;
-				break;
-			case 'qards-section-heading':
-				Component = require('../qard/header/').default;
-				break;
+				return this.renderImage(config);
 			default:
-				Component = null;
-		}
-
-		if (Component) {
-			return <TrackVisibility once>
-				<Component post={post} preview={preview} {...config}/>
-			</TrackVisibility>;
+				return this.renderHeading(config);
 		}
 	}
 
-
-	componentDidMount() {
+	get mdLines(): string[] {
 		const {post, previewData} = this.props;
+		const md: string = post ? post.md : (previewData ? previewData.md : '');
+		return md.split('\n');
+	}
 
-		let md: string = post ? post.md : (previewData ? previewData.md : '');
+	isAsyncWidget(widget: string | null): boolean {
+		return !this.staticWidgets.includes(widget || '');
+	}
+
+	widgetFromLine(line: string): string | null {
+		const params = line.match(cPattern);
+		return (params && params.length > 2) ? params[1] : null;
+	}
+
+	async componentDidMount(): Promise<void> {
+		const lines = this.mdLines;
 
 		let bodyLines: bodyLine[] = [];
 
-		//	first identify the qard components that need to be resolved
-		//	so we can then iterate and replace all of them in one go
-		const lines = md.split('\n');
 		for (let i = 0; i < lines.length; i++) {
 			const line = lines[i];
 
-			if (lineRepresentsEncodedComponent(line)) {
-				const rendered = this.renderComponent(line);
 
-				bodyLines.push({
-					line, rendered, isWidget: true,
-				});
+			if (lineRepresentsEncodedComponent(line)) {
+				const widget = this.widgetFromLine(line);
+				if (widget && this.isAsyncWidget(widget)) {
+					const computed = await this.renderComponent(line);
+
+					bodyLines.push({
+						line, computed, isWidget: true,
+					});
+				}
 			} else {
 				bodyLines.push({
-					line, rendered: line, isWidget: false,
+					line, computed: line, isWidget: false,
 				});
 			}
 		}
@@ -143,9 +182,44 @@ export default class Post extends React.Component<Props, State> {
 		this.setState({bodyLines});
 	}
 
+	renderStaticBody() {
+		//	Since we're code splitting the qard modules and lazy loading them
+		//	we're losing SEO. This method returns the markdown without the qard
+		//	modules so we can push the text content out right away until the
+		//	modules get loaded
+		let accumulator: string[] = [];
+
+		return <React.Fragment>
+			{this.mdLines.map((line: string, k) => {
+				if (lineRepresentsEncodedComponent(line)) {
+					if (!this.isAsyncWidget(this.widgetFromLine(line))) {
+						//	render everything that is collected inside
+						//	our accumulator and then render the component
+						//	also resets the accumulator
+						const acc = accumulator.join('\n');
+						accumulator = [];
+
+						return <React.Fragment key={k}>
+							<div className="paragraphs">
+								<MarkdownRender md={acc}/>
+							</div>
+							{this.renderStaticWidget(line)}
+						</React.Fragment>;
+					}
+				} else {
+					//	non-component, add it to our acc
+					accumulator.push(line);
+				}
+			})}
+
+			{(accumulator.length > 0) && <div className="paragraphs">
+				<MarkdownRender md={accumulator.join('\n')}/>
+			</div>}
+		</React.Fragment>;
+	}
 
 	renderBody() {
-		if (!this.state.bodyLines.length) return <React.Fragment/>;
+		if (!this.state.bodyLines.length) return this.renderStaticBody();
 
 		let accumulator: string[] = [];
 
@@ -162,11 +236,11 @@ export default class Post extends React.Component<Props, State> {
 						<div className="paragraphs">
 							<MarkdownRender md={acc}/>
 						</div>
-						{line.rendered}
+						{line.computed}
 					</React.Fragment>;
 				} else {
 					//	non-component, add it to our acc
-					accumulator.push(line.rendered);
+					accumulator.push(line.computed);
 				}
 			})}
 
