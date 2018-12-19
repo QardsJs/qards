@@ -367,6 +367,13 @@ const createReferencesField = (node, actions, getNodes) => {
 exports.onCreateWebpackConfig = ({stage, actions}) => {
 	const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
+	if (stage === 'build-javascript') {
+		// Turn off source maps
+		actions.setWebpackConfig({
+			devtool: false,
+		});
+	}
+
 	actions.setWebpackConfig({
 		plugins: [
 			new MomentLocalesPlugin(),
