@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Loadable from 'react-loadable';
 import TrackVisibility from 'react-on-screen';
 
 import {Article, Date, Excerpt, Hero, Title} from './styles';
@@ -7,9 +8,14 @@ import MarkdownRender from '../markdown';
 import {cPattern, lineRepresentsEncodedComponent} from '../../utils/helpers';
 import {decodeWidgetDataObject} from '../../cms/utils';
 
-import {QardImageContent} from '../qard/image';
-
+import QardImageContent from '../qard/image/content';
 import {PostType} from '../../fragments/post';
+import {HTMLDivProps} from '@blueprintjs/core';
+
+// const LoadableQardHeader = Loadable({
+// 	loader : () => import('../qard/header'),
+// 	loading: Loading,
+// });
 
 export interface Props {
 	post?: PostType;
@@ -27,7 +33,19 @@ export interface Props {
 	}
 }
 
-export default class Post extends React.Component<Props, any> {
+interface bodyLine {
+	line: string;
+	rendered: any;
+	isWidget: boolean;
+}
+
+interface State {
+	bodyLines: bodyLine[];
+}
+
+export default class Post extends React.Component<Props, State> {
+	state = {bodyLines: []};
+
 	/**
 	 * I can't stress this enough but we should import only what
 	 * is required by the post. We will have huge pages otherwise
@@ -38,68 +56,106 @@ export default class Post extends React.Component<Props, any> {
 	 * own requirements in terms of qards components so...consider
 	 * this a work in progress.
 	 */
-	renderComponent(line: string) {
-		const {preview, post} = this.props;
+	async renderComponent(line: string): Promise<HTMLDivProps> {
+		return new Promise((resolve, reject) => {
+			const {preview, post} = this.props;
 
-		const params = line.match(cPattern);
-		if (!params || params.length < 3) return;
+			const params = line.match(cPattern);
+			if (!params || params.length < 3) return;
 
-		const widget = params[1];
-		const config = decodeWidgetDataObject(params[2]);
+			const widget = params[1];
+			const config = decodeWidgetDataObject(params[2]);
 
-		let Component;
+			let module: Promise<any> | null, Component;
 
-		switch (widget) {
-			case 'image':
-				Component = QardImageContent;
-				break;
-			case 'qards-code':
-				Component = require('../qard/code').default;
-				break;
-			case 'qards-reveal':
-				Component = require('../qard/reveal').default;
-				break;
-			case 'qards-callout':
-				Component = require('../qard/callout').default;
-				break;
-			case 'qards-audio':
-				Component = require('../qard/audio').default;
-				break;
-			case 'qards-video':
-				Component = require('../qard/video').default;
-				break;
-			case 'qards-divider':
-				Component = require('../qard/divider').default;
-				break;
-			case 'qards-gallery':
-				Component = require('../qard/gallery').default;
-				break;
-			case 'qards-countdown':
-				Component = require('../qard/countdown').default;
-				break;
-			case 'qards-reference':
-				Component = require('../qard/reference').default;
-				break;
-			case 'qards-section-heading':
-				Component = require('../qard/header').default;
-				break;
-		}
+			switch (widget) {
+				case 'image':
+					module = import('../qard/image/content');
+					break;
+				case 'qards-code':
+					module = import('../qard/code');
+					break;
+				case 'qards-reveal':
+					module = import('../qard/reveal');
+					break;
+				case 'qards-callout':
+					module = import('../qard/callout');
+					break;
+				case 'qards-audio':
+					module = import('../qard/audio');
+					break;
+				case 'qards-video':
+					module = import('../qard/video');
+					break;
+				case 'qards-divider':
+					module = import('../qard/divider');
+					break;
+				case 'qards-gallery':
+					module = import('../qard/gallery');
+					break;
+				case 'qards-countdown':
+					module = import('../qard/countdown');
+					break;
+				case 'qards-reference':
+					module = import('../qard/reference');
+					break;
+				case 'qards-section-heading':
+					module = import('../qard/header/');
+					break;
+				default:
+					module = null;
+			}
 
-		return Component ? <TrackVisibility once>
-				<Component post={post} preview={preview} {...config}/>
-			</TrackVisibility> :
-			<p style={{color: 'red', display: 'block'}}>Unknown widget: <b>{widget}</b></p>;
+			if (module) {
+				return module.then(({default: Component}) => {
+					resolve(<TrackVisibility once>
+						<Component post={post} preview={preview} {...config}/>
+					</TrackVisibility>);
+				});
+			} else {
+				reject(`Unknown widget: ${widget}`);
+			}
+		});
 	}
 
-	renderBody(body: string) {
-		if (!body) return '';
+	async componentDidMount(): Promise<void> {
+		const {post, previewData} = this.props;
 
-		//	Create an accumulator for non-component lines
+		let md: string = post ? post.md : (previewData ? previewData.md : '');
+
+		let bodyLines: bodyLine[] = [];
+
+		//	first identify the qard components that need to be resolved
+		//	so we can then iterate and replace all of them in one go
+		const lines = md.split('\n');
+		for (let i = 0; i < lines.length; i++) {
+			const line = lines[i];
+
+			if (lineRepresentsEncodedComponent(line)) {
+				const rendered = await this.renderComponent(line);
+
+				bodyLines.push({
+					line, rendered, isWidget: true,
+				});
+			} else {
+				bodyLines.push({
+					line, rendered: line, isWidget: false,
+				});
+			}
+		}
+
+		this.setState({bodyLines});
+	}
+
+
+	renderBody() {
+		if (!this.state.bodyLines.length) return <React.Fragment/>;
+
 		let accumulator: string[] = [];
 
 		return <React.Fragment>
-			{body.split('\n').map((line, k) => {
-				if (lineRepresentsEncodedComponent(line)) {
+			{this.state.bodyLines.map((line: bodyLine, k) => {
+				if (line.isWidget) {
 					//	render everything that is collected inside
 					//	our accumulator and then render the component
 					//	also resets the accumulator
@@ -110,11 +166,11 @@ export default class Post extends React.Component<Props, any> {
 						<div className="paragraphs">
 							<MarkdownRender md={acc}/>
 						</div>
-						{this.renderComponent(line)}
+						{line.rendered}
 					</React.Fragment>;
 				} else {
 					//	non-component, add it to our acc
-					accumulator.push(line);
+					accumulator.push(line.rendered);
 				}
 			})}
 
@@ -153,7 +209,7 @@ export default class Post extends React.Component<Props, any> {
 				{hero && <Hero className={'qards-post-hero'}><QardImageContent {...hero}/></Hero>}
 				{excerpt && <Excerpt className={'qards-post-excerpt'}>{excerpt}</Excerpt>}
 
-				{this.renderBody(md)}
+				{this.renderBody()}
 			</Article>
 		);
 	}

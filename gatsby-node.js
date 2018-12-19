@@ -367,18 +367,11 @@ const createReferencesField = (node, actions, getNodes) => {
 exports.onCreateWebpackConfig = ({stage, actions}) => {
 	const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
-	switch (stage) {
-		case `develop`:
-		case `build-javascript`:
-		case `build-html`:
-		case `develop-html`:
-			actions.setWebpackConfig({
-				plugins: [
-					new MomentLocalesPlugin(),
-				],
-			});
-			break;
-	}
+	actions.setWebpackConfig({
+		plugins: [
+			new MomentLocalesPlugin(),
+		],
+	});
 };
 
 //	Creates a `references` field that holds the references to other posts
