@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import rTime from 'reading-time';
 import {PostType} from '../fragments/post';
-import moment from 'moment';
 import {CategoryType} from '../templates/category';
 import {CardHeaderType} from '../components/qard/header';
 import {decodeWidgetDataObject} from '../cms/utils';
 import Immutable from 'immutable';
+import {format} from 'date-fns';
 
 let settingsConfig = require('../../static/config/settings.json');
 let postsConfig = require('../../static/config/posts.json');
@@ -73,25 +73,25 @@ export function tokenizePost(post: PostType): PostType {
 			},
 		}, {
 			//  Will replace the token with a `createdAt` derrived date (the date format is specified)
-			//  using a formatter that is applied with moment
+			//  using a formatter that is applied with date-fns
 			perform: (input: string): string => {
 				const r = /{createdAt:([a-zA-Z0-9-_:]+)}/i;
 				const match = r.exec(input);
 
 				if (!match) return input;
-				const format = match[1];
-				return input.replace(r, moment(post.frontmatter.created_at).format(format));
+				const dtFormat = match[1];
+				return input.replace(r, format(new Date(post.frontmatter.created_at), dtFormat));
 			},
 		}, {
 			//  Will replace the token with derrived date (from current date) (the date format is specified)
-			//  using a formatter that is applied with moment
+			//  using a formatter that is applied with date-fns
 			perform: (input: string): string => {
 				const r = /{currentDate:([a-zA-Z0-9-_:]+)}/i;
 				const match = r.exec(input);
 
 				if (!match) return input;
-				const format = match[1];
-				return input.replace(r, moment().format(format));
+				const dtFormat = match[1];
+				return input.replace(r, format(new Date(), dtFormat));
 			},
 		},
 	];

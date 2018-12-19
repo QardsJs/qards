@@ -17,6 +17,7 @@
     "base-64": "^0.1.0",
     "browser-image-size": "^1.1.0",
     "chai-colors": "^1.0.1",
+    "date-fns": "^2.0.0-alpha.26",
     "deep-map-object": "^0.0.4",
     "disqus-react": "^1.0.5",
     "extract-text-webpack-plugin": "^3.0.2",
