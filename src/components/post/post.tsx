@@ -68,6 +68,9 @@ export default class Post extends React.Component<Props, State> {
 
 			//	image and header are loaded for all posts immediately
 			switch (widget) {
+				case 'image':
+					module = import(/* webpackPrefetch: true */ '../qard/image/content');
+					break;
 				case 'qards-code':
 					module = import(/* webpackPrefetch: true */ '../qard/code');
 					break;
@@ -149,9 +152,10 @@ export default class Post extends React.Component<Props, State> {
 		return !this.staticWidgets.includes(widget || '');
 	}
 
-	widgetFromLine(line: string): string | null {
+	widgetFromLine(line: string): string {
 		const params = line.match(cPattern);
-		return (params && params.length > 2) ? params[1] : null;
+		if (!params || params.length < 3) throw new Error('bad widget detected');
+		return params[1];
 	}
 
 	async componentDidMount(): Promise<void> {
@@ -164,14 +168,11 @@ export default class Post extends React.Component<Props, State> {
 
 
 			if (lineRepresentsEncodedComponent(line)) {
-				const widget = this.widgetFromLine(line);
-				if (widget && this.isAsyncWidget(widget)) {
-					const computed = await this.renderComponent(line);
+				const computed = await this.renderComponent(line);
 
-					bodyLines.push({
-						line, computed, isWidget: true,
-					});
-				}
+				bodyLines.push({
+					line, computed, isWidget: true,
+				});
 			} else {
 				bodyLines.push({
 					line, computed: line, isWidget: false,
@@ -219,7 +220,7 @@ export default class Post extends React.Component<Props, State> {
 	}
 
 	renderBody() {
-		if (!this.state.bodyLines.length) return this.renderStaticBody();
+		if (this.state.bodyLines.length == 0) return this.renderStaticBody();
 
 		let accumulator: string[] = [];
 
