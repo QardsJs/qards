@@ -1,16 +1,16 @@
-import * as React from "react";
-import { uniqBy } from "lodash";
-import { graphql, Link, StaticQuery } from "gatsby";
-import { Alignment, Button, Intent, Menu, NavbarGroup, NavbarHeading, Popover } from "@blueprintjs/core";
+import * as React from 'react';
+import {uniqBy} from 'lodash';
+import {graphql, Link, StaticQuery} from 'gatsby';
+import {Alignment, Button, Intent, Menu, NavbarGroup, NavbarHeading, Popover} from '@blueprintjs/core';
 
-import Hide from "../common/hide";
-import { extractNodesFromEdges, getPluginsConfig } from "../../utils/helpers";
-import { Container, DrawerLinkList, StyledNavbar, StyledNavbarGroupLeft } from "./styles";
-import NavbarDrawer from "./drawer";
-import config from "../../../static/config/settings.json";
-import Logo from "../logo";
-import { PostType } from "../../fragments/post";
-import { CategoryType } from "../../templates/category";
+import Hide from '../common/hide';
+import {extractNodesFromEdges, getPluginsConfig} from '../../utils/helpers';
+import {Container, DrawerLinkList, StyledNavbar, StyledNavbarGroupLeft} from './styles';
+import NavbarDrawer from './drawer';
+import config from '../../../static/config/settings.json';
+import Logo from '../logo';
+import {PostType} from '../../fragments/post';
+import {CategoryType} from '../../templates/category';
 
 export interface CategoriesProps {
 	isInDrawer?: boolean;
@@ -19,7 +19,7 @@ export interface CategoriesProps {
 
 export class Categories extends React.Component<CategoriesProps, any> {
 	render() {
-		const { popularCategories, isInDrawer } = this.props;
+		const {popularCategories, isInDrawer} = this.props;
 
 		if (isInDrawer) {
 			return (
@@ -80,11 +80,18 @@ export default class Navigation extends React.Component<Props, State> {
 							filter: {
 								fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 								frontmatter: {isPage: {eq: true}}
-							}
+							},
+							limit: 10
 						) {
 							edges {
 								node {
-									...postFragment
+									id
+									fields {
+										slug
+									}
+									frontmatter {
+										title
+									}
 								}
 							}
 						}
@@ -110,7 +117,7 @@ export default class Navigation extends React.Component<Props, State> {
 					}
 				`}
 				render={(data: DataProps) => {
-					const { categories } = data;
+					const {categories} = data;
 
 					const pages: PostType[] = [];
 
@@ -119,7 +126,7 @@ export default class Navigation extends React.Component<Props, State> {
 					}
 
 					const popularCategories = categories ? uniqBy(
-						extractNodesFromEdges(categories.edges), JSON.stringify
+						extractNodesFromEdges(categories.edges), JSON.stringify,
 					) : [];
 
 					return (
@@ -133,7 +140,7 @@ export default class Navigation extends React.Component<Props, State> {
 
 								<Hide small xsmall>
 									<NavbarGroup align={Alignment.RIGHT}>
-										{typeof document !== "undefined" && getPluginsConfig(["search", "enable"]) &&
+										{typeof document !== 'undefined' && getPluginsConfig(['search', 'enable']) &&
 										<div>
 											<NavbarDrawer
 												width={600}
@@ -150,7 +157,7 @@ export default class Navigation extends React.Component<Props, State> {
 											{pages.map((page) => {
 												return (
 													<div key={page.id}>
-														<Link className={"bp3-button bp3-minimal"}
+														<Link className={'bp3-button bp3-minimal'}
 															  to={page.fields.slug}>
 															{page.frontmatter.title}
 														</Link>
@@ -179,9 +186,9 @@ export default class Navigation extends React.Component<Props, State> {
 
 								<Hide medium large larger xlarge>
 									<NavbarGroup align={Alignment.RIGHT}>
-										{typeof document !== "undefined" && (
+										{typeof document !== 'undefined' && (
 											<NavbarDrawer
-												width={"90%"}
+												width={'90%'}
 												pages={pages}
 												popularCategories={popularCategories}
 											>
