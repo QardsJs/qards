@@ -1,10 +1,19 @@
-import Typography from "typography";
-import { getSettingsConfig } from "./helpers";
+import Typography from 'typography';
+import {getSettingsConfig} from './helpers';
 
-let bodyFontFamily = ["Roboto", "Helvetica", "Arial", "sans-serif"];
+let baseFont = getSettingsConfig('baseFont');
+let fallbackFont = getSettingsConfig('fallbackFont');
+
+let bodyFontFamily = ['sans-serif'];
 let headerFontFamily = bodyFontFamily;
 
-const performance = getSettingsConfig("performanceMode");
+if (fallbackFont) {
+	bodyFontFamily.unshift(fallbackFont);
+}
+
+bodyFontFamily.unshift(baseFont);
+
+const performance = getSettingsConfig('performanceMode');
 
 if (performance == true) {
 	bodyFontFamily.shift();
@@ -12,11 +21,11 @@ if (performance == true) {
 }
 
 const typography = new Typography({
-	baseFontSize    : performance ? "15px" : "16px",
+	baseFontSize    : performance ? '15px' : '16px',
 	baseLineHeight  : 1,
 	omitGoogleFont  : true,
 	headerFontFamily: headerFontFamily,
-	bodyFontFamily  : bodyFontFamily
+	bodyFontFamily  : bodyFontFamily,
 });
 
 export default typography;

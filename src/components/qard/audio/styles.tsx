@@ -27,7 +27,7 @@ export const Item = styled.li`
     border-top: 1px solid ${theme.color(['borders'])};
     
     &.active {
-        color: ${theme.color(['accent', 'background'])};
+        color: ${theme.color(['primary', 'background'])};
     }
     
     &:last-child {

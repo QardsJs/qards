@@ -37,7 +37,79 @@ export const settingsCollection = {
 			faster both for your users and search engines. In performance mode
 			we won't load many posters (when showing posts results), we will
 			not be using too many css effects and we will not load an external
-			font`,
+			font. Some of these tweaks can also be altered separately.`,
+		}, {
+			label  : 'Base font',
+			name   : 'baseFont',
+			widget : 'list',
+			default: 'Roboto',
+			fields : [{
+				label : 'Arial',
+				name  : 'arial',
+				widget: 'string',
+			}, {
+				label : 'Verdana',
+				name  : 'verdana',
+				widget: 'string',
+			}, {
+				label : 'Georgia',
+				name  : 'georgia',
+				widget: 'string',
+			}, {
+				label : 'Work Sans',
+				name  : 'Work Sans',
+				widget: 'string',
+			}, {
+				label : 'Roboto',
+				name  : 'Roboto',
+				widget: 'string',
+			}, {
+				label : 'Lato',
+				name  : 'Lato',
+				widget: 'string',
+			}, {
+				label : 'Biorhyme',
+				name  : 'Biorhyme',
+				widget: 'string',
+			}, {
+				label : 'Open Sans',
+				name  : 'Open Sans',
+				widget: 'string',
+			}, {
+				label : 'Poppins',
+				name  : 'Poppins',
+				widget: 'string',
+			}],
+		}, {
+			label  : 'Fallback font',
+			name   : 'fallbackFont',
+			widget : 'list',
+			default: 'arial',
+			fields : [{
+				label : 'Arial',
+				name  : 'arial',
+				widget: 'string',
+			}, {
+				label : 'Verdana',
+				name  : 'verdana',
+				widget: 'string',
+			}, {
+				label : 'Georgia',
+				name  : 'georgia',
+				widget: 'string',
+			}, {
+				label : 'Helvetica',
+				name  : 'Helvetica',
+				widget: 'string',
+			}, {
+				label : 'Sans-serif',
+				name  : 'Sans-serif',
+				widget: 'string',
+			}, {
+				label : 'Times New Roman',
+				name  : 'Times New Roman',
+				widget: 'string',
+			}],
 		}, {
 			label : 'Logo',
 			name  : 'logo',

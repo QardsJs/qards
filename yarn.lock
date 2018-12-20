@@ -16982,10 +16982,35 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typeface-biorhyme@^0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/typeface-biorhyme/-/typeface-biorhyme-0.0.54.tgz#334d8fae4476588f29c5949148763417796492b6"
+  integrity sha512-pEon3lT9rrSHkdFYhhfTymOZ5jXmddtshX1YuKafOF7jBxuZxuam0KbVxLpGHCl7vZ6p0Mg6HF9DbnwuI3eTgg==
+
+typeface-lato@^0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/typeface-lato/-/typeface-lato-0.0.54.tgz#6ea56309a8b0cfdb7e8246e05de4b58b8272b47c"
+  integrity sha512-2/oP5YrXCBSLg+N2ZdWnMbJ0PRIidrJVFHgRoLxo5MNsdu9eE4aBwsoEY/K/+9rKdktGO8zpiXBYPRn9F6U/Sw==
+
+typeface-open-sans@^0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/typeface-open-sans/-/typeface-open-sans-0.0.54.tgz#20f5b5ea5c7f95d89dc1f8b2d2b1457680129cee"
+  integrity sha512-w6wOd6EicZdZKf0jSU/K3EzEi3zFgvWQSN7NOpRIQI5KeMWmC5Pg/lqtBVJHB0pRChYRmLdhf4h8ROur0A3JZQ==
+
+typeface-poppins@^0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/typeface-poppins/-/typeface-poppins-0.0.54.tgz#58c90da107a14db1e359f4d339cb2cc8e098d37b"
+  integrity sha512-VQyXtQJdr4jxHIyZWR6SkBjkqf5opHF4cx5C7A48mfL60ahYLN2fGtsN9qAgJ6YyRvOLpDn64czfn+/tWwSE/g==
+
 typeface-roboto@^0.0.54:
   version "0.0.54"
   resolved "https://registry.yarnpkg.com/typeface-roboto/-/typeface-roboto-0.0.54.tgz#8f02c9a18d1cfa7f49381a6ff0d21ff061f38ad2"
   integrity sha512-sOFA1FXgP0gOgBYlS6irwq6hHYA370KE3dPlgYEJHL3PJd5X8gQE0RmL79ONif6fL5JZuGDj+rtOrFeOqz5IZQ==
+
+typeface-work-sans@^0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/typeface-work-sans/-/typeface-work-sans-0.0.54.tgz#1bf57d6a2c7dfa6f820adbe12d8c2291835f07c4"
+  integrity sha512-pWSD7euQ6WeS1OLoefKSY5s6kmiJmd9udLpXWvzYmx4jahLJoxoExzdD6qcOZuOYhpW+dB5BP0ydmHg46ODa5g==
 
 typescript-require@^0.2.10:
   version "0.2.10"

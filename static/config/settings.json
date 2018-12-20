@@ -5,5 +5,7 @@
   "baseUrl": "https://affectionate-hamilton-12254a.netlify.com",
   "performanceMode": false,
   "logo": "/images/uploads/logo.png",
-  "socialShareImg": "/images/uploads/andrew-ridley-76547-unsplash.jpg"
+  "socialShareImg": "/images/uploads/andrew-ridley-76547-unsplash.jpg",
+  "baseFont": "Poppins",
+  "fallbackFont": "arial"
 }
