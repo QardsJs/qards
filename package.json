@@ -76,6 +76,7 @@
     "remark": "^10.0.1",
     "remark-react": "^5.0.0",
     "resize-observer-polyfill": "^1.5.1",
+    "rimraf": "^2.6.2",
     "scrollprogress": "^3.0.2",
     "stringz": "^1.0.0",
     "styled-components": "^4.1.3",

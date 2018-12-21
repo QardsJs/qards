@@ -1,10 +1,12 @@
 require('typescript-require');
 
 const _ = require('lodash');
+const fs = require('fs');
 const ncp = require('ncp').ncp;
 const Promise = require('bluebird');
 const path = require('path');
 const mkdirp = require('mkdirp');
+const rimraf = require('rimraf');
 const base64 = require('base-64');
 const {createFilePath} = require('gatsby-source-filesystem');
 
@@ -386,19 +388,19 @@ exports.onCreateWebpackConfig = ({stage, actions}) => {
 
 exports.onPreBootstrap = () => {
 	//	See gatsby-browser.js to learn why we do this
+	const customfontsDir = './public/custom-fonts';
+
 	const loadCustomFonts = () => {
 		const fontNpmPackage = siteSettings.typography.npmPackage;
 		if (fontNpmPackage) {
 			ncp.limit = 16;
 
-			const desto = './public/custom-fonts';
-
-			mkdirp(desto, (err) => {
+			mkdirp(customfontsDir, (err) => {
 				if (err) {
 					console.error('unable to create custom fonts folder');
 					throw err;
 				} else {
-					ncp(`node_modules/${fontNpmPackage}`, desto, (err) => {
+					ncp(`node_modules/${fontNpmPackage}`, customfontsDir, (err) => {
 						if (err) {
 							console.error('unable to copy font package');
 							throw err;
@@ -409,7 +411,12 @@ exports.onPreBootstrap = () => {
 		}
 	};
 
-	loadCustomFonts();
+	//	Ensure a clean copy of the custom fonts dir
+	if (fs.existsSync(customfontsDir)) {
+		rimraf(customfontsDir, {}, loadCustomFonts);
+	} else {
+		loadCustomFonts();
+	}
 };
 
 //	Creates a `references` field that holds the references to other posts
