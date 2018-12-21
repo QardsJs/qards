@@ -6,6 +6,12 @@
   "performanceMode": false,
   "logo": "/images/uploads/logo.png",
   "socialShareImg": "/images/uploads/andrew-ridley-76547-unsplash.jpg",
-  "baseFont": "Poppins",
+  "typography": {
+    "fontSize": "15px",
+    "bodyFontFamily": "Roboto",
+    "baseLineHeight": 1,
+    "headerFontFamily": "Roboto",
+    "npmPackage": "typeface-roboto"
+  },
   "fallbackFont": "arial"
 }

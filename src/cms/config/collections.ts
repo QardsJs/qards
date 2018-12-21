@@ -39,76 +39,49 @@ export const settingsCollection = {
 			not be using too many css effects and we will not load an external
 			font. Some of these tweaks can also be altered separately.`,
 		}, {
-			label  : 'Base font',
-			name   : 'baseFont',
-			widget : 'list',
-			default: 'Roboto',
-			fields : [{
-				label : 'Arial',
-				name  : 'arial',
-				widget: 'string',
+			label : 'Typography',
+			name  : 'typography',
+			widget: 'object',
+			hint  : `Customise your main font from here. There are certain performance
+			advantages in using the "typeface-?" packages (you can search for them on npmjs)
+			so I added support for specifying them here.
+			`,
+			fields: [{
+				label  : 'Family',
+				name   : 'bodyFontFamily',
+				widget : 'string',
+				default: 'Roboto',
+				hint   : 'The font family for your body content',
 			}, {
-				label : 'Verdana',
-				name  : 'verdana',
-				widget: 'string',
+				label  : 'Family',
+				name   : 'headerFontFamily',
+				widget : 'string',
+				default: 'Roboto',
+				hint   : 'The font family for headers and titles',
 			}, {
-				label : 'Georgia',
-				name  : 'georgia',
-				widget: 'string',
+				label  : 'Base line height',
+				name   : 'baseLineHeight',
+				widget : 'number',
+				default: 1,
+				hint   : `The base line height for your typography`,
 			}, {
-				label : 'Work Sans',
-				name  : 'Work Sans',
-				widget: 'string',
+				label   : 'Typeface package',
+				name    : 'fontSize',
+				widget  : 'string',
+				required: false,
+				default : '15px',
+				hint    : `The font size (in pixels) to serve as a base for all fonts
+				calculations.`,
 			}, {
-				label : 'Roboto',
-				name  : 'Roboto',
-				widget: 'string',
-			}, {
-				label : 'Lato',
-				name  : 'Lato',
-				widget: 'string',
-			}, {
-				label : 'Biorhyme',
-				name  : 'Biorhyme',
-				widget: 'string',
-			}, {
-				label : 'Open Sans',
-				name  : 'Open Sans',
-				widget: 'string',
-			}, {
-				label : 'Poppins',
-				name  : 'Poppins',
-				widget: 'string',
-			}],
-		}, {
-			label  : 'Fallback font',
-			name   : 'fallbackFont',
-			widget : 'list',
-			default: 'arial',
-			fields : [{
-				label : 'Arial',
-				name  : 'arial',
-				widget: 'string',
-			}, {
-				label : 'Verdana',
-				name  : 'verdana',
-				widget: 'string',
-			}, {
-				label : 'Georgia',
-				name  : 'georgia',
-				widget: 'string',
-			}, {
-				label : 'Helvetica',
-				name  : 'Helvetica',
-				widget: 'string',
-			}, {
-				label : 'Sans-serif',
-				name  : 'Sans-serif',
-				widget: 'string',
-			}, {
-				label : 'Times New Roman',
-				name  : 'Times New Roman',
-				widget: 'string',
+				label   : 'Typeface package',
+				name    : 'npmPackage',
+				widget  : 'string',
+				required: false,
+				default : 'typeface-roboto',
+				hint    : `(optional) Specify the "typeface-?" package to be imported. If you
+				don't want to use a "typeface-?" package you can leave this field blank but,
+				if you load a custom font, make sure you link to it in one of your css
+				files.`,
 			}],
 		}, {
 			label : 'Logo',
