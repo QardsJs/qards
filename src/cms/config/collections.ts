@@ -79,9 +79,7 @@ export const settingsCollection = {
 				required: false,
 				default : 'typeface-roboto',
 				hint    : `(optional) Specify the "typeface-?" package to be imported. If you
-				don't want to use a "typeface-?" package you can leave this field blank but,
-				if you load a custom font, make sure you link to it in one of your css
-				files.`,
+				don't want to use a "typeface-?" package you can leave this field blank.`,
 			}],
 		}, {
 			label : 'Logo',

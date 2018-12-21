@@ -12,19 +12,6 @@ let postsConfig = require('../../static/config/posts.json');
 let pluginsConfig = require('../../static/config/plugins.json');
 let themeConfig = require('../../static/config/theme.json');
 
-if (process.env.SETTINGS_CONFIG_FILE) {
-	settingsConfig = require(process.env.SETTINGS_CONFIG_FILE);
-}
-if (process.env.POSTS_CONFIG_FILE) {
-	postsConfig = require(process.env.POSTS_CONFIG_FILE);
-}
-if (process.env.PLUGINS_CONFIG_FILE) {
-	pluginsConfig = require(process.env.PLUGINS_CONFIG_FILE);
-}
-if (process.env.THEME_CONFIG_FILE) {
-	themeConfig = require(process.env.THEME_CONFIG_FILE);
-}
-
 export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"(.*?)"}/;
 export const cPatternWithId = (id: string): string => {
 	return `{"widget":"${id}","config":"(.*?)"}`;

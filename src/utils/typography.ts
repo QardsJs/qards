@@ -1,17 +1,17 @@
 import Typography from 'typography';
 import {getSettingsConfig} from './helpers';
 
-const fontSize = getSettingsConfig(['mainFont', 'fontSize']);
-const fontFamily = getSettingsConfig(['mainFont', 'bodyFontFamily']);
-const baseLineHeight = getSettingsConfig(['mainFont', 'baseLineHeight']);
-const headerFontFamily = getSettingsConfig(['mainFont', 'headerFontFamily']);
+const fontSize = getSettingsConfig(['typography', 'fontSize']);
+const fontFamily = getSettingsConfig(['typography', 'bodyFontFamily']);
+const baseLineHeight = getSettingsConfig(['typography', 'baseLineHeight']);
+const headerFontFamily = getSettingsConfig(['typography', 'headerFontFamily']);
 
 const typography = new Typography({
 	baseFontSize    : fontSize,
 	baseLineHeight  : parseInt(baseLineHeight),
 	omitGoogleFont  : true,
-	bodyFontFamily  : fontFamily,
-	headerFontFamily: headerFontFamily,
+	bodyFontFamily  : fontFamily.split(','),
+	headerFontFamily: headerFontFamily.split(','),
 });
 
 export default typography;

@@ -1,12 +1,15 @@
 require('typescript-require');
 
 const _ = require('lodash');
+const ncp = require('ncp').ncp;
 const Promise = require('bluebird');
 const path = require('path');
+const mkdirp = require('mkdirp');
 const base64 = require('base-64');
 const {createFilePath} = require('gatsby-source-filesystem');
 
 const postsSettings = require('./static/config/posts.json');
+const siteSettings = require('./static/config/settings.json');
 
 const postTemplate = path.resolve('./src/templates/post/index.tsx');
 const postsTemplate = path.resolve('./src/templates/posts/index.tsx');
@@ -379,6 +382,34 @@ exports.onCreateWebpackConfig = ({stage, actions}) => {
 			new MomentLocalesPlugin(),
 		],
 	});
+};
+
+exports.onPreBootstrap = () => {
+	//	See gatsby-browser.js to learn why we do this
+	const loadCustomFonts = () => {
+		const fontNpmPackage = siteSettings.typography.npmPackage;
+		if (fontNpmPackage) {
+			ncp.limit = 16;
+
+			const desto = './public/custom-fonts';
+
+			mkdirp(desto, (err) => {
+				if (err) {
+					console.error('unable to create custom fonts folder');
+					throw err;
+				} else {
+					ncp(`node_modules/${fontNpmPackage}`, desto, (err) => {
+						if (err) {
+							console.error('unable to copy font package');
+							throw err;
+						}
+					});
+				}
+			});
+		}
+	};
+
+	loadCustomFonts();
 };
 
 //	Creates a `references` field that holds the references to other posts
