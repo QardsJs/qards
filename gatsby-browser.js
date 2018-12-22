@@ -5,7 +5,7 @@ const performanceMode = settings.performanceMode;
 
 exports.onInitialClientRender = () => {
 	if (!performanceMode) {
-		if (fontNpmPackage) {
+		if (fontNpmPackage.length > 0) {
 			/**
 			 * This custom font directory is created by gatsby-node
 			 * `onPreBootstrap` hook. I would be easier right here to
