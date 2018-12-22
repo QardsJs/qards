@@ -64,49 +64,50 @@ export default class Post extends React.Component<Props, State> {
 			const widget = params[1];
 			const config = decodeWidgetDataObject(params[2]);
 
-			let module: Promise<any> | null, Component;
+			let module: string | null, Component;
 
 			//	image and header are loaded for all posts immediately
 			switch (widget) {
 				case 'image':
-					module = import(/* webpackPrefetch: true */ '../qard/image/content');
+					module = 'image/content';
 					break;
 				case 'qards-code':
-					module = import(/* webpackPrefetch: true */ '../qard/code');
+					module = 'code';
 					break;
 				case 'qards-reveal':
-					module = import(/* webpackPrefetch: true */ '../qard/reveal');
+					module = 'reveal';
 					break;
 				case 'qards-callout':
-					module = import(/* webpackPrefetch: true */ '../qard/callout');
+					module = 'callout';
 					break;
 				case 'qards-audio':
-					module = import(/* webpackPrefetch: true */ '../qard/audio');
+					module = 'audio';
 					break;
 				case 'qards-video':
-					module = import(/* webpackPrefetch: true */ '../qard/video');
+					module = 'video';
 					break;
 				case 'qards-divider':
-					module = import(/* webpackPrefetch: true */ '../qard/divider');
+					module = 'divider';
 					break;
 				case 'qards-gallery':
-					module = import(/* webpackPrefetch: true */ '../qard/gallery');
+					module = 'gallery';
 					break;
 				case 'qards-countdown':
-					module = import(/* webpackPrefetch: true */ '../qard/countdown');
+					module = 'countdown';
 					break;
 				case 'qards-reference':
-					module = import(/* webpackPrefetch: true */ '../qard/reference');
+					module = 'reference';
 					break;
 				case 'qards-section-heading':
-					module = import(/* webpackPrefetch: true */ '../qard/header/');
+					module = 'header/';
 					break;
 				default:
 					module = null;
 			}
 
 			if (module) {
-				return module.then(({default: Component}) => {
+				//	There needs to be a single import
+				return import(/* webpackPrefetch: true */`../qard/${module}`).then(({default: Component}) => {
 					resolve(<TrackVisibility once>
 						<Component post={post} preview={preview} {...config}/>
 					</TrackVisibility>);

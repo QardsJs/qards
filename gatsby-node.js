@@ -389,26 +389,54 @@ exports.onCreateWebpackConfig = ({stage, actions}) => {
 exports.onPreBootstrap = () => {
 	//	See gatsby-browser.js to learn why we do this
 	const customfontsDir = './public/custom-fonts';
+	const performanceMode = siteSettings.performanceMode;
 
-	const loadCustomFonts = () => {
-		const fontNpmPackage = siteSettings.typography.npmPackage;
-		if (fontNpmPackage) {
-			ncp.limit = 16;
-
+	const writeEmptyFile = () => {
+		return new Promise((resolve, reject) => {
 			mkdirp(customfontsDir, (err) => {
 				if (err) {
-					console.error('unable to create custom fonts folder');
-					throw err;
+					reject(err);
 				} else {
-					ncp(`node_modules/${fontNpmPackage}`, customfontsDir, (err) => {
+					//	write an empty file because we can't conditionally import inside gatsby-browser
+					fs.writeFile('./public/custom-fonts/index.css', '', (err) => {
 						if (err) {
-							console.error('unable to copy font package');
-							throw err;
+							reject(err);
 						}
+						resolve();
 					});
 				}
 			});
-		}
+		});
+	};
+
+	const loadCustomFonts = () => {
+		const fontNpmPackage = siteSettings.typography.npmPackage;
+
+		writeEmptyFile().then(() => {
+			if (fontNpmPackage) {
+				ncp.limit = 16;
+
+				mkdirp(customfontsDir, (err) => {
+					if (err) {
+						console.error('unable to create custom fonts folder');
+						throw err;
+					} else {
+						if (!performanceMode) {
+							ncp(`node_modules/${fontNpmPackage}`, customfontsDir, (err) => {
+								if (err) {
+									console.error('unable to copy font package');
+									throw err;
+								}
+							});
+						} else {
+							console.warn('Performance mode: external font will not be loaded!');
+						}
+					}
+				});
+			}
+		}).catch((err) => {
+			throw err;
+		});
 	};
 
 	//	Ensure a clean copy of the custom fonts dir
