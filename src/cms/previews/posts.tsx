@@ -7,7 +7,7 @@ import StylesLoader from '../styles-loader';
 const PostPreview = ({entry}: any) => {
 	const title: string = entry.getIn(['data', 'title']);
 	const excerpt = entry.getIn(['data', 'excerpt']);
-	const created_at = entry.getIn(['data', 'created_at']).toString();
+	const created_at = entry.getIn(['data', 'created_at']);
 	const body = entry.getIn(['data', 'body']);
 
 	const heroAlt: string = entry.getIn(['data', 'hero', 'alt']);
@@ -18,15 +18,15 @@ const PostPreview = ({entry}: any) => {
 	};
 
 	return <StylesLoader>
-		<div style={{padding: "20px 10px"}}>
+		<div style={{padding: '20px 10px'}}>
 			<Post
 				preview={true}
 				previewData={{
 					title,
-					created_at,
+					created_at: created_at ? created_at.toString() : '',
 					excerpt,
-					heroImage: hero,
-					md       : body,
+					heroImage : hero,
+					md        : body,
 				}}
 			/>
 		</div>

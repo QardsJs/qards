@@ -143,10 +143,13 @@ export default class Post extends React.Component<Props, State> {
 		}
 	}
 
+	bodyMd(props?: Props): string {
+		const {post, previewData} = props ? props : this.props;
+		return (post ? post.md : (previewData ? previewData.md : '')) || '';
+	}
+
 	get mdLines(): string[] {
-		const {post, previewData} = this.props;
-		const md: string = post ? post.md : (previewData ? previewData.md : '');
-		return md.split('\n');
+		return this.bodyMd(this.props).split('\n');
 	}
 
 	isAsyncWidget(widget: string | null): boolean {
@@ -159,7 +162,7 @@ export default class Post extends React.Component<Props, State> {
 		return params[1];
 	}
 
-	async componentDidMount(): Promise<void> {
+	async setBodyLines() {
 		const lines = this.mdLines;
 
 		let bodyLines: bodyLine[] = [];
@@ -167,6 +170,7 @@ export default class Post extends React.Component<Props, State> {
 		for (let i = 0; i < lines.length; i++) {
 			const line = lines[i];
 
+			if (!line.trim().length) continue;
 
 			if (lineRepresentsEncodedComponent(line)) {
 				const computed = await this.renderComponent(line);
@@ -182,6 +186,19 @@ export default class Post extends React.Component<Props, State> {
 		}
 
 		this.setState({bodyLines});
+	}
+
+	async componentDidMount(): Promise<void> {
+		return this.setBodyLines();
+	}
+
+	async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): Promise<void> {
+		//	when using the CMS we need to update the state each time we update the body
+		//	but make sure we're not doing an endless loop here so we just do a match on the
+		//	body to detect changes and propagate our lines into state
+		if (this.bodyMd(prevProps) !== this.bodyMd()) {
+			return this.setBodyLines();
+		}
 	}
 
 	renderStaticBody() {
@@ -272,7 +289,6 @@ export default class Post extends React.Component<Props, State> {
 				alt: previewData.heroImage.alt || '',
 			};
 		}
-		const md = post ? post.md : (previewData ? previewData.md : '');
 
 		return (
 			<Article>
