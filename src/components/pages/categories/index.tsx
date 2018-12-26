@@ -66,7 +66,7 @@ class CategoryPage extends React.Component<Props, any> {
 						{featured.map((f) => <FeaturedPost key={f.id} post={f}/>)}
 					</Box>}
 
-					{posts.length && <Box mt={[20, 20, 20, 40]}>
+					{posts.length > 0 && <Box mt={[20, 20, 20, 40]}>
 						<Posts showExcerpt={true} posts={posts} pagination={pagination}/>
 					</Box>}
 
