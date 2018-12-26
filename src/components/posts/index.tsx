@@ -106,6 +106,7 @@ export default class Posts extends Component<Props, State> {
 							as="li"
 							key={key}
 							className={`itemli`}
+							style={coverversion ? {} : {marginTop: 20}}
 						>
 							<Article className={'post-card-article'}>
 								<StyledCard

@@ -13,7 +13,7 @@ meta:
 isPage: false
 isFeatured: false
 pinSidebar:
-  enable: true
+  enable: false
   categories: Qards
 showAuthor: true
 hero:
