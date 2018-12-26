@@ -15,6 +15,7 @@ import config from '../../../../static/config/settings.json';
 interface PostPageProps {
 	post: PostType;
 	related: PostType[];
+	pinned?: PostType[];
 	location: any;
 }
 
@@ -55,7 +56,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 
 
 	render() {
-		const {post, related, location} = this.props;
+		const {post, related, pinned, location} = this.props;
 
 		const tokenizedPost = tokenizePost(post);
 
@@ -96,7 +97,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 				<Content style={{
 					marginBottom: 40,
 				}}>
-					<Post post={tokenizedPost} location={location}/>
+					<Post post={tokenizedPost} location={location} pinnedPosts={pinned}/>
 				</Content>
 
 				{related.length > 0 && <Box mt={[80, 80, 80, 120]}>

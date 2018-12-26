@@ -96,7 +96,7 @@ export const query = graphql`
 			totalCount
 			edges {
 				node {
-					...postFragment
+					...cardPostFragment
 				}
 			}
 		}
@@ -115,7 +115,7 @@ export const query = graphql`
 		) {
 			edges {
 				node {
-					...postFragment
+					...cardPostFragment
 				}
 			}
 		}

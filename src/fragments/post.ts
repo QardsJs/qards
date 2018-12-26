@@ -201,4 +201,47 @@ export const _ = graphql`
 			}
 		}
 	}
+	
+	
+	fragment cardPostFragment on MarkdownRemark {
+		id
+		md: rawMarkdownBody
+		
+		authors {
+			...authorFragment
+		}
+		
+		categories {
+			id
+			frontmatter {
+				title
+			}
+		}
+		
+		frontmatter{
+			title
+			excerpt
+			created_at(formatString: "MMMM DD, YYYY")
+			
+			hero{
+				alt
+				image {
+					thumb: childImageSharp {
+						fluid(maxWidth:450){
+							tracedSVG
+							aspectRatio
+							originalImg
+							src
+							srcSet
+							sizes
+						}
+					}
+				}
+			}
+		}
+		
+		fields {
+			slug
+		}
+	}
 `;

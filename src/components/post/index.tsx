@@ -15,6 +15,7 @@ import Disqus from '../disqus';
 
 export interface Props {
 	post: PostType;
+	pinnedPosts?: PostType[];
 	location: {
 		href: string;
 	};
@@ -22,7 +23,7 @@ export interface Props {
 
 export default class Post extends React.Component<Props, any> {
 	public render() {
-		const {post, location} = this.props;
+		const {post, pinnedPosts, location} = this.props;
 
 		const showProgress = getPostsConfig('progressShow');
 		const performanceMode = getSettingsConfig('performanceMode');
@@ -50,7 +51,12 @@ export default class Post extends React.Component<Props, any> {
 				</Box>
 				<SidebarWrapper width={[0, 0, 0, 2 / 5]} mt={[0, 0, 0, 60]}>
 					<Hide medium small xsmall className={'sidebar'}>
-						<Sidebar wrapperProps={{style: {marginLeft: 60}}} post={post} currentUrl={location.href}/>
+						<Sidebar
+							wrapperProps={{style: {marginLeft: 60}}}
+							post={post}
+							pinnedPosts={pinnedPosts}
+							currentUrl={location.href}
+						/>
 					</Hide>
 				</SidebarWrapper>
 

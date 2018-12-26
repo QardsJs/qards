@@ -29,6 +29,9 @@ interface Props {
 	//  if these cards are rendered using a dark theme
 	darkTheme?: boolean;
 	pagination?: PaginationType;
+
+	//	in coverVersion set to true we only show the cover
+	coverVersion?: boolean;
 }
 
 interface State {
@@ -36,8 +39,6 @@ interface State {
 }
 
 export default class Posts extends Component<Props, State> {
-	ticking: boolean | undefined = undefined;
-
 	static renderAuthor(post: PostType) {
 		const performance = getSettingsConfig('performanceMode');
 
@@ -83,7 +84,7 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	render() {
-		const {posts, title, pagination, showExcerpt, darkTheme} = this.props;
+		const {posts, title, pagination, showExcerpt, darkTheme, coverVersion} = this.props;
 		const performance = getSettingsConfig('performanceMode');
 
 		const result: PostType[] = [];
@@ -93,7 +94,7 @@ export default class Posts extends Component<Props, State> {
 		}
 
 		return (
-			<Wrapper className={darkTheme ? 'darktheme' : ''}>
+			<Wrapper coverVersion={coverVersion || false} className={darkTheme ? 'darktheme' : ''}>
 				{title && <h3>{title}</h3>}
 
 				<List as="ul" style={{
@@ -101,7 +102,7 @@ export default class Posts extends Component<Props, State> {
 				}}>
 					{result.map((post, key) => {
 						return <ListItem
-							width={[6 / 6, 3 / 6, 2 / 6]}
+							width={[1]}
 							px={'20px'}
 							as="li"
 							key={key}
@@ -109,19 +110,24 @@ export default class Posts extends Component<Props, State> {
 						>
 							<Article className={'post-card-article'}>
 								<StyledCard
+									coverVersion={coverVersion || false}
 									to={post.fields.slug}
-									className={`post-card unselectable ${performance ? 'performance' : ''}`}
+									className={`post-card unselectable ${performance ? 'performance' : ''} ${coverVersion ? 'cover' : ''}`}
 								>
-									{Posts.renderHero(post)}
+									{!performance && Posts.renderHero(post)}
 
+									{coverVersion && <h5 className={`cover title`}>{post.frontmatter.title}</h5>}
+									{coverVersion && <p className={`cover excerpt`}>{post.frontmatter.excerpt}</p>}
+
+									{!coverVersion || performance &&
 									<Content className={'post-card-content'}>
 										<span className={`date`}>{post.frontmatter.created_at}</span>
 										<h5 className={`title`}>{post.frontmatter.title}</h5>
 										{showExcerpt !== false &&
 										<p className={`excerpt`}>{post.frontmatter.excerpt}</p>}
-									</Content>
+									</Content>}
 
-									{Posts.renderAuthor(post)}
+									{!coverVersion && !performance && Posts.renderAuthor(post)}
 								</StyledCard>
 							</Article>
 						</ListItem>;

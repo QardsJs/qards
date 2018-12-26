@@ -67,7 +67,7 @@ export const query = graphql`
 		) {
 			edges {
 				node {
-					...postFragment
+					...cardPostFragment
 				}
 			}
 		}

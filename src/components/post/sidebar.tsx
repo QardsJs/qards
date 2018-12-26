@@ -7,18 +7,18 @@ import Toc from './toc';
 import Tags from './tags';
 import Subscribe from '../subscribe';
 import SocialShare from '../social-share';
-import TitledWrapper from '../common/titled-wrapper';
 
 import {HTMLDivProps} from '@blueprintjs/core';
 import {PostType} from '../../fragments/post';
 import {getPostsConfig, getPluginsConfig} from '../../utils/helpers';
+import Posts from '../posts';
 
 const Wrapper = styled.div`
     color: black;
 `;
 
 export const SidebarItem = styled.div`
-	margin-bottom: 80px;
+	margin-bottom: 60px;
 `;
 
 const SubscribeWrapper = styled.div`
@@ -45,15 +45,14 @@ const TagsWrapper = styled.div`
 
 interface Props {
 	post: PostType;
+	pinnedPosts?: PostType[];
 	currentUrl: string;
 	wrapperProps?: HTMLDivProps;
 }
 
 export default class PostSidebar extends Component<Props, any> {
-
-
 	render() {
-		const {post, currentUrl} = this.props;
+		const {post, currentUrl, pinnedPosts} = this.props;
 
 		return (
 			<Wrapper {...this.props.wrapperProps}>
@@ -65,6 +64,9 @@ export default class PostSidebar extends Component<Props, any> {
 					</SocialShareWrapper>
 				</SidebarItem>}
 
+				{pinnedPosts && pinnedPosts.length > 0 && <SidebarItem>
+					<Posts showExcerpt={false} posts={pinnedPosts} coverVersion={true}/>
+				</SidebarItem>}
 
 				{(getPostsConfig('subscribeShow') && getPluginsConfig(['emailSubscribers', 'enable'])) &&
 				<SidebarItem>
