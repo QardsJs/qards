@@ -96,7 +96,6 @@ export const StyledCard = styled(Link)`
 	&.cover {
 		img {
 			border-radius: 4px;
-	    	filter: ${(props: {coverversion: boolean|number}) => props.coverversion == true ? 'grayscale(0%) brightness(40%) contrast(1)' : ''}!important;
 		}
 		
 		p.excerpt {
@@ -109,6 +108,7 @@ export const StyledCard = styled(Link)`
 			display: block;
 			text-shadow: 1px 1px 1px #000;
 			font-size: 1.1rem;
+			visibility: hidden;
 		}
 		
 		h5.title {
@@ -122,11 +122,14 @@ export const StyledCard = styled(Link)`
 			color: white;
 			display: block;
 			text-shadow: 1px 1px 1px #000;
+			visibility: hidden;
 		}
 		
 		&:hover {
-			p.excerpt, h5.title { visibility: hidden!important }
-			img { filter: none!important }
+			p.excerpt, h5.title { visibility: visible!important }
+			img {
+				filter: ${(props: {coverversion: boolean|number}) => props.coverversion == true ? 'grayscale(0%) brightness(40%) contrast(1)' : ''}!important;
+			}
 		}
 	}
 
