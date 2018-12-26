@@ -65,7 +65,7 @@ export default class PostSidebar extends Component<Props, any> {
 				</SidebarItem>}
 
 				{pinnedPosts && pinnedPosts.length > 0 && <SidebarItem>
-					<Posts showExcerpt={false} posts={pinnedPosts} coverVersion={true}/>
+					<Posts showExcerpt={false} posts={pinnedPosts} coverversion={true} gridConfig={[1]}/>
 				</SidebarItem>}
 
 				{(getPostsConfig('subscribeShow') && getPluginsConfig(['emailSubscribers', 'enable'])) &&

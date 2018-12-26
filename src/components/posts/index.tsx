@@ -25,13 +25,14 @@ interface Props {
 	posts: PostType[];
 	showExcerpt?: boolean;
 	title?: string;
+	gridConfig?: number[];
 
 	//  if these cards are rendered using a dark theme
 	darkTheme?: boolean;
 	pagination?: PaginationType;
 
-	//	in coverVersion set to true we only show the cover
-	coverVersion?: boolean;
+	//	in coverversion set to true we only show the cover
+	coverversion?: boolean;
 }
 
 interface State {
@@ -40,8 +41,6 @@ interface State {
 
 export default class Posts extends Component<Props, State> {
 	static renderAuthor(post: PostType) {
-		const performance = getSettingsConfig('performanceMode');
-
 		if (post.authors && post.authors.length) {
 			return <Author className={'post-card-author'}>
 				{post.authors[0].frontmatter.avatar && !performance &&
@@ -66,9 +65,7 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	static renderHero(post: PostType) {
-		const performance = getSettingsConfig('performanceMode');
-
-		if (post.frontmatter.hero && post.frontmatter.hero.image && !performance) {
+		if (post.frontmatter.hero && post.frontmatter.hero.image) {
 			return <Cover className={'post-card-cover'}>
 				<TrackVisibility once>
 					<LazyLoad height={210}>
@@ -84,7 +81,7 @@ export default class Posts extends Component<Props, State> {
 	}
 
 	render() {
-		const {posts, title, pagination, showExcerpt, darkTheme, coverVersion} = this.props;
+		const {posts, title, pagination, showExcerpt, darkTheme, coverversion, gridConfig} = this.props;
 		const performance = getSettingsConfig('performanceMode');
 
 		const result: PostType[] = [];
@@ -93,8 +90,10 @@ export default class Posts extends Component<Props, State> {
 			result.push(tokenizePost(posts[i]));
 		}
 
+		const showHero = (!performance && !coverversion) || coverversion;
+
 		return (
-			<Wrapper coverVersion={coverVersion || false} className={darkTheme ? 'darktheme' : ''}>
+			<Wrapper coverversion={coverversion || false} className={darkTheme ? 'darktheme' : ''}>
 				{title && <h3>{title}</h3>}
 
 				<List as="ul" style={{
@@ -102,7 +101,7 @@ export default class Posts extends Component<Props, State> {
 				}}>
 					{result.map((post, key) => {
 						return <ListItem
-							width={[1]}
+							width={gridConfig || [6 / 6, 3 / 6, 2 / 6]}
 							px={'20px'}
 							as="li"
 							key={key}
@@ -110,16 +109,21 @@ export default class Posts extends Component<Props, State> {
 						>
 							<Article className={'post-card-article'}>
 								<StyledCard
-									coverVersion={coverVersion || false}
+									coverversion={coverversion ? 1 : 0}
 									to={post.fields.slug}
-									className={`post-card unselectable ${performance ? 'performance' : ''} ${coverVersion ? 'cover' : ''}`}
+									className={`post-card unselectable ${performance ? 'performance' : ''} ${coverversion ? 'cover' : ''}`}
 								>
-									{!performance && Posts.renderHero(post)}
+									{showHero && Posts.renderHero(post)}
 
-									{coverVersion && <h5 className={`cover title`}>{post.frontmatter.title}</h5>}
-									{coverVersion && <p className={`cover excerpt`}>{post.frontmatter.excerpt}</p>}
+									{coverversion && <h5 className={`cover title ${performance ? 'performance' : ''}`}>
+										{post.frontmatter.title}
+									</h5>}
 
-									{!coverVersion || performance &&
+									{coverversion && <p className={`cover excerpt ${performance ? 'performance' : ''}`}>
+										{post.frontmatter.excerpt}
+									</p>}
+
+									{!coverversion &&
 									<Content className={'post-card-content'}>
 										<span className={`date`}>{post.frontmatter.created_at}</span>
 										<h5 className={`title`}>{post.frontmatter.title}</h5>
@@ -127,7 +131,7 @@ export default class Posts extends Component<Props, State> {
 										<p className={`excerpt`}>{post.frontmatter.excerpt}</p>}
 									</Content>}
 
-									{!coverVersion && !performance && Posts.renderAuthor(post)}
+									{!coverversion && Posts.renderAuthor(post)}
 								</StyledCard>
 							</Article>
 						</ListItem>;

@@ -54,8 +54,8 @@ export const Wrapper = styled.div`
         }
     }
     
-    padding: ${(props: {coverVersion: boolean}) => {
-	return props.coverVersion == true ? `60px 0` : `0 0 20px 0`;
+    padding: ${(props: {coverversion: boolean}) => {
+	return props.coverversion == true ? `60px 0` : `0 0 20px 0`;
 }};
     
     h3 {
@@ -96,7 +96,7 @@ export const StyledCard = styled(Link)`
 	&.cover {
 		img {
 			border-radius: 4px;
-	    	filter: ${(props: {coverVersion: boolean}) => props.coverVersion == true ? 'grayscale(0%) brightness(40%) contrast(1)' : ''}!important;
+	    	filter: ${(props: {coverversion: boolean|number}) => props.coverversion == true ? 'grayscale(0%) brightness(40%) contrast(1)' : ''}!important;
 		}
 		
 		p.excerpt {
