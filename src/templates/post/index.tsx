@@ -48,7 +48,7 @@ const PostTemplate = ({data, location}: Props) => {
 export default PostTemplate;
 
 export const query = graphql`
-	query($slug: String, $tags: [String]) {
+	query($slug: String, $tags: [String], $categories: [String]) {
 		post: markdownRemark(fields: { slug: { eq: $slug } }) {
 			...postFragment
 		}
@@ -57,8 +57,11 @@ export const query = graphql`
 			sort: {fields: [frontmatter___created_at], order: DESC},
 			limit: 2,
 			filter: {
-				fileAbsolutePath: {regex: "//collections/posts//"},
-				frontmatter: {pinSidebar:{enable: {eq: true}}}
+				fileAbsolutePath: {regex: "//static/content/collections/posts//"},
+				frontmatter: {
+					pinSidebar:{enable: {eq: true}},
+					categories: {in: $categories}
+				}
 			}
 		) {
 			edges {
