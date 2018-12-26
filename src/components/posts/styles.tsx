@@ -55,7 +55,7 @@ export const Wrapper = styled.div`
     }
     
     padding: ${(props: {coverversion: boolean}) => {
-	return props.coverversion == true ? `60px 0` : `0 0 20px 0`;
+	return props.coverversion == true ? `0 0 60px 0` : `0 0 20px 0`;
 }};
     
     h3 {
