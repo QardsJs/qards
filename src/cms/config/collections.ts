@@ -617,7 +617,7 @@ export const postsCollection = {
 			label   : 'Enable?',
 			name    : 'enable',
 			widget  : 'boolean',
-			required: false,
+			required: true,
 			default : false,
 		}, {
 			label        : 'Target categories',
@@ -627,9 +627,9 @@ export const postsCollection = {
 			searchFields : ['title', 'excerpt'],
 			valueField   : 'title',
 			displayFields: ['title'],
-			hint         : `Select the category where this post should appear in the sidebar. You
-			can leave this field empty to target all posts with this pin. WARNING: A current  
-			limitation in the CMS does not allow selecting multiple categories`,
+			required     : true,
+			hint         : `Select the category where this post should appear in the sidebar. 
+			WARNING: A current limitation in the CMS does not allow selecting multiple categories`,
 		}],
 	}, {
 		label   : 'Hero',

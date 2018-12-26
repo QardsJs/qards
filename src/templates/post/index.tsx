@@ -59,8 +59,10 @@ export const query = graphql`
 			filter: {
 				fileAbsolutePath: {regex: "//static/content/collections/posts//"},
 				frontmatter: {
-					pinSidebar:{enable: {eq: true}},
-					categories: {in: $categories}
+					pinSidebar:{
+						enable: {eq: true},
+						categories: {in: $categories}
+					}
 				}
 			}
 		) {
