@@ -38,7 +38,7 @@ const Blog = () => {
 		render={(data: DataProps) => {
 			return <Route
 				component={BlogRoute}
-				latest={data.latest ? extractNodesFromEdges(data.latest.edges) : []}
+				posts={data.latest ? extractNodesFromEdges(data.latest.edges) : []}
 				path={'/'}
 			/>;
 		}}

@@ -153,20 +153,23 @@ const paginateCategories = (createPage, posts, categories) => {
 		const numPages = Math.ceil(categoryPosts.length / postsPerPage);
 		const slug = c.fields.slug;
 
-		_.times(numPages, i => {
-			createPage({
-				path     : i === 0 ? slug : `${slug}${i + 1}`,
-				component: categoryTemplate,
-				context  : {
-					limit      : postsPerPage,
-					skip       : i * postsPerPage,
-					numPages,
-					currentPage: i + 1,
-					category   : c,
-					slug,
-				},
+		//	only create a page if the category has posts
+		if (categoryPosts.length) {
+			_.times(numPages, i => {
+				createPage({
+					path     : i === 0 ? slug : `${slug}${i + 1}`,
+					component: categoryTemplate,
+					context  : {
+						limit      : postsPerPage,
+						skip       : i * postsPerPage,
+						numPages,
+						currentPage: i + 1,
+						category   : c,
+						slug,
+					},
+				});
 			});
-		});
+		}
 	});
 };
 
