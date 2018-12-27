@@ -76,14 +76,14 @@ export class IndexPage extends React.Component<Props, any> {
 						{featured && <FeaturedPost post={featured}/>}
 
 						<Box mb={postsMb}>
-							{posts.length > 0 && <Posts
+							{posts && posts.length > 0 && <Posts
 								showExcerpt={getPostsConfig(['showExcerpts'], true)}
 								posts={posts}
 								title={`Latest articles`}
 								pagination={pagination}
 							/>}
 
-							{posts.length <= 0 &&
+							{!posts || posts.length <= 0 &&
 							<Box mt={200} mb={200} style={{
 								textAlign: 'center',
 							}}>
