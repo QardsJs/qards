@@ -8,7 +8,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
 const base64 = require('base-64');
-const {createFilePath} = require('gatsby-source-filesystem');
+const { createFilePath } = require('gatsby-source-filesystem');
 
 const postsSettings = require('./static/config/posts.json');
 const siteSettings = require('./static/config/settings.json');
@@ -56,11 +56,11 @@ const paginatePosts = (createPage, postsEdges) => {
 
 	_.times(numPages, i => {
 		createPage({
-			path     : i === 0 ? `${pathPrefix}` : `${pathPrefix}/${i + 1}`,
+			path: i === 0 ? `${pathPrefix}` : `${pathPrefix}/${i + 1}`,
 			component: postsTemplate,
-			context  : {
-				limit      : postsPerPage,
-				skip       : i * postsPerPage,
+			context: {
+				limit: postsPerPage,
+				skip: i * postsPerPage,
 				numPages,
 				currentPage: i + 1,
 			},
@@ -75,9 +75,9 @@ const paginatePosts = (createPage, postsEdges) => {
 
 		// create posts
 		createPage({
-			path     : slug,
+			path: slug,
 			component: postTemplate,
-			context  : {
+			context: {
 				slug,
 				previous,
 				next,
@@ -113,11 +113,11 @@ const paginateTags = (createPage, posts) => {
 
 		_.times(numPages, i => {
 			createPage({
-				path     : i === 0 ? `tag/${slug}` : `tag/${slug}/${i + 1}`,
+				path: i === 0 ? `tag/${slug}` : `tag/${slug}/${i + 1}`,
 				component: tagTemplate,
-				context  : {
-					limit      : postsPerPage,
-					skip       : i * postsPerPage,
+				context: {
+					limit: postsPerPage,
+					skip: i * postsPerPage,
 					numPages,
 					currentPage: i + 1,
 					tag,
@@ -153,28 +153,43 @@ const paginateCategories = (createPage, posts, categories) => {
 		const numPages = Math.ceil(categoryPosts.length / postsPerPage);
 		const slug = c.fields.slug;
 
-		//	only create a page if the category has posts
-		if (categoryPosts.length) {
+		if (categoryPosts.length > 0) {
 			_.times(numPages, i => {
 				createPage({
-					path     : i === 0 ? slug : `${slug}${i + 1}`,
+					path: i === 0 ? slug : `${slug}${i + 1}`,
 					component: categoryTemplate,
-					context  : {
-						limit      : postsPerPage,
-						skip       : i * postsPerPage,
+					context: {
+						limit: postsPerPage,
+						skip: i * postsPerPage,
 						numPages,
 						currentPage: i + 1,
-						category   : c,
+						category: c,
 						slug,
 					},
 				});
+			});
+		} else {
+			//	the navbar component does a query on the categories but it can't know
+			//	if the results have any posts in them so we have to make a page even if
+			//	there will be no results to be shown
+			createPage({
+				path: slug,
+				component: categoryTemplate,
+				context: {
+					limit: postsPerPage,
+					skip: 0,
+					numPages,
+					currentPage: 1,
+					category: c,
+					slug,
+				},
 			});
 		}
 	});
 };
 
-exports.createPages = ({graphql, actions}) => {
-	const {createPage} = actions;
+exports.createPages = ({ graphql, actions }) => {
+	const { createPage } = actions;
 
 	return new Promise((resolve, reject) => {
 		resolve(
@@ -319,11 +334,11 @@ const createFinalSlug = (post, slug) => {
 
 //	Creates a mapping between posts and authors, sets the slug
 //	and other required attributes
-exports.sourceNodes = ({actions, getNodes, getNode}) => {
-	const {createNodeField} = actions;
+exports.sourceNodes = ({ actions, getNodes, getNode }) => {
+	const { createNodeField } = actions;
 
 	getCollectionNodes('categories', getNodes).forEach(node => {
-		createNodeField({node, name: 'slug', value: `category${createFilePath({node, getNode})}`});
+		createNodeField({ node, name: 'slug', value: `category${createFilePath({ node, getNode })}` });
 	});
 
 	getCollectionNodes('posts', getNodes).forEach(node => {
@@ -331,8 +346,8 @@ exports.sourceNodes = ({actions, getNodes, getNode}) => {
 		mapCategoriesToPostNode(node, getNodes);
 
 		//	create the post slug
-		const slugPath = createFilePath({node, getNode});
-		createNodeField({node, name: 'slug', value: createFinalSlug(node, slugPath)});
+		const slugPath = createFilePath({ node, getNode });
+		createNodeField({ node, name: 'slug', value: createFinalSlug(node, slugPath) });
 	});
 };
 
@@ -372,7 +387,7 @@ const createReferencesField = (node, actions, getNodes) => {
 	node.references___NODES = references;
 };
 
-exports.onCreateWebpackConfig = ({stage, actions}) => {
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
 	const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 	if (stage === 'build-javascript') {
@@ -451,7 +466,7 @@ exports.onPreBootstrap = () => {
 };
 
 //	Creates a `references` field that holds the references to other posts
-exports.onCreateNode = async ({node, actions, getNodes}) => {
+exports.onCreateNode = async ({ node, actions, getNodes }) => {
 	if (isNodeOfCollection(node, 'posts')) createReferencesField(node, actions, getNodes);
 };
 
