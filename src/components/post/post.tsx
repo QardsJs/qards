@@ -202,6 +202,7 @@ export default class Post extends React.Component<Props, State> {
 	}
 
 	renderStaticBody() {
+		return '';
 		//	Since we're code splitting the qard modules and lazy loading them
 		//	we're losing SEO. This method returns the markdown without the qard
 		//	modules so we can push the text content out right away until the
@@ -245,10 +246,14 @@ export default class Post extends React.Component<Props, State> {
 		return <React.Fragment>
 			{this.state.bodyLines.map((line: bodyLine, k) => {
 				if (line.isWidget) {
-					//	render everything that is collected inside
-					//	our accumulator and then render the component
-					//	also resets the accumulator
-					const acc = accumulator.join('\n');
+					//	Render everything that is collected inside
+					//	our accumulator and then render the component.
+					//	Also resets the accumulator.
+					//	Make sure you join with double new lines otherwise the
+					//	computed markdown might render invalid by joining several
+					//	lines that don't belong together
+					const acc = accumulator.join('\n\n');
+
 					accumulator = [];
 
 					return <React.Fragment key={k}>
@@ -263,8 +268,9 @@ export default class Post extends React.Component<Props, State> {
 				}
 			})}
 
-			{(accumulator.length > 0) && <div className="paragraphs">
-				<MarkdownRender md={accumulator.join('\n')}/>
+			{/* Render the last bits that entered the accumulator */}
+			{accumulator.length > 0 && <div className="paragraphs">
+				<MarkdownRender md={accumulator.join('\n\n')}/>
 			</div>}
 		</React.Fragment>;
 	}

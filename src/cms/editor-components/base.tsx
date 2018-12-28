@@ -31,10 +31,13 @@ export default function(id: string, label: string, fields: FieldType[]) {
 		},
 
 		toBlock: (obj: any) => {
-			return JSON.stringify({
+			//	We're supposed to have new lines between the widgets but, just to make sure
+			//	we don't run into any trouble with Netlify CMS future updates, keep new lines
+			//	before and after the generated widget
+			return '\n' + JSON.stringify({
 				widget: id,
 				config: encodeWidgetDataObject(Immutable.fromJS(obj)),
-			});
+			}) + '\n';
 		},
 
 		toPreview: (obj: any) => <div/>,
