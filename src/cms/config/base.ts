@@ -8,7 +8,7 @@ export default {
 	media_folder : 'static/images/uploads',
 	public_folder: '/images/uploads',
 	slug         : {
-		encoding     : 'ascii',
-		clean_accents: true,
+		encoding     : 'unicode',
+		clean_accents: false,
 	},
 };

@@ -1,7 +1,7 @@
 {
   "name": "qards",
   "description": "Qards - a professional publishing platform",
-  "version": "0.0.2-alpha",
+  "version": "0.0.3-alpha",
   "author": "Romeo Mihalcea <romeo.mihalcea@gmail.com>",
   "dependencies": {
     "@blueprintjs/core": "^3.10.0",
