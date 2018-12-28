@@ -23,7 +23,7 @@ const Wrapper = styled.ul`
 		
 		&.active {
 			a {
-				color: ${theme.color(['primary', 'background'])};
+				color: ${theme.color(['secondaryAccent', 'background'])};
 				opacity: 1;
 				-webkit-transition: color 300ms linear;
 				-ms-transition: color 300ms linear;
