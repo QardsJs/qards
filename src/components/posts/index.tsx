@@ -41,6 +41,8 @@ interface State {
 
 export default class Posts extends Component<Props, State> {
 	static renderAuthor(post: PostType) {
+		const performance = getSettingsConfig('performanceMode');
+
 		if (post.authors && post.authors.length) {
 			return <Author className={'post-card-author'}>
 				{post.authors[0].frontmatter.avatar && !performance &&
