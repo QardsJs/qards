@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Loadable from 'react-loadable';
 import TrackVisibility from 'react-on-screen';
 
 import {Article, Date, Excerpt, Hero, Title} from './styles';

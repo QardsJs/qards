@@ -23,9 +23,7 @@ export default class DisqusComments extends React.Component<Props & React.HTMLAt
 		const {url, title, identifier, ...rest} = this.props;
 		const shortname = getPluginsConfig(['disqus', 'shortname']) || 'typely';
 		const config = {
-			url       : url,
-			identifier: title,
-			title     : identifier,
+			url, title, identifier,
 		};
 
 		return <Wrapper {...rest}>
