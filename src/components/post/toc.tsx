@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {throttle, maxBy} from 'lodash';
+import {throttle} from 'lodash';
 // @ts-ignore
 import SP from 'scrollprogress';
 
@@ -8,7 +8,7 @@ import theme from '../../theme';
 import {PostType} from '../../fragments/post';
 import {decodeWidgetDataObject} from '../../cms/utils';
 import {CardHeaderType} from '../qard/header';
-import {cPattern, getSettingsConfig, lineRepresentsEncodedComponent, Base64} from '../../utils/helpers';
+import {cPattern, getSettingsConfig, lineRepresentsEncodedComponent, slugify} from '../../utils/helpers';
 import TitledWrapper from '../common/titled-wrapper';
 import {SidebarItem} from './sidebar';
 
@@ -186,15 +186,15 @@ class Toc extends Component<Props, State> {
 						return (
 							<li
 								key={key}
-								id={`toc-header-${Base64.encode(header.title)}`}
+								id={`toc-header-${slugify(header.title)}`}
 								className={`toc-item ${
 									this.state.activeItemId ==
-									`h-item-${Base64.encode(header.title)}`
+									`h-item-${slugify(header.title)}`
 										? 'active'
 										: ''
 									} type-${header.type}`}
 							>
-								<a href={`#h-item-${Base64.encode(header.title)}`}>
+								<a href={`#h-item-${slugify(header.title)}`}>
 									<b>{header.title}</b>
 								</a>
 							</li>
