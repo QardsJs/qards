@@ -93,7 +93,7 @@ export default class Posts extends Component<Props, State> {
 		const showHero = (!performance && !coverversion) || coverversion;
 
 		return (
-			<Wrapper coverversion={coverversion || false} className={darkTheme ? 'darktheme' : ''}>
+			<Wrapper className={darkTheme ? 'darktheme' : ''}>
 				{title && <h3>{title}</h3>}
 
 				<List as="ul" style={{
