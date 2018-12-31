@@ -6,6 +6,7 @@ node_modules
 yarn-error.log
 yarn.lock
 public
+coverage
 netlify.toml
 cypress/.Trash-0
 cypress/screenshots
