@@ -1,7 +1,7 @@
 {
   "name": "qards",
   "description": "Qards - a professional publishing platform",
-  "version": "0.0.5-alpha",
+  "version": "0.0.6-alpha",
   "author": "Romeo Mihalcea <romeo.mihalcea@gmail.com>",
   "dependencies": {
     "@blueprintjs/core": "^3.10.0",
@@ -72,7 +72,7 @@
     "react-redux": "^6.0.0",
     "react-share": "^2.4.0",
     "react-typography": "^0.16.18",
-    "reading-time": "^1.1.3",
+    "reading-time-estimator": "^1.0.3",
     "remark": "^10.0.1",
     "remark-react": "^5.0.0",
     "resize-observer-polyfill": "^1.5.1",
@@ -99,10 +99,11 @@
     "develop": "gatsby develop",
     "cypress:open": "cypress open",
     "format": "prettier --write '**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "devDependencies": {
     "@types/algoliasearch": "^3.30.1",
+    "@types/jest": "^23.3.10",
     "@types/lodash": "^4.14.119",
     "@types/node": "^10.12.15",
     "@types/prop-types": "^15.5.8",
@@ -118,9 +119,12 @@
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
     "cypress": "^3.1.3",
+    "jest": "^23.6.0",
     "moment-locales-webpack-plugin": "^1.0.7",
     "prettier": "^1.15.3",
-    "redux-devtools-extension": "^2.13.7"
+    "redux-devtools-extension": "^2.13.7",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.2"
   },
   "repository": {
     "type": "git",

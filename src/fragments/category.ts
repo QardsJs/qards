@@ -4,7 +4,7 @@ import {PageHeroType, PageMetaType} from "./common";
 
 export interface CategoryType {
 	id: string;
-	posts: {
+	posts?: {
 		edges: PostType[];
 	}
 
