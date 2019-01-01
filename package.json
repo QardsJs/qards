@@ -14,7 +14,6 @@
     "algoliasearch": "^3.31.0",
     "autoprefixer": "^9.4.3",
     "babel-plugin-styled-components": "^1.10.0",
-    "base-64": "^0.1.0",
     "browser-image-size": "^1.1.0",
     "chai-colors": "^1.0.1",
     "core-js": "^2.6.1",
@@ -50,6 +49,7 @@
     "gatsby-transformer-sharp": "^2.1.9",
     "immutable": "^4.0.0-rc.12",
     "install": "^0.12.2",
+    "js-base64": "^2.5.0",
     "lodash": "^4.17.10",
     "lodash.debounce": "^4.0.8",
     "mkdirp": "^0.5.1",
@@ -101,7 +101,8 @@
     "develop": "gatsby develop",
     "cypress:open": "cypress open",
     "format": "prettier --write '**/*.js'",
-    "test": "jest"
+    "test": "jest",
+    "inspect:build-size": "gatsby build && find public/ -not -name \"*.jpg\" -not -name \"*.map\" -not -name \"*.png\" -not -name \"*.json\" -not -name \"*.map\" -size +500k -exec ls -lh {} \\+"
   },
   "devDependencies": {
     "@types/algoliasearch": "^3.30.1",

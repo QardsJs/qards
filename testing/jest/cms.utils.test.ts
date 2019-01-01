@@ -10,6 +10,12 @@ test('[decodeWidgetDataObject] should properly decode encoded widget', () => {
 		});
 });
 
+test('[decodeWidgetDataObject] should produce a result that can pe JSON parsed without errors', () => {
+	expect(() => {
+		cmsUtils.decodeWidgetDataObject('eyJ0aXRsZSI6IlJldGFpbCBBcmJpdHJhZ2WgIiwidHlwZSI6InNlY29uZGFyeSJ9');
+	}).not.toThrow();
+});
+
 test('[encodeWidgetDataObject] should properly encode widget data', () => {
 	expect(cmsUtils.encodeWidgetDataObject({
 		'title'   : 'Audio playlist',

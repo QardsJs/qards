@@ -1,4 +1,4 @@
-import {Base64} from '../utils/helpers';
+import {Base64} from 'js-base64';
 
 export function encodeWidgetDataObject(data: object): string {
 	return Base64.encode(JSON.stringify(data));

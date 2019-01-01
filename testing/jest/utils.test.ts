@@ -1,3 +1,5 @@
+// @ts-ignore
+import {Base64} from 'js-base64';
 import * as helpers from '../../src/utils/helpers';
 import {CategoryType} from '../../src/templates/category';
 import {PostType} from '../../src/fragments/post';
@@ -24,18 +26,26 @@ test('[slugify] spaces should be trimmed from start or finish', () => {
 });
 
 test('[Base64] should encode without errors', () => {
-	expect(helpers.Base64.encode('寻找罪魁祸首')).toBe('5a+75om+572q6a2B56W46aaW');
+	expect(Base64.encode('寻找罪魁祸首')).toBe('5a+75om+572q6a2B56W46aaW');
+	expect(Base64.encode(
+		'{"title":"Get a quality microphone","type":"secondary"}')).toBe(
+		'eyJ0aXRsZSI6IkdldCBhIHF1YWxpdHkgbWljcm9waG9uZSIsInR5cGUiOiJzZWNvbmRhcnkifQ==',
+	);
 });
 
 test('[Base64] should decode without errors', () => {
-	expect(helpers.Base64.decode('5a+75om+572q6a2B56W46aaW')).toBe('寻找罪魁祸首');
+	expect(Base64.decode('5a+75om+572q6a2B56W46aaW')).toBe('寻找罪魁祸首');
+	expect(Base64.decode(
+		'eyJ0aXRsZSI6IkdldCBhIHF1YWxpdHkgbWljcm9waG9uZSIsInR5cGUiOiJzZWNvbmRhcnkifQ==')).toBe(
+		'{"title":"Get a quality microphone","type":"secondary"}',
+	);
 });
 
 test('[Base64] encodes and decodes with same result', () => {
 	const input = `寻找罪魁祸首-我一得到任何消息，就立刻给你发短信`;
 	const output = `5a+75om+572q6a2B56W46aaWLeaIkeS4gOW+l+WIsOS7u+S9lea2iOaBr++8jOWwseeri+WIu+e7meS9oOWPkeefreS/oQ==`;
-	expect(helpers.Base64.encode(input)).toBe(output);
-	expect(helpers.Base64.decode(output)).toBe(input);
+	expect(Base64.encode(input)).toBe(output);
+	expect(Base64.decode(output)).toBe(input);
 });
 
 test('[normalizeCfgPath] should return an array if a string is passed', () => {
@@ -166,14 +176,14 @@ test('[tokenizePost] should replace specified tokens with provided values', () =
 
 	p.frontmatter.title = '{createdAt:yyyy} is the year the article was written';
 	p.frontmatter.excerpt = '{createdAt:yyyy} is the year the article was written';
-	expect(helpers.tokenizePost(p).frontmatter.title).toBe('2018 is the year the article was written');
-	expect(helpers.tokenizePost(p).frontmatter.excerpt).toBe('2018 is the year the article was written');
+	expect(helpers.tokenizePost(p).frontmatter.title).toBe('2019 is the year the article was written');
+	expect(helpers.tokenizePost(p).frontmatter.excerpt).toBe('2019 is the year the article was written');
 
 
 	p.frontmatter.title = '{currentDate:yyyy} is current year';
 	p.frontmatter.excerpt = '{currentDate:yyyy} is current year';
-	expect(helpers.tokenizePost(p).frontmatter.title).toBe('2018 is current year');
-	expect(helpers.tokenizePost(p).frontmatter.excerpt).toBe('2018 is current year');
+	expect(helpers.tokenizePost(p).frontmatter.title).toBe('2019 is current year');
+	expect(helpers.tokenizePost(p).frontmatter.excerpt).toBe('2019 is current year');
 
 });
 
