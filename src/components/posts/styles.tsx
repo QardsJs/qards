@@ -54,7 +54,7 @@ export const Wrapper = styled.div`
         }
     }
     
-    padding: 0 0 20px 0;
+    padding: 40px 0 20px 0;
     
     h3 {
         text-align: center;
