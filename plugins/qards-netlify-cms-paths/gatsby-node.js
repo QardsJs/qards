@@ -1,7 +1,7 @@
 require('typescript-require');
 
 const _ = require('lodash');
-const base64 = require('base-64');
+const base64 = require('js-base64').Base64;
 const path = require('path');
 const makeRelative = require('./make-relative');
 const deepMap = require('deep-map-object');

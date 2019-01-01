@@ -7,7 +7,7 @@ const Promise = require('bluebird');
 const path = require('path');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
-const base64 = require('base-64');
+const base64 = require('js-base64').Base64;
 const { createFilePath } = require('gatsby-source-filesystem');
 
 const postsSettings = require('./static/config/posts.json');
