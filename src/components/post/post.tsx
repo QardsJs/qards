@@ -10,7 +10,6 @@ import {decodeWidgetDataObject} from '../../cms/utils';
 import QardHeader from '../qard/header';
 import QardImageContent from '../qard/image/content';
 import {PostType} from '../../fragments/post';
-import {HTMLDivProps} from '@blueprintjs/core';
 
 export interface Props {
 	post?: PostType;
@@ -53,7 +52,7 @@ export default class Post extends React.Component<Props, State> {
 	 * post page that renders headings and paragraphs before anything
 	 * else that gets resolved meanwhile.
 	 */
-	async renderComponent(line: string): Promise<HTMLDivProps> {
+	async renderComponent(line: string): Promise<any> {
 		return new Promise((resolve, reject) => {
 			const {preview, post} = this.props;
 
@@ -63,7 +62,7 @@ export default class Post extends React.Component<Props, State> {
 			const widget = params[1];
 			const config = decodeWidgetDataObject(params[2]);
 
-			let module: string | null, Component;
+			let module: string | null;
 
 			//	image and header are loaded for all posts immediately
 			switch (widget) {

@@ -100,7 +100,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 					<Post post={tokenizedPost} location={location} pinnedPosts={pinned}/>
 				</Content>
 
-				{related.length > 0 && <Box mt={[80, 80, 80, 120]}>
+				{related.length > 0 && <Box mt={[80, 80, 80, 120]} pt={80}>
 					<Content darkTheme={true}>
 						<Posts darkTheme={true} showExcerpt={true} posts={related} title={`More like this`}/>
 					</Content>
