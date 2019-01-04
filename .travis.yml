@@ -8,6 +8,8 @@ node_js:
   - '10'
 install:
   - npm i
+before_script:
+  - npm install -g cypress
 script:
   - gatsby build
   - npm run test:ci
