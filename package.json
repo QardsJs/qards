@@ -1,7 +1,7 @@
 {
   "name": "qards",
   "description": "Qards - a professional publishing platform",
-  "version": "0.0.6-alpha",
+  "version": "0.1.1-alpha",
   "author": "Romeo Mihalcea <romeo.mihalcea@gmail.com>",
   "dependencies": {
     "@blueprintjs/core": "^3.10.0",
@@ -97,12 +97,12 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "serve": "http-server ./public -a 127.0.0.1 -c-1 -p 8081",
     "deploy": "gatsby build && netlify deploy",
     "develop": "gatsby develop",
     "cypress:open": "cypress open",
-    "format": "prettier --write '**/*.js'",
     "test": "jest",
+    "test:ci": "gatsby build && start-server-and-test serve http://127.0.0.1:8081/list-of-supported-cards/ test",
     "inspect:build-size": "gatsby build && find public/ -not -name \"*.jpg\" -not -name \"*.map\" -not -name \"*.png\" -not -name \"*.json\" -not -name \"*.map\" -size +500k -exec ls -lh {} \\+"
   },
   "devDependencies": {
@@ -118,14 +118,18 @@
     "@types/react-redux": "^6.0.11",
     "@types/react-share": "^2.1.1",
     "@types/react-transition-group": "^2.0.13",
+    "@types/request": "^2.48.1",
     "@types/styled-components": "^4.1.4",
     "@types/tinycolor2": "^1.4.1",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
+    "http-server": "^0.11.1",
     "jest": "^23.6.0",
     "moment-locales-webpack-plugin": "^1.0.7",
     "prettier": "^1.15.3",
     "redux-devtools-extension": "^2.13.7",
+    "request": "^2.88.0",
+    "start-server-and-test": "^1.7.11",
     "ts-jest": "^23.10.5",
     "typescript": "^3.2.2"
   },

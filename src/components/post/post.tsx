@@ -40,6 +40,7 @@ interface State {
 export default class Post extends React.Component<Props, State> {
 	state = {bodyLines: []};
 
+	//	do not add widgets here if they are not imported above
 	staticWidgets = ['image', 'qards-section-heading'];
 
 	/**
@@ -125,6 +126,10 @@ export default class Post extends React.Component<Props, State> {
 		return <QardHeader {...config}/>;
 	}
 
+	//	`QardHeader` and `QardImageContent` are the only cards being loaded
+	//	here by default so they can be inserted into a static render in order
+	//	to mitigate the loss of content for cralwers that lack a javascript
+	//	interpreter
 	renderStaticWidget(line: string) {
 		const params = line.match(cPattern);
 

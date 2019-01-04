@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {Scrollbars} from 'react-custom-scrollbars';
 
 import QardBase, {QardProps} from '../base';
+import {getThemeConfig} from '../../../utils/helpers';
 
 const Wrapper = styled.div`
 	font-size: 0.85rem;
@@ -56,7 +57,7 @@ export interface CardCodeType extends QardProps {
 
 export default class QardCodeBlock extends QardBase<CardCodeType, any> {
 	public render() {
-		const {language, code} = this.props;
+		const {code} = this.props;
 
 		return (
 			<Wrapper>
@@ -67,10 +68,10 @@ export default class QardCodeBlock extends QardBase<CardCodeType, any> {
 					autoHide
 					universal={true}
 					renderThumbVertical={({...props}) => (
-						<div {...props} style={{backgroundColor: '#A8FF60'}}/>
+						<div {...props} style={{backgroundColor: getThemeConfig(['colors', 'accent', 'background'])}}/>
 					)}
 					renderThumbHorizontal={({...props}) => (
-						<div {...props} style={{backgroundColor: '#A8FF60'}}/>
+						<div {...props} style={{backgroundColor: getThemeConfig(['colors', 'accent', 'background'])}}/>
 					)}
 				>
 					<pre>

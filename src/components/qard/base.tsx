@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {PostType} from "../../fragments/post";
+import {PostType} from '../../fragments/post';
 
 export interface QardProps {
 	//  some items do not work well on preview mode
@@ -9,6 +9,7 @@ export interface QardProps {
 	//  this flag and disable functionalities based on
 	//  its value
 	preview?: boolean;
+	renderStatic?: boolean;
 	post?: PostType;
 }
 
@@ -16,19 +17,14 @@ export interface QardState {
 
 }
 
-/**
- * Generic Component for all Qards to extend. This Component
- * should hold only functionality that addresses or might be
- * of interest to all Qard components
- */
-export default class QardBase<T extends QardProps, S extends QardState> extends React.Component<T, S> {
+export default abstract class QardBase<T extends QardProps, S extends QardState> extends React.Component<T, S> {
 	//  Place inside the callback code that should not be
 	//  available during preview mode (netlify-cms) or other
 	//  places where the full functionality of the widget
 	//  might not work (iframes etc)
 	notAvailableInPreview(cb: any) {
 		if (this.props.preview) {
-			alert("This functionality is not available in preview mode");
+			alert('This functionality is not available in preview mode');
 		} else {
 			cb();
 		}
