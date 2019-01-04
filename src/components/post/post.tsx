@@ -200,7 +200,6 @@ export default class Post extends React.Component<Props, State> {
 	}
 
 	renderStaticBody() {
-		return '';
 		//	Since we're code splitting the qard modules and lazy loading them
 		//	we're losing SEO. This method returns the markdown without the qard
 		//	modules so we can push the text content out right away until the
