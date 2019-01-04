@@ -97,7 +97,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "serve": "http-server ./public -a 127.0.0.1 -c-1 -p 8081",
+    "serve": "http-server ./public -a 127.0.0.1 -c-1 -p 8081 --silent",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "cypress:run": "cypress run",
