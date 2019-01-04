@@ -25,5 +25,8 @@
   },
   "rssFeed": {
     "enable": true
+  },
+  "sitemap": {
+    "enable": true
   }
 }

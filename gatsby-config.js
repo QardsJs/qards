@@ -324,6 +324,12 @@ if (configPlugins.rssFeed && configPlugins.rssFeed.enable) {
 	});
 }
 
+if (configPlugins.sitemap && configPlugins.sitemap.enable) {
+	plugins.push({
+		resolve: `gatsby-plugin-sitemap`,
+	});
+}
+
 //	last
 plugins.push(`gatsby-plugin-netlify`);
 
