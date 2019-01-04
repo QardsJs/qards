@@ -302,7 +302,7 @@ export default class Post extends React.Component<Props, State> {
 			<Article>
 				{title && <Title className={'qards-post-title'}>{title}</Title>}
 				{created_at && <Date className={'qards-post-date'}>{created_at.toString()}</Date>}
-				{hero && <Hero className={'qards-post-hero'}><QardImageContent {...hero}/></Hero>}
+				{hero && <Hero className={'qards-post-hero'}><QardImageContent lightbox={true} {...hero}/></Hero>}
 				{excerpt && <Excerpt className={'qards-post-excerpt'}>{excerpt}</Excerpt>}
 
 				{this.renderBody()}

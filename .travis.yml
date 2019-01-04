@@ -8,8 +8,11 @@ node_js:
   - '10'
 install:
   - npm i
+before_script:
+  - gatsby build
 script:
   - npm run test:ci
+  - npm run test:e2e
 notifications:
   email: false
 git:

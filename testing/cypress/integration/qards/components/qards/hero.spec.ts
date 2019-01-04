@@ -12,7 +12,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 context('Qards:Hero', () => {
 	beforeEach(() => {
-		cy.visit('/posts/list-of-supported-cards/');
+		cy.visit('/list-of-supported-cards/');
 	});
 
 	it('should render with required css class', () => {

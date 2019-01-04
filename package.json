@@ -98,11 +98,14 @@
   "license": "MIT",
   "scripts": {
     "serve": "http-server ./public -a 127.0.0.1 -c-1 -p 8081",
-    "deploy": "gatsby build && netlify deploy",
+    "build": "gatsby build",
     "develop": "gatsby develop",
+    "cypress:run": "cypress run",
     "cypress:open": "cypress open",
     "test": "jest",
-    "test:ci": "gatsby build && start-server-and-test serve http://127.0.0.1:8081/list-of-supported-cards/ test",
+    "test:ci": "start-server-and-test serve http://127.0.0.1:8081/list-of-supported-cards/ test",
+    "test:e2e": "start-server-and-test serve http://127.0.0.1:8081/list-of-supported-cards/ cypress:run",
+    "test:e2e:gui": "start-server-and-test serve http://127.0.0.1:8081/list-of-supported-cards/ cypress:open",
     "inspect:build-size": "gatsby build && find public/ -not -name \"*.jpg\" -not -name \"*.map\" -not -name \"*.png\" -not -name \"*.json\" -not -name \"*.map\" -size +500k -exec ls -lh {} \\+"
   },
   "devDependencies": {
@@ -123,6 +126,7 @@
     "@types/tinycolor2": "^1.4.1",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
+    "cypress": "^3.1.4",
     "http-server": "^0.11.1",
     "jest": "^23.6.0",
     "moment-locales-webpack-plugin": "^1.0.7",
