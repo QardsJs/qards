@@ -8,7 +8,6 @@ yarn-error.log
 yarn.lock
 public
 coverage
-netlify.toml
 testing/cypress/.Trash-0
 testing/cypress/screenshots
 tmp/
