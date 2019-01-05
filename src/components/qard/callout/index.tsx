@@ -9,6 +9,7 @@ import QardBase from '../base';
 
 const Wrapper = styled.div`
     margin-bottom: 20px;
+    
     .bp3-callout {
     	font-weight: 300;
     	font-size: 1.1rem;
