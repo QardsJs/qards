@@ -53,4 +53,8 @@ context('Components:Post', () => {
 		cy.get('body').type('{esc}');
 		cy.get('#lightboxBackdrop').should('not.be.visible');
 	});
+
+	it('should render emojis', () => {
+		cy.get('img.emojione').click().should('be.visible');
+	});
 });

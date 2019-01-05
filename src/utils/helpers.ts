@@ -12,7 +12,7 @@ let postsConfig = require('../../static/config/posts.json');
 let pluginsConfig = require('../../static/config/plugins.json');
 let themeConfig = require('../../static/config/theme.json');
 
-export const cPattern = /^{"widget":"([a-zA-Z0-9-]+)","config":"(.*?)"}$/;
+export const cPattern = /{"widget":"([a-zA-Z0-9-]+)","config":"(.*?)"}/;
 export const cPatternWithId = (id: string): string => {
 	return `{"widget":"${id}","config":"(.*?)"}`;
 };

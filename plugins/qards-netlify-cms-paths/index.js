@@ -9,9 +9,12 @@ module.exports = async ({markdownNode, markdownAST, getNode}, options) => {
 	if (imgs.length) {
 		const {default: netlifyCfg} = require(options.cmsConfigPath);
 		const {absolutePath} = getNode(markdownNode.parent);
+		const newPaths = await Promise.all(imgs.map(({url}) => {
+			return makeRelative(absolutePath, url, netlifyCfg);
+		}));
 
-		imgs.forEach((img) => {
-			img.url = makeRelative(absolutePath, img.url, netlifyCfg)
+		imgs.forEach((img, key) => {
+			img.url = newPaths[key]
 		})
 	}
 };

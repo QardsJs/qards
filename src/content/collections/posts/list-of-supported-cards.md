@@ -23,7 +23,6 @@ excerpt: >-
   This page serves as a testing ground for qards and we use it to 
   showcase various features and also test it with cypress.
 ---
-
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IkNhcmQgSGVybyIsInN1YnRpdGxlIjoiV2VsbCwgeW91J3JlIGxvb2tpbmcgYXQgaXQuIEl0IGhhcyBhIHRpdGxlIGFuZCBzdWJ0aXRsZS4iLCJ0eXBlIjoicHJpbWFyeSJ9"}
 The hero (name subject to change as I'm not sure it's the right one) is like a heading. It is being used to separate chapters and its title will be included in the Table of contents that follows every post.
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IkdhbGxlcmllcyIsInN1YnRpdGxlIjoiT25lIG9yIG11bHRpcGxlIGltYWdlcyB0aGF0IHdpbGwgYmUgaW5zZXJ0ZWQgYWNjb3JkaW5nbHkiLCJ0eXBlIjoicHJpbWFyeSJ9"}
@@ -56,3 +55,7 @@ Using references you can link to other posts. A card is automatically created wi
 {"widget":"image","config":"eyJzcmMiOiIvaW1hZ2VzL3VwbG9hZHMvbWlrZS1kb3JuZXItMTczNTAyLXVuc3BsYXNoLmpwZyIsImFsdCI6IkhvdyBjYW4geW91IHN0YXJ0IGEgYmxvZyBmcmVlIiwibGlnaHRib3giOnRydWUsImNhcHRpb24iOiJIb3cgY2FuIHlvdSBzdGFydCBhIGJsb2cgZnJlZSJ9"}
 
 > Quote test: These data indicate that low serum testosterone levels are associated with an adverse metabolic profile and suggest a novel unifying mechanism for the previously independent observations that low testosterone levels and impaired mitochondrial function promote insulin resistance in men.
+
+{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlRlc3RpbmcgbWF0ZXJpYWwiLCJzdWJ0aXRsZSI6IlRlc3Rpbmcgc25pcHBldHMgZm9yIGludGVybmFsIHVzZSIsInR5cGUiOiJwcmltYXJ5In0="}
+
+These snippets serve as a testing ground for qards. :nerd:

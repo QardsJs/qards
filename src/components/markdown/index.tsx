@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import remark from "remark";
-import remarkReact from "remark-react";
+import React, {Component} from 'react';
+import remark from 'remark';
+import remarkReact from 'remark-react';
 
 export interface Props {
 	md: string;
@@ -10,8 +10,9 @@ export interface Props {
 class MarkdownRender extends Component<Props, any> {
 	render() {
 		const {md, component, ...props} = this.props;
-		const Wrapper: React.ReactType = component || "div";
+		const Wrapper: React.ReactType = component || 'div';
 
+		// @ts-ignore
 		return <Wrapper {...props}>
 			{remark().use(remarkReact).processSync(md).contents}
 		</Wrapper>;
