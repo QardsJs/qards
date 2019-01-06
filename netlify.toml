@@ -2,5 +2,4 @@
   publish = "public"
   command = "npm run build"
 [build.environment]
-  CI = true
   NODE_ENV = "production"
