@@ -113,10 +113,6 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 		if (prevProps.items.length != this.props.items.length) this.__prepare();
 	}
 
-	renderStaticBody(): React.ReactNode {
-		return undefined;
-	}
-
 	render() {
 		const {preview, post, items} = this.props;
 		const {images, currentImage, lightboxIsOpen} = this.state;

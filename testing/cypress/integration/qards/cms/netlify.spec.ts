@@ -10,31 +10,90 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 describe('Test Backend', () => {
-	// beforeEach(() => {
-	// 	cy.visit('/admin/#/collections/posts/entries/list-of-supported-cards');
-	// });
+	beforeEach(() => {
+		// @ts-ignore
+		cy.setNetlifySiteUrl();
+	});
 
-	const setSiteUrlAndLogin = () => {
+	const gotoAdmin = () => {
 		cy.viewport(1200, 1200);
 		cy.visit('/admin/');
+	};
 
-		cy.get('#netlify-identity-widget').then(($iframe) => {
-			const $body = $iframe.contents().find('body');
-			let form = cy.wrap($body[0]);
-
-			form.find('input.formControl').eq(0).clear().type(
-				'https://priceless-kare-fdc4ff.netlify.com', {force: true},
-			);
-			cy.wrap($body[0]).find('button.btn').eq(0).click();
-		});
-
+	const submitLoginFrm = () => {
 		cy.get(`iframe`).then(($iframe) => {
 			const $body = $iframe.contents().find('body');
 			cy.wrap($body[0]).get('button').click();
+			cy.wait(1000);
+
+			cy.wrap($body[0]).find('input[type="email"]').eq(0).clear().type(
+				Cypress.env('NETLIFY_USER') || 'invalid@user.com', {force: true},
+			);
+
+			cy.wrap($body[0]).find('input[type="password"]').eq(0).clear().type(
+				Cypress.env('NETLIFY_PASSWORD') || 'invalid-password', {force: true},
+			);
+
+			cy.wrap($body[0]).find('button.btn[type=submit]').eq(0).click();
 		});
 	};
 
-	it('should set site url to the cms', () => {
-		setSiteUrlAndLogin();
+	const navigatetoPosts = () => {
+		cy.contains('a', 'Posts').click();
+	};
+
+	const navigateCreatePost = () => {
+		cy.contains('a', 'New Post').click();
+	};
+
+	const assertInsideAdmin = () => {
+		cy.contains('a', 'Posts');
+	};
+
+	const assertOnPostsPage = () => {
+		cy.url().should('contain', '/#/collections/posts');
+		cy.contains('h1', 'Posts');
+	};
+
+	const toggleMarkdownEditor = () => {
+		cy.get('div').contains('Markdown').parent().find('button[role=switch]').click();
+	};
+
+	// @ts-ignore
+	const writePostBody = (postBody) => {
+		cy.get(`[data-slate-editor]`).click().type(postBody.replace(/{/g, `{{}`), {
+			delay: 0,
+		});
+	};
+
+	it('should be able to log in', () => {
+		gotoAdmin();
+		submitLoginFrm();
+		assertInsideAdmin();
+	});
+
+	it('should find the Posts collection', () => {
+		navigatetoPosts();
+		assertOnPostsPage();
+	});
+
+	it('should be able to create post', () => {
+		navigateCreatePost();
+
+		cy.readFile('./src/content/collections/posts/list-of-supported-cards.md').then((postBody) => {
+			cy.get(`iframe`).then(($iframe) => {
+				const $body = $iframe.contents().find('body');
+
+				cy.get('input#title-field-1').clear().type('test new post');
+				cy.wrap($body[0]).find('h1').eq(0).contains('test new post');
+
+				//	switch to markdown
+				toggleMarkdownEditor();
+
+				//	enter our test post
+				//cy.get('[data-slate-editor]').click().invoke('val', postBody).trigger('change');
+				writePostBody(postBody);
+			});
+		});
 	});
 });
