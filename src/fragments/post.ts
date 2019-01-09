@@ -7,6 +7,7 @@ import {CategoryType} from './category';
 export interface PostType {
 	id: string;
 	md: string;
+	html: string;
 
 	frontmatter: {
 		isPage: boolean;
@@ -58,6 +59,7 @@ export const _ = graphql`
 	fragment postFragment on MarkdownRemark {
 		id
 		md: rawMarkdownBody
+		html
 		
 		authors {
 			...authorFragment

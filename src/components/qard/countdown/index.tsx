@@ -70,15 +70,6 @@ export default class QardCountdown extends QardBase<CardCountdownType, State> {
 		clearInterval(this.setInterval);
 	}
 
-	renderStaticBody(): React.ReactNode {
-		const {title, subtitle, event} = this.props;
-		return <>
-			<b>{title}</b>
-			<p>{subtitle}</p>
-			<p>{event.toString()}</p>
-		</>;
-	}
-
 	//	!IMPORTANT: Pick the date relative to your timezone. The widget will converti it
 	//	to UTC by default so here you get a UTC date but in the widget (when setting time)
 	//	you have to think relative to your timezone

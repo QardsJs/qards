@@ -108,8 +108,13 @@ const plugins = [
 	{
 		resolve: `gatsby-transformer-remark`,
 		options: {
-			//	Plugins that will modify markdown body
 			plugins: [
+				{
+					resolve: 'gatsby-remark-emoji',
+					options: {
+						emojiConversion: 'shortnameToImage',
+					},
+				},
 				{
 					resolve: `qards-netlify-cms-paths`,
 					options: {
@@ -122,27 +127,8 @@ const plugins = [
 						// It's important to specify the maxWidth (in pixels) of
 						// the content container as this plugin uses this as the
 						// base for generating different widths of each image.
-						maxWidth       : 2500,
+						maxWidth       : 2100,
 						backgroundColor: 'transparent',
-					},
-				}, {
-					resolve: 'gatsby-remark-emojis',
-					options: {
-						// Deactivate the plugin globally (default: true)
-						active: true,
-						// Add a custom css class
-						class : 'emoji-icon',
-						// Select the size (available size: 16, 24, 32, 64)
-						size  : 64,
-						// Add custom styles
-						styles: {
-							display     : 'inline',
-							margin      : '0',
-							'margin-top': '1px',
-							position    : 'relative',
-							top         : '5px',
-							width       : '25px',
-						},
 					},
 				}],
 		},

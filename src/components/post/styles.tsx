@@ -5,7 +5,12 @@ import tinycolor2 from 'tinycolor2';
 
 
 export const Wrapper = styled(Flex)`
-    
+    img.emojione {
+    	margin: 0;
+    	height: 1.4rem;
+    	width: 1.4rem;
+    	vertical-align: text-top;
+    }
 `;
 
 export const Title = styled.h1`

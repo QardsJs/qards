@@ -17,7 +17,7 @@ export interface QardState {
 
 }
 
-export default abstract class QardBase<T extends QardProps, S extends QardState> extends React.Component<T, S> {
+export default class QardBase<T extends QardProps, S extends QardState> extends React.Component<T, S> {
 	//  Place inside the callback code that should not be
 	//  available during preview mode (netlify-cms) or other
 	//  places where the full functionality of the widget

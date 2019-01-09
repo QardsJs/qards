@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import theme from '../../../theme';
 import QardBase, {QardProps} from '../base';
-import {getThemeConfig} from '../../../utils/helpers';
 
 const Divider = styled.hr`
     margin: 50px 0 40px 0;
@@ -39,10 +38,6 @@ export interface CardDividerType extends QardProps {
 }
 
 export default class QardDivider extends QardBase<CardDividerType, any> {
-
-	renderStaticBody(): React.ReactNode {
-		return this.render();
-	}
 
 	public render() {
 		return <Divider className={this.props.type || 'bullets'}/>;
