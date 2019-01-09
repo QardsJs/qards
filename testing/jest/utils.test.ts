@@ -107,7 +107,7 @@ test('[readingTime] should return proper values', () => {
 test('[lineRepresentsEncodedComponent] should should detect encoded component', () => {
 	const l = `{"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IkF1ZGlvIHBsYXlsaXN0Iiwic3VidGl0bGUiOiJBbiBhdWRpbyBwbGF5bGlzdCBjYW4gY29udGFpbiBvbmUgb3IgbXVsdGlwbGUgYXVkaW8gZmlsZXMiLCJ0eXBlIjoicHJpbWFyeSJ9"}`;
 	expect(helpers.lineRepresentsEncodedComponent(l)).toBe(true);
-	expect(helpers.lineRepresentsEncodedComponent(`-${l}`)).toBe(false);
+	expect(helpers.lineRepresentsEncodedComponent(`-${l}`)).toBe(true);
 });
 
 test('[getPostPrimaryHeadings] should return primary headings', () => {
