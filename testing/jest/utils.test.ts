@@ -155,6 +155,7 @@ test('[tokenizePost] should replace specified tokens with provided values', () =
 			slug     : 'asd',
 		},
 		md         : '',
+		html       : '',
 		references : [],
 	};
 

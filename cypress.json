@@ -7,5 +7,5 @@
   "pluginsFile": "./testing/cypress/plugins/index.js",
   "screenshotsFolder": "./testing/cypress/screenshots",
   "videosFolder": "./testing/cypress/videos",
-  "supportFile": "./testing/cypress/support/index.js"
+  "supportFile": "./testing/cypress/support/index.ts"
 }

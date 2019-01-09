@@ -121,8 +121,8 @@ export default class QardCountdown extends QardBase<CardCountdownType, State> {
 
 		return <Wrapper>
 			<Flex flexWrap={`wrap`}>
-				<Box width={1}>
-					<Flex justifyContent={'center'}>
+				<Box width={1} className={'countdown'}>
+					<Flex justifyContent={'center'} className={'digits'}>
 						<Box width={[1 / 2, 1 / 3, 1 / 4, 1 / 4]} px={2}>
 							<Counter>{firstDuration}</Counter>
 						</Box>
@@ -142,7 +142,7 @@ export default class QardCountdown extends QardBase<CardCountdownType, State> {
 						</Box>
 					</Flex>
 
-					<Flex>
+					<Flex className={'labels'}>
 						<Box width={[1 / 2, 1 / 3, 1 / 4, 1 / 4]} px={2}>
 							<Indicator>{firstLabel}</Indicator>
 						</Box>

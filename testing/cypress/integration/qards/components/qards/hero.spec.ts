@@ -1,9 +1,5 @@
 /// <reference types="Cypress" />
 
-const chaiColors = require('chai-colors');
-
-chai.use(chaiColors);
-
 Cypress.on('uncaught:exception', (err, runnable) => {
 	// returning false here prevents Cypress from
 	// failing the test
