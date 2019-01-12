@@ -40,7 +40,7 @@ context('Components:Post', () => {
 		cy.get('.qards-post-excerpt')
 			.should('be.visible')
 			.should('have.css', 'color')
-			.and('be.colored', '#5a6c7a');
+			.and('eq', '#5a6c7a');
 	});
 
 	it('should maximize the hero img on click', () => {

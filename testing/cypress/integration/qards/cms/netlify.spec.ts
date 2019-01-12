@@ -5,10 +5,11 @@ const Base64 = require('js-base64').Base64;
 
 chai.use(chaiColors);
 
+// @ts-ignore
 Cypress.on('uncaught:exception', (err, runnable) => {
 	// returning false here prevents Cypress from
 	// failing the test on exceptions
-	return false;
+	return !!Cypress.env('TRAVIS_BUILD_ID');
 });
 
 const encodeWidgetDataObject = (data: object): string => {
@@ -19,6 +20,11 @@ describe('Test Backend', () => {
 	beforeEach(() => {
 		// @ts-ignore
 		cy.setNetlifySiteUrl();
+	});
+
+	after(() => {
+		cy.log('This is After - root');
+		cy.visit('/');
 	});
 
 	const gotoAdmin = () => {
