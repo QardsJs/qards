@@ -55,6 +55,7 @@
     "lodash.debounce": "^4.0.8",
     "mkdirp": "^0.5.1",
     "moment": "^2.23.0",
+    "moment-locales-webpack-plugin": "^1.0.7",
     "moment-timezone": "^0.5.23",
     "ncp": "^2.0.0",
     "netlify-cms": "^2.3.1",
@@ -78,6 +79,7 @@
     "reading-time-estimator": "^1.0.3",
     "remark": "^10.0.1",
     "remark-react": "^5.0.0",
+    "request": "^2.88.0",
     "resize-observer-polyfill": "^1.5.1",
     "rimraf": "^2.6.2",
     "scrollprogress": "^3.0.2",
@@ -87,9 +89,7 @@
     "typeface-roboto": "^0.0.54",
     "typescript-require": "^0.2.10",
     "typography": "^0.16.18",
-    "unist-util-select": "^1.5.0",
-    "request": "^2.88.0",
-    "moment-locales-webpack-plugin": "^1.0.7"
+    "unist-util-select": "^1.5.0"
   },
   "keywords": [
     "static site",

@@ -40,6 +40,6 @@ context('Qards:Hero', () => {
 			.find('span')
 			.first()
 			.should('have.css', 'color')
-			.and('eq', '#5a6c7a');
+			.and('eq', 'rgb(90, 108, 122)');
 	});
 });

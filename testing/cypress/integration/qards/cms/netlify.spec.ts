@@ -23,8 +23,7 @@ describe('Test Backend', () => {
 	});
 
 	after(() => {
-		cy.log('This is After - root');
-		cy.visit('/');
+		cy.visit('/', {failOnStatusCode: false});
 	});
 
 	const gotoAdmin = () => {
@@ -81,6 +80,7 @@ describe('Test Backend', () => {
 			delay: 0,
 		});
 	};
+
 	const getPreviewBody = (): Promise<any> => {
 		// @ts-ignore
 		return new Cypress.Promise((resolve: any) => {

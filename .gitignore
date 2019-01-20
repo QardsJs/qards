@@ -11,3 +11,4 @@ coverage
 testing/cypress/.Trash-0
 testing/cypress/screenshots
 tmp/
+test.sh

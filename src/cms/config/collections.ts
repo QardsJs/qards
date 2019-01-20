@@ -523,7 +523,7 @@ export const postsCollection = {
 	label_singular: 'Post',
 	folder        : 'static/content/collections/posts',
 	create        : true,
-	slug          : PostsSettings.slugStructure,
+	slug          : '{{slug}}',
 	sort          : 'created_at:desc',
 	fields        : [{
 		label : 'Title',
