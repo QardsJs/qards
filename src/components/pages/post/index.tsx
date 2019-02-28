@@ -20,10 +20,19 @@ interface PostPageProps {
 }
 
 class PostPage extends React.Component<PostPageProps, any> {
+	get hasHeroImg() {
+		const {post} = this.props;
+		return post.frontmatter.hero &&
+			post.frontmatter.hero.image &&
+			post.frontmatter.hero.image.sharp &&
+			post.frontmatter.hero.image.sharp.fixed;
+	}
+
 	get ogImage() {
 		const {post} = this.props;
 
-		if (post.frontmatter.hero && post.frontmatter.hero.image && post.frontmatter.hero.image.sharp && post.frontmatter.hero.image.sharp.fixed) {
+		if (this.hasHeroImg) {
+			// @ts-ignore
 			return post.frontmatter.hero.image.sharp.fixed.src;
 		} else {
 			return config.socialShareImg ? config.socialShareImg : '';
@@ -40,16 +49,24 @@ class PostPage extends React.Component<PostPageProps, any> {
 		}
 	}
 
-	get ogImageDimensions() {
+	get ogImageDimensions(): {
+		width: number;
+		height: number;
+	} {
 		const {post} = this.props;
 
-		if (post.frontmatter.hero && post.frontmatter.hero.image.sharp.fixed) {
+		if (this.hasHeroImg) {
 			return {
+				// @ts-ignore
 				width : post.frontmatter.hero.image.sharp.fixed.width,
+				// @ts-ignore
 				height: post.frontmatter.hero.image.sharp.fixed.height,
 			};
 		} else {
-			return config.title;
+			return {
+				width : 550,
+				height: 250,
+			};
 		}
 	}
 
@@ -81,8 +98,8 @@ class PostPage extends React.Component<PostPageProps, any> {
 				<meta property="og:updated_time" content={tokenizedPost.frontmatter.created_at.toString()}/>
 				<meta property="og:image" content={prependBaseUrl(this.ogImage)}/>
 				<meta property="og:image:secure_url" content={prependBaseUrl(this.ogImage)}/>
-				<meta property="og:image:width" content={this.ogImageDimensions.width}/>
-				<meta property="og:image:height" content={this.ogImageDimensions.height}/>
+				<meta property="og:image:width" content={this.ogImageDimensions.width.toString()}/>
+				<meta property="og:image:height" content={this.ogImageDimensions.height.toString()}/>
 				<meta property="og:image:alt" content={this.ogImageAlt}/>
 
 				<meta name="twitter:card" content="summary_large_image"/>
