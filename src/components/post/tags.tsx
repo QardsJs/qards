@@ -46,7 +46,7 @@ export default class PostTags extends Component<Props, State> {
 		const {post, ...props} = this.props;
 		const {tags} = post.frontmatter;
 
-		return tags.length > 0 ? <Wrapper flexWrap={'wrap'} alignItems={'space-between'} {...props}>
+		return (tags && tags.length > 0) ? <Wrapper flexWrap={'wrap'} alignItems={'space-between'} {...props}>
 				{tags.map((tag) => {
 
 					return <Link to={`/tag/${slugify(tag)}/`} key={tag}>
