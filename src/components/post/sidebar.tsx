@@ -75,10 +75,10 @@ export default class PostSidebar extends Component<Props, any> {
 					</SubscribeWrapper>
 				</SidebarItem>}
 
-				<TagsWrapper>
+				{post.frontmatter.tags && <TagsWrapper>
 					<b className="title">Tags</b>
 					<Tags post={post}/>
-				</TagsWrapper>
+				</TagsWrapper>}
 			</Wrapper>
 		);
 	}
