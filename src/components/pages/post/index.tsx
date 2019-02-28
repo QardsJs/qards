@@ -74,7 +74,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 				<meta property="og:url" content={prependBaseUrl(location.pathname)}/>
 				<meta property="og:site_name" content={config.name}/>
 
-				<meta property="article:tag" content={tokenizedPost.frontmatter.tags.join(', ')}/>
+				<meta property="article:tag" content={(tokenizedPost.frontmatter.tags || []).join(', ')}/>
 				<meta property="article:section"
 					  content={tokenizedPost.categories ? tokenizedPost.categories[0].frontmatter.title : 'Uncategorized'}/>
 				<meta property="article:published_time" content={tokenizedPost.frontmatter.created_at.toString()}/>
