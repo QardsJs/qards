@@ -20,11 +20,10 @@ interface PostPageProps {
 }
 
 class PostPage extends React.Component<PostPageProps, any> {
-
 	get ogImage() {
 		const {post} = this.props;
 
-		if (post.frontmatter.hero && post.frontmatter.hero.image.sharp.fixed) {
+		if (post.frontmatter.hero && post.frontmatter.hero.image && post.frontmatter.hero.image.sharp && post.frontmatter.hero.image.sharp.fixed) {
 			return post.frontmatter.hero.image.sharp.fixed.src;
 		} else {
 			return config.socialShareImg ? config.socialShareImg : '';
@@ -53,7 +52,6 @@ class PostPage extends React.Component<PostPageProps, any> {
 			return config.title;
 		}
 	}
-
 
 	render() {
 		const {post, related, pinned, location} = this.props;
