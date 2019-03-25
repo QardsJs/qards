@@ -88,7 +88,7 @@ const scanObjForImagesAndCreateNodes = (matches, obj) => {
 	// file node for them so that all the standard image processing stuff will kick up
 	const extensions = new Set([`.jpeg`, `.jpg`, `.png`, `.webp`, `.tif`, `.tiff`]);
 
-	for (const key of Object.keys(obj)) {
+	for (const key of Object.keys(obj || {})) {
 		const value = obj[key];
 
 		if (typeof value !== 'string') {
