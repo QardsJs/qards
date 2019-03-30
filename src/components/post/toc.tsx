@@ -170,7 +170,10 @@ class Toc extends Component<Props, State> {
 
 				if (widget == 'qards-section-heading') {
 					const config = decodeWidgetDataObject(params[2]);
-					headings.push({...config});
+
+					if (config.type && ['primary', 'secondary'].indexOf(config.type) > -1) {
+						headings.push({...config});
+					}
 				}
 			}
 		});

@@ -20,8 +20,8 @@ export const SecondaryTitle = styled.h3`
 `;
 
 export const SubTitle = styled.span`
-	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-top: 0;
+	margin-bottom: 0;
 	color: ${theme.color(['lightText'])};
 	font-weight: 300;
 	font-size: 1.3rem;
