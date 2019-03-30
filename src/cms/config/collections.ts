@@ -293,34 +293,39 @@ export const settingsCollection = {
 			name  : 'frontLimit',
 			widget: 'number',
 		}, {
-			label  : 'Show post scroll progress?',
-			name   : 'progressShow',
-			widget : 'boolean',
-			hint   : `When scrolling a post, a progress bar 
+			label   : 'Show post scroll progress?',
+			name    : 'progressShow',
+			widget  : 'boolean',
+			hint    : `When scrolling a post, a progress bar 
 					indicating the current position in page will be 
 					shown on the bottom of the page`,
-			default: true,
+			default : true,
+			required: false,
 		}, {
-			label  : 'Show table of contents?',
-			name   : 'tocShow',
-			widget : 'boolean',
-			default: true,
+			label   : 'Show table of contents?',
+			name    : 'tocShow',
+			widget  : 'boolean',
+			default : true,
+			required: false,
 		}, {
-			label  : 'Show social media share buttons?',
-			name   : 'socialShow',
-			widget : 'boolean',
-			default: true,
+			label   : 'Show social media share buttons?',
+			name    : 'socialShow',
+			widget  : 'boolean',
+			default : true,
+			required: false,
 		}, {
-			label  : 'Show subscribe box?',
-			name   : 'subscribeShow',
-			widget : 'boolean',
-			default: true,
+			label   : 'Show subscribe box?',
+			name    : 'subscribeShow',
+			widget  : 'boolean',
+			default : true,
+			required: false,
 		}, {
-			label  : 'Show excerpts?',
-			name   : 'showExcerpts',
-			widget : 'boolean',
-			default: true,
-			hint   : `If true, the post excerpts will be shown when
+			label   : 'Show excerpts?',
+			name    : 'showExcerpts',
+			widget  : 'boolean',
+			default : true,
+			required: false,
+			hint    : `If true, the post excerpts will be shown when
 			displaying post results (cards)`,
 		}, {
 			label   : 'Slug structure',
