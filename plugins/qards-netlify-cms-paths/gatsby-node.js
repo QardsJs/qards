@@ -64,7 +64,7 @@ const createPostImageNodes = async (node, actions) => {
 			//	The `config` is an object that may or may not go nested
 			//	so we're going to have to parse it recursively to find
 			//	our needles
-			const subMatches = scanObjForImagesAndCreateNodes(matches, config, node);
+			const subMatches = scanObjForImages(matches, config);
 			matches.concat(subMatches);
 
 			const formattedName = _.camelCase(widget);
@@ -83,7 +83,7 @@ const createPostImageNodes = async (node, actions) => {
 	});
 };
 
-const scanObjForImagesAndCreateNodes = (matches, obj) => {
+const scanObjForImages = (matches, obj) => {
 	// Find all values on the object which end in an extension we recognise, then create a
 	// file node for them so that all the standard image processing stuff will kick up
 	const extensions = new Set([`.jpeg`, `.jpg`, `.png`, `.webp`, `.tif`, `.tiff`]);
@@ -94,7 +94,7 @@ const scanObjForImagesAndCreateNodes = (matches, obj) => {
 		if (typeof value !== 'string') {
 			//	go deeper and keep adding the keys to the name
 			//	so we can have an understanding of how to query these images
-			const subMatches = scanObjForImagesAndCreateNodes(matches, value);
+			const subMatches = scanObjForImages(matches, value);
 			matches.concat(subMatches);
 		} else {
 			const extension = path.extname(value).toLowerCase();
@@ -110,5 +110,7 @@ const scanObjForImagesAndCreateNodes = (matches, obj) => {
 };
 
 exports.onCreateNode = async ({node, actions}, options) => {
-	createPostImageNodes(node, actions).then(() => mapNetlifyMediaPath(node, options));
+	createPostImageNodes(node, actions).then(() => {
+		return mapNetlifyMediaPath(node, options);
+	});
 };

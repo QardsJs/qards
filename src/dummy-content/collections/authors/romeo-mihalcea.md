@@ -5,4 +5,3 @@ excerpt: >-
   Author of **Qards**.
 avatar: /images/uploads/main-thumb-30885056-200-dneebuyfidspmoxkbtxrdvqwpbmwwrjk.jpeg
 ---
-

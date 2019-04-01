@@ -48,7 +48,7 @@ const plugins = [
 		resolve: `gatsby-source-filesystem`,
 		options: {
 			name: `dummy-posts`,
-			path: `${__dirname}/src/content/collections/posts`,
+			path: `${__dirname}/src/dummy-content/collections/posts`,
 		},
 	},
 	{
@@ -62,7 +62,7 @@ const plugins = [
 		resolve: `gatsby-source-filesystem`,
 		options: {
 			name: `dummy-authors`,
-			path: `${__dirname}/src/content/collections/authors`,
+			path: `${__dirname}/src/dummy-content/collections/authors`,
 		},
 	},
 	{
@@ -76,7 +76,7 @@ const plugins = [
 		resolve: `gatsby-source-filesystem`,
 		options: {
 			name: `dummy-categories`,
-			path: `${__dirname}/src/content/collections/categories`,
+			path: `${__dirname}/src/dummy-content/collections/categories`,
 		},
 	},
 	{
@@ -89,8 +89,15 @@ const plugins = [
 	{
 		resolve: 'gatsby-source-filesystem',
 		options: {
+			path: `${__dirname}/src/dummy-content/images/uploads`,
+			name: 'dummy-images',
+		},
+	},
+	{
+		resolve: 'gatsby-source-filesystem',
+		options: {
 			path: `${__dirname}/src/app/static`,
-			name: 'app_images',
+			name: 'app-images',
 		},
 	},
 	`gatsby-plugin-offline`,
