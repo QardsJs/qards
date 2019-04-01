@@ -2,16 +2,16 @@ import React from 'react';
 import {StyleSheetManager} from 'styled-components';
 
 const StylesLoader = ({children}: any) => {
-    const iframe = document.querySelectorAll('iframe');
+	const iframe = document.querySelectorAll('[class*="PreviewPaneFrame"]')[0];
 
-    if (!iframe || !iframe[0] || !iframe[0].contentDocument) {
-        throw Error("I failed to locate the preview iframe for netlify CMS");
-    }
+	if (!iframe) {
+		throw Error('Preview pane iframe was not found. Cms preview might not work as expected!');
+	}
 
-    // @ts-ignore
-    return <StyleSheetManager target={iframe[0].contentDocument.head}>
-        {children}
-    </StyleSheetManager>;
+	// @ts-ignore
+	return <StyleSheetManager target={iframe.contentDocument.head}>
+		{children}
+	</StyleSheetManager>;
 };
 
 export default StylesLoader;
