@@ -22,10 +22,10 @@ module.exports = (markdownPath, imagePath, netlifyCfg) => {
 		return imagePath;
 	}
 
-	let fullPath = `${cwd}${imagePath}`;
-
 	const dirMarkdownPath = path.dirname(markdownPath).replace(`${cwd}/`, `/`);
 	imagePath = imagePath.replace(public_folder, `/${media_folder}`);
+
+	let fullPath = `${cwd}${imagePath}`;
 
 	//	Maybe it's a dummy image (for the test post we have) in which case we
 	//	should also look inside our dummy folder for this image

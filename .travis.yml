@@ -11,6 +11,7 @@ install:
 before_script:
   - npm install -g cypress
 script:
+  - gatsby telemetry --disable
   - npm run test:ci
   - npm run test:e2e
 notifications:
