@@ -12,3 +12,7 @@ testing/cypress/.Trash-0
 testing/cypress/screenshots
 tmp/
 test.sh
+
+static/images/uploads/test-1.jpg
+static/images/uploads/test-2.jpg
+static/images/uploads/test-3.jpg
