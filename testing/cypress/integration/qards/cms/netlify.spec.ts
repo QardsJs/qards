@@ -84,7 +84,7 @@ describe('Test Backend', () => {
 	const getPreviewBody = (): Promise<any> => {
 		// @ts-ignore
 		return new Cypress.Promise((resolve: any) => {
-			cy.get(`iframe`).then(($iframe) => {
+			cy.get(`iframe[class*="PreviewPaneFrame"]`).then(($iframe) => {
 				resolve($iframe.contents().find('body')[0]);
 			});
 		});

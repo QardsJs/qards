@@ -1,13 +1,12 @@
 import React from 'react';
 import Gallery from './Grid';
 import Lightbox from 'react-images';
-import Img from "gatsby-image";
+import Img from 'gatsby-image';
 import styled from 'styled-components';
 // @ts-ignore
-import browserImageSize from "browser-image-size";
+import browserImageSize from 'browser-image-size';
 
-import {CardImageType} from "../image";
-import QardBase, {QardProps} from "../base";
+import QardBase, {QardProps} from '../base';
 import {div} from '@rebass/grid';
 
 //  -2px is the margin set by the gallery for each image
@@ -49,10 +48,10 @@ const ImageComponent = ({photo, onClick, post, margin, ...rest}: any) => {
 				margin,
 				width : photo.width,
 				height: photo.height,
-				cursor: "pointer"
+				cursor: 'pointer',
 			}}
 			onClick={(e: any) => onClick(e, rest)}
-			{...rest}/>
+			{...rest}/>;
 	} else {
 		//	find our image
 		for (let i = 0; i < post.fields.galleries.length; i++) {
@@ -67,23 +66,23 @@ const ImageComponent = ({photo, onClick, post, margin, ...rest}: any) => {
 							margin,
 							width : photo.width,
 							height: photo.height,
-							cursor: "pointer"
+							cursor: 'pointer',
 						}}
 						{...rest}
 					/>
-				</div>
+				</div>;
 			}
 		}
 	}
 
-	return <div/>
+	return <div/>;
 };
 
 export class QardGallery extends QardBase<CardGalleryType, State> {
 	state = {
 		lightboxIsOpen: false,
 		currentImage  : 0,
-		images        : [] as StateImages[]
+		images        : [] as StateImages[],
 	};
 
 	constructor(props: CardGalleryType) {
@@ -97,7 +96,7 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 	}
 
 	__prepare() {
-		if (this.props.preview) {
+		if (this.props.preview && this.props.items) {
 			for (let i = 0; i < this.props.items.length; i++) {
 				this.getImageDimensions(this.props.items[i]);
 			}
@@ -110,7 +109,9 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 
 	componentDidUpdate(prevProps: CardGalleryType, prevState: State) {
 		//  only prepare if the props have changed and stay silent for state changes
-		if (prevProps.items.length != this.props.items.length) this.__prepare();
+		const prev = prevProps.items ? prevProps.items.length : 0;
+		const curr = this.props.items ? this.props.items.length : 0;
+		if (prev != curr) this.__prepare();
 	}
 
 	render() {
@@ -138,7 +139,7 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 							height : 100 / allGalleryItem.image.image.fluid.aspectRatio,
 							srcSet : allGalleryItem.image.image.fluid.srcSet,
 							caption: currentGalleryItem.caption || currentGalleryItem.alt,
-							alt    : allGalleryItem.alt || currentGalleryItem.caption
+							alt    : allGalleryItem.alt || currentGalleryItem.caption,
 						});
 					}
 				}
@@ -192,6 +193,8 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 		browserImageSize(image.src).then((result: any) => {
 			const stateImages = this.state.images;
 
+			console.log(image.src, result);
+
 			if (!stateImages.find(x => x.image.src == image.src)) {
 				stateImages.push({
 					image,
@@ -201,8 +204,10 @@ export class QardGallery extends QardBase<CardGalleryType, State> {
 			}
 
 			this.setState({
-				images: stateImages
+				images: stateImages,
 			});
+		}).catch((err: Error) => {
+			console.error('error getting images size for', image.src, err);
 		});
 	}
 
