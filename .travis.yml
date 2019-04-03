@@ -1,3 +1,7 @@
+# currently does not work on Travis because the electron browser
+# (the one being used when going headless) stops on `visit` and
+# refuses to go any further. This pull request presumably fixes things:
+# https://github.com/cypress-io/cypress/pull/3531
 language: node_js
 cache:
   directories:

@@ -40,9 +40,10 @@ describe('Test Backend', () => {
 		//	before leaving the page
 		cy.window().then((win) => {
 			win.onbeforeunload = null;
-		});
 
-		cy.visit('/', {failOnStatusCode: false});
+			// @ts-ignore
+			cy.visit('/', {failOnStatusCode: false});
+		});
 	});
 
 	const gotoAdmin = () => {

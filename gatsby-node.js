@@ -81,7 +81,7 @@ const paginatePosts = (createPage, postsEdges) => {
 				slug,
 				previous,
 				next,
-				tags      : edge.node.frontmatter.tags,
+				tags      : edge.node.frontmatter.tags || [],
 				categories: edge.node.frontmatter.categories,
 			},
 		});
