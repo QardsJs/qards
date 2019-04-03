@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://127.0.0.1:8081",
-  "video": true,
+  "video": false,
   "watchForFileChanges": false,
   "fixturesFolder": "./testing/cypress/fixtures",
   "integrationFolder": "./testing/cypress/integration",
