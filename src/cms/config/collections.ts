@@ -632,7 +632,7 @@ export const postsCollection = {
 			searchFields : ['title', 'excerpt'],
 			valueField   : 'title',
 			displayFields: ['title'],
-			required     : true,
+			required     : false,
 			hint         : `Select the category where this post should appear in the sidebar. 
 			WARNING: A current limitation in the CMS does not allow selecting multiple categories`,
 		}],
