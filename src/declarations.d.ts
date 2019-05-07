@@ -11,6 +11,7 @@ declare module 'react-accessible-accordion';
 declare module 'gatsby-plugin-mailchimp';
 declare module 'netlify-cms-widget-color';
 declare module 'react-motion-drawer';
+declare module 'remark-external-links';
 declare module 'disqus-react';
 
 declare module '*.svg' {

@@ -137,6 +137,15 @@ const plugins = [
 						maxWidth       : 2100,
 						backgroundColor: 'transparent',
 					},
+				},
+				{
+					//	If you modify this config make sure to also update
+					//	the same properties inside components/markdown/index.tsx
+					resolve: 'gatsby-remark-external-links',
+					options: {
+						target: '_blank',
+						rel   : 'nofollow noopener noreferrer',
+					},
 				}],
 		},
 	},

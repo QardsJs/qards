@@ -58,4 +58,4 @@ Using references you can link to other posts. A card is automatically created wi
 
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlRlc3RpbmcgbWF0ZXJpYWwiLCJzdWJ0aXRsZSI6IlRlc3Rpbmcgc25pcHBldHMgZm9yIGludGVybmFsIHVzZSIsInR5cGUiOiJwcmltYXJ5In0="}
 
-These snippets serve as a testing ground for qards. :nerd:
+These snippets serve as a testing ground for qards. :nerd:. This is an [external link](https://typely.com); the HTML should have `nofollow`, `noopener`, `noreferrer` and open the link in a `_blank` page.
