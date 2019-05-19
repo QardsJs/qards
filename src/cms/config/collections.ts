@@ -440,6 +440,15 @@ export const settingsCollection = {
 				name  : 'enable',
 				widget: 'boolean',
 			}],
+		}, {
+			label : 'Sitemap',
+			name  : 'sitemap',
+			widget: 'object',
+			fields: [{
+				label : 'Enable',
+				name  : 'enable',
+				widget: 'boolean',
+			}],
 		}],
 	}],
 };
