@@ -308,6 +308,16 @@ export const settingsCollection = {
 			default : true,
 			required: false,
 		}, {
+			label   : 'Override author with metabox?',
+			name    : 'authorOverrideMetabox',
+			widget  : 'boolean',
+			default : false,
+			required: false,
+			hint    : `If true, the posts author section will be overriden with
+			information pulled from the general settings. The avatar will be the
+			site logo, name will be site/blog name, description will be site
+			description and so on.`,
+		}, {
 			label   : 'Show social media share buttons?',
 			name    : 'socialShow',
 			widget  : 'boolean',

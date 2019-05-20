@@ -9,7 +9,15 @@ import Content from '../../layout/content';
 import Post from '../../post';
 import Subscribe from '../../subscribe';
 import Posts from '../../posts';
-import {tokenizePost, prependBaseUrl, getPluginsConfig, getSettingsConfig} from '../../../utils/helpers';
+import {
+	tokenizePost,
+	prependBaseUrl,
+	getPluginsConfig,
+	getSettingsConfig,
+	getPostsConfig,
+	mdWithoutEncodedComponents,
+	markdownRenderHtml,
+} from '../../../utils/helpers';
 import config from '../../../../static/config/settings.json';
 
 interface PostPageProps {
@@ -90,56 +98,67 @@ class PostPage extends React.Component<PostPageProps, any> {
 	}
 
 	get postImage(): string {
-		const tokenizedPost = tokenizePost(this.props.post);
 		return prependBaseUrl(this.ogImage);
 	}
 
+	get blogTitle(): string {
+		return getSettingsConfig(['title']);
+	}
+
+	get authorName(): string {
+		const overrideAuthor = getPostsConfig(['authorOverrideMetabox']) || false;
+		if (overrideAuthor) {
+			const {post} = this.props;
+			return post.authors[0].frontmatter.title;
+		}
+		return this.blogTitle;
+	}
+
+	get schemaAuthorType(): string {
+		const overrideAuthor = getPostsConfig(['authorOverrideMetabox']) || false;
+		if (overrideAuthor) {
+			return 'Organization';
+		}
+		return 'Person';
+	}
+
 	get schemaOrg(): any {
-		const blogUrl = getSettingsConfig(['baseUrl']) || '';
-		const blogTitle = getSettingsConfig(['title']) || '';
+		const {post} = this.props;
 
-		const schemaOrgJSONLD: any = [
-			{
-				'@context'   : 'http://schema.org',
-				'@type'      : 'WebSite',
-				url          : this.postUrl,
-				name         : this.postTitle,
-				alternateName: blogTitle,
+		return {
+			'@context'      : 'http://schema.org',
+			'@type'         : 'BlogPosting',
+			headline        : this.postTitle,
+			genre           : post.categories[0].frontmatter.title,
+			keywords        : this.postTags,
+			url             : this.postUrl,
+			datePublished   : post.frontmatter.created_at.toString(),
+			image           : {
+				'@type'   : 'imageObject',
+				url       : getSettingsConfig(['baseUrl']),
+				contentUrl: this.postImage,
+				height    : this.ogImageDimensions.height.toString(),
+				width     : this.ogImageDimensions.width.toString(),
 			},
-		];
-
-		schemaOrgJSONLD.push({
-				'@context'     : 'http://schema.org',
-				'@type'        : 'BreadcrumbList',
-				itemListElement: [
-					{
-						'@type' : 'ListItem',
-						position: 1,
-						item    : {
-							'@id': this.postUrl,
-							name : this.postTitle,
-							image: this.postImage,
-						},
-					},
-				],
+			author          : {
+				'@type': this.schemaAuthorType,
+				name   : this.authorName,
 			},
-			{
-				'@context'   : 'http://schema.org',
-				'@type'      : 'BlogPosting',
-				url          : blogUrl,
-				name         : this.postTitle,
-				alternateName: blogTitle,
-				headline     : this.postTitle,
-				image        : {
-					'@type': 'ImageObject',
-					url    : {
-						image: this.postImage,
-					},
+			publisher       : {
+				'@type': 'Organization',
+				name   : this.blogTitle,
+				logo   : {
+					'@type'   : 'imageObject',
+					contentUrl: prependBaseUrl(getSettingsConfig(['logo'])),
+					url       : getSettingsConfig(['baseUrl']),
 				},
-				description  : this.postExcerpt,
-			});
-
-		return schemaOrgJSONLD;
+			},
+			mainEntityOfPage: {
+				'@type': 'WebPage',
+				'@id'  : this.postUrl,
+			},
+			articleBody     : markdownRenderHtml(mdWithoutEncodedComponents(post)),
+		};
 	}
 
 	render() {

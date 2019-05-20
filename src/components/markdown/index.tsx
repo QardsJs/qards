@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import remark from 'remark';
-import remarkReact from 'remark-react';
-import externalLinks from 'remark-external-links';
+
+import {markdownRenderPost} from '../../utils/helpers';
 
 export interface Props {
 	md: string;
@@ -15,10 +14,7 @@ class MarkdownRender extends Component<Props, any> {
 
 		// @ts-ignore
 		return <Wrapper {...props}>
-			{remark().use(remarkReact).use(externalLinks, {
-				target: '_blank',
-				rel   : ['nofollow', 'noopener', 'noreferrer'],
-			}).processSync(md).contents}
+			{markdownRenderPost(md)}
 		</Wrapper>;
 	}
 }
