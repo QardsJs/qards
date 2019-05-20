@@ -9,7 +9,7 @@ import Content from '../../layout/content';
 import Post from '../../post';
 import Subscribe from '../../subscribe';
 import Posts from '../../posts';
-import {tokenizePost, prependBaseUrl, getPluginsConfig} from '../../../utils/helpers';
+import {tokenizePost, prependBaseUrl, getPluginsConfig, getSettingsConfig} from '../../../utils/helpers';
 import config from '../../../../static/config/settings.json';
 
 interface PostPageProps {
@@ -70,6 +70,78 @@ class PostPage extends React.Component<PostPageProps, any> {
 		}
 	}
 
+	get postUrl(): string {
+		return prependBaseUrl(this.props.location.pathname);
+	}
+
+	get postTitle(): string {
+		const tokenizedPost = tokenizePost(this.props.post);
+		return tokenizedPost.frontmatter.title;
+	}
+
+	get postExcerpt(): string {
+		const tokenizedPost = tokenizePost(this.props.post);
+		return tokenizedPost.frontmatter.excerpt;
+	}
+
+	get postTags(): string {
+		const tokenizedPost = tokenizePost(this.props.post);
+		return (tokenizedPost.frontmatter.tags || []).join(', ');
+	}
+
+	get postImage(): string {
+		const tokenizedPost = tokenizePost(this.props.post);
+		return prependBaseUrl(this.ogImage);
+	}
+
+	get schemaOrg(): any {
+		const blogUrl = getSettingsConfig(['baseUrl']) || '';
+		const blogTitle = getSettingsConfig(['title']) || '';
+
+		const schemaOrgJSONLD: any = [
+			{
+				'@context'   : 'http://schema.org',
+				'@type'      : 'WebSite',
+				url          : this.postUrl,
+				name         : this.postTitle,
+				alternateName: blogTitle,
+			},
+		];
+
+		schemaOrgJSONLD.push({
+				'@context'     : 'http://schema.org',
+				'@type'        : 'BreadcrumbList',
+				itemListElement: [
+					{
+						'@type' : 'ListItem',
+						position: 1,
+						item    : {
+							'@id': this.postUrl,
+							name : this.postTitle,
+							image: this.postImage,
+						},
+					},
+				],
+			},
+			{
+				'@context'   : 'http://schema.org',
+				'@type'      : 'BlogPosting',
+				url          : blogUrl,
+				name         : this.postTitle,
+				alternateName: blogTitle,
+				headline     : this.postTitle,
+				image        : {
+					'@type': 'ImageObject',
+					url    : {
+						image: this.postImage,
+					},
+				},
+				description  : this.postExcerpt,
+			});
+
+		return schemaOrgJSONLD;
+	}
+
 	render() {
 		const {post, related, pinned, location} = this.props;
 
@@ -78,34 +150,39 @@ class PostPage extends React.Component<PostPageProps, any> {
 		return <Layout>
 			<Helmet title={tokenizedPost.frontmatter.title}>
 				<html lang="en"/>
-				<meta name="description" content={tokenizedPost.frontmatter.excerpt}/>
+				<meta name="description" content={this.postExcerpt}/>
+				<meta name="image" content={this.postImage}/>
 
-				<link rel="canonical" href={prependBaseUrl(location.pathname)}/>
+				<script type="application/ld+json">
+					{JSON.stringify(this.schemaOrg)}
+				</script>
+
+				<link rel="canonical" href={this.postUrl}/>
 
 				<meta property="og:locale" content="en_US"/>
 				<meta property="og:type" content="article"/>
-				<meta property="og:title" content={tokenizedPost.frontmatter.title}/>
-				<meta property="og:description" content={tokenizedPost.frontmatter.excerpt}/>
-				<meta property="og:url" content={prependBaseUrl(location.pathname)}/>
+				<meta property="og:title" content={this.postTitle}/>
+				<meta property="og:description" content={this.postExcerpt}/>
+				<meta property="og:url" content={this.postUrl}/>
 				<meta property="og:site_name" content={config.name}/>
 
-				<meta property="article:tag" content={(tokenizedPost.frontmatter.tags || []).join(', ')}/>
+				<meta property="article:tag" content={this.postTags}/>
 				<meta property="article:section"
 					  content={tokenizedPost.categories ? tokenizedPost.categories[0].frontmatter.title : 'Uncategorized'}/>
 				<meta property="article:published_time" content={tokenizedPost.frontmatter.created_at.toString()}/>
 				<meta property="article:modified_time" content={tokenizedPost.frontmatter.created_at.toString()}/>
 
 				<meta property="og:updated_time" content={tokenizedPost.frontmatter.created_at.toString()}/>
-				<meta property="og:image" content={prependBaseUrl(this.ogImage)}/>
-				<meta property="og:image:secure_url" content={prependBaseUrl(this.ogImage)}/>
+				<meta property="og:image" content={this.postImage}/>
+				<meta property="og:image:secure_url" content={this.postImage}/>
 				<meta property="og:image:width" content={this.ogImageDimensions.width.toString()}/>
 				<meta property="og:image:height" content={this.ogImageDimensions.height.toString()}/>
 				<meta property="og:image:alt" content={this.ogImageAlt}/>
 
 				<meta name="twitter:card" content="summary_large_image"/>
-				<meta name="twitter:description" content={tokenizedPost.frontmatter.excerpt}/>
-				<meta name="twitter:title" content={tokenizedPost.frontmatter.title}/>
-				<meta name="twitter:image" content={prependBaseUrl(this.ogImage)}/>
+				<meta name="twitter:description" content={this.postExcerpt}/>
+				<meta name="twitter:title" content={this.postTitle}/>
+				<meta name="twitter:image" content={this.postImage}/>
 			</Helmet>
 
 			<Wrapper>
