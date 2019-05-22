@@ -12,6 +12,7 @@ meta:
   keywords: 'Qards, widgets, components, blog'
 isPage: false
 isFeatured: false
+doFollowLinks: false
 pinSidebar:
   enable: false
   categories: Qards
