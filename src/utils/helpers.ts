@@ -168,7 +168,7 @@ export function extractNodesFromEdges(edges: any, path: string = ''): any {
 export function markdownRenderHtml(md: string, doFollowLinks: boolean = false): string {
 	const rels = ['noopener', 'noreferrer'];
 
-	if (doFollowLinks) {
+	if (!doFollowLinks) {
 		rels.push('nofollow');
 	}
 
@@ -181,7 +181,7 @@ export function markdownRenderHtml(md: string, doFollowLinks: boolean = false): 
 export function markdownRenderPost(md: string, doFollowLinks: boolean = false): string {
 	const rels = ['noopener', 'noreferrer'];
 
-	if (doFollowLinks) {
+	if (!doFollowLinks) {
 		rels.push('nofollow');
 	}
 	return remark().use(remarkReact).use(externalLinks, {
