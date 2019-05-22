@@ -165,14 +165,14 @@ export function extractNodesFromEdges(edges: any, path: string = ''): any {
 	return res;
 }
 
-export function markdownRenderHtml(md: string): string {
+export function markdownRenderHtml(md: string, doFollowLinks: boolean = false): string {
 	return remark().use(remarkParse).use(remarkHtml).use(externalLinks, {
 		target: '_blank',
 		rel   : ['nofollow', 'noopener', 'noreferrer'],
 	}).processSync(md).contents;
 }
 
-export function markdownRenderPost(md: string): string {
+export function markdownRenderPost(md: string, doFollowLinks: boolean = false): string {
 	return remark().use(remarkReact).use(externalLinks, {
 		target: '_blank',
 		rel   : ['nofollow', 'noopener', 'noreferrer'],

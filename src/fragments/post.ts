@@ -12,6 +12,7 @@ export interface PostType {
 	frontmatter: {
 		isPage: boolean;
 		isFeatured: boolean;
+		doFollowLinks?: boolean;
 		showAuthor: boolean;
 		title: string;
 		excerpt: string;
@@ -75,6 +76,7 @@ export const _ = graphql`
 			created_at(formatString: "MMMM DD, YYYY")
 			tags
 			showAuthor
+			doFollowLinks
 			isPage
 			isFeatured
 			

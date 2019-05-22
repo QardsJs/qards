@@ -617,6 +617,14 @@ export const postsCollection = {
 		required: false,
 		default : false,
 	}, {
+		label   : 'Do follow links?',
+		name    : 'doFollowLinks',
+		widget  : 'boolean',
+		required: false,
+		default : false,
+		hint: `By default all links have a nofollow rel. You can disable that
+		for this post with this setting.`
+	}, {
 		label   : 'Show author?',
 		name    : 'showAuthor',
 		widget  : 'boolean',

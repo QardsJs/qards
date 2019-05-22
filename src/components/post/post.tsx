@@ -207,10 +207,10 @@ export default class Post extends React.Component<Props, State> {
 	renderSection(part: string) {
 		//	If we're in preview mode we need to load the markdown ourselves
 		//	In normal mode, we use the HTML from our props
-		const {preview} = this.props;
+		const {preview, post} = this.props;
 
 		return preview ? <div className="paragraphs">
-			<MarkdownRender md={part}/>
+			<MarkdownRender md={part} doFollowLinks={post ? post.frontmatter.doFollowLinks : false}/>
 		</div> : <div className="paragraphs" dangerouslySetInnerHTML={{
 			__html: part,
 		}}/>;
