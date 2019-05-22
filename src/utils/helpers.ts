@@ -173,9 +173,14 @@ export function markdownRenderHtml(md: string, doFollowLinks: boolean = false): 
 }
 
 export function markdownRenderPost(md: string, doFollowLinks: boolean = false): string {
+	const rels = ['noopener', 'noreferrer'];
+
+	if (doFollowLinks) {
+		rels.push('nofollow');
+	}
 	return remark().use(remarkReact).use(externalLinks, {
 		target: '_blank',
-		rel   : ['nofollow', 'noopener', 'noreferrer'],
+		rel   : rels,
 	}).processSync(md).contents;
 }
 
