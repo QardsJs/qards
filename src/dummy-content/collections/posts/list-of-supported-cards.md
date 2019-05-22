@@ -12,7 +12,7 @@ meta:
   keywords: 'Qards, widgets, components, blog'
 isPage: false
 isFeatured: false
-doFollowLinks: false
+doFollowLinks: true
 pinSidebar:
   enable: false
   categories: Qards
@@ -59,4 +59,4 @@ Using references you can link to other posts. A card is automatically created wi
 
 {"widget":"qards-section-heading","config":"eyJ0aXRsZSI6IlRlc3RpbmcgbWF0ZXJpYWwiLCJzdWJ0aXRsZSI6IlRlc3Rpbmcgc25pcHBldHMgZm9yIGludGVybmFsIHVzZSIsInR5cGUiOiJwcmltYXJ5In0="}
 
-These snippets serve as a testing ground for qards. :nerd:. This is an [external link](https://typely.com); the HTML should have `nofollow`, `noopener`, `noreferrer` and open the link in a `_blank` page.
+These snippets serve as a testing ground for qards. This is an towards a popular [proofreading app](https://typely.com) that I developed :nerd:; the HTML should have `noopener`, `noreferrer` while skipping `nofollow` because the domain is whitelisted. Also, the link should open in a `_blank` page.

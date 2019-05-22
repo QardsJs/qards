@@ -1,3 +1,0 @@
-{
-  "description": "It will intercept all external links of generated pages/posts etc and add rel=\"noopener nofollow noreferrer\" to them."
-}

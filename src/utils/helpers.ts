@@ -7,10 +7,7 @@ import {decodeWidgetDataObject} from '../cms/utils';
 import Immutable from 'immutable';
 import {format} from 'date-fns';
 import remark from 'remark';
-import remarkHtml from 'remark-html';
-import remarkParse from 'remark-parse';
 import remarkReact from 'remark-react';
-import externalLinks from 'remark-external-links';
 
 let settingsConfig = require('../../static/config/settings.json');
 let postsConfig = require('../../static/config/posts.json');
@@ -165,29 +162,8 @@ export function extractNodesFromEdges(edges: any, path: string = ''): any {
 	return res;
 }
 
-export function markdownRenderHtml(md: string, doFollowLinks: boolean = false): string {
-	const rels = ['noopener', 'noreferrer'];
-
-	if (!doFollowLinks) {
-		rels.push('nofollow');
-	}
-
-	return remark().use(remarkParse).use(remarkHtml).use(externalLinks, {
-		target: '_blank',
-		rel   : rels,
-	}).processSync(md).contents;
-}
-
-export function markdownRenderPost(md: string, doFollowLinks: boolean = false): string {
-	const rels = ['noopener', 'noreferrer'];
-
-	if (!doFollowLinks) {
-		rels.push('nofollow');
-	}
-	return remark().use(remarkReact).use(externalLinks, {
-		target: '_blank',
-		rel   : rels,
-	}).processSync(md).contents;
+export function markdownRenderPost(md: string): string {
+	return remark().use(remarkReact).processSync(md).contents;
 }
 
 interface rTimeResponse {

@@ -139,12 +139,11 @@ const plugins = [
 					},
 				},
 				{
-					//	If you modify this config make sure to also update
-					//	the same properties inside components/markdown/index.tsx
-					resolve: 'gatsby-remark-external-links',
+					resolve: 'qards-transformer-external-links',
 					options: {
-						target: '_blank',
-						rel   : 'nofollow noopener noreferrer',
+						target        : '_blank',
+						rel           : ['nofollow', 'noopener', 'noreferrer'],
+						bypassNofollow: ['qards.io', 'typely.com'],
 					},
 				}],
 		},
@@ -184,18 +183,6 @@ const plugins = [
 		resolve: `gatsby-plugin-page-creator`,
 		options: {
 			path: `${__dirname}/src/app/pages`,
-		},
-	},
-	{
-		resolve: `fix-external-links`,
-		options: {
-			attributes: {
-				nofollow: {
-					skipMatch: [
-						/** regex that will be matched against external link */
-					],
-				},
-			},
 		},
 	},
 	{

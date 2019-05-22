@@ -16,7 +16,6 @@ import {
 	getSettingsConfig,
 	getPostsConfig,
 	mdWithoutEncodedComponents,
-	markdownRenderHtml,
 } from '../../../utils/helpers';
 import config from '../../../../static/config/settings.json';
 
@@ -157,7 +156,7 @@ class PostPage extends React.Component<PostPageProps, any> {
 				'@type': 'WebPage',
 				'@id'  : this.postUrl,
 			},
-			articleBody     : markdownRenderHtml(mdWithoutEncodedComponents(post)),
+			articleBody     : post.html,
 		};
 	}
 

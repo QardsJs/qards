@@ -5,8 +5,6 @@ declare module 'remark-react';
 declare module 'netlify-cms';
 declare module 'react-prism';
 declare module 'react-images';
-declare module 'remark-html';
-declare module 'remark-parse';
 declare module 'js-base64';
 declare module 'react-custom-scrollbars';
 declare module 'react-accessible-accordion';

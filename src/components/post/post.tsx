@@ -210,7 +210,7 @@ export default class Post extends React.Component<Props, State> {
 		const {preview, post} = this.props;
 
 		return preview ? <div className="paragraphs">
-			<MarkdownRender md={part} doFollowLinks={post ? post.frontmatter.doFollowLinks : false}/>
+			<MarkdownRender md={part}/>
 		</div> : <div className="paragraphs" dangerouslySetInnerHTML={{
 			__html: part,
 		}}/>;
