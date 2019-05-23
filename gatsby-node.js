@@ -32,6 +32,11 @@ const getTags = (edges) => {
 	return tags;
 };
 
+const makeSureEndsWithSlash = (url) => {
+	url += url.endsWith('/') ? '' : '/';
+	return url;
+};
+
 const paginatePosts = (createPage, postsEdges) => {
 	const pathPrefix = postsSettings.pathPrefix || 'posts';
 
@@ -56,7 +61,7 @@ const paginatePosts = (createPage, postsEdges) => {
 
 	_.times(numPages, i => {
 		createPage({
-			path     : i === 0 ? `${pathPrefix}` : `${pathPrefix}/${i + 1}`,
+			path     : makeSureEndsWithSlash(i === 0 ? `${pathPrefix}` : `${pathPrefix}/${i + 1}`),
 			component: postsTemplate,
 			context  : {
 				limit      : postsPerPage,
@@ -75,7 +80,7 @@ const paginatePosts = (createPage, postsEdges) => {
 
 		// create posts
 		createPage({
-			path     : slug,
+			path     : makeSureEndsWithSlash(slug),
 			component: postTemplate,
 			context  : {
 				slug,
@@ -114,7 +119,7 @@ const paginateTags = (createPage, posts) => {
 
 		_.times(numPages, i => {
 			createPage({
-				path     : i === 0 ? `tag/${slug}` : `tag/${slug}/${i + 1}`,
+				path     : makeSureEndsWithSlash(i === 0 ? `tag/${slug}` : `tag/${slug}/${i + 1}`),
 				component: tagTemplate,
 				context  : {
 					limit      : postsPerPage,
@@ -122,7 +127,7 @@ const paginateTags = (createPage, posts) => {
 					numPages,
 					currentPage: i + 1,
 					tag,
-					slug,
+					slug       : makeSureEndsWithSlash(slug),
 				},
 			});
 		});
@@ -157,7 +162,7 @@ const paginateCategories = (createPage, posts, categories) => {
 		if (categoryPosts.length > 0) {
 			_.times(numPages, i => {
 				createPage({
-					path     : i === 0 ? slug : `${slug}${i + 1}`,
+					path     : makeSureEndsWithSlash(i === 0 ? slug : `${slug}${i + 1}`),
 					component: categoryTemplate,
 					context  : {
 						limit      : postsPerPage,
@@ -165,7 +170,7 @@ const paginateCategories = (createPage, posts, categories) => {
 						numPages,
 						currentPage: i + 1,
 						category   : c,
-						slug,
+						slug       : makeSureEndsWithSlash(slug),
 					},
 				});
 			});
@@ -174,7 +179,7 @@ const paginateCategories = (createPage, posts, categories) => {
 			//	if the results have any posts in them so we have to make a page even if
 			//	there will be no results to be shown
 			createPage({
-				path     : slug,
+				path     : makeSureEndsWithSlash(slug),
 				component: categoryTemplate,
 				context  : {
 					limit      : postsPerPage,
@@ -182,7 +187,7 @@ const paginateCategories = (createPage, posts, categories) => {
 					numPages,
 					currentPage: 1,
 					category   : c,
-					slug,
+					slug       : makeSureEndsWithSlash(slug),
 				},
 			});
 		}
