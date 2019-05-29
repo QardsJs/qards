@@ -304,7 +304,7 @@ export default class Post extends React.Component<Props, State> {
 		}
 
 		let created = `Created: ${created_at.toString()}`;
-		if (updated_at && updated_at != '') {
+		if (updated_at && updated_at != '' && updated_at != created_at) {
 			created = `Updated: ${updated_at.toString()}`;
 		}
 

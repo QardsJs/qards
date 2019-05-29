@@ -76,7 +76,7 @@ export const _ = graphql`
 		
 		parent {
 			... on File {
-				modifiedTime(formatString: "MM/DD/YYYY")
+				modifiedTime(formatString: "MMMM DD, YYYY")
 			}
         }
 
