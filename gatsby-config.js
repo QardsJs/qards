@@ -158,7 +158,7 @@ const plugins = [
 			developerURL  : null,
 			dir           : 'auto',
 			lang          : 'en-US',
-			background    : 'transparent',
+			background    : configTheme.colors.accent.background || '#3ea38f',
 			theme_color   : configTheme.colors.accent.background || '#3ea38f',
 			display       : 'standalone',
 			orientation   : 'any',
