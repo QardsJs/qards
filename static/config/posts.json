@@ -4,6 +4,7 @@
   "tocShow": true,
   "socialShow": true,
   "subscribeShow": true,
+  "authorOverrideMetabox": true,
   "slugStructure": "{{slug}}",
   "pathPrefix": "/posts"
 }

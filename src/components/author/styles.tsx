@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import theme from "../../theme";
+import React from 'react';
+import styled from 'styled-components';
+import theme from '../../theme';
 import {getThemeConfig} from '../../utils/helpers';
 
 export const Wrapper = styled.div`
@@ -33,6 +33,11 @@ export const Avatar = styled.div`
 	img {
 		height: 80px;
 		width: 80px;
-		border-radius: 40px;
+	}
+	
+	&.rounded {
+		img {
+			border-radius: 40px;
+		}
 	}
 `;

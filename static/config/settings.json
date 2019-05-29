@@ -1,7 +1,7 @@
 {
   "name": "qards",
   "title": "Qards - the blogging platform for professionals",
-  "excerpt": "Qards is a blogging platform for professionals",
+  "excerpt": "Qards is a serverless blogging platform for professionals powered by Gatbsy and Netlify CMS",
   "baseUrl": "https://affectionate-hamilton-12254a.netlify.com",
   "performanceMode": false,
   "logo": "/images/uploads/logo.png",

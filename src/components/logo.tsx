@@ -31,7 +31,7 @@ export const StyledLogo = styled(Link)`
 	}
 `;
 
-export interface DataProps {
+export interface LogoDataProps {
 	logo: {
 		edges: {
 			node: {
@@ -72,7 +72,7 @@ export default class Logo extends React.Component<Props & HTMLDivProps, any> {
 						}
 					}
 				`}
-				render={(data: DataProps) => {
+				render={(data: LogoDataProps) => {
 					return (
 						<StyledLogo to={'/'}>
 							<Flex flexDirection={'row'} alignItems={'center'}>

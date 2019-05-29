@@ -1,5 +1,3 @@
-import PostsSettings from '../../../static/config/posts.json';
-
 export const settingsCollection = {
 	name  : 'settings',
 	label : 'Settings',
