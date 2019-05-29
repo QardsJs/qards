@@ -62,7 +62,7 @@
     "netlify-cms-widget-color": "^3.0.1",
     "node-sass": "^4.11.0",
     "node-sass-json-importer": "^4.1.0",
-    "qards-transformer-external-links": "^0.1.6",
+    "qards-transformer-external-links": "^0.2.2",
     "react": "^16.6.3",
     "react-accessible-accordion": "^2.4.5",
     "react-custom-scrollbars": "^4.2.1",
