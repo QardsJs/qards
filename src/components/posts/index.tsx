@@ -6,7 +6,7 @@ import LazyLoad from 'react-lazyload';
 import Pagination from '../pagination';
 import {Pagination as PaginationType} from '../rogue-interfaces';
 import {PostType} from '../../fragments/post';
-import {readingTime, tokenizePost, getSettingsConfig} from '../../utils/helpers';
+import {readingTime, tokenizePost, getSettingsConfig, getPostsConfig} from '../../utils/helpers';
 import {
 	Article,
 	Author,
@@ -42,7 +42,9 @@ interface State {
 export default class Posts extends Component<Props, State> {
 	static renderAuthor(post: PostType) {
 		const performance = getSettingsConfig('performanceMode');
-		if (post.authors && post.authors.length) {
+		const authorOverrideMetabox = getPostsConfig('authorOverrideMetabox');
+
+		if (post.authors && post.authors.length && !authorOverrideMetabox) {
 			return <Author className={'post-card-author'}>
 				{post.authors[0].frontmatter.avatar && !performance &&
 				<TrackVisibility once>
