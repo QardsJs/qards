@@ -311,7 +311,7 @@ export default class Post extends React.Component<Props, State> {
 		return (
 			<Article>
 				{title && <Title className={'qards-post-title'}>{title}</Title>}
-				{created && <Date className={'qards-post-date'}>{created}</Date>}
+				<Date className={'qards-post-date'}>{created}</Date>
 				{hero && <Hero className={'qards-post-hero'}><QardImageContent lightbox={true} {...hero}/></Hero>}
 				{excerpt && <Excerpt className={'qards-post-excerpt'}>{excerpt}</Excerpt>}
 
