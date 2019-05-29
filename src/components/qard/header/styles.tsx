@@ -12,11 +12,13 @@ export const Wrapper = styled.header`
 export const PrimaryTitle = styled.h2`
 	margin-top: 0;
 	margin-bottom: 5px;
+	font-size: 2.1rem;
 `;
 
 export const SecondaryTitle = styled.h3`
 	margin-top: 50px;
 	margin-bottom: 15px;
+	font-size: 1.7rem;
 `;
 
 export const SubTitle = styled.span`
