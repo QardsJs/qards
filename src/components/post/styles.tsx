@@ -72,6 +72,8 @@ export const Article = styled.article`
 	}
 	
 	.paragraphs {
+		color: ${tinycolor2(theme.color(['text'])).lighten(25).toString()};
+
 		pre, code {
 			font-size: 1rem;
 			padding: 0 4px;

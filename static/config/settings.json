@@ -7,11 +7,10 @@
   "logo": "/images/uploads/logo.png",
   "socialShareImg": "/images/uploads/andrew-ridley-76547-unsplash.jpg",
   "typography": {
-    "fontSize": "15px",
-    "bodyFontFamily": "Roboto",
+    "fontSize": "14px",
+    "bodyFontFamily": "Arial",
     "baseLineHeight": 1,
-    "headerFontFamily": "Roboto",
-    "npmPackage": "typeface-roboto"
+    "headerFontFamily": "Arial"
   },
-  "fallbackFont": "arial"
+  "fallbackFont": "helvetica"
 }
