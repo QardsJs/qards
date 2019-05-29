@@ -22,7 +22,8 @@ export const StyledLogo = styled(Link)`
 	}
 	
 	span {
-	    font-size: .8em;
+	    font-size: .9em;
+	    font-weight: 600;
 	}
 	
 	&:hover {

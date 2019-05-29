@@ -22,6 +22,10 @@ export interface PostType {
 		meta: PageMetaType;
 	}
 
+	parent: {
+		modifiedTime: string;
+	}
+
 	references?: PostType[];
 	authors: AuthorType[];
 	categories: CategoryType[];
@@ -69,6 +73,12 @@ export const _ = graphql`
 		categories {
 			...categoryFragment
 		}
+		
+		parent {
+			... on File {
+				modifiedTime(formatString: "MM/DD/YYYY")
+			}
+        }
 
 		frontmatter{
 			title

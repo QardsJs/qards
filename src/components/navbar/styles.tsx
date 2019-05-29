@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import {Navbar, NavbarGroup} from '@blueprintjs/core';
 
 import theme from '../../theme';
-import {getThemeConfig} from '../../utils/helpers';
 
 export const StyledNavbar = styled(Navbar)`
 	border: none;
@@ -17,10 +16,6 @@ export const StyledNavbar = styled(Navbar)`
 			outline: none;
 		}
 	}
-`;
-
-export const SearchInput = styled.input`
-	width: 100%;
 `;
 
 export const Container = styled.div`
