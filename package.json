@@ -29,7 +29,7 @@
     "gatsby-plugin-favicon": "^3.1.4",
     "gatsby-plugin-feed": "^2.0.11",
     "gatsby-plugin-google-analytics": "^2.0.8",
-    "gatsby-plugin-mailchimp": "4.0.0",
+    "gatsby-plugin-mailchimp": "5.1.2",
     "gatsby-plugin-netlify": "^2.0.13",
     "gatsby-plugin-netlify-cms": "^3.0.17",
     "gatsby-plugin-offline": "^2.0.19",
